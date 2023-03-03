@@ -9,6 +9,19 @@
                 <div class="logText">
                     <span>Levi Qin的博客</span>
                 </div>
+                <div class="nav-bar">
+                    <ul>
+                        <li>首页</li>
+                        <li>前端导航</li>
+                        <li>前端资料</li>
+                        <li>小工具</li>
+                        <li>关于我</li>
+                    </ul>
+                    <div class="menu-icon-card">
+                        <el-icon><Expand /></el-icon>
+                        <el-icon><Fold /></el-icon>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -17,6 +30,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+// import {Expand, Fold} from "element-plus"
 
 const router = useRouter();
 </script>
@@ -25,6 +39,11 @@ const router = useRouter();
 @media (max-width: 330px) {
     .logText {
         display: none;
+    }
+}
+@media (max-width: 800px) {
+    .nav-bar ul {
+        display: none !important;
     }
 }
 
@@ -53,6 +72,22 @@ const router = useRouter();
 
     .logText {
         font-size: 16px;
+    }
+    .nav-bar {
+        flex: 1;
+        .menu-icon-card {
+            display: none;
+        }
+        ul {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            li {
+                padding: 0 15px;
+                color: var(--themeTextColor);
+                cursor: pointer;
+            }
+        }
     }
 }
 </style>

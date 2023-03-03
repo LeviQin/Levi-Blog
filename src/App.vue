@@ -1,6 +1,6 @@
 <template>
   <router-view />
-  <MoveSpecialEffect></MoveSpecialEffect>
+  <move-special-effect></move-special-effect>
 </template>
 
 <script setup>
