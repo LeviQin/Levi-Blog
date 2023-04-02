@@ -2,41 +2,65 @@ import Layout from "@/layout/Index.vue";
 
 export default [
     {
-        path: '/',
+        path: "/",
         component: Layout,
-        redirect: '/dashboard',
+        redirect: "/dashboard",
         children: [
             {
-                path: 'dashboard',
-                component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/Index.vue'),
-                name: 'dashboard',
+                path: "/dashboard",
+                component: () => import("@/views/Dashboard/Index.vue"),
+                name: "Dashboard",
                 meta: {
-                    title: 'dashboard',
+                    title: "dashboard",
                 }
             },
             {
-                path: 'article',
-                component: () => import(/* webpackChunkName: "dashboard" */ '@/views/article/Index.vue'),
-                name: 'article',
+                path: "/nav",
+                component: () => import("@/views/Nav/Index.vue"),
+                name: "Nav",
                 meta: {
-                    title: 'article',
+                    title: "Nav",
                 }
-            }
+            },
+            {
+                path: "/material",
+                component: () => import("@/views/Material/Index.vue"),
+                name: "Material",
+                meta: {
+                    title: "Material",
+                }
+            },
+            {
+                path: "/tools",
+                component: () => import("@/views/Tools/Index.vue"),
+                name: "Tools",
+                meta: {
+                    title: "Tools",
+                }
+            },
         ]
     },
     {
-        path: '/:catchAll(.*)',
+        path: "/about",
+        component: () => import("@/views/About/Index.vue"),
+        name: "About",
+        meta: {
+            title: "About",
+        }
+    },
+    {
+        path: "/:catchAll(.*)",
         redirect: "/404",
         meta: {
-          title: '重定向',
+            title: "重定向",
         },
-      },
+    },
     {
-        path: '/404',
-        name: "error404",
-        component: () => import('@/views/errorPage/404.vue'),
+        path: "/404",
+        name: "Error404",
+        component: () => import("@/views/ErrorPage/404.vue"),
         meta: {
-            title: '页面不存在',
+            title: "页面不存在",
         },
     },
 ]
