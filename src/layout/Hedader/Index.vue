@@ -50,6 +50,11 @@ const router = useRouter();
     height: 70px;
     background: var(--themeColor);
     min-width: var(--minWidth);
+    box-shadow: 0px 0px 10px 5px rgba(55, 99, 170, 0.1);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 99999;
 }
 
 .logCrad {

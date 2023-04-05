@@ -18,6 +18,11 @@
   --themeTextColor: #4c8bf4;
   --minWidth: 200px;
   --heeartWidth: 1200px;
+
+  --aboutColor: #95a5a6;
+  --workColor: #79bbff;
+  --abilityColor: #95d475;
+  --connectColor: #eebe77;
   overflow-x: hidden;
 }
 
@@ -124,4 +129,8 @@ li {
   min-width: var(--minWidth);
   height: 100%;
   margin: 0 auto;
+}
+
+.el-carousel__container {
+  height: 100% !important;
 }

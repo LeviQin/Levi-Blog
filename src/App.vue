@@ -9,5 +9,6 @@ import MoveSpecialEffect from "./components/MoveSpecialEffect/Index.vue";
 <style lang="scss" scoped>
 #app {
   position: relative;
+  height: 100%;
 }
 </style>

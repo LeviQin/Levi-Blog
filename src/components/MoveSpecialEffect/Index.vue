@@ -1,3 +1,5 @@
+<template></template>
+
 <script setup>
 import { onMounted } from "vue";
 import { throttle } from "@/utils/utils.js";
