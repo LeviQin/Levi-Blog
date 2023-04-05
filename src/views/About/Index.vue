@@ -13,16 +13,8 @@
         </ul>
       </div>
     </div>
-    <el-carousel
-      class="carousel"
-      direction="vertical"
-      :autoplay="false"
-      trigger="click"
-      ref="carouselRef"
-      :loop="false"
-      @mousewheel="rollScroll($event)"
-      @change="changeCarousel"
-    >
+    <el-carousel class="carousel" direction="vertical" :autoplay="false" trigger="click" ref="carouselRef" :loop="false"
+      @mousewheel="rollScroll($event)" @change="changeCarousel">
       <el-carousel-item name="0">
         <About @toNextPage="toNextPage" />
       </el-carousel-item>
@@ -40,12 +32,34 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import About from "./About.vue";
 import Work from "./Work.vue";
 import Ability from "./Ability.vue";
 import Connect from "./Connect.vue";
+import Hammer from "hammerjs";
+
+onMounted(() => {
+  const mc = new Hammer(carouselRef.value.$el);
+  mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+  mc.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+
+  mc.on("panend", (e) => {
+    e.preventDefault();
+    // 检查是否是垂直方向的移动
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      // 检查移动方向
+      if (e.deltaY > 0) {
+        // 向下滑动
+        carouselRef.value.prev();
+      } else {
+        // 向上滑动
+        carouselRef.value.next();
+      }
+    }
+  });
+});
 
 let timeId = ref(null);
 let carouselRef = ref(null);
@@ -93,28 +107,34 @@ const changeCarousel = (val) => {
   .about-header-nav ul li {
     font-size: 1rem !important;
   }
+
   li .nav-avatar {
     width: 4.5rem !important;
     height: 4.5rem !important;
     background-size: 4.5rem 4.5rem !important;
   }
 }
+
 .about {
   display: flex;
   flex-direction: column;
   height: 100%;
+
   .carousel {
     height: 100%;
     flex: 1;
   }
 }
+
 .about-header {
   height: 80px;
   background-color: #000000;
+
   .about-header-nav ul {
     height: 100%;
     display: flex;
     justify-content: space-between;
+
     li {
       width: 20%;
       color: #fff;
@@ -124,6 +144,7 @@ const changeCarousel = (val) => {
       font-size: 24px;
       cursor: pointer;
       transition: all 0.4s;
+
       .nav-avatar {
         background: url(../../assets/images/levi.jpg);
         background-size: 100px 100px;
@@ -141,33 +162,41 @@ const changeCarousel = (val) => {
         top: 20px;
       }
     }
+
     li.about:hover {
       transition: all 0.4s;
       color: var(--aboutColor);
     }
+
     li.work:hover {
       transition: all 0.4s;
       color: var(--workColor);
     }
+
     li.ability:hover {
       transition: all 0.4s;
       color: var(--abilityColor);
     }
+
     li.connect:hover {
       transition: all 0.4s;
       color: var(--connectColor);
     }
   }
 }
+
 .active-nav.about {
   color: var(--aboutColor) !important;
 }
+
 .active-nav.work {
   color: var(--workColor) !important;
 }
+
 .active-nav.ability {
   color: var(--abilityColor) !important;
 }
+
 .active-nav.connect {
   color: var(--connectColor) !important;
 }

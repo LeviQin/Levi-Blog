@@ -27,7 +27,7 @@ const emit = defineEmits(["toOnePage"]);
   width: 80px;
   height: 80px;
   position: absolute;
-  bottom: 40px;
+  bottom: 20px;
   left: 50%;
   margin-left: -30px;
   opacity: 0.75;

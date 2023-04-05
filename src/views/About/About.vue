@@ -15,7 +15,7 @@
             <img class="bio-icon" src="../../assets/images/location.svg" alt="" />
           </div>
           <div class="right-content">
-            <span class="bio-text">目前在深圳就职于笨鸟软件</span>
+            <span class="bio-text">目前就职于深圳市笨鸟软件有限公司</span>
           </div>
         </div>
         <div class="info-item">
@@ -23,7 +23,15 @@
             <img class="bio-icon" src="../../assets/images/message.svg" alt="" />
           </div>
           <div class="right-content">
-            <span class="bio-text">有丰富的前端开发经验，有丰富的前端开发经验</span>
+            <span class="bio-text">有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="left-icon">
+            <img class="bio-icon" src="../../assets/images/html5.svg" alt="" />
+          </div>
+          <div class="right-content">
+            <span class="bio-text">擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js</span>
           </div>
         </div>
       </div>
@@ -47,9 +55,12 @@ const emit = defineEmits(["toNextPage"]);
   .info {
     width: 100% !important;
   }
+
   .info-content {
-    padding: 7rem 2rem !important;
+    padding: 0 !important;
+    width: 100%;
   }
+
   .left-icon {
     width: 5rem !important;
     height: 5rem !important;
@@ -57,43 +68,58 @@ const emit = defineEmits(["toNextPage"]);
     justify-content: center;
     align-items: center;
   }
+
   .right-content {
     flex: 1;
     display: flex;
     align-items: center;
     text-align: left;
   }
+
   .bio-icon {
-    width: 3rem !important;
-    height: 3rem !important;
+    width: 2rem !important;
+    height: 2rem !important;
     animation: none !important;
+    opacity: 1 !important;
   }
+
   .bio-text {
     margin-left: 0 !important;
     animation: none !important;
+    opacity: 1 !important;
+    font-size: 1rem !important;
   }
 }
+
 .container {
   height: 100%;
   background: #eee url(../../assets/images/bg-tile.png) 0 0;
   position: relative;
 }
+
 .info {
   width: 960px;
   margin: 0 auto;
+  overflow: hidden;
 }
+
 .info-content {
-  padding-top: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
+
 .info-item {
   display: flex;
 }
+
 .button-arrow {
   display: block;
   width: 60px;
   height: 60px;
   position: absolute;
-  bottom: 40px;
+  bottom: 20px;
   left: 50%;
   margin-left: -30px;
   opacity: 0.75;
@@ -103,45 +129,73 @@ const emit = defineEmits(["toNextPage"]);
   transform: scale(0.8);
   background-position: 0 -60px;
   cursor: pointer;
+
   &:hover {
     transform: scale(1);
     transition: all 0.2s ease-in 0s;
   }
 }
+
 .left-icon {
   width: 100px;
   height: 100px;
+  display: flex;
+  align-items: center;
 }
+
 .bio-icon {
   width: 60px;
   height: 60px;
-  animation: bioIconIn 0.6s ease-out 0.7s 1 forwards;
+  animation: bioIconIn 0.3s ease-out 0.7s 1 forwards;
+  opacity: 0;
 }
+
+.right-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  text-align: left;
+}
+
 .bio-text {
-  margin-left: -210px;
-  animation: bioTextIn 0.6s ease-out 0.7s 1 forwards;
+  animation: bioTextIn 0.3s ease-out 0.7s 1 forwards;
+  opacity: 0;
+  font-size: 22px;
+  line-height: 30px;
 }
+
 @keyframes bioTextIn {
   0% {
-    transform: translate(649px, 0);
+    margin-left: 500px;
     opacity: 0;
   }
 
   100% {
-    transform: translate(0, 0);
+    margin-left: 0;
     opacity: 1;
   }
 }
+
 @keyframes bioIconIn {
   0% {
-    margin-left: -300px;
+    margin-left: 0;
     opacity: 0;
-    transform: rotate(-60deg);
+    transform: rotate(-90deg);
   }
+
   100% {
-    margin-left: -269px;
+    margin-left: 10px;
     opacity: 1;
     transform: rotate(0deg);
   }
 }
-</style>
+
+@keyframes hoverBioIcon {
+  0% {
+    transform: rotate(-90deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}</style>
