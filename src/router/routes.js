@@ -1,12 +1,10 @@
 import Layout from "@/layout/Index.vue";
 
-export default [
-    {
+export default [{
         path: "/",
         component: Layout,
         redirect: "/dashboard",
-        children: [
-            {
+        children: [{
                 path: "/dashboard",
                 component: () => import("@/views/Dashboard/Index.vue"),
                 name: "Dashboard",
@@ -36,6 +34,22 @@ export default [
                 name: "Tools",
                 meta: {
                     title: "Tools",
+                }
+            },
+            {
+                path: "/ip",
+                component: () => import("@/views/Tools/IpIdentification.vue"),
+                name: "IP",
+                meta: {
+                    title: "IP",
+                }
+            },
+            {
+                path: "/password",
+                component: () => import("@/views/Tools/EncryptionAndDecryption.vue"),
+                name: "Password",
+                meta: {
+                    title: "Password",
                 }
             },
         ]

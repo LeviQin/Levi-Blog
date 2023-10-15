@@ -52,7 +52,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { getSiteList } from "@/api/nav";
+import { getSiteList } from "@/api/webdev";
 
 onMounted(() => {
   getSiteNavList();

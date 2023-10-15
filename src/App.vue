@@ -1,11 +1,8 @@
 <template>
   <router-view />
-  <move-special-effect></move-special-effect>
 </template>
 
-<script setup>
-import MoveSpecialEffect from "./components/MoveSpecialEffect/Index.vue";
-</script>
+<script setup></script>
 <style lang="scss" scoped>
 #app {
   position: relative;

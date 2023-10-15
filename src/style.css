@@ -14,8 +14,9 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --themeColor: #f8f8f8;
-  --themeTextColor: #4c8bf4;
+  --themeColor: #198754;
+  --themeTextColor: #fff;
+  --filingColor: #000;
   --minWidth: 200px;
   --heeartWidth: 1200px;
 
@@ -133,4 +134,11 @@ li {
 
 .el-carousel__container {
   height: 100% !important;
+}
+
+.lv-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #dcdfe6;
 }

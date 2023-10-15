@@ -47,14 +47,14 @@ const router = useRouter();
 }
 
 .header {
+    background-color: var(--themeColor);
     height: 70px;
-    background: var(--themeColor);
     min-width: var(--minWidth);
-    box-shadow: 0px 0px 10px 5px rgba(55, 99, 170, 0.1);
+    border: 1px solid rgba(55, 99, 170, 0.1);
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 99999;
+    z-index: 9;
 }
 
 .logCrad {
