@@ -12,6 +12,8 @@ import { ref } from "vue";
 <style lang="scss" scoped>
 .footer {
   min-width: var(--minWidth);
+  margin: 15px 0;
+  text-align: center;
 }
 
 a,

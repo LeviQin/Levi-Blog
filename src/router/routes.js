@@ -37,11 +37,11 @@ export default [{
                 }
             },
             {
-                path: "/ip",
-                component: () => import("@/views/Tools/IpIdentification.vue"),
-                name: "IP",
+                path: "/life",
+                component: () => import("@/views/Tools/LifeTools.vue"),
+                name: "Life",
                 meta: {
-                    title: "IP",
+                    title: "Life",
                 }
             },
             {
@@ -50,6 +50,22 @@ export default [{
                 name: "Password",
                 meta: {
                     title: "Password",
+                }
+            },
+            {
+                path: "/webmaster",
+                component: () => import("@/views/Tools/WebmasterTools.vue"),
+                name: "Webmaster",
+                meta: {
+                    title: "Webmaster",
+                }
+            },
+            {
+                path: "/front-end",
+                component: () => import("@/views/Tools/FrontEndTools.vue"),
+                name: "Front End",
+                meta: {
+                    title: "Front End",
                 }
             },
         ]

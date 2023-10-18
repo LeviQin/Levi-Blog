@@ -19,6 +19,7 @@
   --filingColor: #000;
   --minWidth: 200px;
   --heeartWidth: 1200px;
+  --hedaerBarHeight: 70px;
 
   --aboutColor: #95a5a6;
   --workColor: #79bbff;
@@ -26,6 +27,32 @@
   --connectColor: #eebe77;
   overflow-x: hidden;
 }
+
+/* 滚动条优化 start */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f6f6f6;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cdcdcd;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #747474;
+}
+
+::-webkit-scrollbar-corner {
+  background: #f6f6f6;
+}
+
+/* 滚动条优化 end */
 
 a {
   font-weight: 500;
@@ -101,7 +128,6 @@ li {
 #app {
   width: 100%;
   height: 100%;
-  text-align: center;
 }
 
 @media (prefers-color-scheme: light) {
@@ -141,4 +167,8 @@ li {
   padding: 20px;
   border-radius: 5px;
   border: 1px solid #dcdfe6;
+}
+
+.red-text {
+  color: red;
 }

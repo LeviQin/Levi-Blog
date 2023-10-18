@@ -1,51 +1,50 @@
 <template>
   <div class="container">
-    <div class="website-card">
-      <div class="website-cassification">
-        <div class="cassification-title">
-          <span>文档</span>
-        </div>
-        <div class="website-item-card" v-for="item in documentMap" :key="item.id">
-          <div class="website-item" @click="toSitePage(item.url)">
-            <div class="website-img">
-              <img :src="item.image" :alt="item.title" />
-            </div>
-            <div class="website-title">
-              <span>{{ item.title }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="website-cassification">
-        <div class="cassification-title">
-          <span>社区</span>
-        </div>
-        <div class="website-item-card" v-for="item in communityMap" :key="item.id">
-          <div class="website-item" @click="toSitePage(item.url)">
-            <div class="website-img">
-              <img :src="item.image" :alt="item.title" />
-            </div>
-            <div class="website-title">
-              <span>{{ item.title }}</span>
+    <div class="website-card w">
+      <el-tabs tab-position="left" class="tabs-card" type="border-card">
+        <el-tab-pane label="文档">
+          <div class="tab-item">
+            <div class="website-item-card" v-for="item in documentMap" :key="item.id">
+              <div class="website-item" @click="toSitePage(item.url)">
+                <div class="website-img">
+                  <img :src="item.image" :alt="item.title" />
+                </div>
+                <div class="website-title">
+                  <span>{{ item.title }}</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="website-cassification">
-        <div class="cassification-title">
-          <span>工具</span>
-        </div>
-        <div class="website-item-card" v-for="item in toolMap" :key="item.id">
-          <div class="website-item" @click="toSitePage(item.url)">
-            <div class="website-img">
-              <img :src="item.image" :alt="item.title" />
-            </div>
-            <div class="website-title">
-              <span>{{ item.title }}</span>
+        </el-tab-pane>
+        <el-tab-pane label="社区">
+          <div class="tab-item">
+            <div class="website-item-card" v-for="item in communityMap" :key="item.id">
+              <div class="website-item" @click="toSitePage(item.url)">
+                <div class="website-img">
+                  <img :src="item.image" :alt="item.title" />
+                </div>
+                <div class="website-title">
+                  <span>{{ item.title }}</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </el-tab-pane>
+        <el-tab-pane label="工具">
+          <div class="tab-item">
+            <div class="website-item-card" v-for="item in toolMap" :key="item.id">
+              <div class="website-item" @click="toSitePage(item.url)">
+                <div class="website-img">
+                  <img :src="item.image" :alt="item.title" />
+                </div>
+                <div class="website-title">
+                  <span>{{ item.title }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
@@ -78,60 +77,61 @@ const toSitePage = (url) => {
 </script>
 
 <style lang="scss" scoped>
-.website-card {
+.tab-item {
   display: flex;
-  justify-content: space-around;
-  .website-cassification {
-    padding: 10px 50px;
-    width: 20%;
-    .cassification-title {
-      text-align: center;
-      font-size: 22px;
-      height: 60px;
-      line-height: 60px;
+  flex-wrap: wrap;
+}
+
+.website-item-card {
+  position: relative;
+  width: 270px;
+  height: 150px;
+  margin: 10px;
+
+  .website-item {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    border-radius: 15px;
+    top: 0;
+    position: absolute;
+    transition: all 0.4s;
+    background: linear-gradient(to bottom, #ffffff, #ecf0f9);
+    border: 2px solid #fff;
+    box-shadow: 8px 8px 20px 0 rgb(55 99 170 / 10%);
+    background-image: linear-gradient(0deg, #fff, #f3f5f8);
+
+    &:hover {
+      position: absolute;
+      top: -8px;
+      transition: all 0.4s;
     }
-    .website-item-card {
-      position: relative;
+
+    .website-img {
+      margin-top: 20px;
       width: 100%;
-      height: 180px;
-      .website-item {
-        width: 100%;
+      height: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 80%;
         height: 80%;
-        cursor: pointer;
-        border-radius: 15px;
-        top: 0;
-        position: absolute;
-        transition: all 0.4s;
-        background: linear-gradient(to bottom, #ffffff, #ecf0f9);
-        border: 2px solid #fff;
-        box-shadow: 8px 8px 20px 0 rgb(55 99 170 / 10%);
-        background-image: linear-gradient(0deg, #fff, #f3f5f8);
-        &:hover {
-          position: absolute;
-          top: -8px;
-          transition: all 0.4s;
-        }
-        .website-img {
-          margin-top: 20px;
-          width: 100%;
-          height: 70px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          img {
-            width: 80%;
-            height: 80%;
-            object-fit: contain;
-          }
-        }
-        .website-title {
-          text-align: center;
-          line-height: 50px;
-          color: #383e4a;
-          font-size: 22px;
-        }
+        object-fit: contain;
       }
     }
+
+    .website-title {
+      text-align: center;
+      line-height: 50px;
+      color: #383e4a;
+      font-size: 22px;
+    }
   }
+}
+
+.tabs-card {
+  width: 100%;
 }
 </style>
