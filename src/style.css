@@ -156,6 +156,7 @@ li {
   min-width: var(--minWidth);
   height: 100%;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .el-carousel__container {
@@ -171,4 +172,12 @@ li {
 
 .red-text {
   color: red;
+}
+
+.el-drawer__header {
+  display: none !important;
+}
+
+.el-tooltip__trigger {
+  outline: none;
 }

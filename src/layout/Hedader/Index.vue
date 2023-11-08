@@ -1,18 +1,38 @@
 <template>
   <div class="header">
-    <div class="w">
+    <div class="nav-card w">
+      <div class="menu-icon-card">
+        <i class="bi bi-text-right collapse-icon" @click="clickCollapse"></i>
+      </div>
       <div class="logCrad">
-        <div class="logTitle" @click="router.push('/')">
-          <span><i class="bi bi-code-slash"></i> JavaScript </span>
-        </div>
-        <div class="logText">
+        <div class="logText" @click="router.push('/')">
           <span>Levi Qin的博客</span>
         </div>
-        <div class="nav-bar-box">
-          <nav-bar></nav-bar>
-        </div>
+        <nav-bar></nav-bar>
+      </div>
+      <div class="search-card">
+        <el-input v-model="input3" placeholder="搜索啥呢？">
+          <template #prefix>
+            <i class="bi bi-search"></i>
+          </template>
+        </el-input>
       </div>
     </div>
+    <el-drawer
+      v-model="drawer"
+      direction="ltr"
+      close-on-click-modal
+      append-to-body
+      size="80%"
+    >
+      <ul class="m-nav-ul" @click="toMPage">
+        <li data-path="/">首页</li>
+        <li data-path="/nav">前端导航</li>
+        <li data-path="/material">前端资料</li>
+        <li data-path="/tools">小工具</li>
+        <li data-path="/about">关于我</li>
+      </ul>
+    </el-drawer>
   </div>
 </template>
 
@@ -22,9 +42,26 @@ import { useRouter } from "vue-router";
 import NavBar from "./components/NavBar/Index.vue";
 
 const router = useRouter();
+
+let input3 = ref("");
+let drawer = ref(false);
+
+const clickCollapse = () => {
+  drawer.value = true;
+};
+const toMPage = (e) => {
+  const path = e.target.getAttribute("data-path");
+  if (path) {
+    router.push(path);
+    drawer.value = false;
+  }
+};
 </script>
 
 <style lang="scss" scoped>
+.menu-icon-card {
+  display: none;
+}
 .header {
   background-color: var(--themeColor);
   height: var(--hedaerBarHeight);
@@ -33,35 +70,55 @@ const router = useRouter();
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 9;
+  z-index: 90;
 }
 
-.logCrad {
-  height: var(--hedaerBarHeight);
+.nav-card {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
-  span {
-    color: var(--themeTextColor);
-  }
+  .logCrad {
+    height: var(--hedaerBarHeight);
+    display: flex;
+    align-items: center;
 
-  .logTitle {
-    font-weight: bold;
-    font-size: 25px;
-    margin-right: 20px;
-    min-width: var(--minWidth);
-    cursor: pointer !important;
-    text-align: center;
-  }
+    span {
+      color: var(--themeTextColor);
+    }
 
-  .logText {
-    font-size: 16px;
-  }
-  .nav-bar-box {
-    flex: 1;
+    .logTitle {
+      font-weight: bold;
+      font-size: 25px;
+      margin-right: 20px;
+      min-width: var(--minWidth);
+      cursor: pointer !important;
+      text-align: center;
+    }
+
+    .logText {
+      font-size: 24px;
+      cursor: pointer !important;
+      margin-right: 20px;
+    }
   }
 }
-@media (max-width: 380px) {
+
+@media (max-width: 860px) {
+  .menu-icon-card {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 0.7rem;
+    cursor: pointer;
+
+    .collapse-icon {
+      color: var(--themeTextColor);
+      font-size: 1.8rem;
+    }
+  }
+}
+@media (max-width: 480px) {
   .logText {
     display: none;
   }

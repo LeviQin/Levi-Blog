@@ -13,6 +13,22 @@ export default [{
                 }
             },
             {
+                path: "/cute-pet",
+                component: () => import("@/views/Topic/CutePet.vue"),
+                name: "Cute Pet",
+                meta: {
+                    title: "Cute Pet",
+                }
+            },
+            {
+                path: "/topic-detail/:id",
+                component: () => import("@/views/Topic/TopicDetail.vue"),
+                name: "Topic Detail",
+                meta: {
+                    title: "Topic Detail",
+                }
+            },
+            {
                 path: "/nav",
                 component: () => import("@/views/Nav/Index.vue"),
                 name: "Nav",

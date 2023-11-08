@@ -13,8 +13,16 @@
         </ul>
       </div>
     </div>
-    <el-carousel class="carousel" direction="vertical" :autoplay="false" trigger="click" ref="carouselRef" :loop="false"
-      @mousewheel="rollScroll($event)" @change="changeCarousel">
+    <el-carousel
+      class="carousel"
+      direction="vertical"
+      :autoplay="false"
+      trigger="click"
+      ref="carouselRef"
+      :loop="false"
+      @mousewheel="rollScroll($event)"
+      @change="changeCarousel"
+    >
       <el-carousel-item name="0">
         <About @toNextPage="toNextPage" />
       </el-carousel-item>
@@ -42,8 +50,8 @@ import Hammer from "hammerjs";
 
 onMounted(() => {
   const mc = new Hammer(carouselRef.value.$el);
-  mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
-  mc.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+  mc.get("pan").set({ direction: Hammer.DIRECTION_ALL });
+  mc.get("swipe").set({ direction: Hammer.DIRECTION_VERTICAL });
 
   mc.on("panend", (e) => {
     e.preventDefault();
@@ -146,7 +154,7 @@ const changeCarousel = (val) => {
       transition: all 0.4s;
 
       .nav-avatar {
-        background: url(../../assets/images/levi.jpg);
+        background: url(../../assets/images/levi2.jpg);
         background-size: 100px 100px;
         position: absolute;
         width: 100px;
