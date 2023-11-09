@@ -4,9 +4,9 @@
       <div class="menu-icon-card">
         <i class="bi bi-text-right collapse-icon" @click="clickCollapse"></i>
       </div>
-      <div class="logCrad">
-        <div class="logText" @click="router.push('/')">
-          <span>Levi Qin的博客</span>
+      <div class="log-crad">
+        <div class="log-text" @click="router.push('/')">
+          <h1>Levi 的博客</h1>
         </div>
         <nav-bar></nav-bar>
       </div>
@@ -78,7 +78,7 @@ const toMPage = (e) => {
   align-items: center;
   justify-content: space-between;
 
-  .logCrad {
+  .log-crad {
     height: var(--hedaerBarHeight);
     display: flex;
     align-items: center;
@@ -87,19 +87,12 @@ const toMPage = (e) => {
       color: var(--themeTextColor);
     }
 
-    .logTitle {
-      font-weight: bold;
-      font-size: 25px;
-      margin-right: 20px;
-      min-width: var(--minWidth);
-      cursor: pointer !important;
-      text-align: center;
-    }
-
-    .logText {
+    .log-text h1 {
       font-size: 24px;
       cursor: pointer !important;
       margin-right: 20px;
+      color: var(--themeTextColor);
+      font-weight: 500;
     }
   }
 }
@@ -119,7 +112,7 @@ const toMPage = (e) => {
   }
 }
 @media (max-width: 480px) {
-  .logText {
+  .log-text {
     display: none;
   }
 }

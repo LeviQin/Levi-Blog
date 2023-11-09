@@ -9,7 +9,7 @@ export default [{
                 component: () => import("@/views/Dashboard/Index.vue"),
                 name: "Dashboard",
                 meta: {
-                    title: "dashboard",
+                    title: "仪表盘",
                 }
             },
             {
@@ -17,7 +17,15 @@ export default [{
                 component: () => import("@/views/Topic/CutePet.vue"),
                 name: "Cute Pet",
                 meta: {
-                    title: "Cute Pet",
+                    title: "宠物",
+                }
+            },
+            {
+                path: "/landscape",
+                component: () => import("@/views/Topic/Landscape.vue"),
+                name: "Landscape",
+                meta: {
+                    title: "风景",
                 }
             },
             {
@@ -25,7 +33,7 @@ export default [{
                 component: () => import("@/views/Topic/TopicDetail.vue"),
                 name: "Topic Detail",
                 meta: {
-                    title: "Topic Detail",
+                    title: "专题详情",
                 }
             },
             {
@@ -33,7 +41,7 @@ export default [{
                 component: () => import("@/views/Nav/Index.vue"),
                 name: "Nav",
                 meta: {
-                    title: "Nav",
+                    title: "导航",
                 }
             },
             {
@@ -41,7 +49,7 @@ export default [{
                 component: () => import("@/views/Material/Index.vue"),
                 name: "Material",
                 meta: {
-                    title: "Material",
+                    title: "文档",
                 }
             },
             {
@@ -49,7 +57,7 @@ export default [{
                 component: () => import("@/views/Tools/Index.vue"),
                 name: "Tools",
                 meta: {
-                    title: "Tools",
+                    title: "工具",
                 }
             },
             {
@@ -57,7 +65,7 @@ export default [{
                 component: () => import("@/views/Tools/LifeTools.vue"),
                 name: "Life",
                 meta: {
-                    title: "Life",
+                    title: "生活",
                 }
             },
             {
@@ -65,7 +73,7 @@ export default [{
                 component: () => import("@/views/Tools/EncryptionAndDecryption.vue"),
                 name: "Password",
                 meta: {
-                    title: "Password",
+                    title: "密码",
                 }
             },
             {
@@ -73,7 +81,7 @@ export default [{
                 component: () => import("@/views/Tools/WebmasterTools.vue"),
                 name: "Webmaster",
                 meta: {
-                    title: "Webmaster",
+                    title: "站长工具",
                 }
             },
             {
@@ -81,7 +89,7 @@ export default [{
                 component: () => import("@/views/Tools/FrontEndTools.vue"),
                 name: "Front End",
                 meta: {
-                    title: "Front End",
+                    title: "前端",
                 }
             },
         ]
@@ -91,7 +99,7 @@ export default [{
         component: () => import("@/views/About/Index.vue"),
         name: "About",
         meta: {
-            title: "About",
+            title: "关于我",
         }
     },
     {

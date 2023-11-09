@@ -1,13 +1,13 @@
 <template>
-  <div class="cute-pet w">
-    <div class="cute-pet-sidebar">侧栏</div>
-    <div class="cute-pet-main">
+  <div class="landscape w">
+    <div class="landscape-sidebar">侧栏</div>
+    <div class="landscape-main">
       <div class="waterfall-container">
         <wc-waterfall :gap="10" :cols="cols">
           <div
             class="waterfall-item"
             @click="toDetail(item)"
-            v-for="item in dataMap.cutePetList"
+            v-for="item in dataMap.landscapeList"
           >
             <div class="is-top-box" v-if="item.is_top">
               <i class="bi bi-pin-angle-fill"></i>
@@ -19,7 +19,7 @@
               fit="scale-down"
               :alt="item.title"
             />
-            <div class="waterfall-title">
+            <!-- <div class="waterfall-title">
               <span>{{ item.title }}</span>
             </div>
             <div class="waterfall-footer">
@@ -34,7 +34,7 @@
                   ><span class="num-text">{{ item.likes }}</span></i
                 >
               </div>
-            </div>
+            </div> -->
           </div>
         </wc-waterfall>
       </div>
@@ -52,6 +52,7 @@ import dayjs from "dayjs";
 const router = useRouter();
 
 onMounted(() => {
+  console.log(1111111);
   getData();
   window.addEventListener("resize", setWaterfallCol, true);
 });
@@ -61,7 +62,7 @@ onUnmounted(() => {
 });
 
 const dataMap = reactive({
-  cutePetList: [],
+  landscapeList: [],
 });
 
 let cols = ref(3);
@@ -85,10 +86,10 @@ const toDetail = (item) => {
 
 const getData = async () => {
   try {
-    const res = await getCategoryArticles({ category: "2" });
+    const res = await getCategoryArticles({ category: "3" });
     const { code, data } = res.data;
     if (code === 200) {
-      dataMap.cutePetList = data.map((item) => {
+      dataMap.landscapeList = data.map((item) => {
         item.updated_at = dayjs(item.updated_at).format("YYYY-MM-DD");
         return item;
       });
@@ -100,25 +101,24 @@ const getData = async () => {
 </script>
 
 <style lang="scss" scoped>
-.cute-pet {
+.landscape {
   display: flex;
 
-  .cute-pet-sidebar {
+  .landscape-sidebar {
     width: 20%;
   }
 
-  .cute-pet-main {
+  .landscape-main {
     flex: 1;
   }
 }
 
 .waterfall-item {
   background: #fff;
-  padding: 10px;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
   border-radius: 5px;
   cursor: pointer;
   overflow: hidden;
+  display: flex;
 }
 
 .is-top-box {
@@ -136,10 +136,10 @@ const getData = async () => {
 .triangle-box {
   position: absolute;
   transform: rotate(45deg);
-  top: -15px;
-  left: -15px;
-  width: 50px;
-  height: 50px;
+  top: -40px;
+  left: -40px;
+  width: 80px;
+  height: 80px;
   background: #fff;
   z-index: 9;
 }
@@ -183,7 +183,7 @@ const getData = async () => {
 }
 
 @media (max-width: 860px) {
-  .cute-pet-sidebar {
+  .landscape-sidebar {
     display: none;
   }
 

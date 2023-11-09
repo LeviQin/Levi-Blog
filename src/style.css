@@ -14,9 +14,10 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --themeColor: #198754;
+  --themeColor: #88798c;
   --themeTextColor: #fff;
   --filingColor: #000;
+  --linkTextColor: #409eff;
   --minWidth: 200px;
   --heeartWidth: 1200px;
   --hedaerBarHeight: 70px;
