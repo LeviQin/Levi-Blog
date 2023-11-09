@@ -5,7 +5,11 @@
       <div class="info-content">
         <div class="info-item">
           <a href="https://open.lwim.cn/doc/" target="_blank">
-            <img class="info-img" src="../../assets/images/im-sdk.webp" alt="IM SDK" />
+            <img
+              class="info-img"
+              v-lazy="'/src/assets/images/about/im-sdk.webp'"
+              alt="IM SDK"
+            />
             <div class="info-text">
               <span>IM SDK</span>
             </div>
@@ -13,7 +17,11 @@
         </div>
         <div class="info-item">
           <a href="https://www.kefangapp.com/#/download" target="_blank">
-            <img class="info-img" src="../../assets/images/kefang-flutter.webp" alt="可访APP Flutter版" />
+            <img
+              class="info-img"
+              v-lazy="'/src/assets/images/about/kefang-flutter.webp'"
+              alt="可访APP Flutter版"
+            />
             <div class="info-text">
               <div><span>可访APP Flutter版</span></div>
               <div class="m-hide-box">1</div>
@@ -22,15 +30,23 @@
         </div>
         <div class="info-item">
           <a href="https://web.kefangapp.com/" target="_blank">
-            <img class="info-img" src="../../assets/images/kefang.webp" alt="可访Web版" />
+            <img
+              class="info-img"
+              v-lazy="'/src/assets/images/about/kefang.webp'"
+              alt="可访Web版"
+            />
             <div class="info-text">
               <span>可访Web版</span>
             </div>
           </a>
         </div>
-        <div class="info-item ">
+        <div class="info-item">
           <a href="https://www.lwim.cn/" target="_blank">
-            <img class="info-img" src="../../assets/images/lingwuyun.webp" alt="领兀云官网" />
+            <img
+              class="info-img"
+              v-lazy="'/src/assets/images/about/lingwuyun.webp'"
+              alt="领兀云官网"
+            />
             <div class="info-text">
               <span>领兀云官网</span>
             </div>
@@ -38,7 +54,11 @@
         </div>
         <div class="info-item">
           <a href="https://open.lwim.cn/" target="_blank">
-            <img class="info-img" src="../../assets/images/kaifazhe.webp" alt="开发者平台" />
+            <img
+              class="info-img"
+              v-lazy="'/src/assets/images/about/kaifazhe.webp'"
+              alt="开发者平台"
+            />
             <div class="info-text">
               <span>开发者平台</span>
             </div>
@@ -46,7 +66,11 @@
         </div>
         <div class="info-item m-hide-box">
           <a href="https://www.aiwinn.com/" target="_blank">
-            <img class="info-img" src="../../assets/images/aihuayigtong.webp" alt="爱华盈通官网" />
+            <img
+              class="info-img"
+              v-lazy="'/src/assets/images/about/aihuayigtong.webp'"
+              alt="爱华盈通官网"
+            />
             <div class="info-text">
               <span>爱华盈通官网</span>
             </div>
@@ -80,7 +104,7 @@ const emit = defineEmits(["toNextPage"]);
   }
 
   .info-content {
-    padding: .5rem 0 0 0 !important;
+    padding: 0.5rem 0 0 0 !important;
     width: 100% !important;
   }
 
@@ -122,7 +146,7 @@ const emit = defineEmits(["toNextPage"]);
   }
 }
 
-@media (any-hover:hover) {
+@media (any-hover: hover) {
   .info-item:hover {
     .info-text {
       top: 0;

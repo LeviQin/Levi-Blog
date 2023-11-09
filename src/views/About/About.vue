@@ -23,7 +23,9 @@
             <img class="bio-icon" src="../../assets/images/message.svg" alt="" />
           </div>
           <div class="right-content">
-            <span class="bio-text">有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术</span>
+            <span class="bio-text"
+              >有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术</span
+            >
           </div>
         </div>
         <div class="info-item">
@@ -31,7 +33,9 @@
             <img class="bio-icon" src="../../assets/images/html5.svg" alt="" />
           </div>
           <div class="right-content">
-            <span class="bio-text">擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js</span>
+            <span class="bio-text"
+              >擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js</span
+            >
           </div>
         </div>
       </div>
@@ -198,4 +202,5 @@ const emit = defineEmits(["toNextPage"]);
   100% {
     transform: rotate(0deg);
   }
-}</style>
+}
+</style>

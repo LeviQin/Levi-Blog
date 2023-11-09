@@ -14,13 +14,12 @@
               <i class="bi bi-pin-angle-fill"></i>
             </div>
             <div class="triangle-box" v-if="item.is_top"></div>
-            <el-image class="cover-img" :src="item.image" fit="scale-down">
-              <template #error>
-                <div class="image-slot">
-                  <img src="../../assets/images/banner/banner1.jpeg" alt="" />
-                </div>
-              </template>
-            </el-image>
+            <img
+              class="cover-img"
+              v-lazy="item.image"
+              fit="scale-down"
+              :alt="item.title"
+            />
             <div class="waterfall-title">
               <span>{{ item.title }}</span>
             </div>
@@ -125,12 +124,6 @@ const getData = async () => {
   border-radius: 5px;
   cursor: pointer;
   overflow: hidden;
-  transition: all 0.3s;
-
-  &:hover {
-    transform: scale(1.02);
-    transition: all 0.3s;
-  }
 }
 
 .is-top-box {
