@@ -4,7 +4,7 @@
 
 <script setup>
 import { ref, reactive, onMounted } from "vue";
-import { articleDetail } from "@/api/article.js";
+import { articleDetail } from "@/api/articles.js";
 
 onMounted(() => {
   getData();
