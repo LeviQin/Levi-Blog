@@ -6,16 +6,12 @@
       </div>
       <div class="log-crad">
         <div class="log-text" @click="router.push('/')">
-          <h1>Levi 的博客</h1>
+          <h1><i class="bi bi-stars"></i>Levi</h1>
         </div>
         <nav-bar></nav-bar>
       </div>
       <div class="search-card">
-        <el-input v-model="input3" placeholder="搜索啥呢？">
-          <template #prefix>
-            <i class="bi bi-search"></i>
-          </template>
-        </el-input>
+        <i class="bi bi-search" @click="showSearchModel"></i>
       </div>
     </div>
     <el-drawer
@@ -33,18 +29,30 @@
         <li data-path="/about">关于我</li>
       </ul>
     </el-drawer>
+
+    <!-- search model -->
+    <search-model ref="searchModelRef"></search-model>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import NavBar from "./components/NavBar/Index.vue";
+import SearchModel from "./components/SearchModel/Index.vue";
 
 const router = useRouter();
 
-let input3 = ref("");
+onMounted(() => {
+  window.addEventListener("scroll", scrollHeaderBar, true);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", scrollHeaderBar, true);
+});
+
 let drawer = ref(false);
+let searchModelRef = ref(null);
 
 const clickCollapse = () => {
   drawer.value = true;
@@ -56,17 +64,27 @@ const toMPage = (e) => {
     drawer.value = false;
   }
 };
+const scrollHeaderBar = (e) => {
+  const header = document.querySelector(".header");
+  const top = e.srcElement.scrollingElement.scrollTop; // 获取页面滚动高度
+  header.style.transition = "0.5s linear";
+  header.style.background = `rgba(0, 0, 0, ${top / 200})`;
+};
+const showSearchModel = () => {
+  searchModelRef.value.show();
+};
 </script>
 
 <style lang="scss" scoped>
 .menu-icon-card {
   display: none;
 }
+
 .header {
-  background-color: var(--themeColor);
+  background-color: rgba(0, 0, 0, 0);
   height: var(--hedaerBarHeight);
   min-width: var(--minWidth);
-  border: 1px solid rgba(55, 99, 170, 0.1);
+  // border: 1px solid rgba(55, 99, 170, 0.1);
   position: fixed;
   top: 0;
   width: 100%;
@@ -97,7 +115,16 @@ const toMPage = (e) => {
   }
 }
 
+.search-card i {
+  color: #fff;
+  cursor: pointer;
+}
+
 @media (max-width: 860px) {
+  .header {
+    height: var(--hedaerMobileBarHeight);
+  }
+
   .menu-icon-card {
     display: flex !important;
     align-items: center;
@@ -111,6 +138,7 @@ const toMPage = (e) => {
     }
   }
 }
+
 @media (max-width: 480px) {
   .log-text {
     display: none;

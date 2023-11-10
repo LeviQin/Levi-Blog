@@ -1,25 +1,49 @@
 <template>
   <div class="nav-bar">
     <ul class="nav-ul" @click="toPage">
-      <li class="nav-li active-li" data-name="/" data-router="/">首页</li>
+      <li class="nav-li active-li" data-name="/" data-router="/">
+        <i class="bi bi-house"></i>首页
+      </li>
       <el-dropdown @command="handleTopicCommand">
-        <li class="nav-li" data-name="/topic">专题</li>
+        <li class="nav-li" data-name="/topic"><i class="bi bi-book"></i>文章分类</li>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item command="daily">日常</el-dropdown-item>
-            <el-dropdown-item command="technology">技术</el-dropdown-item>
-            <el-dropdown-item command="cute-pet">萌宠</el-dropdown-item>
-            <el-dropdown-item command="notes">笔记</el-dropdown-item>
-            <el-dropdown-item command="landscape">风景</el-dropdown-item>
-            <el-dropdown-item command="figure">人物</el-dropdown-item>
-            <el-dropdown-item command="game">游戏</el-dropdown-item>
+            <el-dropdown-item command="daily"
+              ><i class="bi bi-balloon-heart bi-dropdown-item"></i>日常</el-dropdown-item
+            >
+            <el-dropdown-item command="technology"
+              ><i class="bi bi-code-slash bi-dropdown-item"></i>技术</el-dropdown-item
+            >
+            <el-dropdown-item command="cute-pet"
+              ><i class="bi bi-twitter bi-dropdown-item"></i>萌宠</el-dropdown-item
+            >
+            <el-dropdown-item command="notes"
+              ><i class="bi bi-brush bi-dropdown-item"></i>笔记</el-dropdown-item
+            >
+            <el-dropdown-item command="landscape"
+              ><i class="bi bi-globe-americas bi-dropdown-item"></i>风景</el-dropdown-item
+            >
+            <el-dropdown-item command="figure"
+              ><i class="bi bi-universal-access bi-dropdown-item"></i
+              >人物</el-dropdown-item
+            >
+            <el-dropdown-item command="game"
+              ><i class="bi bi-controller bi-dropdown-item"></i>游戏</el-dropdown-item
+            >
+            <el-dropdown-item command="game"
+              ><i class="bi bi-emoji-dizzy bi-dropdown-item"></i>囧事</el-dropdown-item
+            >
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <li class="nav-li" data-name="/nav" data-router="/nav">前端导航</li>
-      <li class="nav-li" data-name="/material" data-router="/material">前端资料</li>
+      <li class="nav-li" data-name="/nav" data-router="/nav">
+        <i class="bi bi-browser-chrome"></i>前端导航
+      </li>
+      <li class="nav-li" data-name="/material" data-router="/material">
+        <i class="bi bi-pc-display"></i>前端资料
+      </li>
       <el-dropdown>
-        <li class="nav-li" data-name="/tools">小工具</li>
+        <li class="nav-li" data-name="/tools"><i class="bi bi-tools"></i>小工具</li>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>生活工具</el-dropdown-item>
@@ -37,7 +61,9 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <li class="nav-li" data-name="/about" data-router="/about">关于我</li>
+      <li class="nav-li" data-name="/about" data-router="/about">
+        <i class="bi bi-person-bounding-box"></i>关于我
+      </li>
     </ul>
   </div>
 </template>
@@ -95,6 +121,14 @@ const handleTopicCommand = (val) => {
 
 .active-li {
   color: rgb(187, 214, 212);
+}
+
+.bi {
+  margin-right: 5px;
+}
+
+.bi-dropdown-item {
+  margin-right: 10px;
 }
 
 @media (max-width: 860px) {

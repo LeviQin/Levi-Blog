@@ -92,7 +92,7 @@ const getArticleDetail = async () => {
 }
 
 .page-title {
-  padding: 0 2.5rem;
+  padding: 0 45px;
 }
 
 .page-title h1 {
@@ -120,6 +120,7 @@ const getArticleDetail = async () => {
 
 .nav-title {
   color: #000;
+
   &:hover {
     color: var(--linkTextColor);
   }
@@ -134,5 +135,15 @@ const getArticleDetail = async () => {
 
 :deep(.el-divider) {
   margin: 12px 0;
+}
+
+@media (max-width: 860px) {
+  .page-title {
+    padding: 0 20px;
+  }
+
+  .page-title h1 {
+    font-size: 36px;
+  }
 }
 </style>

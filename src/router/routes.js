@@ -3,13 +3,13 @@ import Layout from "@/layout/Index.vue";
 export default [{
         path: "/",
         component: Layout,
-        redirect: "/dashboard",
+        redirect: "/home",
         children: [{
-                path: "/dashboard",
-                component: () => import("@/views/Dashboard/Index.vue"),
-                name: "Dashboard",
+                path: "/home",
+                component: () => import("@/views/Home/Index.vue"),
+                name: "Home",
                 meta: {
-                    title: "仪表盘",
+                    title: "首页",
                 }
             },
             {

@@ -53,6 +53,7 @@ const router = useRouter();
 
 onMounted(() => {
   getData();
+  setWaterfallCol();
   window.addEventListener("resize", setWaterfallCol, true);
 });
 

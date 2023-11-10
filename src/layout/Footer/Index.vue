@@ -32,7 +32,8 @@ span {
   width: 80%;
   text-align: center;
   border-radius: 15px;
-  background: var(--themeColor);
+  backdrop-filter: blur(20px);
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
   margin: 30px 0;
 }
 .text-item {
