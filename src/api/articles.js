@@ -1,5 +1,12 @@
 import request from "@/utils/request";
 
+export const getArticleList = () => {
+    return request({
+        method: 'get',
+        url: '/api/articles/article',
+    });
+};
+
 export const getCategoryArticles = (data) => {
     return request({
         method: "post",

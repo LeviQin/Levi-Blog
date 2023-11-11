@@ -1,42 +1,46 @@
 <template>
   <div class="cute-pet w">
-    <div class="cute-pet-sidebar">侧栏</div>
-    <div class="cute-pet-main">
-      <div class="waterfall-container">
-        <wc-waterfall :gap="10" :cols="cols">
-          <div
-            class="waterfall-item"
-            @click="toDetail(item)"
-            v-for="item in dataMap.cutePetList"
-          >
-            <div class="is-top-box" v-if="item.is_top">
-              <i class="bi bi-pin-angle-fill"></i>
-            </div>
-            <div class="triangle-box" v-if="item.is_top"></div>
-            <img
-              class="cover-img"
-              v-lazy="item.image"
-              fit="scale-down"
-              :alt="item.title"
-            />
-            <div class="waterfall-title">
-              <span>{{ item.title }}</span>
-            </div>
-            <div class="waterfall-footer">
-              <div class="waterfall-footer-date">
-                <span>{{ item.updated_at }}</span>
+    <top-banner @nextPosition="nextPosition" :bannerConfig="bannerConfig"></top-banner>
+    <div class="cute-pet-container page-container" ref="cutePetContainerRef">
+      <div class="topic-sidebar">
+        <topic-sidebar></topic-sidebar>
+      </div>
+      <div class="cute-pet-main">
+        <div class="waterfall-container">
+          <wc-waterfall :gap="10" :cols="cols">
+            <div
+              class="waterfall-item"
+              @click="toDetail(item)"
+              v-for="item in dataMap.cutePetList"
+            >
+              <div class="is-top-box" v-if="item.is_top">
+                <i class="bi bi-pin-angle-fill"></i>
               </div>
-              <div class="waterfall-footer-bar">
-                <i class="bi bi-eye"
-                  ><span class="num-text">{{ item.view_count }}</span></i
-                >
-                <i class="bi bi-hand-thumbs-up"
-                  ><span class="num-text">{{ item.likes }}</span></i
-                >
+              <img
+                class="cover-img"
+                v-lazy="item.image"
+                fit="scale-down"
+                :alt="item.title"
+              />
+              <div class="waterfall-title">
+                <span>{{ item.title }}</span>
+              </div>
+              <div class="waterfall-footer">
+                <div class="waterfall-footer-date">
+                  <span>{{ item.updated_at }}</span>
+                </div>
+                <div class="waterfall-footer-bar">
+                  <i class="bi bi-eye"
+                    ><span class="num-text">{{ item.view_count }}</span></i
+                  >
+                  <i class="bi bi-hand-thumbs-up"
+                    ><span class="num-text">{{ item.likes }}</span></i
+                  >
+                </div>
               </div>
             </div>
-          </div>
-        </wc-waterfall>
+          </wc-waterfall>
+        </div>
       </div>
     </div>
   </div>
@@ -48,6 +52,8 @@ import "wc-waterfall";
 import { useRouter } from "vue-router";
 import { getCategoryArticles } from "@/api/articles.js";
 import dayjs from "dayjs";
+import TopicSidebar from "@/components/TopicSidebar/Index.vue";
+import TopBanner from "@/components/TopBanner/Index.vue";
 
 const router = useRouter();
 
@@ -66,6 +72,18 @@ const dataMap = reactive({
 });
 
 let cols = ref(3);
+let cutePetContainerRef = ref(null);
+
+const bannerConfig = {
+  height: "40vh",
+  showArrow: false,
+  title: "Levi",
+  text: "莫道桑榆晚，为霞尚满天",
+};
+
+const nextPosition = () => {
+  cutePetContainerRef.value.scrollIntoView({ behavior: "smooth" });
+};
 
 const setWaterfallCol = () => {
   if (window.innerWidth <= 480) {
@@ -86,7 +104,7 @@ const toDetail = (item) => {
 
 const getData = async () => {
   try {
-    const res = await getCategoryArticles({ category: "2" });
+    const res = await getCategoryArticles({ category: "3" });
     const { code, data } = res.data;
     if (code === 200) {
       dataMap.cutePetList = data.map((item) => {
@@ -101,53 +119,41 @@ const getData = async () => {
 </script>
 
 <style lang="scss" scoped>
-.cute-pet {
-  display: flex;
-
-  .cute-pet-sidebar {
-    width: 20%;
-  }
-
-  .cute-pet-main {
-    flex: 1;
-  }
+.cute-pet-main {
+  flex: 1;
 }
-
 .waterfall-item {
-  background: #fff;
+  background: var(--themeColor);
   padding: 10px;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
-  border-radius: 5px;
+  border-radius: var(--themeRadius);
   cursor: pointer;
-  overflow: hidden;
 }
 
 .is-top-box {
   position: absolute;
-  top: 5px;
-  left: 0;
+  top: -13px;
+  left: -13px;
   z-index: 10;
+  background: rgb(255, 139, 38);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   .bi {
-    font-size: 26px;
-    color: rgb(255, 139, 38);
+    font-size: 26px !important;
+    color: #fff;
+    margin-right: 0;
   }
-}
-
-.triangle-box {
-  position: absolute;
-  transform: rotate(45deg);
-  top: -15px;
-  left: -15px;
-  width: 50px;
-  height: 50px;
-  background: #fff;
-  z-index: 9;
 }
 
 .waterfall-item img {
   width: 100%;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .waterfall-title {
@@ -208,26 +214,15 @@ const getData = async () => {
   }
 
   .is-top-box {
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    z-index: 10;
-
-    .bi {
-      font-size: 16px;
-      color: rgb(240, 139, 8);
-    }
-  }
-
-  .triangle-box {
-    position: absolute;
-    transform: rotate(45deg);
     top: -10px;
     left: -10px;
-    width: 35px;
-    height: 35px;
-    background: #fff;
-    z-index: 9;
+    width: 20px;
+    height: 20px;
+    padding: 8px;
+
+    .bi {
+      font-size: 22px !important;
+    }
   }
 }
 </style>

@@ -1,6 +1,8 @@
 <template>
   <div class="landscape w">
-    <div class="landscape-sidebar">侧栏</div>
+    <div class="topic-sidebar">
+      <topic-sidebar></topic-sidebar>
+    </div>
     <div class="landscape-main">
       <div class="waterfall-container">
         <wc-waterfall :gap="10" :cols="cols">
@@ -48,11 +50,11 @@ import "wc-waterfall";
 import { useRouter } from "vue-router";
 import { getCategoryArticles } from "@/api/articles.js";
 import dayjs from "dayjs";
+import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 
 const router = useRouter();
 
 onMounted(() => {
-  console.log(1111111);
   getData();
   window.addEventListener("resize", setWaterfallCol, true);
 });
@@ -86,7 +88,7 @@ const toDetail = (item) => {
 
 const getData = async () => {
   try {
-    const res = await getCategoryArticles({ category: "3" });
+    const res = await getCategoryArticles({ category: "5" });
     const { code, data } = res.data;
     if (code === 200) {
       dataMap.landscapeList = data.map((item) => {
@@ -104,10 +106,6 @@ const getData = async () => {
 .landscape {
   display: flex;
 
-  .landscape-sidebar {
-    width: 20%;
-  }
-
   .landscape-main {
     flex: 1;
   }
@@ -115,7 +113,7 @@ const getData = async () => {
 
 .waterfall-item {
   background: #fff;
-  border-radius: 5px;
+  border-radius: var(--themeRadius);
   cursor: pointer;
   overflow: hidden;
   display: flex;

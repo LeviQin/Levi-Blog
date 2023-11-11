@@ -1,4 +1,7 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {
+    createRouter,
+    createWebHistory
+} from "vue-router";
 import constantRoutes from "./routes";
 
 const router = createRouter({
@@ -8,7 +11,10 @@ const router = createRouter({
         if (savedPosition) {
             return savedPosition
         } else {
-            return { x: 0, y: 0 }
+            return {
+                x: 0,
+                y: 0
+            }
         }
     }
 });

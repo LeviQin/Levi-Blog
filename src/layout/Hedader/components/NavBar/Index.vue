@@ -1,11 +1,9 @@
 <template>
   <div class="nav-bar">
     <ul class="nav-ul" @click="toPage">
-      <li class="nav-li active-li" data-name="/" data-router="/">
-        <i class="bi bi-house"></i>首页
-      </li>
+      <li class="nav-li active-li" data-router="/home">首页</li>
       <el-dropdown @command="handleTopicCommand">
-        <li class="nav-li" data-name="/topic"><i class="bi bi-book"></i>文章分类</li>
+        <li class="nav-li">专题</li>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item command="daily"
@@ -30,20 +28,16 @@
             <el-dropdown-item command="game"
               ><i class="bi bi-controller bi-dropdown-item"></i>游戏</el-dropdown-item
             >
-            <el-dropdown-item command="game"
+            <el-dropdown-item command="embarrassing"
               ><i class="bi bi-emoji-dizzy bi-dropdown-item"></i>囧事</el-dropdown-item
             >
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <li class="nav-li" data-name="/nav" data-router="/nav">
-        <i class="bi bi-browser-chrome"></i>前端导航
-      </li>
-      <li class="nav-li" data-name="/material" data-router="/material">
-        <i class="bi bi-pc-display"></i>前端资料
-      </li>
+      <li class="nav-li" data-router="/nav">前端导航</li>
+      <li class="nav-li" data-router="/material">前端资料</li>
       <el-dropdown>
-        <li class="nav-li" data-name="/tools"><i class="bi bi-tools"></i>小工具</li>
+        <li class="nav-li">小工具</li>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>生活工具</el-dropdown-item>
@@ -61,34 +55,43 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <li class="nav-li" data-name="/about" data-router="/about">
-        <i class="bi bi-person-bounding-box"></i>关于我
-      </li>
+      <li class="nav-li" data-router="/about">关于我</li>
     </ul>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, watch } from "vue";
+import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
+
+watch(
+  () => route.path,
+  () => {
+    activeNav();
+  }
+);
+
+onMounted(() => {
+  activeNav();
+});
 
 const toPage = (e) => {
-  const name = e.target.getAttribute("data-name");
   const path = e.target.getAttribute("data-router");
-  if (name && path) router.push(path);
+  path && router.push(path);
+};
 
+const activeNav = () => {
   const lis = document.querySelectorAll(".nav-li");
-  if (path) {
-    lis.forEach((ele) => {
-      if (name === ele.getAttribute("data-path")) {
-        ele.classList.add("active-li");
-      } else {
-        ele.classList.remove("active-li");
-      }
-    });
-  }
+  lis.forEach((ele) => {
+    if (route.path === ele.getAttribute("data-router")) {
+      ele.classList.add("active-li");
+    } else {
+      ele.classList.remove("active-li");
+    }
+  });
 };
 
 const handleTopicCommand = (val) => {
@@ -106,21 +109,23 @@ const handleTopicCommand = (val) => {
 .nav-li {
   display: flex;
   align-items: center;
-  height: var(--hedaerBarHeight);
-  padding: 0 10px;
-  color: var(--themeTextColor);
+  height: var(--headerBarHeight);
+  margin: 0 20px;
+  color: var(--navTextColor);
   cursor: pointer;
   font-size: 16px;
   transition: all 0.5s;
+  border-bottom: 2px solid transparent;
 
   &:hover {
-    color: rgb(187, 214, 212);
+    color: var(--themeTextColor);
     transition: all 0.5s;
   }
 }
 
 .active-li {
-  color: rgb(187, 214, 212);
+  color: var(--themeTextColor);
+  border-bottom: 2px solid var(--themeTextColor);
 }
 
 .bi {

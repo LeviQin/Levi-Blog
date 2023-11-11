@@ -73,4 +73,14 @@ defineExpose({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+:deep(.vuepress-markdown-body) {
+  background: transparent !important;
+}
+:deep(.vuepress-markdown-body h2) {
+  border-bottom: none;
+}
+:deep(.vuepress-markdown-body:not(.custom)) {
+  padding: 0;
+}
+</style>

@@ -13,11 +13,27 @@ export default [{
                 }
             },
             {
+                path: "/daily",
+                component: () => import("@/views/Topic/Daily.vue"),
+                name: "Daily",
+                meta: {
+                    title: "专题（日常）",
+                }
+            },
+            {
+                path: "/technology",
+                component: () => import("@/views/Topic/Technology.vue"),
+                name: "Technology",
+                meta: {
+                    title: "专题（技术）",
+                }
+            },
+            {
                 path: "/cute-pet",
                 component: () => import("@/views/Topic/CutePet.vue"),
                 name: "Cute Pet",
                 meta: {
-                    title: "宠物",
+                    title: "专题（萌宠）",
                 }
             },
             {
@@ -25,7 +41,7 @@ export default [{
                 component: () => import("@/views/Topic/Landscape.vue"),
                 name: "Landscape",
                 meta: {
-                    title: "风景",
+                    title: "专题（风景）",
                 }
             },
             {
@@ -41,7 +57,7 @@ export default [{
                 component: () => import("@/views/Nav/Index.vue"),
                 name: "Nav",
                 meta: {
-                    title: "导航",
+                    title: "前端导航",
                 }
             },
             {
@@ -49,7 +65,7 @@ export default [{
                 component: () => import("@/views/Material/Index.vue"),
                 name: "Material",
                 meta: {
-                    title: "文档",
+                    title: "前端资料",
                 }
             },
             {
@@ -57,7 +73,7 @@ export default [{
                 component: () => import("@/views/Tools/Index.vue"),
                 name: "Tools",
                 meta: {
-                    title: "工具",
+                    title: "小工具",
                 }
             },
             {

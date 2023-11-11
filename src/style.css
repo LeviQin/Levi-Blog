@@ -14,14 +14,17 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --themeColor: #282c34;
-  --themeTextColor: #fff;
+  --themeColor: #ffffffc6;
+  --themeTextColor: #5a8cbd;
+  --navTextColor: #fff;
   --filingColor: #000;
+  --balckTextColor: #181a2a;
   --linkTextColor: #409eff;
   --minWidth: 200px;
   --heeartWidth: 1200px;
-  --hedaerBarHeight: 70px;
-  --hedaerMobileBarHeight: 50px;
+  --headerBarHeight: 60px;
+  --headerMobileBarHeight: 50px;
+  --themeRadius: 20px;
 
   --aboutColor: #95a5a6;
   --workColor: #79bbff;
@@ -79,6 +82,7 @@ a:hover {
 
 html {
   height: 100%;
+  cursor: url(./assets/images/shubiao.ico) 16 16,auto;
 }
 
 body {
@@ -182,4 +186,33 @@ li {
 
 .el-tooltip__trigger {
   outline: none;
+}
+
+.topic-sidebar {
+  width: 22%;
+  margin-right: 20px;
+}
+
+.el-divider {
+  margin: 12px 0;
+  background: #00000037;
+}
+.el-divider--horizonta {
+  border-top: none;
+}
+
+.page-container {
+  display: flex;
+  padding-top: 80px;
+}
+
+ /* 添加模糊效果的样式 */
+ .container-blur {
+  backdrop-filter: blur(5px); /* 调整模糊程度 */
+}
+
+@media (max-width: 860px) {
+  .topic-sidebar {
+    display: none;
+  }
 }

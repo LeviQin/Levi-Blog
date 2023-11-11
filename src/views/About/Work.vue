@@ -7,7 +7,7 @@
           <a href="https://open.lwim.cn/doc/" target="_blank">
             <img
               class="info-img"
-              v-lazy="'/src/assets/images/about/im-sdk.webp'"
+              src="../../assets/images/about/im-sdk.webp"
               alt="IM SDK"
             />
             <div class="info-text">
@@ -19,7 +19,7 @@
           <a href="https://www.kefangapp.com/#/download" target="_blank">
             <img
               class="info-img"
-              v-lazy="'/src/assets/images/about/kefang-flutter.webp'"
+              src="../../assets/images/about/kefang-flutter.webp"
               alt="可访APP Flutter版"
             />
             <div class="info-text">
@@ -32,7 +32,7 @@
           <a href="https://web.kefangapp.com/" target="_blank">
             <img
               class="info-img"
-              v-lazy="'/src/assets/images/about/kefang.webp'"
+              src="../../assets/images/about/kefang.webp"
               alt="可访Web版"
             />
             <div class="info-text">
@@ -44,7 +44,7 @@
           <a href="https://www.lwim.cn/" target="_blank">
             <img
               class="info-img"
-              v-lazy="'/src/assets/images/about/lingwuyun.webp'"
+              src="/src/assets/images/about/lingwuyun.webp"
               alt="领兀云官网"
             />
             <div class="info-text">
@@ -56,7 +56,7 @@
           <a href="https://open.lwim.cn/" target="_blank">
             <img
               class="info-img"
-              v-lazy="'/src/assets/images/about/kaifazhe.webp'"
+              src="../../assets/images/about/kaifazhe.webp"
               alt="开发者平台"
             />
             <div class="info-text">
@@ -68,7 +68,7 @@
           <a href="https://www.aiwinn.com/" target="_blank">
             <img
               class="info-img"
-              v-lazy="'/src/assets/images/about/aihuayigtong.webp'"
+              src="../../assets/images/about/aihuayigtong.webp"
               alt="爱华盈通官网"
             />
             <div class="info-text">

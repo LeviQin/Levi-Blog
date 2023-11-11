@@ -1,11 +1,11 @@
 <template>
-  <div class="home w">
+  <div class="technology w">
     <top-banner @nextPosition="nextPosition" :bannerConfig="bannerConfig"></top-banner>
-    <div class="home-container page-container" ref="homeContainerRef">
+    <div class="technology-container page-container" ref="technologyRef">
       <div class="topic-sidebar">
         <topic-sidebar></topic-sidebar>
       </div>
-      <div class="content">
+      <div class="technology-content">
         <div
           class="article-item"
           v-for="item in dataMap.tableData"
@@ -28,10 +28,6 @@
                 <i class="bi bi-calendar-heart"></i>
                 <span>{{ item.published_at }}</span>
               </div>
-              <div class="footer-category">
-                <i class="bi bi-bookmark"></i>
-                <span>{{ categoryList[item.category - 1] }}</span>
-              </div>
               <div class="footer-tags">
                 <i class="bi bi-tags-fill"></i>
                 <span v-for="key in item.article_tags">{{ tagsList[key - 1] }}</span>
@@ -53,18 +49,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import TopicSidebar from "@/components/TopicSidebar/Index.vue";
-import { getArticleList } from "@/api/articles.js";
-import dayjs from "dayjs";
+import { ref, reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { getCategoryArticles } from "@/api/articles.js";
+import dayjs from "dayjs";
+import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import { tagMap } from "@/utils/tagMap.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
 
 const router = useRouter();
-
-let homeContainerRef = ref(null);
-let tagsList = ref([]);
 
 onMounted(() => {
   tagsList.value = tagMap.map((item) => item.label);
@@ -75,17 +68,18 @@ const dataMap = reactive({
   tableData: [],
 });
 
+let tagsList = ref([]);
+let technologyRef = ref(null);
+
 const bannerConfig = {
-  height: "100vh",
-  showArrow: true,
+  height: "40vh",
+  showArrow: false,
   title: "Levi",
   text: "莫道桑榆晚，为霞尚满天",
 };
 
-const categoryList = ["日常", "技术", "萌宠", "笔记", "风景", "人物", "游戏", "囧事"];
-
 const nextPosition = () => {
-  homeContainerRef.value.scrollIntoView({ behavior: "smooth" });
+  cutePetContainerRef.value.scrollIntoView({ behavior: "smooth" });
 };
 
 const toArticleDetail = (item) => {
@@ -99,8 +93,8 @@ const toArticleDetail = (item) => {
 
 const getData = async () => {
   try {
-    const res = await getArticleList();
-    const { code, data, message } = res.data;
+    const res = await getCategoryArticles({ category: "2" });
+    const { code, data } = res.data;
     if (code === 200) {
       dataMap.tableData = data.map((item) => {
         item.updated_at = dayjs(item.updated_at).format("YYYY-MM-DD");
@@ -117,7 +111,7 @@ const getData = async () => {
 </script>
 
 <style lang="scss" scoped>
-.content {
+.technology-content {
   flex: 1;
 }
 
@@ -200,24 +194,6 @@ const getData = async () => {
   }
 }
 
-.footer-category {
-  font-size: 14px;
-  margin-right: 20px;
-  position: relative;
-  color: var(--balckTextColor);
-
-  &::before {
-    content: "";
-    width: 1px;
-    height: 15px;
-    position: absolute;
-    top: 50%;
-    right: -8px;
-    transform: translateY(-50%);
-    background-color: rgba(156, 156, 156, 0.816);
-  }
-}
-
 .footer-tags span {
   margin: 0 5px;
   padding: 4px;
@@ -225,6 +201,18 @@ const getData = async () => {
   border-radius: 4px;
   font-size: 12px;
   white-space: nowrap;
+}
+
+.button-arrow {
+  display: block;
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  margin-left: -20px;
+  opacity: 0.75;
+  z-index: 9999;
+  cursor: pointer;
+  animation: arrowMove 2s linear infinite;
 }
 
 @media (max-width: 860px) {

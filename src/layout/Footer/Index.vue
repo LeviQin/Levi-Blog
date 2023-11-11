@@ -24,7 +24,7 @@ import { ref } from "vue";
 
 a,
 span {
-  color: var(--themeTextColor);
+  color: var(--navTextColor);
   font-size: 17px;
 }
 .text-card {
@@ -34,7 +34,7 @@ span {
   border-radius: 15px;
   backdrop-filter: blur(20px);
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
-  margin: 30px 0;
+  margin-bottom: 30px;
 }
 .text-item {
   padding: 8px 0;

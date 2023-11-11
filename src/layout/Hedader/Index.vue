@@ -82,13 +82,13 @@ const showSearchModel = () => {
 
 .header {
   background-color: rgba(0, 0, 0, 0);
-  height: var(--hedaerBarHeight);
+  height: var(--headerBarHeight);
   min-width: var(--minWidth);
   // border: 1px solid rgba(55, 99, 170, 0.1);
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 90;
+  z-index: 99999;
 }
 
 .nav-card {
@@ -97,22 +97,22 @@ const showSearchModel = () => {
   justify-content: space-between;
 
   .log-crad {
-    height: var(--hedaerBarHeight);
+    height: var(--headerBarHeight);
     display: flex;
     align-items: center;
 
     span {
-      color: var(--themeTextColor);
-    }
-
-    .log-text h1 {
-      font-size: 24px;
-      cursor: pointer !important;
-      margin-right: 20px;
-      color: var(--themeTextColor);
-      font-weight: 500;
+      color: var(--navTextColor);
     }
   }
+}
+
+.log-text h1 {
+  font-size: 24px;
+  cursor: pointer !important;
+  margin-right: 20px;
+  color: var(--navTextColor);
+  font-weight: 500;
 }
 
 .search-card i {
@@ -122,7 +122,7 @@ const showSearchModel = () => {
 
 @media (max-width: 860px) {
   .header {
-    height: var(--hedaerMobileBarHeight);
+    height: var(--headerMobileBarHeight);
   }
 
   .menu-icon-card {
@@ -133,13 +133,21 @@ const showSearchModel = () => {
     cursor: pointer;
 
     .collapse-icon {
-      color: var(--themeTextColor);
+      color: var(--navTextColor);
       font-size: 1.8rem;
     }
   }
+
+  .log-text h1 {
+    font-size: 20px;
+    cursor: pointer !important;
+    margin-right: 20px;
+    color: var(--navTextColor);
+    font-weight: 500;
+  }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 375px) {
   .log-text {
     display: none;
   }
