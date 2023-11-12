@@ -149,7 +149,7 @@ const getData = async () => {
   position: relative;
   transition: all 0.2s;
   &:hover {
-    transform: scale(1.01);
+    transform: scale(1.005);
     transition: all 0.2s;
   }
 }
@@ -238,6 +238,14 @@ const getData = async () => {
   border-radius: 4px;
   font-size: 12px;
   white-space: nowrap;
+}
+
+.article-item-title h2 {
+  transition: all 0.4s;
+  &:hover {
+    transition: all 0.4s;
+    transform: translateX(15px);
+  }
 }
 
 @media (max-width: 860px) {

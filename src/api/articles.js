@@ -21,3 +21,11 @@ export const articleDetail = (id) => {
         url: `/api/articles/article/${id}`,
     });
 };
+
+export const getKeywordResult = (data) => {
+    return request({
+        method: 'post',
+        url: `/api/articles/searchKeyword`,
+        data
+    });
+};

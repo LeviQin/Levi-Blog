@@ -5,7 +5,7 @@
     close-on-click-modal
     append-to-body
     size="300px"
-    :z-index="99999"
+    :z-index="10002"
     @close="close"
   >
     <div>
@@ -169,6 +169,7 @@ defineExpose({
 
 .nav-drawer-li-collapse {
   padding: 0 30px;
+  margin-bottom: 15px;
   li {
     padding: 2px 0;
     font-size: 13px;
@@ -176,19 +177,6 @@ defineExpose({
     .bi {
       margin-right: 10px;
     }
-  }
-}
-
-.dividing-line {
-  position: relative;
-  margin: 20px auto;
-  border: 2px dashed var(--btnTagBgColor);
-  .bi-rocket-takeoff-fill {
-    position: absolute;
-    color: var(--btnTagBgColor);
-    top: -10px;
-    left: 5%;
-    font-size: 24px;
   }
 }
 

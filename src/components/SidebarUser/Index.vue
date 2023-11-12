@@ -110,6 +110,7 @@ const router = useRouter();
   .sidebar-info-data-item {
     font-size: 14px;
   }
+
   .sidebar-info {
     padding: 20px 0 0 0;
   }

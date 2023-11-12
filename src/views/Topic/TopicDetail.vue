@@ -59,8 +59,8 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { onMounted, reactive, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 import { articleDetail } from "@/api/articles.js";
 import MarkdownRenderer from "@/components/MarkdownRenderer/Index.vue";
 import SidebarUser from "@/components/SidebarUser/Index.vue";
@@ -68,7 +68,16 @@ import { tagMap } from "@/utils/tagMap.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
 
 const route = useRoute();
-const router = useRouter();
+
+watch(
+  () => route.params.id,
+  () => {
+    if (route.params.id) {
+      tagsList.value = tagMap.map((item) => item.label);
+      getArticleDetail();
+    }
+  }
+);
 
 onMounted(() => {
   tagsList.value = tagMap.map((item) => item.label);
