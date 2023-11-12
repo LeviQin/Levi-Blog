@@ -127,7 +127,7 @@ const getData = async () => {
 
   .bi {
     font-size: 26px;
-    color: rgb(255, 139, 38);
+    color: var(--btnTagBgColor);
   }
 }
 

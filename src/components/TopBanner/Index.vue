@@ -62,10 +62,9 @@ const emit = defineEmits(["nextPosition"]);
 .top-banner p {
   width: 265px;
   line-height: 40px;
-  animation: widthChange steps(16) 3s, blinkCursor steps(1) 1s infinite;
+  animation: textAnimation 10s infinite;
   overflow: hidden;
   white-space: nowrap;
-  border-right: 0.1em solid rgba(0, 0, 0, 0);
   text-shadow: 0 5px 15px rgba(0, 0, 0, 1) !important;
   color: #fff;
   font-size: 24px;
@@ -93,19 +92,6 @@ const emit = defineEmits(["nextPosition"]);
   }
 }
 
-@keyframes widthChange {
-  0% {
-    width: 0;
-  }
-}
-
-@keyframes blinkCursor {
-  50% {
-    /* 颜色透明 */
-    border-color: transparent;
-  }
-}
-
 @keyframes arrowMove {
   0% {
     transform: translateY(-10px);
@@ -117,6 +103,28 @@ const emit = defineEmits(["nextPosition"]);
 
   50% {
     transform: translateY(-15px);
+  }
+}
+
+@keyframes textAnimation {
+  0% {
+    width: 0;
+  }
+
+  25% {
+    width: 100%;
+  }
+
+  50% {
+    width: 100%;
+  }
+
+  75% {
+    width: 0;
+  }
+
+  100% {
+    width: 0;
   }
 }
 </style>

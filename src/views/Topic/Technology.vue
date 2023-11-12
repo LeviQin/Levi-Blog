@@ -37,9 +37,6 @@
               <i class="bi bi-eye"
                 ><span class="num-text">{{ item.view_count }}</span></i
               >
-              <i class="bi bi-hand-thumbs-up"
-                ><span class="num-text">{{ item.likes }}</span></i
-              >
             </div>
           </div>
         </div>
@@ -122,14 +119,10 @@ const getData = async () => {
   cursor: pointer;
   margin-bottom: 20px;
   position: relative;
-}
-
-.article-item-title {
-  transition: all 0.3s;
-
+  transition: all 0.2s;
   &:hover {
-    transition: all 0.3s;
-    color: var(--themeTextColor);
+    transform: scale(1.01);
+    transition: all 0.2s;
   }
 }
 
@@ -137,7 +130,7 @@ const getData = async () => {
   position: absolute;
   top: -13px;
   left: -13px;
-  background: rgb(255, 139, 38);
+  background: var(--btnTagBgColor);
   border-radius: 50%;
   display: flex;
   align-items: center;

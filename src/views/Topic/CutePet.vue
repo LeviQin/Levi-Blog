@@ -33,9 +33,6 @@
                   <i class="bi bi-eye"
                     ><span class="num-text">{{ item.view_count }}</span></i
                   >
-                  <i class="bi bi-hand-thumbs-up"
-                    ><span class="num-text">{{ item.likes }}</span></i
-                  >
                 </div>
               </div>
             </div>
@@ -135,7 +132,7 @@ const getData = async () => {
   top: -13px;
   left: -13px;
   z-index: 10;
-  background: rgb(255, 139, 38);
+  background: var(--btnTagBgColor);
   border-radius: 50%;
   width: 20px;
   height: 20px;

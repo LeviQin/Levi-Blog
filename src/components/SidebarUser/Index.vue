@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="sidebar-info-data">
-      <div>
+      <div class="sidebar-info-data-item">
         <div>
           <span>文章</span>
         </div>
@@ -26,7 +26,7 @@
           <span>1252</span>
         </div>
       </div>
-      <div>
+      <div class="sidebar-info-data-item">
         <div>
           <span>文章</span>
         </div>
@@ -34,7 +34,7 @@
           <span>1252</span>
         </div>
       </div>
-      <div>
+      <div class="sidebar-info-data-item">
         <div>
           <span>文章</span>
         </div>
@@ -60,6 +60,7 @@ const router = useRouter();
   margin-bottom: 20px;
   padding: 20px;
 }
+
 .sidebar-info-avatar {
   display: flex;
   justify-content: center;
@@ -70,6 +71,10 @@ const router = useRouter();
   height: 120px;
   border-radius: 50%;
   cursor: pointer;
+
+  &:hover {
+    animation: accelerate 0.6s infinite linear;
+  }
 }
 
 .sidebar-info-introduce-item {
@@ -90,5 +95,23 @@ const router = useRouter();
 
 .sidebar-info-data-num {
   padding: 10px 0;
+}
+
+@media (max-width: 860px) {
+  .avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .sidebar-info-introduce {
+    display: none;
+  }
+
+  .sidebar-info-data-item {
+    font-size: 14px;
+  }
+  .sidebar-info {
+    padding: 20px 0 0 0;
+  }
 }
 </style>

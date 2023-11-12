@@ -23,27 +23,24 @@
             </p>
           </div>
           <div class="article-item-footer">
-            <div class="footer-left">
-              <div class="footer-date">
-                <i class="bi bi-calendar-heart"></i>
-                <span>{{ item.published_at }}</span>
-              </div>
+            <div class="footer-info">
               <div class="footer-category">
                 <i class="bi bi-bookmark"></i>
                 <span>{{ categoryList[item.category - 1] }}</span>
               </div>
-              <div class="footer-tags">
-                <i class="bi bi-tags-fill"></i>
-                <span v-for="key in item.article_tags">{{ tagsList[key - 1] }}</span>
+              <div class="footer-date">
+                <i class="bi bi-calendar-heart"></i>
+                <span>{{ item.published_at }}</span>
+              </div>
+              <div class="footer-view">
+                <i class="bi bi-eye"
+                  ><span class="num-text">{{ item.view_count }}</span></i
+                >
               </div>
             </div>
-            <div class="footer-right">
-              <i class="bi bi-eye"
-                ><span class="num-text">{{ item.view_count }}</span></i
-              >
-              <i class="bi bi-hand-thumbs-up"
-                ><span class="num-text">{{ item.likes }}</span></i
-              >
+            <div class="footer-tags">
+              <i class="bi bi-tags-fill"></i>
+              <span v-for="key in item.article_tags">{{ tagsList[key - 1] }}</span>
             </div>
           </div>
         </div>
@@ -57,16 +54,19 @@ import { ref, onMounted } from "vue";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import { getArticleList } from "@/api/articles.js";
 import dayjs from "dayjs";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { tagMap } from "@/utils/tagMap.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
 
 const router = useRouter();
+const route = useRoute();
 
 let homeContainerRef = ref(null);
 let tagsList = ref([]);
+let isScrolling = ref(false);
 
 onMounted(() => {
+  window.addEventListener("scroll", scrollWidnow, true);
   tagsList.value = tagMap.map((item) => item.label);
   getData();
 });
@@ -83,6 +83,25 @@ const bannerConfig = {
 };
 
 const categoryList = ["日常", "技术", "萌宠", "笔记", "风景", "人物", "游戏", "囧事"];
+
+const scrollWidnow = () => {
+  if (!isScrolling.value) {
+    requestAnimationFrame(() => {
+      const top = window.scrollY;
+      const bannerBar = document.querySelector(".banner-bar");
+      const threshold = route.path === "/home" ? 500 : 100;
+      if (top > threshold) {
+        bannerBar.classList.add("container-blur");
+      } else {
+        bannerBar.classList.remove("container-blur");
+      }
+
+      isScrolling.value = false;
+    });
+
+    isScrolling.value = true;
+  }
+};
 
 const nextPosition = () => {
   homeContainerRef.value.scrollIntoView({ behavior: "smooth" });
@@ -128,14 +147,10 @@ const getData = async () => {
   cursor: pointer;
   margin-bottom: 20px;
   position: relative;
-}
-
-.article-item-title {
-  transition: all 0.3s;
-
+  transition: all 0.2s;
   &:hover {
-    transition: all 0.3s;
-    color: var(--themeTextColor);
+    transform: scale(1.01);
+    transition: all 0.2s;
   }
 }
 
@@ -159,13 +174,6 @@ const getData = async () => {
   }
 }
 
-.article-item-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
 .bi {
   margin-right: 10px;
   font-style: normal;
@@ -177,10 +185,11 @@ const getData = async () => {
   font-size: 14px;
 }
 
-.footer-left {
+.footer-info {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  margin-bottom: 10px;
 }
 
 .footer-date {
@@ -216,6 +225,10 @@ const getData = async () => {
     transform: translateY(-50%);
     background-color: rgba(156, 156, 156, 0.816);
   }
+}
+
+.footer-tags {
+  margin-bottom: 10px;
 }
 
 .footer-tags span {
@@ -255,6 +268,11 @@ const getData = async () => {
 
   .footer-date {
     font-size: 12px;
+  }
+
+  .footer-tags,
+  .footer-info {
+    margin-bottom: 5px;
   }
 
   .footer-tags span {

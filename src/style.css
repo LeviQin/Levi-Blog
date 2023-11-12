@@ -20,6 +20,7 @@
   --filingColor: #000;
   --balckTextColor: #181a2a;
   --linkTextColor: #409eff;
+  --btnTagBgColor: #ff8b26;
   --minWidth: 200px;
   --heeartWidth: 1200px;
   --headerBarHeight: 60px;
@@ -82,7 +83,7 @@ a:hover {
 
 html {
   height: 100%;
-  cursor: url(./assets/images/shubiao.ico) 16 16,auto;
+  cursor: url(./assets/images/shubiao.ico) 16 16, auto;
 }
 
 body {
@@ -197,8 +198,9 @@ li {
   margin: 12px 0;
   background: #00000037;
 }
+
 .el-divider--horizonta {
-  border-top: none;
+  border-top: none !important;
 }
 
 .page-container {
@@ -206,9 +208,41 @@ li {
   padding-top: 80px;
 }
 
- /* 添加模糊效果的样式 */
- .container-blur {
-  backdrop-filter: blur(5px); /* 调整模糊程度 */
+/* 添加模糊效果的样式 */
+.container-blur {
+  filter: blur(6px);
+  transform: scale(1.02);
+}
+
+.el-drawer__body {
+  padding: 0 !important;
+}
+
+.el-dialog__header {
+  display: none;
+}
+
+.el-dialog__body {
+  padding: 0 !important;
+}
+
+@keyframes accelerate {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 860px) {

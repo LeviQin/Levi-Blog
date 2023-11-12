@@ -34,7 +34,7 @@ span {
   border-radius: 15px;
   backdrop-filter: blur(20px);
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
-  margin-bottom: 30px;
+  margin: 30px;
 }
 .text-item {
   padding: 8px 0;
@@ -43,6 +43,7 @@ span {
 @media (max-width: 860px) {
   .text-card {
     width: 100%;
+    margin: 20px 0;
   }
 }
 </style>

@@ -14,23 +14,10 @@
         <i class="bi bi-search" @click="showSearchModel"></i>
       </div>
     </div>
-    <el-drawer
-      v-model="drawer"
-      direction="ltr"
-      close-on-click-modal
-      append-to-body
-      size="80%"
-    >
-      <ul class="m-nav-ul" @click="toMPage">
-        <li data-path="/">首页</li>
-        <li data-path="/nav">前端导航</li>
-        <li data-path="/material">前端资料</li>
-        <li data-path="/tools">小工具</li>
-        <li data-path="/about">关于我</li>
-      </ul>
-    </el-drawer>
+    <!-- 移动端导航抽屉 -->
+    <nav-drawer ref="navDrawerRef"></nav-drawer>
 
-    <!-- search model -->
+    <!-- 搜索弹窗 -->
     <search-model ref="searchModelRef"></search-model>
   </div>
 </template>
@@ -38,33 +25,28 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
-import NavBar from "./components/NavBar/Index.vue";
+import NavBar from "./components/NavBar/index.vue";
 import SearchModel from "./components/SearchModel/Index.vue";
+import NavDrawer from "./components/NavDrawer/Index.vue";
 
 const router = useRouter();
 
 onMounted(() => {
-  window.addEventListener("scroll", scrollHeaderBar, true);
+  window.addEventListener("scroll", scrollWidnow, true);
 });
 
 onUnmounted(() => {
-  window.removeEventListener("scroll", scrollHeaderBar, true);
+  window.removeEventListener("scroll", scrollWidnow, true);
 });
 
-let drawer = ref(false);
+let navDrawerRef = ref(null);
 let searchModelRef = ref(null);
 
 const clickCollapse = () => {
-  drawer.value = true;
+  navDrawerRef.value.show();
 };
-const toMPage = (e) => {
-  const path = e.target.getAttribute("data-path");
-  if (path) {
-    router.push(path);
-    drawer.value = false;
-  }
-};
-const scrollHeaderBar = (e) => {
+
+const scrollWidnow = (e) => {
   const header = document.querySelector(".header");
   const top = e.srcElement.scrollingElement.scrollTop; // 获取页面滚动高度
   header.style.transition = "0.5s linear";
@@ -84,7 +66,6 @@ const showSearchModel = () => {
   background-color: rgba(0, 0, 0, 0);
   height: var(--headerBarHeight);
   min-width: var(--minWidth);
-  // border: 1px solid rgba(55, 99, 170, 0.1);
   position: fixed;
   top: 0;
   width: 100%;
@@ -141,7 +122,7 @@ const showSearchModel = () => {
   .log-text h1 {
     font-size: 20px;
     cursor: pointer !important;
-    margin-right: 20px;
+    margin-left: -30px;
     color: var(--navTextColor);
     font-weight: 500;
   }
