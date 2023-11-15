@@ -14,7 +14,8 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --themeColor: #ffffffc6;
+  --themeColor: linear-gradient(60deg,rgba(255,215,228, 0.8) 0,rgba(200,241,255,0.8) 93%);
+  --navBarTextColor: #fff;
   --themeTextColor: #5a8cbd;
   --navTextColor: #fff;
   --filingColor: #000;
@@ -81,16 +82,18 @@ a:hover {
   color: #535bf2;
 }
 
-html {
+html, body {
+  scroll-behavior: smooth;
+  font-family: var(--global-font),-apple-system, IBM Plex Mono ,monosapce,'微软雅黑', sans-serif;
+  width: 100%;
   height: 100%;
-  cursor: url(./assets/images/shubiao.ico) 16 16, auto;
 }
 
 body {
-  height: 100%;
   margin: 0;
   display: flex;
   place-items: center;
+  cursor: url(./assets/images/feijihangban.ico) 16 16, auto !important;
 }
 
 h1 {
@@ -173,7 +176,7 @@ li {
 
 .topic-sidebar {
   width: 22%;
-  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .page-container {
@@ -248,6 +251,11 @@ li {
   transition: all 1s;
 }
 
+.pagination-box {
+  display: flex;
+  justify-content: center;
+}
+
 @keyframes accelerate {
   0% {
     transform: rotate(0);
@@ -265,6 +273,34 @@ li {
 
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes eleJitter {
+  0% {
+    transform: scaleX(1);
+  }
+
+  10%,
+  20% {
+    transform: scale3d(0.9, 0.9, 0.9) rotate(-3deg);
+  }
+
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: scale3d(1.1, 1.1, 1.1) rotate(3deg);
+  }
+
+  40%,
+  60%,
+  80% {
+    transform: scale3d(1.1, 1.1, 1.1) rotate(-3deg);
+  }
+
+  100% {
+    transform: scaleX(1);
   }
 }
 

@@ -2,7 +2,7 @@
   <div class="nav-bar">
     <ul class="nav-ul" @click="toPage">
       <li class="nav-li active-li" data-router="/home">首页</li>
-      <el-dropdown @command="handleTopicCommand">
+      <el-dropdown @command="handleCommandToPage">
         <li class="nav-li">专题</li>
         <template #dropdown>
           <el-dropdown-menu>
@@ -34,15 +34,15 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <li class="nav-li" data-router="/nav">前端导航</li>
+      <li class="nav-li" data-router="/nav">常用网站</li>
       <li class="nav-li" data-router="/material">前端资料</li>
-      <el-dropdown>
+      <el-dropdown @command="handleCommandToPage">
         <li class="nav-li">小工具</li>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>生活工具</el-dropdown-item>
-            <el-dropdown-item>加密/解密</el-dropdown-item>
-            <el-dropdown-item>JSON工具</el-dropdown-item>
+            <!-- <el-dropdown-item>生活工具</el-dropdown-item> -->
+            <el-dropdown-item command="password">加密/解密</el-dropdown-item>
+            <!-- <el-dropdown-item>JSON工具</el-dropdown-item>
             <el-dropdown-item>压缩/格式化</el-dropdown-item>
             <el-dropdown-item>文档</el-dropdown-item>
             <el-dropdown-item>前端工具</el-dropdown-item>
@@ -51,10 +51,11 @@
             <el-dropdown-item>二维码工具</el-dropdown-item>
             <el-dropdown-item>正则表达式</el-dropdown-item>
             <el-dropdown-item>站长工具</el-dropdown-item>
-            <el-dropdown-item>其他</el-dropdown-item>
+            <el-dropdown-item>其他</el-dropdown-item> -->
           </el-dropdown-menu>
         </template>
       </el-dropdown>
+      <li class="nav-li" data-router="/links">友情链接</li>
       <li class="nav-li" data-router="/about">关于我</li>
     </ul>
   </div>
@@ -94,7 +95,7 @@ const activeNav = () => {
   });
 };
 
-const handleTopicCommand = (val) => {
+const handleCommandToPage = (val) => {
   router.push(`/${val}`);
 };
 </script>
@@ -111,20 +112,19 @@ const handleTopicCommand = (val) => {
   align-items: center;
   height: var(--headerBarHeight);
   margin: 0 20px;
-  color: var(--navTextColor);
+  color: var(--navBarTextColor);
   cursor: pointer;
   font-size: 16px;
   transition: all 0.5s;
   border-bottom: 2px solid transparent;
 
   &:hover {
-    color: var(--themeTextColor);
+    border-bottom: 2px solid var(--themeTextColor);
     transition: all 0.5s;
   }
 }
 
 .active-li {
-  color: var(--themeTextColor);
   border-bottom: 2px solid var(--themeTextColor);
 }
 

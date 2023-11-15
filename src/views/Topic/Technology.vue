@@ -1,14 +1,11 @@
 <template>
   <div class="technology w">
-    <top-banner @nextPosition="nextPosition" :bannerConfig="bannerConfig"></top-banner>
+    <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="technology-container page-container" ref="technologyRef">
-      <div class="topic-sidebar">
-        <topic-sidebar></topic-sidebar>
-      </div>
-      <div class="technology-content">
+      <article class="technology-content">
         <div
           class="article-item"
-          v-for="item in dataMap.tableData"
+          v-for="item in dataMap.data"
           @click="toArticleDetail(item)"
         >
           <div class="is-top-box" v-if="item.is_top">
@@ -40,6 +37,20 @@
             </div>
           </div>
         </div>
+        <div class="pagination-box">
+          <el-pagination
+            :page-sizes="dataMap.paginationDatas.pageSizes"
+            :small="dataMap.paginationDatas.small"
+            :disabled="dataMap.paginationDatas.disabled"
+            :background="dataMap.paginationDatas.background"
+            :layout="dataMap.paginationDatas.layout"
+            :total="dataMap.paginationDatas.total"
+            @current-change="handleCurrentChange"
+          />
+        </div>
+      </article>
+      <div class="topic-sidebar">
+        <topic-sidebar></topic-sidebar>
       </div>
     </div>
   </div>
@@ -63,20 +74,27 @@ onMounted(() => {
 
 const dataMap = reactive({
   tableData: [],
+  data: [],
+  paginationDatas: {
+    pageSizes: [10, 20, 40, 60, 100, 200, 500],
+    small: false,
+    disabled: false,
+    total: 0,
+    layout: "prev, pager, next",
+    background: true,
+  },
 });
 
-let tagsList = ref([]);
 let technologyRef = ref(null);
+let tagsList = ref([]);
+let page = ref(1);
+let pageSize = ref(10);
 
 const bannerConfig = {
-  height: "40vh",
+  height: "30vh",
   showArrow: false,
   title: "Levi",
   text: "莫道桑榆晚，为霞尚满天",
-};
-
-const nextPosition = () => {
-  cutePetContainerRef.value.scrollIntoView({ behavior: "smooth" });
 };
 
 const toArticleDetail = (item) => {
@@ -88,16 +106,29 @@ const toArticleDetail = (item) => {
   });
 };
 
+const getTableData = () => {
+  dataMap.paginationDatas.total = dataMap.tableData.length;
+  let firstIndex = pageSize.value * page.value - pageSize.value; // 开始查找的数据下标
+  dataMap.data = dataMap.tableData.slice(firstIndex, pageSize.value + firstIndex); // 截取分页数据
+};
+
+const handleCurrentChange = (val) => {
+  page.value = val;
+  getTableData();
+  technologyRef.value.scrollIntoView({ behavior: "smooth" });
+};
+
 const getData = async () => {
   try {
     const res = await getCategoryArticles({ category: "2" });
     const { code, data } = res.data;
     if (code === 200) {
       dataMap.tableData = data.map((item) => {
-        item.updated_at = dayjs(item.updated_at).format("YYYY-MM-DD");
-        item.published_at = dayjs(item.published_at).format("YYYY-MM-DD");
+        item.updated_at = dayjs(item.updated_at).format("YYYY-MM-DD hh:mm:ss");
+        item.published_at = dayjs(item.published_at).format("YYYY-MM-DD hh:mm:ss");
         return item;
       });
+      getTableData();
     } else {
       console.log(message, "message--------------------");
     }
@@ -120,10 +151,6 @@ const getData = async () => {
   margin-bottom: 20px;
   position: relative;
   transition: all 0.2s;
-  &:hover {
-    transform: scale(1.01);
-    transition: all 0.2s;
-  }
 }
 
 .is-top-box {

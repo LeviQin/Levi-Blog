@@ -79,12 +79,21 @@ const emit = defineEmits(["nextPosition"]);
   opacity: 0.75;
   z-index: 9999;
   cursor: pointer;
-  animation: arrowMove 2s linear infinite;
+  animation: arrowMove 1s linear infinite;
 }
 
 @media (max-width: 860px) {
   .banner-text-box {
     top: 25%;
+  }
+
+  .top-banner h2,
+  .top-banner i {
+    font-size: 30px;
+  }
+
+  .top-banner p {
+    font-size: 16px;
   }
 
   .button-arrow {
@@ -102,7 +111,7 @@ const emit = defineEmits(["nextPosition"]);
   }
 
   50% {
-    transform: translateY(-15px);
+    transform: translateY(-20px);
   }
 }
 

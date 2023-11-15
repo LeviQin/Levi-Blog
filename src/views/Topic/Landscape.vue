@@ -1,27 +1,26 @@
 <template>
   <div class="landscape w">
-    <div class="topic-sidebar">
-      <topic-sidebar></topic-sidebar>
-    </div>
-    <div class="landscape-main">
-      <div class="waterfall-container">
-        <wc-waterfall :gap="10" :cols="cols">
-          <div
-            class="waterfall-item"
-            @click="toDetail(item)"
-            v-for="item in dataMap.landscapeList"
-          >
-            <div class="is-top-box" v-if="item.is_top">
-              <i class="bi bi-pin-angle-fill"></i>
-            </div>
-            <div class="triangle-box" v-if="item.is_top"></div>
-            <img
-              class="cover-img"
-              v-lazy="item.image"
-              fit="scale-down"
-              :alt="item.title"
-            />
-            <!-- <div class="waterfall-title">
+    <top-banner :bannerConfig="bannerConfig"></top-banner>
+    <div class="landscape-container page-container" ref="landscapeRef">
+      <article class="landscape-main">
+        <div class="waterfall-container">
+          <wc-waterfall :gap="10" :cols="cols">
+            <div
+              class="waterfall-item"
+              @click="toDetail(item)"
+              v-for="item in dataMap.landscapeList"
+            >
+              <div class="is-top-box" v-if="item.is_top">
+                <i class="bi bi-pin-angle-fill"></i>
+              </div>
+              <div class="triangle-box" v-if="item.is_top"></div>
+              <img
+                class="cover-img"
+                v-lazy="item.image"
+                fit="scale-down"
+                :alt="item.title"
+              />
+              <!-- <div class="waterfall-title">
               <span>{{ item.title }}</span>
             </div>
             <div class="waterfall-footer">
@@ -37,8 +36,12 @@
                 >
               </div>
             </div> -->
-          </div>
-        </wc-waterfall>
+            </div>
+          </wc-waterfall>
+        </div>
+      </article>
+      <div class="topic-sidebar">
+        <topic-sidebar></topic-sidebar>
       </div>
     </div>
   </div>
@@ -68,6 +71,14 @@ const dataMap = reactive({
 });
 
 let cols = ref(3);
+let landscapeRef = ref(null);
+
+const bannerConfig = {
+  height: "30vh",
+  showArrow: false,
+  title: "Levi",
+  text: "莫道桑榆晚，为霞尚满天",
+};
 
 const setWaterfallCol = () => {
   if (window.innerWidth <= 480) {
@@ -92,7 +103,7 @@ const getData = async () => {
     const { code, data } = res.data;
     if (code === 200) {
       dataMap.landscapeList = data.map((item) => {
-        item.updated_at = dayjs(item.updated_at).format("YYYY-MM-DD");
+        item.updated_at = dayjs(item.updated_at).format("YYYY-MM-DD hh:mm:ss");
         return item;
       });
     }

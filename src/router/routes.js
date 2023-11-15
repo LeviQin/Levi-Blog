@@ -57,7 +57,7 @@ export default [{
                 component: () => import("@/views/Nav/Index.vue"),
                 name: "Nav",
                 meta: {
-                    title: "前端导航",
+                    title: "常用网站",
                 }
             },
             {
@@ -106,6 +106,14 @@ export default [{
                 name: "Front End",
                 meta: {
                     title: "前端",
+                }
+            },
+            {
+                path: "/links",
+                component: () => import("@/views/Links/Index.vue"),
+                name: "Links",
+                meta: {
+                    title: "友情链接",
                 }
             },
         ]

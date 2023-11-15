@@ -15,7 +15,7 @@
       <div class="dividing-line">
         <i class="bi bi-rocket-takeoff-fill"></i>
       </div>
-      <ul class="nav-drawer-ul" @click="toMPage">
+      <ul class="nav-drawer-ul" @click="toPage">
         <li class="nav-drawer-li" data-router="/">首页</li>
         <div class="collapse-card">
           <li class="nav-drawer-li" id="topic" @click="clickTopic">
@@ -27,20 +27,36 @@
               id="topicCollapse"
               v-show="showTopicCollapse"
             >
-              <ul>
-                <li><i class="bi bi-balloon-heart bi-dropdown-item"></i>日常</li>
-                <li><i class="bi bi-code-slash bi-dropdown-item"></i>技术</li>
-                <li><i class="bi bi-twitter bi-dropdown-item"></i>萌宠</li>
-                <li><i class="bi bi-brush bi-dropdown-item"></i>笔记</li>
-                <li><i class="bi bi-globe-americas bi-dropdown-item"></i>风景</li>
-                <li><i class="bi bi-universal-access bi-dropdown-item"></i>人物</li>
-                <li><i class="bi bi-controller bi-dropdown-item"></i>游戏</li>
-                <li><i class="bi bi-emoji-dizzy bi-dropdown-item"></i>囧事</li>
+              <ul @click="toPage">
+                <li data-router="/daily">
+                  <i class="bi bi-balloon-heart bi-dropdown-item"></i>日常
+                </li>
+                <li data-router="/technology">
+                  <i class="bi bi-code-slash bi-dropdown-item"></i>技术
+                </li>
+                <li data-router="/cute-pet">
+                  <i class="bi bi-twitter bi-dropdown-item"></i>萌宠
+                </li>
+                <li data-router="/notes">
+                  <i class="bi bi-brush bi-dropdown-item"></i>笔记
+                </li>
+                <li data-router="/landscape">
+                  <i class="bi bi-globe-americas bi-dropdown-item"></i>风景
+                </li>
+                <li data-router="/figure">
+                  <i class="bi bi-universal-access bi-dropdown-item"></i>人物
+                </li>
+                <li data-router="/game">
+                  <i class="bi bi-controller bi-dropdown-item"></i>游戏
+                </li>
+                <li data-router="/embarrassing">
+                  <i class="bi bi-emoji-dizzy bi-dropdown-item"></i>囧事
+                </li>
               </ul>
             </div>
           </transition>
         </div>
-        <li class="nav-drawer-li" data-router="/nav">前端导航</li>
+        <li class="nav-drawer-li" data-router="/nav">常用网站</li>
         <li class="nav-drawer-li" data-router="/material">前端资料</li>
         <li class="nav-drawer-li" id="tools" @click="clickTools">
           <span>小工具</span><i class="bi bi-chevron-down bi-tools-icon"></i>
@@ -51,10 +67,10 @@
             id="toolsCollapse"
             v-show="showToolsCollapse"
           >
-            <ul>
-              <li>生活工具</li>
-              <li>加密/解密</li>
-              <li>JSON工具</li>
+            <ul @click="toPage">
+              <!-- <li>生活工具</li> -->
+              <li data-router="/password">加密/解密</li>
+              <!-- <li>JSON工具</li>
               <li>压缩/格式化</li>
               <li>文档</li>
               <li>前端工具</li>
@@ -63,10 +79,11 @@
               <li>二维码工具</li>
               <li>正则表达式</li>
               <li>站长工具</li>
-              <li>其他</li>
+              <li>其他</li> -->
             </ul>
           </div>
         </transition>
+        <li class="nav-drawer-li" data-router="/links">友情链接</li>
         <li class="nav-drawer-li" data-router="/about">关于我</li>
       </ul>
     </div>
@@ -76,7 +93,7 @@
 <script setup>
 import { ref, defineExpose } from "vue";
 import { useRouter } from "vue-router";
-import SidebarUser from "../../../../components/SidebarUser/Index.vue";
+import SidebarUser from "@/components/SidebarUser/Index.vue";
 
 const router = useRouter();
 
@@ -93,7 +110,7 @@ const close = () => {
   showToolsCollapse.value = false;
 };
 
-const toMPage = (e) => {
+const toPage = (e) => {
   const path = e.target.getAttribute("data-router");
   if (path) {
     router.push(path);

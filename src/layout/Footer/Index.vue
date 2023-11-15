@@ -1,13 +1,14 @@
 <template>
-  <div class="footer w">
-    <div class="text-card">
-      <div class="text-item">
+  <div class="footer">
+    <div class="info-box">
+      <div class="info-item">
         <span>© 2023 levi 博客</span>
       </div>
-      <div class="text-item">
+      <div class="info-item">
         <a href="https://beian.miit.gov.cn" target="_blank">粤ICP备2022120914号</a>
       </div>
     </div>
+    <div class="support-box"></div>
   </div>
 </template>
 
@@ -19,31 +20,34 @@ import { ref } from "vue";
 .footer {
   min-width: var(--minWidth);
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  backdrop-filter: blur(20px);
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
+  padding: 20px 0;
+  margin-top: 30px;
 }
 
-a,
-span {
+.info-item a,
+.info-item span {
   color: var(--navTextColor);
   font-size: 17px;
 }
-.text-card {
-  padding: 20px 0;
-  width: 80%;
+.info-box {
   text-align: center;
-  border-radius: 15px;
-  backdrop-filter: blur(20px);
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
-  margin: 30px;
 }
-.text-item {
+.info-item {
   padding: 8px 0;
 }
 
 @media (max-width: 860px) {
-  .text-card {
-    width: 100%;
-    margin: 20px 0;
+  .footer {
+    margin-top: 20px;
+  }
+
+  .info-item a,
+  .info-item span {
+    color: var(--navTextColor);
+    font-size: 14px;
   }
 }
 </style>

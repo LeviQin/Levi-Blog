@@ -1,11 +1,8 @@
 <template>
   <div class="cute-pet w">
-    <top-banner @nextPosition="nextPosition" :bannerConfig="bannerConfig"></top-banner>
+    <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="cute-pet-container page-container" ref="cutePetContainerRef">
-      <div class="topic-sidebar">
-        <topic-sidebar></topic-sidebar>
-      </div>
-      <div class="cute-pet-main">
+      <article class="cute-pet-main">
         <div class="waterfall-container">
           <wc-waterfall :gap="10" :cols="cols">
             <div
@@ -18,7 +15,7 @@
               </div>
               <img
                 class="cover-img"
-                v-lazy="item.image"
+                v-lazy="`${getBaseURL()}${item.image}`"
                 fit="scale-down"
                 :alt="item.title"
               />
@@ -38,6 +35,9 @@
             </div>
           </wc-waterfall>
         </div>
+      </article>
+      <div class="topic-sidebar">
+        <topic-sidebar></topic-sidebar>
       </div>
     </div>
   </div>
@@ -51,6 +51,7 @@ import { getCategoryArticles } from "@/api/articles.js";
 import dayjs from "dayjs";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
+import { getBaseURL } from "@/utils/judgmentEnv.js";
 
 const router = useRouter();
 
@@ -69,17 +70,12 @@ const dataMap = reactive({
 });
 
 let cols = ref(3);
-let cutePetContainerRef = ref(null);
 
 const bannerConfig = {
-  height: "40vh",
+  height: "30vh",
   showArrow: false,
   title: "Levi",
   text: "莫道桑榆晚，为霞尚满天",
-};
-
-const nextPosition = () => {
-  cutePetContainerRef.value.scrollIntoView({ behavior: "smooth" });
 };
 
 const setWaterfallCol = () => {
@@ -105,7 +101,7 @@ const getData = async () => {
     const { code, data } = res.data;
     if (code === 200) {
       dataMap.cutePetList = data.map((item) => {
-        item.updated_at = dayjs(item.updated_at).format("YYYY-MM-DD");
+        item.updated_at = dayjs(item.updated_at).format("YYYY-MM-DD hh:mm:ss");
         return item;
       });
     }

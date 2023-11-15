@@ -8,7 +8,7 @@
         <div class="log-text" @click="router.push('/')">
           <h1><i class="bi bi-stars"></i>Levi</h1>
         </div>
-        <nav-bar></nav-bar>
+        <site-nav-bar></site-nav-bar>
       </div>
       <div class="search-card">
         <i class="bi bi-search" @click="showSearchModel"></i>
@@ -25,7 +25,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
-import NavBar from "./components/NavBar/index.vue";
+import SiteNavBar from "./components/SiteNavBar/Index.vue";
 import SearchModel from "./components/SearchModel/Index.vue";
 import NavDrawer from "./components/NavDrawer/Index.vue";
 
@@ -48,9 +48,31 @@ const clickCollapse = () => {
 
 const scrollWidnow = (e) => {
   const header = document.querySelector(".header");
+  const logh1 = document.querySelector(".log-text h1");
+  const biSearch = document.querySelector(".search-card .bi-search");
+  const collapseIcon = document.querySelector(".menu-icon-card .collapse-icon");
+  const navlis = document.querySelectorAll(".nav-li");
   const top = e.srcElement.scrollingElement.scrollTop; // 获取页面滚动高度
   header.style.transition = "0.5s linear";
-  header.style.background = `rgba(0, 0, 0, ${top / 200})`;
+  header.style.background = `linear-gradient(60deg,rgba(255,215,228, ${
+    top / 200
+  }) 0,rgba(200,241,255, ${top / 200}) 93%)`;
+  if (top > 100) {
+    logh1.style.color = `var(--balckTextColor)`;
+    biSearch.style.color = `var(--balckTextColor)`;
+    collapseIcon.style.color = `var(--balckTextColor)`;
+    navlis.forEach((ele) => {
+      ele.style.color = `var(--balckTextColor)`;
+    });
+  } else {
+    logh1.style.color = `var(--navTextColor)`;
+    biSearch.style.color = `var(--navTextColor)`;
+    collapseIcon.style.color = `var(--navTextColor)`;
+    navlis.forEach((ele) => {
+      ele.style.color = `var(--navTextColor)`;
+    });
+    header.style.boxShadow = `none`;
+  }
 };
 const showSearchModel = () => {
   searchModelRef.value.show();
@@ -89,16 +111,18 @@ const showSearchModel = () => {
 }
 
 .log-text h1 {
-  font-size: 24px;
+  font-size: 25px;
   cursor: pointer !important;
   margin-right: 20px;
-  color: var(--navTextColor);
+  color: var(--navBarTextColor);
   font-weight: 500;
+  transition: all 0.5s;
 }
 
 .search-card i {
-  color: #fff;
+  color: var(--navBarTextColor);
   cursor: pointer;
+  font-size: 22px;
 }
 
 @media (max-width: 860px) {
@@ -121,10 +145,7 @@ const showSearchModel = () => {
 
   .log-text h1 {
     font-size: 20px;
-    cursor: pointer !important;
     margin-left: -30px;
-    color: var(--navTextColor);
-    font-weight: 500;
   }
 }
 

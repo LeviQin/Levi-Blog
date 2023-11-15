@@ -6,17 +6,7 @@ import constantRoutes from "./routes";
 
 const router = createRouter({
     history: createWebHistory(),
-    routes: constantRoutes,
-    scrollBehavior(to, form, savedPosition) {
-        if (savedPosition) {
-            return savedPosition
-        } else {
-            return {
-                x: 0,
-                y: 0
-            }
-        }
-    }
+    routes: constantRoutes
 });
 
 // 重置路由器解决控制台大量警告的问题

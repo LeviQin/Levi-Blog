@@ -1,16 +1,18 @@
 <template>
   <div class="layout">
-    <div>
+    <header>
       <Hedader />
-    </div>
-    <div class="main">
+    </header>
+    <main class="main">
       <router-view />
-    </div>
-    <div class="footer-card">
+    </main>
+    <footer class="footer-card">
       <Footer />
-    </div>
-    <back-to-top></back-to-top>
+    </footer>
+
     <div class="banner-bar"></div>
+
+    <float-tool-bar></float-tool-bar>
   </div>
 </template>
 
@@ -18,22 +20,57 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import Hedader from "./Hedader/Index.vue";
 import Footer from "./Footer/Index.vue";
-import BackToTop from "../components/BackToTop/Index.vue";
 import { useRoute } from "vue-router";
+import { ElNotification } from "element-plus";
+import FloatToolBar from "../components/FloatToolBar/Index.vue";
 
 const route = useRoute();
 
 onMounted(() => {
+  window.addEventListener("keydown", keydownEvent);
   window.addEventListener("scroll", scrollWidnow, true);
 });
 
 onUnmounted(() => {
+  window.removeEventListener("keydown", keydownEvent);
   window.removeEventListener("scroll", scrollWidnow, true);
 });
 
 let isScrolling = ref(false);
+let isF12 = ref(false);
 
-const scrollWidnow = (e) => {
+const keydownEvent = (event) => {
+  // 检测是否按下了 F12 键
+  if (event.keyCode === 123) {
+    if (!isF12.value) {
+      ElNotification({
+        title: "发现你啦🎉",
+        message: "欢迎查看我的网站，开发者朋友！🕵️",
+        type: "warning",
+        zIndex: 99999,
+      });
+      console.log(
+        "%c" + "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿",
+        "font-family: monospace;"
+      );
+      console.log(
+        "%c嘿嘿, 欢迎查看我的网站，开发者朋友！🕵️",
+        "font-size: 20px; color: #3498db; text-shadow: 1px 1px 2px #555;"
+      );
+      console.log(
+        "%c欢迎互相探讨学习哦~",
+        "font-size: 20px; color: #3498db; text-shadow: 1px 1px 2px #555;"
+      );
+      console.log(
+        "%c" + "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿",
+        "font-family: monospace;"
+      );
+      isF12.value = true;
+    }
+  }
+};
+
+const scrollWidnow = () => {
   if (!isScrolling.value) {
     requestAnimationFrame(() => {
       const top = window.scrollY;
@@ -73,7 +110,7 @@ const scrollWidnow = (e) => {
   bottom: 0;
   left: 0;
   right: 0;
-  background-image: url(../assets/images/banner/banner2.jpg);
+  background-image: url(../assets/images/banner/gufengnv.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

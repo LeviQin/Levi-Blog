@@ -2,13 +2,10 @@
   <div class="home w">
     <top-banner @nextPosition="nextPosition" :bannerConfig="bannerConfig"></top-banner>
     <div class="home-container page-container" ref="homeContainerRef">
-      <div class="topic-sidebar">
-        <topic-sidebar></topic-sidebar>
-      </div>
-      <div class="content">
+      <article class="content">
         <div
           class="article-item"
-          v-for="item in dataMap.tableData"
+          v-for="item in dataMap.data"
           @click="toArticleDetail(item)"
         >
           <div class="is-top-box" v-if="item.is_top">
@@ -44,6 +41,20 @@
             </div>
           </div>
         </div>
+        <div class="pagination-box">
+          <el-pagination
+            :page-sizes="dataMap.paginationDatas.pageSizes"
+            :small="dataMap.paginationDatas.small"
+            :disabled="dataMap.paginationDatas.disabled"
+            :background="dataMap.paginationDatas.background"
+            :layout="dataMap.paginationDatas.layout"
+            :total="dataMap.paginationDatas.total"
+            @current-change="handleCurrentChange"
+          />
+        </div>
+      </article>
+      <div class="topic-sidebar">
+        <topic-sidebar></topic-sidebar>
       </div>
     </div>
   </div>
@@ -57,15 +68,13 @@ import dayjs from "dayjs";
 import { useRouter, useRoute } from "vue-router";
 import { tagMap } from "@/utils/tagMap.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
+import { scrollAnimation } from "@/utils/scrollAnimation.js";
 
 const router = useRouter();
 const route = useRoute();
 
-let homeContainerRef = ref(null);
-let tagsList = ref([]);
-let isScrolling = ref(false);
-
 onMounted(() => {
+  scrollWidnow();
   window.addEventListener("scroll", scrollWidnow, true);
   tagsList.value = tagMap.map((item) => item.label);
   getData();
@@ -73,13 +82,28 @@ onMounted(() => {
 
 const dataMap = reactive({
   tableData: [],
+  data: [],
+  paginationDatas: {
+    pageSizes: [10, 20, 40, 60, 100, 200, 500],
+    small: false,
+    disabled: false,
+    total: 0,
+    layout: "prev, pager, next",
+    background: true,
+  },
 });
+
+let homeContainerRef = ref(null);
+let tagsList = ref([]);
+let isScrolling = ref(false);
+let page = ref(1);
+let pageSize = ref(10);
 
 const bannerConfig = {
   height: "100vh",
   showArrow: true,
   title: "Levi",
-  text: "莫道桑榆晚，为霞尚满天",
+  text: "浮世景色百千年依旧，人之在世却如白露与泡影",
 };
 
 const categoryList = ["日常", "技术", "萌宠", "笔记", "风景", "人物", "游戏", "囧事"];
@@ -104,7 +128,8 @@ const scrollWidnow = () => {
 };
 
 const nextPosition = () => {
-  homeContainerRef.value.scrollIntoView({ behavior: "smooth" });
+  const banner = document.querySelector(".banner-bar");
+  scrollAnimation(banner.scrollHeight, "bottom");
 };
 
 const toArticleDetail = (item) => {
@@ -116,16 +141,29 @@ const toArticleDetail = (item) => {
   });
 };
 
+const getTableData = () => {
+  dataMap.paginationDatas.total = dataMap.tableData.length;
+  let firstIndex = pageSize.value * page.value - pageSize.value; // 开始查找的数据下标
+  dataMap.data = dataMap.tableData.slice(firstIndex, pageSize.value + firstIndex); // 截取分页数据
+};
+
+const handleCurrentChange = (val) => {
+  page.value = val;
+  getTableData();
+  homeContainerRef.value.scrollIntoView({ behavior: "smooth" });
+};
+
 const getData = async () => {
   try {
     const res = await getArticleList();
     const { code, data, message } = res.data;
     if (code === 200) {
       dataMap.tableData = data.map((item) => {
-        item.updated_at = dayjs(item.updated_at).format("YYYY-MM-DD");
-        item.published_at = dayjs(item.published_at).format("YYYY-MM-DD");
+        item.updated_at = dayjs(item.updated_at).format("YYYY-MM-DD hh:mm:ss");
+        item.published_at = dayjs(item.published_at).format("YYYY-MM-DD hh:mm:ss");
         return item;
       });
+      getTableData();
     } else {
       console.log(message, "message--------------------");
     }
@@ -148,10 +186,6 @@ const getData = async () => {
   margin-bottom: 20px;
   position: relative;
   transition: all 0.2s;
-  &:hover {
-    transform: scale(1.005);
-    transition: all 0.2s;
-  }
 }
 
 .is-top-box {
@@ -242,6 +276,7 @@ const getData = async () => {
 
 .article-item-title h2 {
   transition: all 0.4s;
+
   &:hover {
     transition: all 0.4s;
     transform: translateX(15px);

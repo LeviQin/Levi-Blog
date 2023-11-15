@@ -3,14 +3,14 @@ import request from "@/utils/request";
 export const getSiteList = () => {
     return request({
         method: "get",
-        url: "/api/frontEnd/getSiteList",
+        url: "/api/frontEnd/siteNav",
     });
 };
 
 export const getInterviewList = () => {
     return request({
         method: "get",
-        url: "/api/frontEnd/getInterviewList",
+        url: "/api/frontEnd/interview",
     });
 };
 

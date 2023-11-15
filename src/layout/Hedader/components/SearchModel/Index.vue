@@ -47,7 +47,7 @@ import { ref, defineExpose, reactive, nextTick } from "vue";
 import { getKeywordResult } from "@/api/articles.js";
 import { debounce } from "@/utils/utils.js";
 import { ElNotification } from "element-plus";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 
@@ -164,6 +164,7 @@ defineExpose({
   margin-bottom: 15px;
   padding: 10px;
   cursor: pointer;
+
   &:hover .result-content-item-title {
     transition: all 0.4s;
     transform: translateX(10px);

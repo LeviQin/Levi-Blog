@@ -29,3 +29,10 @@ export const getKeywordResult = (data) => {
         data
     });
 };
+
+export const getStatistics = () => {
+    return request({
+        method: 'get',
+        url: `/api/articles/statistics`,
+    });
+};

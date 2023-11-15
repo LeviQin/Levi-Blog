@@ -27,16 +27,16 @@
 import { defineProps, ref, onMounted, onBeforeUnmount } from "vue";
 
 onMounted(() => {
-  mainDom = document.querySelector(".main");
-  mainDom.addEventListener("scroll", handleScroll, true);
-  console.log(mainDom, "11111111111111s");
+  // mainDom = document.querySelector(".main");
+  // mainDom.addEventListener("scroll", handleScroll, true);
+  // console.log(mainDom, "11111111111111s");
 });
-onBeforeUnmount(() => {
-  mainDom.removeEventListener("scroll", handleScroll, true);
-  if (interval.value) {
-    clearInterval(interval.value);
-  }
-});
+// onBeforeUnmount(() => {
+//   mainDom.removeEventListener("scroll", handleScroll, true);
+//   if (interval.value) {
+//     clearInterval(interval.value);
+//   }
+// });
 
 const props = defineProps({
   visibilityHeight: {
@@ -80,6 +80,7 @@ const handleScroll = () => {
   visible.value = mainDom.scrollTop > props.visibilityHeight;
   console.log(mainDom.scrollTop, "mainDom.value.scrollTop");
 };
+
 const backToTop = () => {
   if (isMoving.value) return;
   const start = mainDom.scrollTop;

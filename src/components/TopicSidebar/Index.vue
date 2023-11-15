@@ -46,12 +46,25 @@
       </ul>
     </div>
   </div>
+  <div class="sidebar-tags">
+    <div class="sidebar-tags-title">
+      <i class="bi bi-tags-fill"></i>
+      <span>标签</span>
+    </div>
+    <div class="sidebar-tags-content">
+      <div class="tags-item" v-for="item in dataMap.tags" :style="`color: ${item.color}`">
+        {{ item.label }}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import SidebarUser from "../SidebarUser/Index.vue";
+import { tagMap } from "@/utils/tagMap.js";
+import { getRandomHexColor } from "@/utils/utils.js";
 
 const route = useRoute();
 const router = useRouter();
@@ -64,7 +77,15 @@ watch(
 );
 
 onMounted(() => {
+  dataMap.tags = tagMap.map((item) => {
+    item.color = getRandomHexColor();
+    return item;
+  });
   activeCategory();
+});
+
+const dataMap = reactive({
+  tags: [],
 });
 
 const activeCategory = () => {
@@ -85,27 +106,35 @@ const selectCategory = (e) => {
 </script>
 
 <style lang="scss" scoped>
-.sidebar-category {
+.sidebar-category,
+.sidebar-tags {
   background: var(--themeColor);
   border-radius: var(--themeRadius);
   margin-bottom: 20px;
   padding: 20px;
 }
 
-.sidebar-category {
-  position: sticky;
-  left: 0;
-  top: 80px;
-}
-
-.sidebar-category-title {
+.sidebar-category-title,
+.sidebar-tags-title {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
   padding: 0 10px;
 }
 
-.bi-hdd-stack {
+.sidebar-tags-content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tags-item {
+  margin: 2px 5px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.bi-hdd-stack,
+.bi-tags-fill {
   margin-right: 10px;
   font-size: 24px;
 }

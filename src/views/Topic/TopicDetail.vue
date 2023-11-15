@@ -1,27 +1,7 @@
 <template>
   <div class="topic-detail w">
-    <top-banner @nextPosition="nextPosition" :bannerConfig="bannerConfig"></top-banner>
-    <div class="topic-detail-container page-container" ref="topicDetailRef">
-      <div class="topic-detail-sidebar">
-        <sidebar-user></sidebar-user>
-        <ul class="sidebar-ul nav" v-if="dataMap.titles.length">
-          <div class="sidebar-name">
-            <span>文章目录</span>
-          </div>
-          <el-divider />
-          <li
-            class="sidebar-li nav-item"
-            v-for="anchor in dataMap.titles"
-            :style="{
-              padding: `10px 0 10px ${anchor.indent ? anchor.indent * 40 : 20}px`,
-              fontSize: `${16 - anchor.indent}px`,
-            }"
-            @click="handleAnchorClick(anchor)"
-          >
-            <a class="sidebar-a nav-title">{{ anchor.title }}</a>
-          </li>
-        </ul>
-      </div>
+    <top-banner :bannerConfig="bannerConfig"></top-banner>
+    <article class="topic-detail-container page-container" ref="topicDetailRef">
       <div class="topic-detail-content">
         <div class="topic-detail-md">
           <div class="page-title">
@@ -54,7 +34,27 @@
         <!-- <div id="qrcode"></div> -->
         <!-- <div class="message-container">1</div> -->
       </div>
-    </div>
+      <div class="topic-detail-sidebar">
+        <sidebar-user></sidebar-user>
+        <ul class="sidebar-ul nav" v-if="dataMap.titles.length">
+          <div class="sidebar-name">
+            <span>文章目录</span>
+          </div>
+          <el-divider />
+          <li
+            class="sidebar-li nav-item"
+            v-for="anchor in dataMap.titles"
+            :style="{
+              padding: `10px 0 10px ${anchor.indent ? anchor.indent * 40 : 20}px`,
+              fontSize: `${16 - anchor.indent}px`,
+            }"
+            @click="handleAnchorClick(anchor)"
+          >
+            <a class="sidebar-a nav-title">{{ anchor.title }}</a>
+          </li>
+        </ul>
+      </div>
+    </article>
   </div>
 </template>
 
@@ -106,17 +106,12 @@ const dataMap = reactive({
 
 const markdownRendererRef = ref(null);
 let tagsList = ref([]);
-let topicDetailRef = ref(null);
 
 const bannerConfig = {
-  height: "40vh",
+  height: "30vh",
   showArrow: false,
   title: "Levi",
   text: "莫道桑榆晚，为霞尚满天",
-};
-
-const nextPosition = () => {
-  topicDetailRef.value.scrollIntoView({ behavior: "smooth" });
 };
 
 const sendMdTitle = (titles) => {
@@ -152,7 +147,7 @@ const getArticleDetail = async () => {
 .topic-detail-sidebar {
   width: 22%;
   position: relative;
-  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .sidebar-ul {
