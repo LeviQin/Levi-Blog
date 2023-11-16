@@ -16,7 +16,7 @@
 + icon: bootstrap-icons
 + 懒加载：vue-lazyload
 
-## 安装依赖
+### 安装依赖
 ```
 yarn
 ```
