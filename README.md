@@ -1,6 +1,9 @@
 # 个人博客前端项目，使用Vue3+Vite开发
 ### 具有轻量美观流畅等特点
 
+## 预览地址
+[预览博客](https://leviqin.top/hom)
+
 ## 所使用的依赖包介绍
 + md文档解析： @kangc/v-md-editor
 + 代码语法高亮： prismjs
@@ -13,17 +16,17 @@
 + icon: bootstrap-icons
 + 懒加载：vue-lazyload
 
-## Project setup
+## 安装依赖
 ```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
+yarn
 ```
 
-### Compiles and minifies for production
+### 开发运行
 ```
-yarn build
+yarn run dev
+```
+
+### 打包生产
+```
+yarn run build
 ```
