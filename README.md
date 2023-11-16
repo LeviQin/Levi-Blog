@@ -1,7 +1,29 @@
-# Vue 3 + Vite
+# 个人博客前端项目，使用Vue3+Vite开发
+### 具有轻量美观流畅等特点
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 所使用的依赖包介绍
++ md文档解析： @kangc/v-md-editor
++ 代码语法高亮： prismjs
++ 数学公式解析：katex
++ 图表解析： mermaid
++ 瀑布流：wc-waterfall
++ css预处理: sass
++ 触摸手势： hammerjs
++ 日期：dayjs
++ icon: bootstrap-icons
++ 懒加载：vue-lazyload
 
-## Recommended IDE Setup
+## Project setup
+```
+yarn install
+```
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+### Compiles and hot-reloads for development
+```
+yarn serve
+```
+
+### Compiles and minifies for production
+```
+yarn build
+```
