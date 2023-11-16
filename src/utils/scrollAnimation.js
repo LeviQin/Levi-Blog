@@ -7,9 +7,9 @@ let isMoving = false;
 
 /**
  * 滚动动画
- * @param {*} start 开始数值
- * @param {*} type 滚动类型，top or bottom
- * @param {*} time 滚动速度
+ * @param {Number} start 开始数值
+ * @param {String} type 滚动类型，top or bottom
+ * @param {Number} time 延迟时间启动
  * @returns 
  */
 export const scrollAnimation = (start, type = "top", time = 100) => {
