@@ -2,7 +2,7 @@
 ### 具有轻量美观流畅等特点
 
 ## 预览地址
-[预览博客](https://leviqin.top/hom)
+[预览博客](https://leviqin.top)
 
 ## 所使用的依赖包介绍
 + md文档解析： @kangc/v-md-editor
