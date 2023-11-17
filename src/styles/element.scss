@@ -1,0 +1,50 @@
+@import "./base.scss";
+
+/** 这里是element ui的样式 **/
+
+.el-header,
+.el-main,
+.el-footer {
+  padding: 0 !important;
+}
+
+.el-carousel__container {
+  height: 100% !important;
+}
+
+.el-divider {
+  margin: 12px 0;
+  background: #00000037;
+}
+
+.el-divider--horizonta {
+  border-top: none !important;
+}
+
+.el-drawer__header {
+  display: none !important;
+}
+
+.el-tooltip__trigger,
+.el-dialog__headerbtn {
+  outline: none !important;
+}
+
+.el-drawer__body {
+  padding: 0 !important;
+}
+
+.el-dialog__body {
+  padding: 0 !important;
+}
+
+.el-input__wrapper {
+  box-shadow: none !important;
+  border: 1px solid var(--btnTagBgColor);
+  border-radius: 50px !important;
+}
+
+.el-divider--horizontal {
+  border-top: 0 !important;
+  margin: 14px 0 !important;
+}

@@ -10,7 +10,7 @@
 
 <script setup>
 import { ref, defineProps, defineExpose, nextTick, defineEmits, watch } from "vue";
-import { ElEMessage } from "@/utils/resetMessage";
+import { ElNotification } from "element-plus";
 
 const props = defineProps({
   markdownText: {
@@ -30,9 +30,11 @@ const preview = ref(null);
 const titles = ref([]);
 
 const handleCopyCodeSuccess = () => {
-  ElEMessage({
-    type: "success",
+  ElNotification({
+    title: "成功",
     message: "已复制代码",
+    type: "success",
+    zIndex: 99999,
   });
 };
 
@@ -73,14 +75,4 @@ defineExpose({
 });
 </script>
 
-<style lang="scss" scoped>
-:deep(.vuepress-markdown-body) {
-  background: transparent !important;
-}
-:deep(.vuepress-markdown-body h2) {
-  border-bottom: none;
-}
-:deep(.vuepress-markdown-body:not(.custom)) {
-  padding: 0;
-}
-</style>
+<style lang="scss" scoped></style>

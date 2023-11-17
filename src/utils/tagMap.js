@@ -148,4 +148,16 @@ export const tagMap = [
     value: "37",
     label: "Git",
   },
+  {
+    value: "38",
+    label: "Webpack",
+  },
+  {
+    value: "39",
+    label: "Vite",
+  },
+  {
+    value: "40",
+    label: "Markdown",
+  },
 ];

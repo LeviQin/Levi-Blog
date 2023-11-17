@@ -22,12 +22,16 @@
           <div class="article-item-footer">
             <div class="footer-info">
               <div class="footer-category">
-                <i class="bi bi-bookmark"></i>
+                <i class="bi bi-bookmark-dash"></i>
                 <span>{{ categoryList[item.category - 1] }}</span>
               </div>
               <div class="footer-date">
-                <i class="bi bi-calendar-heart"></i>
+                <i class="bi bi-calendar3"></i>
                 <span>{{ item.published_at }}</span>
+              </div>
+              <div class="footer-update">
+                <i class="bi bi-arrow-clockwise"></i>
+                <span>{{ item.updated_at }}</span>
               </div>
               <div class="footer-view">
                 <i class="bi bi-eye"
@@ -50,6 +54,7 @@
             :layout="dataMap.paginationDatas.layout"
             :total="dataMap.paginationDatas.total"
             @current-change="handleCurrentChange"
+            :hide-on-single-page="true"
           />
         </div>
       </article>
@@ -64,7 +69,7 @@
 import { ref, onMounted } from "vue";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import { getArticleList } from "@/api/articles.js";
-import dayjs from "dayjs";
+import { dateToString } from "@/utils/utils.js";
 import { useRouter, useRoute } from "vue-router";
 import { tagMap } from "@/utils/tagMap.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
@@ -159,8 +164,8 @@ const getData = async () => {
     const { code, data, message } = res.data;
     if (code === 200) {
       dataMap.tableData = data.map((item) => {
-        item.updated_at = dayjs(item.updated_at).format("YYYY-MM-DD hh:mm:ss");
-        item.published_at = dayjs(item.published_at).format("YYYY-MM-DD hh:mm:ss");
+        item.updated_at = dateToString(item.updated_at);
+        item.published_at = dateToString(item.published_at);
         return item;
       });
       getTableData();
@@ -224,9 +229,27 @@ const getData = async () => {
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 10px;
+  color: #3c3b3b;
 }
 
 .footer-date {
+  font-size: 14px;
+  margin-right: 20px;
+  position: relative;
+
+  &::before {
+    content: "";
+    width: 1px;
+    height: 15px;
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    transform: translateY(-50%);
+    background-color: rgba(156, 156, 156, 0.816);
+  }
+}
+
+.footer-update {
   font-size: 14px;
   margin-right: 20px;
   position: relative;

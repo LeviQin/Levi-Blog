@@ -1,0 +1,88 @@
+:root {
+    font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+
+    color-scheme: light dark;
+    color: #000;
+    background: #efefef;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+
+    --themeColor: linear-gradient(60deg, rgba(255, 215, 228, 0.85) 0, rgba(200, 241, 255, 0.85) 93%);
+    --navBarTextColor: #fff;
+    --themeTextColor: #5a8cbd;
+    --navTextColor: #fff;
+    --filingColor: #000;
+    --balckTextColor: #181a2a;
+    --linkTextColor: #409eff;
+    --btnTagBgColor: #ff8b26;
+    --minWidth: 200px;
+    --heeartWidth: 1200px;
+    --headerBarHeight: 60px;
+    --headerMobileBarHeight: 50px;
+    --themeRadius: 20px;
+
+    --aboutColor: #95a5a6;
+    --workColor: #79bbff;
+    --abilityColor: #95d475;
+    --connectColor: #eebe77;
+    overflow-x: hidden;
+}
+
+@keyframes accelerate {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes eleJitter {
+    0% {
+        transform: scaleX(1);
+    }
+
+    10%,
+    20% {
+        transform: scale3d(0.9, 0.9, 0.9) rotate(-3deg);
+    }
+
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: scale3d(1.1, 1.1, 1.1) rotate(3deg);
+    }
+
+    40%,
+    60%,
+    80% {
+        transform: scale3d(1.1, 1.1, 1.1) rotate(-3deg);
+    }
+
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+@media (max-width: 860px) {
+    .topic-sidebar {
+        display: none;
+    }
+}

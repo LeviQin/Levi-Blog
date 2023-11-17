@@ -7,6 +7,25 @@
           <div class="page-title">
             <h1>{{ dataMap.articleInfo.title }}</h1>
           </div>
+          <div class="page-info">
+            <div class="page-info-category page-info-item">
+              <i class="bi bi-bookmark-dash"></i>
+              <span>{{ categoryList[dataMap.articleInfo.category - 1] }}</span>
+            </div>
+            <div class="page-info-date page-info-item">
+              <i class="bi bi-calendar3"></i>
+              <span>{{ dataMap.articleInfo.published_at }}</span>
+            </div>
+            <div class="page-info-update page-info-item">
+              <i class="bi bi-arrow-clockwise"></i>
+              <span>{{ dataMap.articleInfo.updated_at }}</span>
+            </div>
+            <div class="page-info-view page-info-item">
+              <i class="bi bi-eye"
+                ><span class="num-text">{{ dataMap.articleInfo.view_count }}</span></i
+              >
+            </div>
+          </div>
           <div>
             <markdown-renderer
               ref="markdownRendererRef"
@@ -41,17 +60,19 @@
             <span>文章目录</span>
           </div>
           <el-divider />
-          <li
-            class="sidebar-li nav-item"
-            v-for="anchor in dataMap.titles"
-            :style="{
-              padding: `10px 0 10px ${anchor.indent ? anchor.indent * 40 : 20}px`,
-              fontSize: `${16 - anchor.indent}px`,
-            }"
-            @click="handleAnchorClick(anchor)"
-          >
-            <a class="sidebar-a nav-title">{{ anchor.title }}</a>
-          </li>
+          <div class="sidebar-content">
+            <li
+              class="sidebar-li nav-item"
+              v-for="anchor in dataMap.titles"
+              :style="{
+                padding: `10px 0 10px ${anchor.indent ? anchor.indent * 40 : 20}px`,
+                fontSize: `${15 - anchor.indent}px`,
+              }"
+              @click="handleAnchorClick(anchor)"
+            >
+              <a class="sidebar-a nav-title">{{ anchor.title }}</a>
+            </li>
+          </div>
         </ul>
       </div>
     </article>
@@ -66,6 +87,7 @@ import MarkdownRenderer from "@/components/MarkdownRenderer/Index.vue";
 import SidebarUser from "@/components/SidebarUser/Index.vue";
 import { tagMap } from "@/utils/tagMap.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
+import { dateToString } from "@/utils/utils.js";
 
 const route = useRoute();
 
@@ -114,6 +136,8 @@ const bannerConfig = {
   text: "莫道桑榆晚，为霞尚满天",
 };
 
+const categoryList = ["日常", "技术", "萌宠", "笔记", "风景", "人物", "游戏", "囧事"];
+
 const sendMdTitle = (titles) => {
   dataMap.titles = titles;
 };
@@ -122,14 +146,17 @@ const handleAnchorClick = (anchor) => {
   markdownRendererRef.value.handleAnchorClick(anchor);
 };
 
-const clickLikes = () => {};
-
 const getArticleDetail = async () => {
   try {
     const res = await articleDetail(route.params.id);
     const { code, data, message } = res.data;
     if (code === 200) {
-      dataMap.articleInfo = data[0];
+      dataMap.articleInfo = data.map((item) => {
+        item.updated_at = dateToString(item.updated_at);
+        item.published_at = dateToString(item.published_at);
+        return item;
+      })[0];
+      document.title = `${dataMap.articleInfo.title} - Levi 笔迹`;
     } else {
       console.log(message, "------------------------");
     }
@@ -140,8 +167,37 @@ const getArticleDetail = async () => {
 </script>
 
 <style lang="scss" scoped>
+.page-title,
+.page-info {
+  padding-left: 15px;
+}
+
 .page-title h1 {
   font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.page-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.page-info-item {
+  margin: 5px;
+  font-size: 15px;
+  color: #3c3b3b;
+}
+
+.bi {
+  margin-right: 10px;
+  font-style: normal;
+  font-size: 15px;
+}
+
+.num-text {
+  margin: 5px;
 }
 
 .topic-detail-sidebar {
@@ -159,16 +215,32 @@ const getArticleDetail = async () => {
   padding: 20px;
 }
 
+.sidebar-li {
+  white-space: nowrap;
+  /* 不换行 */
+  overflow: hidden;
+  /* 隐藏溢出部分 */
+  text-overflow: ellipsis;
+
+  /* 显示省略号 */
+  &:hover .nav-title {
+    color: var(--themeTextColor);
+  }
+}
+
+.sidebar-content {
+  max-height: 500px;
+  overflow: auto;
+  margin: 0 -18px 0 -12px;
+  padding-right: 20px;
+}
+
 .sidebar-name {
   font-size: 20px;
 }
 
 .nav-title {
   color: #000;
-
-  &:hover {
-    color: var(--themeTextColor);
-  }
 }
 
 .topic-detail-content {
@@ -180,11 +252,13 @@ const getArticleDetail = async () => {
   padding: 20px;
   border-radius: var(--themeRadius);
 }
+
 .topic-detail-tool {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 40px 0 10px 0;
+
   .tool-itme {
     cursor: pointer;
     background: var(--btnTagBgColor);
@@ -194,6 +268,7 @@ const getArticleDetail = async () => {
     transition: all 0.5s;
     text-shadow: 0 5px 15px rgba(0, 0, 0, 1) !important;
     font-size: 14px;
+
     &:hover {
       will-change: transform;
       transition: all 0.5s;
@@ -201,12 +276,15 @@ const getArticleDetail = async () => {
       transform-origin: top;
       box-shadow: 0 8px 20px rgba(10, 5, 61, 0.2);
     }
+
     .bi {
       margin-right: 10px;
     }
+
     i,
     span {
-      font-size: 1em; /* 保持字体大小不变 */
+      font-size: 1em;
+      /* 保持字体大小不变 */
       color: #fff;
     }
   }
@@ -236,12 +314,15 @@ const getArticleDetail = async () => {
 }
 
 @media (max-width: 860px) {
+  .page-container {
+    display: block;
+  }
   .topic-detail-sidebar {
     display: none;
   }
 
   .page-title h1 {
-    font-size: 36px;
+    font-size: 30px;
   }
 }
 </style>

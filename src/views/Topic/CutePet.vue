@@ -8,7 +8,7 @@
             <div
               class="waterfall-item"
               @click="toDetail(item)"
-              v-for="item in dataMap.cutePetList"
+              v-for="item in dataMap.data"
             >
               <div class="is-top-box" v-if="item.is_top">
                 <i class="bi bi-pin-angle-fill"></i>
@@ -34,6 +34,18 @@
               </div>
             </div>
           </wc-waterfall>
+        </div>
+        <div class="pagination-box">
+          <el-pagination
+            :page-sizes="dataMap.paginationDatas.pageSizes"
+            :small="dataMap.paginationDatas.small"
+            :disabled="dataMap.paginationDatas.disabled"
+            :background="dataMap.paginationDatas.background"
+            :layout="dataMap.paginationDatas.layout"
+            :total="dataMap.paginationDatas.total"
+            @current-change="handleCurrentChange"
+            :hide-on-single-page="true"
+          />
         </div>
       </article>
       <div class="topic-sidebar">
@@ -66,10 +78,21 @@ onUnmounted(() => {
 });
 
 const dataMap = reactive({
-  cutePetList: [],
+  tableData: [],
+  data: [],
+  paginationDatas: {
+    pageSizes: [10, 20, 40, 60, 100, 200, 500],
+    small: false,
+    disabled: false,
+    total: 0,
+    layout: "prev, pager, next",
+    background: true,
+  },
 });
 
 let cols = ref(3);
+let page = ref(1);
+let pageSize = ref(10);
 
 const bannerConfig = {
   height: "30vh",
@@ -95,15 +118,28 @@ const toDetail = (item) => {
   });
 };
 
+const getTableData = () => {
+  dataMap.paginationDatas.total = dataMap.tableData.length;
+  let firstIndex = pageSize.value * page.value - pageSize.value; // 开始查找的数据下标
+  dataMap.data = dataMap.tableData.slice(firstIndex, pageSize.value + firstIndex); // 截取分页数据
+};
+
+const handleCurrentChange = (val) => {
+  page.value = val;
+  getTableData();
+  technologyRef.value.scrollIntoView({ behavior: "smooth" });
+};
+
 const getData = async () => {
   try {
     const res = await getCategoryArticles({ category: "3" });
     const { code, data } = res.data;
     if (code === 200) {
-      dataMap.cutePetList = data.map((item) => {
+      dataMap.tableData = data.map((item) => {
         item.updated_at = dayjs(item.updated_at).format("YYYY-MM-DD hh:mm:ss");
         return item;
       });
+      getTableData();
     }
   } catch (error) {
     console.log(error, "error---------------------");
@@ -160,6 +196,7 @@ const getData = async () => {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+  color: #3c3b3b;
 }
 
 .waterfall-footer-bar {

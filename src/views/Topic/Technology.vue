@@ -20,20 +20,24 @@
             </p>
           </div>
           <div class="article-item-footer">
-            <div class="footer-left">
+            <div class="footer-info">
               <div class="footer-date">
-                <i class="bi bi-calendar-heart"></i>
+                <i class="bi bi-calendar3"></i>
                 <span>{{ item.published_at }}</span>
               </div>
-              <div class="footer-tags">
-                <i class="bi bi-tags-fill"></i>
-                <span v-for="key in item.article_tags">{{ tagsList[key - 1] }}</span>
+              <div class="footer-update">
+                <i class="bi bi-arrow-clockwise"></i>
+                <span>{{ item.updated_at }}</span>
+              </div>
+              <div class="footer-view">
+                <i class="bi bi-eye"
+                  ><span class="num-text">{{ item.view_count }}</span></i
+                >
               </div>
             </div>
-            <div class="footer-right">
-              <i class="bi bi-eye"
-                ><span class="num-text">{{ item.view_count }}</span></i
-              >
+            <div class="footer-tags">
+              <i class="bi bi-tags-fill"></i>
+              <span v-for="key in item.article_tags">{{ tagsList[key - 1] }}</span>
             </div>
           </div>
         </div>
@@ -46,6 +50,7 @@
             :layout="dataMap.paginationDatas.layout"
             :total="dataMap.paginationDatas.total"
             @current-change="handleCurrentChange"
+            :hide-on-single-page="true"
           />
         </div>
       </article>
@@ -60,7 +65,7 @@
 import { ref, reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { getCategoryArticles } from "@/api/articles.js";
-import dayjs from "dayjs";
+import { dateToString } from "@/utils/utils.js";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import { tagMap } from "@/utils/tagMap.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
@@ -124,8 +129,8 @@ const getData = async () => {
     const { code, data } = res.data;
     if (code === 200) {
       dataMap.tableData = data.map((item) => {
-        item.updated_at = dayjs(item.updated_at).format("YYYY-MM-DD hh:mm:ss");
-        item.published_at = dayjs(item.published_at).format("YYYY-MM-DD hh:mm:ss");
+        item.updated_at = dateToString(item.updated_at);
+        item.published_at = dateToString(item.published_at);
         return item;
       });
       getTableData();
@@ -173,13 +178,6 @@ const getData = async () => {
   }
 }
 
-.article-item-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
 .bi {
   margin-right: 10px;
   font-style: normal;
@@ -191,10 +189,12 @@ const getData = async () => {
   font-size: 14px;
 }
 
-.footer-left {
+.footer-info {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  margin-bottom: 10px;
+  color: #3c3b3b;
 }
 
 .footer-date {
@@ -214,6 +214,27 @@ const getData = async () => {
   }
 }
 
+.footer-update {
+  font-size: 14px;
+  margin-right: 20px;
+  position: relative;
+
+  &::before {
+    content: "";
+    width: 1px;
+    height: 15px;
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    transform: translateY(-50%);
+    background-color: rgba(156, 156, 156, 0.816);
+  }
+}
+
+.footer-tags {
+  margin-bottom: 10px;
+}
+
 .footer-tags span {
   margin: 0 5px;
   padding: 4px;
@@ -223,16 +244,13 @@ const getData = async () => {
   white-space: nowrap;
 }
 
-.button-arrow {
-  display: block;
-  position: absolute;
-  bottom: 100px;
-  left: 50%;
-  margin-left: -20px;
-  opacity: 0.75;
-  z-index: 9999;
-  cursor: pointer;
-  animation: arrowMove 2s linear infinite;
+.article-item-title h2 {
+  transition: all 0.4s;
+
+  &:hover {
+    transition: all 0.4s;
+    transform: translateX(15px);
+  }
 }
 
 @media (max-width: 860px) {
@@ -263,6 +281,11 @@ const getData = async () => {
 
   .footer-date {
     font-size: 12px;
+  }
+
+  .footer-tags,
+  .footer-info {
+    margin-bottom: 5px;
   }
 
   .footer-tags span {

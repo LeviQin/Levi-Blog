@@ -1,0 +1,77 @@
+@import "./base.scss";
+
+/** 这里是md渲染器的样式 **/
+
+.vuepress-markdown-body {
+    background: transparent !important;
+}
+
+.vuepress-markdown-body:not(.custom) {
+    padding: 0 20px !important;
+}
+
+.vuepress-markdown-body img {
+    border-radius: 5px;
+}
+
+.vuepress-markdown-body h1,
+.vuepress-markdown-body h2,
+.vuepress-markdown-body h3 {
+    color: var(--balckTextColor);
+    margin-left: 25px !important;
+    position: relative;
+    transition: all 0.4s;
+    &:hover {
+      transition: all 0.4s;
+      transform: translateX(15px);
+      color: var(--btnTagBgColor);
+    }
+}
+
+
+.vuepress-markdown-body h1::before,
+.vuepress-markdown-body h2::before,
+.vuepress-markdown-body h3::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -35px;
+    width: 30px;
+    height: 30px;
+    background: url(../assets/images/md/huojian.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    animation: hupjianMove 1.5s linear infinite;
+}
+
+.vuepress-markdown-body p {
+    color: var(--balckTextColor);
+}
+
+.vuepress-markdown-body h2 {
+    border-bottom: none;
+}
+
+.vuepress-markdown-body p code {
+    background: #5a8bbd29 !important;
+    color: #164577 !important;
+}
+
+@keyframes hupjianMove {
+    0% {
+        transform: translateY(4px);
+    }
+
+    40% {
+        transform: translateY(-6px);
+    }
+
+    80% {
+        transform: translateY(-2px);
+    }
+
+    100% {
+        transform: translateY(4px);
+    }
+}
