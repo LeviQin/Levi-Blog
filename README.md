@@ -4,6 +4,11 @@
 ## 预览地址
 [预览博客](https://leviqin.top)
 
+## 预览截图
+![](./preview/1700236160346.jpg)
+![](./preview/1700236223056.jpg)
+![](./preview/1700236277724.jpg)
+
 ## 所使用的依赖包介绍
 + md文档解析： @kangc/v-md-editor
 + 代码语法高亮： prismjs

@@ -5,6 +5,7 @@
     </header>
     <main class="main">
       <router-view />
+      <TwinklingStars />
     </main>
     <footer class="footer-card">
       <Footer />
@@ -23,6 +24,7 @@ import Footer from "./Footer/Index.vue";
 import { useRoute } from "vue-router";
 import { ElNotification } from "element-plus";
 import FloatToolBar from "../components/FloatToolBar/Index.vue";
+import TwinklingStars from "../components/TwinklingStars/Index.vue";
 
 const route = useRoute();
 
