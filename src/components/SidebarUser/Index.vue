@@ -14,7 +14,7 @@
         <p><i class="bi bi-stars"></i>Levi</p>
       </div>
       <div class="sidebar-info-introduce-item sidebar-info-introduce-sign">
-        <span>浮世景色百千年依旧，人之在世却如白露与泡影</span>
+        <span>莫道桑榆晚，为霞尚满天</span>
       </div>
     </div>
     <div class="sidebar-info-data">
@@ -54,13 +54,16 @@
           <i class="bi bi-envelope-at"></i>
         </div>
       </a>
-      <div class="contact-item wecht-box" title="微信">
+      <div class="contact-item wecht-box" title="微信" @click="showWXModel">
         <i class="bi bi-wechat"></i>
       </div>
-      <div class="contact-item" title="QQ">
+      <div class="contact-item" title="QQ" @click="showQQmodel">
         <i class="bi bi-tencent-qq"></i>
       </div>
     </div>
+
+    <!-- 微信弹窗 -->
+    <WXModel ref="wxModelRef" />
   </div>
 </template>
 
@@ -69,6 +72,8 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { tagMap } from "@/utils/tagMap.js";
 import { getStatistics } from "@/api/articles.js";
+import WXModel from "../WXModel/Index.vue";
+import { ElNotification } from "element-plus";
 
 const router = useRouter();
 
@@ -77,6 +82,20 @@ onMounted(() => {
 });
 
 let totalArticles = ref(0);
+let wxModelRef = ref(null);
+
+const showWXModel = () => {
+  wxModelRef.value.show();
+};
+
+const showQQmodel = () => {
+  ElNotification({
+    title: "提醒",
+    message: "该功能暂未上线哦~",
+    type: "warning",
+    zIndex: 99999,
+  });
+};
 
 const getData = async () => {
   try {

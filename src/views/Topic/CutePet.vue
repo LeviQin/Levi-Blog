@@ -98,7 +98,7 @@ const bannerConfig = {
   height: "30vh",
   showArrow: false,
   title: "Levi",
-  text: "莫道桑榆晚，为霞尚满天",
+  text: "从此,我拍照,你负责卖萌。",
 };
 
 const setWaterfallCol = () => {

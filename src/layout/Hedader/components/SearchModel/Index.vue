@@ -119,7 +119,7 @@ const getData = async () => {
       }
     } else {
       ElNotification({
-        title: "Error",
+        title: "错误",
         message,
         type: "error",
         zIndex: 99999,

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="website-card w">
-      <el-tabs tab-position="left" class="tabs-card" type="border-card">
+      <!-- <el-tabs tab-position="left" class="tabs-card" type="border-card">
         <el-tab-pane label="文档">
           <div class="tab-item">
             <div class="website-item-card" v-for="item in documentMap" :key="item.id">
@@ -44,7 +44,7 @@
             </div>
           </div>
         </el-tab-pane>
-      </el-tabs>
+      </el-tabs> -->
     </div>
   </div>
 </template>

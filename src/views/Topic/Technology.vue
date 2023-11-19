@@ -99,7 +99,7 @@ const bannerConfig = {
   height: "30vh",
   showArrow: false,
   title: "Levi",
-  text: "莫道桑榆晚，为霞尚满天",
+  text: "talk is cheap,show me the code",
 };
 
 const toArticleDetail = (item) => {

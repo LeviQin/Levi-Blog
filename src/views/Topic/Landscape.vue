@@ -66,6 +66,7 @@ import { useRouter } from "vue-router";
 import { getCategoryArticles } from "@/api/articles.js";
 import dayjs from "dayjs";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
+import TopBanner from "@/components/TopBanner/Index.vue";
 
 const router = useRouter();
 
@@ -100,7 +101,7 @@ const bannerConfig = {
   height: "30vh",
   showArrow: false,
   title: "Levi",
-  text: "莫道桑榆晚，为霞尚满天",
+  text: "水澈而山青,云洁而心境。",
 };
 
 const setWaterfallCol = () => {
@@ -150,14 +151,9 @@ const getData = async () => {
 </script>
 
 <style lang="scss" scoped>
-.landscape {
-  display: flex;
-
-  .landscape-main {
-    flex: 1;
-  }
+.landscape-main {
+  flex: 1;
 }
-
 .waterfall-item {
   background: #fff;
   border-radius: var(--themeRadius);

@@ -98,7 +98,7 @@ const bannerConfig = {
   height: "30vh",
   showArrow: false,
   title: "Levi",
-  text: "莫道桑榆晚，为霞尚满天",
+  text: "一定要站在你所热爱的世界里闪闪发光。",
 };
 
 const setWaterfallCol = () => {
