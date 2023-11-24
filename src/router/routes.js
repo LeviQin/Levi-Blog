@@ -45,6 +45,38 @@ export default [{
                 }
             },
             {
+                path: "/notes",
+                component: () => import("@/views/Topic/notes.vue"),
+                name: "Notes",
+                meta: {
+                    title: "专题（笔记）",
+                }
+            },
+            {
+                path: "/figure",
+                component: () => import("@/views/Topic/Figure.vue"),
+                name: "Figure",
+                meta: {
+                    title: "专题（人物）",
+                }
+            },
+            {
+                path: "/game",
+                component: () => import("@/views/Topic/Game.vue"),
+                name: "Game",
+                meta: {
+                    title: "专题（游戏）",
+                }
+            },
+            {
+                path: "/embarrassing",
+                component: () => import("@/views/Topic/Embarrassing.vue"),
+                name: "Embarrassing",
+                meta: {
+                    title: "专题（囧事）",
+                }
+            },
+            {
                 path: "/topic-detail/:id",
                 component: () => import("@/views/Topic/TopicDetail.vue"),
                 name: "Topic Detail",

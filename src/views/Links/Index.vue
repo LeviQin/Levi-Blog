@@ -5,6 +5,9 @@
       <div class="links-title">
         <h2>技术支持</h2>
       </div>
+      <div class="links-describe">
+        <span>本网站搭建由以下提供技术支持</span>
+      </div>
       <div class="links-category-box">
         <a
           :href="item.link"
@@ -110,7 +113,6 @@ const bannerConfig = {
 .links-container {
   background: var(--themeColor);
   border-radius: var(--themeRadius);
-  width: 100%;
   padding: 20px;
 }
 
@@ -119,6 +121,11 @@ const bannerConfig = {
   justify-content: space-between;
   flex-wrap: wrap;
   box-sizing: border-box;
+}
+
+.links-describe {
+  padding: 0 0 10px 10px;
+  color: #393939;
 }
 
 .links-category-item {
@@ -198,6 +205,7 @@ const bannerConfig = {
 @media (max-width: 1100px) {
   .links-category-item {
     width: 40%;
+    transition: all 0.3s;
   }
 }
 
@@ -210,6 +218,25 @@ const bannerConfig = {
 @media (max-width: 860px) {
   .links-category-item {
     width: 100%;
+    transition: all 0.3s;
+  }
+
+  .links h2 {
+    font-size: 22px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .links-describe {
+    font-size: 15px;
+  }
+
+  .links-category-title {
+    font-size: 18px;
+  }
+
+  .links-category-describe {
+    font-size: 13px;
   }
 }
 </style>

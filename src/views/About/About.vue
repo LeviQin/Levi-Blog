@@ -107,6 +107,10 @@ const emit = defineEmits(["toNextPage"]);
   overflow: hidden;
 }
 
+.info-title {
+  font-size: 30px;
+}
+
 .info-content {
   position: absolute;
   top: 50%;

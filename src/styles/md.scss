@@ -45,6 +45,10 @@
     animation: hupjianMove 1.5s linear infinite;
 }
 
+.vuepress-markdown-body li {
+    list-style: circle;
+}
+
 .vuepress-markdown-body p {
     color: var(--balckTextColor);
 }
@@ -56,6 +60,14 @@
 .vuepress-markdown-body p code {
     background: #5a8bbd29 !important;
     color: #164577 !important;
+}
+
+.vuepress-markdown-body tr:nth-child(2n) {
+    background: none !important;
+}
+
+.vuepress-markdown-body td, .vuepress-markdown-body th {
+    border: 1px solid #282c34 !important;
 }
 
 @keyframes hupjianMove {

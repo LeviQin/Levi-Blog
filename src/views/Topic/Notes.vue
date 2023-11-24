@@ -1,8 +1,8 @@
 <template>
-  <div class="cute-pet w">
+  <div class="notes w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
-    <div class="cute-pet-container page-container" ref="cutePetContainerRef">
-      <article class="cute-pet-main">
+    <div class="notes-container page-container">
+      <article class="notes-main">
         <div class="waterfall-container">
           <wc-waterfall :gap="10" :cols="cols">
             <div
@@ -57,13 +57,13 @@
 
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from "vue";
-import "wc-waterfall";
-import { useRouter } from "vue-router";
 import { getCategoryArticles } from "@/api/articles.js";
-import dayjs from "dayjs";
+import { getBaseURL } from "@/utils/judgmentEnv.js";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
-import { getBaseURL } from "@/utils/judgmentEnv.js";
+import { useRouter } from "vue-router";
+import dayjs from "dayjs";
+import "wc-waterfall";
 
 const router = useRouter();
 
@@ -90,7 +90,7 @@ const dataMap = reactive({
   },
 });
 
-let cols = ref(3);
+let cols = ref(2);
 let page = ref(1);
 let pageSize = ref(10);
 
@@ -98,14 +98,14 @@ const bannerConfig = {
   height: "30vh",
   showArrow: false,
   title: "Levi",
-  text: "从此,我拍照,你负责卖萌",
+  text: "快乐，不是因为拥有的多，而是计较的少",
 };
 
 const setWaterfallCol = () => {
   if (window.innerWidth <= 480) {
-    cols.value = 2;
+    cols.value = 1;
   } else {
-    cols.value = 3;
+    cols.value = 2;
   }
 };
 
@@ -132,7 +132,7 @@ const handleCurrentChange = (val) => {
 
 const getData = async () => {
   try {
-    const res = await getCategoryArticles({ category: "3" });
+    const res = await getCategoryArticles({ category: "4" });
     const { code, data } = res.data;
     if (code === 200) {
       dataMap.tableData = data.map((item) => {
@@ -148,7 +148,7 @@ const getData = async () => {
 </script>
 
 <style lang="scss" scoped>
-.cute-pet-main {
+.notes-main {
   flex: 1;
 }
 .waterfall-item {

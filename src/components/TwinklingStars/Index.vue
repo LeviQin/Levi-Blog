@@ -16,7 +16,9 @@ const generateRandomStar = () => {
   const left = Math.random() * window.innerWidth;
   const size = Math.random() * 2 + 1;
   const opacity = Math.random() * 0.5 + 0.5;
-  return { top, left, size, opacity };
+  const speedX = Math.random() * 2 - 1; // 随机速度X轴方向
+  const speedY = Math.random() * 2 - 1; // 随机速度Y轴方向
+  return { top, left, size, opacity, speedX, speedY };
 };
 
 const initStars = (num) => {
@@ -29,6 +31,10 @@ const drawStars = () => {
   ctx.value.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
   stars.value.forEach((star) => {
+    // 更新星星的位置
+    star.left += star.speedX;
+    star.top += star.speedY;
+
     // 控制透明度变化
     star.opacity -= 0.01;
     if (star.opacity <= 0) {

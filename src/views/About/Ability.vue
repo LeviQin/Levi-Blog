@@ -1,12 +1,16 @@
 <template>
   <div class="container">
     <div class="info">
-      <h1>相关技能</h1>
+      <h1 class="info-title">相关技能</h1>
       <div class="info-content">
-        <p>熟练掌握Vue全家桶</p>
-        <p>写过Js Sdk</p>
-        <p>了解Node.js的基本使用</p>
-        <p>有部分Flutter开发经验</p>
+        <p>熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术</p>
+        <p>熟练掌握Vue全家桶, 能快速独立开发各种PC端和移动端项目</p>
+        <p>熟悉前端性能优化，网页SEO优化，Git和SVN代码管理工具的基本使用</p>
+        <p>属性Webpack和Rollup的基本配置和使用</p>
+        <p>曾独立完成JS SDK开发</p>
+        <p>熟悉Node.js和小程序的开发</p>
+        <p>有Flutter跨平台开发经验</p>
+        <p>有WordPress的开发经验</p>
       </div>
     </div>
     <div class="button-arrow" @click="toNextPage"></div>
@@ -33,13 +37,19 @@ const emit = defineEmits(["toNextPage"]);
 }
 .info {
   position: absolute;
-  top: 30%;
-  left: 30%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: #fff;
   text-align: left;
-  .info-content {
-    font-size: 20px;
-  }
+}
+
+.info-title {
+  font-size: 30px;
+}
+
+.info-content {
+  font-size: 20px;
 }
 .button-arrow {
   display: block;
@@ -58,6 +68,20 @@ const emit = defineEmits(["toNextPage"]);
   &:hover {
     transform: scale(1);
     transition: all 0.2s ease-in 0s;
+  }
+}
+
+@media (max-width: 860px) {
+  .info {
+    width: 80%;
+  }
+  .info-title {
+    font-size: 1.6rem;
+    padding-bottom: 0 !important;
+  }
+
+  .info-content {
+    font-size: 14px;
   }
 }
 </style>

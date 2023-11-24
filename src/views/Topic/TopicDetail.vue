@@ -229,7 +229,7 @@ const getArticleDetail = async () => {
 }
 
 .sidebar-content {
-  max-height: 500px;
+  max-height: 300px;
   overflow: auto;
   margin: 0 -18px 0 -12px;
   padding-right: 20px;

@@ -44,12 +44,12 @@
       </div>
     </div>
     <div class="sidebar-info-contact">
-      <a href="https://github.com/LeviQin">
+      <a href="https://github.com/LeviQin" target="_blank">
         <div class="contact-item" title="GitHub">
           <i class="bi bi-github"></i>
         </div>
       </a>
-      <a href="mailto:levi.qin@easeware.net">
+      <a href="mailto:qinbiao_web@163.com">
         <div class="contact-item envelope-box" title="邮箱">
           <i class="bi bi-envelope-at"></i>
         </div>
