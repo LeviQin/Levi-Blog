@@ -15,7 +15,7 @@
               </div>
               <img
                 class="cover-img"
-                v-lazy="`${getBaseURL()}${item.image}`"
+                v-lazy="item.image"
                 fit="scale-down"
                 :alt="item.title"
               />
@@ -63,7 +63,6 @@ import { getCategoryArticles } from "@/api/articles.js";
 import dayjs from "dayjs";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
-import { getBaseURL } from "@/utils/judgmentEnv.js";
 
 const router = useRouter();
 

@@ -8,7 +8,7 @@ NProgress.configure({
 }); // NProgress配置
 
 router.beforeEach(async (to, from, next) => {
-    document.title = `${to.meta.title} - Levi 笔迹` || "Levi 笔迹";
+    document.title = `${to.meta.title} - Levi 笔迹分享` || "Levi 笔迹分享";
     NProgress.start();
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     scrollAnimation(scrollTop, "top");

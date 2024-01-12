@@ -46,18 +46,18 @@
                 <li data-router="/figure">
                   <i class="bi bi-universal-access bi-dropdown-item"></i>人物
                 </li>
-                <li data-router="/game">
+                <!-- <li data-router="/game">
                   <i class="bi bi-controller bi-dropdown-item"></i>游戏
                 </li>
                 <li data-router="/embarrassing">
                   <i class="bi bi-emoji-dizzy bi-dropdown-item"></i>囧事
-                </li>
+                </li> -->
               </ul>
             </div>
           </transition>
         </div>
-        <li class="nav-drawer-li" data-router="/nav">常用网站</li>
-        <li class="nav-drawer-li" data-router="/material">前端资料</li>
+        <!-- <li class="nav-drawer-li" data-router="/nav">常用网站</li>
+        <li class="nav-drawer-li" data-router="/material">前端资料</li> -->
         <li class="nav-drawer-li" id="tools" @click="clickTools">
           <span>小工具</span><i class="bi bi-chevron-down bi-tools-icon"></i>
         </li>

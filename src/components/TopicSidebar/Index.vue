@@ -35,14 +35,14 @@
           <span><i class="bi bi-universal-access bi-dropdown-item"></i>人物</span>
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/game">
+        <!-- <li class="sidebar-category-li" data-router="/game">
           <span><i class="bi bi-controller bi-dropdown-item"></i>游戏</span>
           <i class="bi bi-chevron-right"></i>
         </li>
         <li class="sidebar-category-li" data-router="/embarrassing">
           <span><i class="bi bi-emoji-dizzy bi-dropdown-item"></i>囧事</span>
           <i class="bi bi-chevron-right"></i>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>

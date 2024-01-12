@@ -25,17 +25,17 @@
               ><i class="bi bi-universal-access bi-dropdown-item"></i
               >人物</el-dropdown-item
             >
-            <el-dropdown-item command="game"
+            <!-- <el-dropdown-item command="game"
               ><i class="bi bi-controller bi-dropdown-item"></i>游戏</el-dropdown-item
-            >
-            <el-dropdown-item command="embarrassing"
+            > -->
+            <!-- <el-dropdown-item command="embarrassing"
               ><i class="bi bi-emoji-dizzy bi-dropdown-item"></i>囧事</el-dropdown-item
-            >
+            > -->
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <li class="nav-li" data-router="/nav">常用网站</li>
-      <li class="nav-li" data-router="/material">前端资料</li>
+      <!-- <li class="nav-li" data-router="/nav">常用网站</li>
+      <li class="nav-li" data-router="/material">前端资料</li> -->
       <el-dropdown @command="handleCommandToPage">
         <li class="nav-li">小工具</li>
         <template #dropdown>

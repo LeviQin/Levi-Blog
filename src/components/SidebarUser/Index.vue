@@ -31,7 +31,7 @@
           <span>分类</span>
         </div>
         <div class="sidebar-info-data-num">
-          <span>8</span>
+          <span>6</span>
         </div>
       </div>
       <div class="sidebar-info-data-item">
