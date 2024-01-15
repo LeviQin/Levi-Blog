@@ -20,7 +20,7 @@
                 :alt="item.title"
               />
               <div class="waterfall-title">
-                <span>{{ item.title }}</span>
+                <h2>{{ item.title }}</h2>
               </div>
               <div class="waterfall-footer">
                 <div class="waterfall-footer-date">

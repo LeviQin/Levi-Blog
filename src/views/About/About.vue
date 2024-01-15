@@ -97,25 +97,39 @@ const emit = defineEmits(["toNextPage"]);
 
 .container {
   height: 100%;
-  background: #eee url(../../assets/images/bg-tile.png) 0 0;
+  background: #eee url(../../assets/images/banner/xiaomao.png);
   position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .info {
-  width: 960px;
-  margin: 0 auto;
-  overflow: hidden;
-}
-
-.info-title {
-  font-size: 30px;
-}
-
-.info-content {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: #000;
+  text-align: left;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.info::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  z-index: -1;
+}
+
+.info-title {
+  font-size: 30px;
 }
 
 .info-item {

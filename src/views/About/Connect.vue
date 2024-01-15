@@ -42,8 +42,11 @@ const emit = defineEmits(["toOnePage"]);
 <style lang="scss" scoped>
 .container {
   height: 100%;
-  background: var(--connectColor);
+  background: #eee url(../../assets/images/banner/mingren.jpeg);
   position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .info {
@@ -53,6 +56,22 @@ const emit = defineEmits(["toOnePage"]);
   transform: translate(-50%, -50%);
   color: #fff;
   text-align: left;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
+  padding: 40px;
+  border-radius: 20px;
+  text-shadow: 0 5px 15px rgb(0, 0, 0) !important;
+}
+
+.info::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  z-index: -1;
 }
 
 .info-content-item {

@@ -9,7 +9,7 @@ export default [{
                 component: () => import("@/views/Home/Index.vue"),
                 name: "Home",
                 meta: {
-                    title: "首页",
+                    title: "Levi的博客，记录分享前端知识，工作中遇到的问题和心得，以及日常的生活风景与萌宠",
                 }
             },
             {

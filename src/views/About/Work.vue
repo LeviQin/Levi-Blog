@@ -122,8 +122,11 @@ const emit = defineEmits(["toNextPage"]);
 
 .container {
   height: 100%;
-  background: var(--workColor);
+  background: #eee url(../../assets/images/banner/qianyuqianxun.jpg);
   position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .info {

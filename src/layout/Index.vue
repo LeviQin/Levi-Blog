@@ -112,7 +112,7 @@ const scrollWidnow = () => {
   bottom: 0;
   left: 0;
   right: 0;
-  background-image: url(../assets/images/banner/gufengnv.jpg);
+  background-image: url(../assets/images/banner/mingren.jpeg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

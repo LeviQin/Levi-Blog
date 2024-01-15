@@ -20,7 +20,7 @@
                 :alt="item.title"
               />
               <div class="waterfall-title">
-                <span>{{ item.title }}</span>
+                <h2>{{ item.title }}</h2>
               </div>
               <div class="waterfall-footer">
                 <div class="waterfall-footer-date">
@@ -89,7 +89,7 @@ const dataMap = reactive({
   },
 });
 
-let cols = ref(2);
+let cols = ref(3);
 let page = ref(1);
 let pageSize = ref(10);
 
@@ -104,7 +104,7 @@ const setWaterfallCol = () => {
   if (window.innerWidth <= 480) {
     cols.value = 1;
   } else {
-    cols.value = 2;
+    cols.value = 3;
   }
 };
 
@@ -188,7 +188,6 @@ const getData = async () => {
 .waterfall-title {
   font-size: 16px;
   line-height: 30px;
-  padding: 10px 0;
 }
 
 .waterfall-footer {
