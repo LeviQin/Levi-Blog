@@ -19,7 +19,7 @@
         <li class="nav-drawer-li" data-router="/">首页</li>
         <div class="collapse-card">
           <li class="nav-drawer-li" id="topic" @click="clickTopic">
-            <span>专题</span><i class="bi bi-chevron-down bi-topic-icon"></i>
+            <span>文章分类</span><i class="bi bi-chevron-down bi-topic-icon"></i>
           </li>
           <transition name="bounce">
             <div

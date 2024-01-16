@@ -14,6 +14,10 @@
     border-radius: 5px;
 }
 
+.vuepress-markdown-body h2 {
+    border: 0 !important;
+}
+
 .vuepress-markdown-body h1,
 .vuepress-markdown-body h2,
 .vuepress-markdown-body h3 {

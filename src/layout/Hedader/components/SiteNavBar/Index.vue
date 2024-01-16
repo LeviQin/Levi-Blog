@@ -3,7 +3,7 @@
     <ul class="nav-ul" @click="toPage">
       <li class="nav-li active-li" data-router="/home">首页</li>
       <el-dropdown @command="handleCommandToPage">
-        <li class="nav-li">专题</li>
+        <li class="nav-li">文章分类</li>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item command="daily"
@@ -117,7 +117,6 @@ const handleCommandToPage = (val) => {
   font-size: 16px;
   transition: all 0.5s;
   border-bottom: 2px solid transparent;
-
   &:hover {
     border-bottom: 2px solid var(--themeTextColor);
     transition: all 0.5s;

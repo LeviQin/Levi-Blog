@@ -251,6 +251,7 @@ const getArticleDetail = async () => {
   background: var(--themeColor);
   padding: 20px;
   border-radius: var(--themeRadius);
+  min-height: 400px;
 }
 
 .topic-detail-tool {
