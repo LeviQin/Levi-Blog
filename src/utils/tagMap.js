@@ -160,4 +160,12 @@ export const tagMap = [
     value: "40",
     label: "Markdown",
   },
+  {
+    value: "41",
+    label: "WebSocket",
+  },
+  {
+    value: "42",
+    label: "我家猫猫",
+  },
 ];

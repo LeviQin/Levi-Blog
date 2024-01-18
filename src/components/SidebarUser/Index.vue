@@ -207,7 +207,7 @@ const getData = async () => {
   }
 
   .sidebar-info-data-item {
-    font-size: 14px;
+    font-size: 17px;
   }
 
   .sidebar-info {

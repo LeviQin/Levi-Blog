@@ -172,3 +172,12 @@ li {
   display: flex;
   justify-content: center;
 }
+
+.tags-item {
+  margin: 0 5px;
+  font-size: 12px;
+  background: #f4ebebef;
+  padding: 3px 7px;
+  border-radius: 10px;
+  white-space: nowrap;
+}

@@ -116,7 +116,7 @@ const scrollWidnow = () => {
   bottom: 0;
   left: 0;
   right: 0;
-  background-image: url(../assets/images/banner/fengjing2.jpeg);
+  background-image: url(../assets/images/banner/fengjing2.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

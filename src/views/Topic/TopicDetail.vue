@@ -300,15 +300,6 @@ const getArticleDetail = async () => {
   }
 }
 
-.tags-item {
-  margin: 0 5px;
-  font-size: 12px;
-  background: #f4ebebef;
-  padding: 3px 7px;
-  border-radius: 10px;
-  white-space: nowrap;
-}
-
 .message-container {
   background: var(--themeColor);
   border-radius: var(--themeRadius);

@@ -114,7 +114,8 @@ const emit = defineEmits(["toOnePage"]);
 
 @media (max-width: 860px) {
   .info {
-    width: 80%;
+    width: 75%;
+    padding: 20px;
   }
 
   .info-title {

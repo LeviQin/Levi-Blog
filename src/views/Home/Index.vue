@@ -44,7 +44,9 @@
             </div>
             <div class="footer-tags">
               <i class="bi bi-tags-fill"></i>
-              <span v-for="key in item.article_tags">{{ tagsList[key - 1] }}</span>
+              <span class="tags-item" v-for="key in item.article_tags">{{
+                tagsList[key - 1]
+              }}</span>
             </div>
           </div>
         </div>
@@ -288,15 +290,6 @@ const getData = async () => {
   margin-bottom: 10px;
 }
 
-.footer-tags span {
-  margin: 0 5px;
-  padding: 4px;
-  background: #fff;
-  border-radius: 4px;
-  font-size: 12px;
-  white-space: nowrap;
-}
-
 .article-item-title h2 {
   transition: all 0.4s;
 
@@ -339,13 +332,6 @@ const getData = async () => {
   .footer-tags,
   .footer-info {
     margin-bottom: 5px;
-  }
-
-  .footer-tags span {
-    margin: 0 2px;
-    padding: 2px 3px;
-    border-radius: 2px;
-    font-size: 12px;
   }
 
   .bi {

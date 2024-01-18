@@ -173,6 +173,7 @@ defineExpose({
   padding: 0 20px;
   margin-bottom: 15px;
   cursor: pointer;
+  font-size: 17px;
 }
 
 .nav-drawer-li-collapse {
@@ -180,7 +181,7 @@ defineExpose({
   margin-bottom: 15px;
   li {
     padding: 2px 0;
-    font-size: 13px;
+    font-size: 15px;
     cursor: pointer;
     .bi {
       margin-right: 10px;

@@ -209,7 +209,8 @@ const emit = defineEmits(["toNextPage"]);
 
 @media (max-width: 860px) {
   .info {
-    width: 100%;
+    width: 80%;
+    top: 45%;
   }
 
   .info-content {
@@ -220,14 +221,15 @@ const emit = defineEmits(["toNextPage"]);
   .info-title {
     font-size: 1.6rem;
     padding-bottom: 0 !important;
-    margin-left: 20px;
+    text-shadow: 0 5px 15px rgb(0, 0, 0) !important;
   }
 
   .info-item {
     height: 3.5rem !important;
     width: 100% !important;
     margin-bottom: 1rem !important;
-    padding: 0 1.5rem !important;
+    backdrop-filter: blur(15px);
+    text-shadow: 0 5px 15px rgb(0, 0, 0) !important;
   }
 
   .info-item a {
@@ -248,7 +250,7 @@ const emit = defineEmits(["toNextPage"]);
   .info-text {
     position: static !important;
     flex: 1 !important;
-    background: rgba(0, 0, 0, 0.8) !important;
+    background: transparent;
     border-radius: 0 5px 5px 0;
     height: auto !important;
     display: flex;

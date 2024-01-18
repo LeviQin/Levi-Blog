@@ -55,46 +55,6 @@ const emit = defineEmits(["toNextPage"]);
 </script>
 
 <style lang="scss" scoped>
-@media (max-width: 768px) {
-  .info {
-    width: 100% !important;
-  }
-
-  .info-content {
-    padding: 0 !important;
-    width: 100%;
-  }
-
-  .left-icon {
-    width: 5rem !important;
-    height: 5rem !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .right-content {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    text-align: left;
-  }
-
-  .bio-icon {
-    width: 2rem !important;
-    height: 2rem !important;
-    animation: none !important;
-    opacity: 1 !important;
-  }
-
-  .bio-text {
-    margin-left: 0 !important;
-    animation: none !important;
-    opacity: 1 !important;
-    font-size: 1rem !important;
-  }
-}
-
 .container {
   height: 100%;
   background: #eee url(../../assets/images/banner/fengjing2.jpg);
@@ -219,6 +179,47 @@ const emit = defineEmits(["toNextPage"]);
 
   100% {
     transform: rotate(0deg);
+  }
+}
+
+@media (max-width: 860px) {
+  .info {
+    width: 80% !important;
+    padding: 10px;
+  }
+
+  .info-content {
+    padding: 0 !important;
+    width: 100%;
+  }
+
+  .left-icon {
+    width: 4rem !important;
+    height: 4rem !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .right-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    text-align: left;
+  }
+
+  .bio-icon {
+    width: 2rem !important;
+    height: 2rem !important;
+    animation: none !important;
+    opacity: 1 !important;
+  }
+
+  .bio-text {
+    margin-left: 0 !important;
+    animation: none !important;
+    opacity: 1 !important;
+    font-size: 1rem !important;
   }
 }
 </style>
