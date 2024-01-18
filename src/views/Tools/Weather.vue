@@ -3,20 +3,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, onUnmounted } from "vue";
+import { ref, onMounted, reactive } from "vue";
 import { identifyIpArea, cityCode, weatherInfo } from "@/api/tools";
 
 onMounted(() => {
   getIpAddress();
-  const bannerBar = document.querySelector(".layout .banner-bar");
-  const loadimage = "/src/assets/images/banner/xiaomao.png";
-  bannerBar.style.backgroundImage = `url(${loadimage})`;
-});
-
-onUnmounted(() => {
-  const bannerBar = document.querySelector(".layout .banner-bar");
-  const loadimage = "/src/assets/images/banner/mingren.jpeg";
-  bannerBar.style.backgroundImage = `url(${loadimage})`;
 });
 
 const dataMap = reactive({
@@ -53,6 +44,6 @@ const getWeatherInfo = async (cityCode) => {
 <style lang="scss" scoped>
 .weather {
   background: var(--themeColor);
-  border-radius: 20px;
+  border-radius: var(--themeRadius);
 }
 </style>

@@ -2,7 +2,7 @@
   <el-dialog
     v-model="dialogVisible"
     title="Tips"
-    width="60%"
+    :width="modelWidth"
     lock-scroll
     append-to-body
     :z-index="10002"
@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, defineExpose } from "vue";
+import { ref, reactive, defineExpose, onMounted, onUnmounted } from "vue";
 import { setStore } from "@/utils/storage.js";
 import mingrenImag from "../../assets/images/banner/mingren.jpeg";
 import fentoufanvImag from "../../assets/images/banner/fentoufanv.jpeg";
@@ -44,6 +44,15 @@ import fengjing7Imag from "../../assets/images/banner/fengjing7.jpg";
 import fengjing8Imag from "../../assets/images/banner/fengjing8.webp";
 import fengjing9Imag from "../../assets/images/banner/fengjing9.jpg";
 import fengjing10Imag from "../../assets/images/banner/fengjing10.webp";
+
+onMounted(() => {
+  setModelWidth();
+  window.addEventListener("resize", setModelWidth, true);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", setModelWidth, true);
+});
 
 const dataMap = reactive({
   images: [
@@ -156,6 +165,7 @@ const dataMap = reactive({
 });
 
 let dialogVisible = ref(false);
+let modelWidth = ref("60%");
 
 const show = () => {
   dialogVisible.value = true;
@@ -165,6 +175,14 @@ const setWallpaper = (image) => {
   const bannerBar = document.querySelector(".layout .banner-bar");
   bannerBar.style.backgroundImage = `url(${image})`;
   setStore("WALLPAPER_URL", image);
+};
+
+const setModelWidth = () => {
+  if (window.innerWidth <= 480) {
+    modelWidth.value = "75%";
+  } else {
+    modelWidth.value = "60%";
+  }
 };
 
 defineExpose({
@@ -198,6 +216,13 @@ defineExpose({
       border-radius: 10px;
       transition: all 0.3s;
     }
+  }
+}
+
+@media (max-width: 860px) {
+  .wallpaper-model-main ul {
+    max-height: 400px;
+    justify-content: center;
   }
 }
 </style>

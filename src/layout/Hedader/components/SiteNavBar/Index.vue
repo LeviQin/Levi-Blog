@@ -42,7 +42,7 @@
           <el-dropdown-menu>
             <el-dropdown-item command="password">加密/解密</el-dropdown-item>
             <el-dropdown-item command="weather">天气查询</el-dropdown-item>
-            <el-dropdown-item command="ip">ip地址查询</el-dropdown-item>
+            <el-dropdown-item command="ip">IP地址查询</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>

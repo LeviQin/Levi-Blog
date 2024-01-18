@@ -48,7 +48,11 @@
               >
             </div>
           </div>
-          <div>
+          <div
+            class="markdown-renderer-card"
+            v-loading="loading"
+            element-loading-background="rgba(122, 122, 122, 0)"
+          >
             <markdown-renderer
               ref="markdownRendererRef"
               :markdownText="dataMap.articleInfo.content"
@@ -128,6 +132,7 @@ const dataMap = reactive({
 
 const markdownRendererRef = ref(null);
 let tagsList = ref([]);
+let loading = ref(false);
 
 const bannerConfig = {
   height: "30vh",
@@ -148,6 +153,7 @@ const handleAnchorClick = (anchor) => {
 
 const getArticleDetail = async () => {
   try {
+    loading.value = true;
     const res = await articleDetail(route.params.id);
     const { code, data, message } = res.data;
     if (code === 200) {
@@ -162,6 +168,8 @@ const getArticleDetail = async () => {
     }
   } catch (error) {
     console.log(error, "------------------------");
+  } finally {
+    loading.value = false;
   }
 };
 </script>
@@ -253,6 +261,10 @@ const getArticleDetail = async () => {
   border-radius: var(--themeRadius);
   min-height: 400px;
   max-width: 890px;
+}
+
+.markdown-renderer-card {
+  min-height: 300px;
 }
 
 .topic-detail-tool {

@@ -70,7 +70,7 @@
             <ul @click="toPage">
               <li data-router="/password">加密/解密</li>
               <li data-router="/weather">天气查询</li>
-              <li data-router="/ip">ip地址查询</li>
+              <li data-router="/ip">IP地址查询</li>
             </ul>
           </div>
         </transition>
