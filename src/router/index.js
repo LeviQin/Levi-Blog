@@ -6,7 +6,7 @@ import constantRoutes from "./routes";
 
 const router = createRouter({
     history: createWebHistory(),
-    routes: constantRoutes
+    routes: constantRoutes,
 });
 
 // 重置路由器解决控制台大量警告的问题

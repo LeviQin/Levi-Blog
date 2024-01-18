@@ -21,14 +21,9 @@
           :rows="8"
           type="textarea"
           placeholder="加/解密的结果"
-          id="copy-span-base64"
         />
         <div class="copy-btn-card">
-          <el-button
-            type="success"
-            @click="copyResult"
-            class="clipboardBtn"
-            data-clipboard-target="#copy-span-base64"
+          <el-button type="success" @click="copyResult" class="clipboardBtn"
             >一键复制结果</el-button
           >
         </div>
@@ -113,7 +108,6 @@
 <script setup>
 import { ref } from "vue";
 import { ElEMessage } from "@/utils/resetMessage.js";
-import Clipboard from "clipboard";
 
 let textarea = ref("");
 let result = ref("");
@@ -185,21 +179,21 @@ const copyResult = () => {
     });
     return;
   }
-  const clipboard = new Clipboard(`.clipboardBtn`);
-  clipboard.on("success", () => {
-    ElEMessage({
-      type: "success",
-      message: "一键复制成功",
+  navigator.clipboard
+    .writeText(result.value)
+    .then(() => {
+      ElEMessage({
+        type: "success",
+        message: "已复制到剪切板",
+      });
+      close();
+    })
+    .catch(() => {
+      ElEMessage({
+        type: "error",
+        message: "复制出错，请重试",
+      });
     });
-    clipboard.destroy();
-  });
-  clipboard.on("error", () => {
-    ElEMessage({
-      type: "warning",
-      message: "浏览器不支持自动复制！",
-    });
-    clipboard.destroy();
-  });
 };
 </script>
 

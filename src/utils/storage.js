@@ -6,7 +6,7 @@
  * @param maxAge
  */
 export const setStore = (name, content, maxAge = null) => {
-    if (!global.window || !name) {
+    if (!window || !name) {
         return;
     }
 
@@ -14,7 +14,7 @@ export const setStore = (name, content, maxAge = null) => {
         content = JSON.stringify(content)
     }
 
-    let storage = global.window.localStorage
+    let storage = window.localStorage
 
     storage.setItem(name, content)
     if (maxAge && !isNaN(parseInt(maxAge))) {
@@ -30,7 +30,7 @@ export const setStore = (name, content, maxAge = null) => {
  * @returns {*}
  */
 export const getStore = name => {
-    if (!global.window || !name) {
+    if (!window || !name) {
         return;
     }
 
@@ -57,7 +57,7 @@ export const getStore = name => {
  * @param name
  */
 export const clearStore = name => {
-    if (!global.window || !name) {
+    if (!window || !name) {
         return;
     }
 
@@ -69,7 +69,7 @@ export const clearStore = name => {
  * Clear all storage
  */
 export const clearAll = () => {
-    if (!global.window || !name) {
+    if (!window || !name) {
         return;
     }
 

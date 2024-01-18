@@ -42,7 +42,7 @@ const emit = defineEmits(["toOnePage"]);
 <style lang="scss" scoped>
 .container {
   height: 100%;
-  background: #eee url(../../assets/images/banner/mingren.jpeg);
+  background: #eee url(../../assets/images/banner/fengjing10.webp);
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;

@@ -97,7 +97,7 @@ const emit = defineEmits(["toNextPage"]);
 
 .container {
   height: 100%;
-  background: #eee url(../../assets/images/banner/xiaomao.png);
+  background: #eee url(../../assets/images/banner/fengjing2.jpg);
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;

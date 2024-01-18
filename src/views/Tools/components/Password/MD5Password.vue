@@ -19,16 +19,11 @@
             <div class="item-label">
               <span>32位大写</span>
             </div>
-            <el-input
-              v-model="hashedText32UC"
-              id="copy-span-32UC"
-              placeholder="32位大写"
-            ></el-input>
+            <el-input v-model="hashedText32UC" placeholder="32位大写"></el-input>
             <el-button
               type="success"
               @click="copyResult(hashedText32UC)"
               class="clipboardBtn"
-              data-clipboard-target="#copy-span-32UC"
               >复制</el-button
             >
           </div>
@@ -36,16 +31,11 @@
             <div class="item-label">
               <span>32位小写</span>
             </div>
-            <el-input
-              v-model="hashedText32"
-              id="copy-span-32"
-              placeholder="32位小写"
-            ></el-input>
+            <el-input v-model="hashedText32" placeholder="32位小写"></el-input>
             <el-button
               type="success"
               @click="copyResult(hashedText32)"
               class="clipboardBtn"
-              data-clipboard-target="#copy-span-32"
               >复制</el-button
             >
           </div>
@@ -53,15 +43,10 @@
             <div class="item-label">
               <span>16位大写</span>
             </div>
-            <el-input
-              v-model="hashedText16UC"
-              id="copy-span-16UC"
-              placeholder="16位大写"
-            ></el-input>
+            <el-input v-model="hashedText16UC" placeholder="16位大写"></el-input>
             <el-button
               type="success"
               @click="copyResult(hashedText16UC)"
-              class="clipboardBtn"
               data-clipboard-target="#copy-span-16UC"
               >复制</el-button
             >
@@ -70,16 +55,11 @@
             <div class="item-label">
               <span>16位小写</span>
             </div>
-            <el-input
-              v-model="hashedText16"
-              id="copy-span-16"
-              placeholder="16位小写"
-            ></el-input>
+            <el-input v-model="hashedText16" placeholder="16位小写"></el-input>
             <el-button
               type="success"
               @click="copyResult(hashedText16)"
               class="clipboardBtn"
-              data-clipboard-target="#copy-span-16"
               >复制</el-button
             >
           </div>
@@ -103,8 +83,6 @@
 import { ref } from "vue";
 import CryptoJS from "crypto-js";
 import { ElEMessage } from "@/utils/resetMessage.js";
-import Clipboard from "clipboard";
-
 let textarea = ref("");
 let hashedText16 = ref("");
 let hashedText16UC = ref("");
@@ -147,21 +125,21 @@ const copyResult = (val) => {
     });
     return;
   }
-  const clipboard = new Clipboard(`.clipboardBtn`);
-  clipboard.on("success", () => {
-    ElEMessage({
-      type: "success",
-      message: "一键复制成功",
+  navigator.clipboard
+    .writeText(val)
+    .then(() => {
+      ElEMessage({
+        type: "success",
+        message: "已复制到剪切板",
+      });
+      close();
+    })
+    .catch(() => {
+      ElEMessage({
+        type: "error",
+        message: "复制出错，请重试",
+      });
     });
-    clipboard.destroy();
-  });
-  clipboard.on("error", () => {
-    ElEMessage({
-      type: "warning",
-      message: "浏览器不支持自动复制！",
-    });
-    clipboard.destroy();
-  });
 };
 </script>
 

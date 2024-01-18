@@ -122,7 +122,7 @@ const emit = defineEmits(["toNextPage"]);
 
 .container {
   height: 100%;
-  background: #eee url(../../assets/images/banner/qianyuqianxun.jpg);
+  background: #eee url(../../assets/images/banner/dipingxian.jpg);
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;

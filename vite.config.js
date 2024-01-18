@@ -11,6 +11,7 @@ import {
   ElementPlusResolver
 } from 'unplugin-vue-components/resolvers'
 import DynamicImport from 'vite-plugin-dynamic-import';
+import VitePluginPreload from 'vite-plugin-preload';
 
 const pathSrc = path.resolve(__dirname, 'src')
 
@@ -24,6 +25,7 @@ export default defineConfig({
       },
     }),
     DynamicImport(),
+    VitePluginPreload(),
     AutoImport({
       // Auto import functions from Vue, e.g. ref, reactive, toRef...
       // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
@@ -76,21 +78,21 @@ export default defineConfig({
     port: '8001',
     strictPort: false, // 设为true时端口被占用直接退出，不会尝试其他可用端口
     hmr: true,
-    usePolling: true
+    usePolling: true,
   },
   build: {
     brotliSize: false,
     /* 压缩大型输出文件可能会很慢，因此禁用该功能可能会提高大型项目的构建性能 */
     outDir: 'dist',
     /* 指定输出路径 */
-    cssCodeSplit: false,
+    cssCodeSplit: true,
     /* 整个项目中的所有 CSS 将被提取到一个 CSS 文件中 */
     chunkSizeWarningLimit: 1500,
     /* chunk 大小警告的限制（以 kbs 为单位） */
     sourcemap: false,
     /* 构建后是否生成 source map 文件 */
     manifest: true,
-    /*  */
+    /* 生成一个构建后的清单（manifest）文件 */
     assetsDir: 'static/img/',
     /* 指定生成静态资源的存放路径 */
     emptyOutDir: true,
@@ -104,6 +106,8 @@ export default defineConfig({
         manualChunks: undefined,
         dynamicImportFunction: 'import',
       },
-    }
+    },
+    /** 启用 CSS 压缩 */
+    minify: 'esbuild',
   }
 })

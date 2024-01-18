@@ -1,4 +1,5 @@
 import Layout from "@/layout/Index.vue";
+import Home from "@/views/Home/Index.vue";
 
 export default [{
         path: "/",
@@ -6,7 +7,7 @@ export default [{
         redirect: "/home",
         children: [{
                 path: "/home",
-                component: () => import("@/views/Home/Index.vue"),
+                component: Home,
                 name: "Home",
                 meta: {
                     title: "Levi的博客，记录分享前端知识，工作中遇到的问题和心得，以及日常的生活风景与萌宠",
@@ -101,19 +102,11 @@ export default [{
                 }
             },
             {
-                path: "/tools",
-                component: () => import("@/views/Tools/Index.vue"),
-                name: "Tools",
+                path: "/ip",
+                component: () => import("@/views/Tools/IPAddress.vue"),
+                name: "IP",
                 meta: {
-                    title: "小工具",
-                }
-            },
-            {
-                path: "/life",
-                component: () => import("@/views/Tools/LifeTools.vue"),
-                name: "Life",
-                meta: {
-                    title: "生活",
+                    title: "IP地址查询",
                 }
             },
             {
@@ -125,11 +118,11 @@ export default [{
                 }
             },
             {
-                path: "/webmaster",
-                component: () => import("@/views/Tools/WebmasterTools.vue"),
-                name: "Webmaster",
+                path: "/weather",
+                component: () => import("@/views/Tools/Weather.vue"),
+                name: "Weather",
                 meta: {
-                    title: "站长工具",
+                    title: "天气查询",
                 }
             },
             {

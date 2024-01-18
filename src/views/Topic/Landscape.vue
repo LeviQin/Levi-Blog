@@ -2,6 +2,9 @@
   <div class="landscape w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="landscape-container page-container" ref="landscapeRef">
+      <div class="topic-sidebar">
+        <topic-sidebar></topic-sidebar>
+      </div>
       <article class="landscape-main">
         <div class="waterfall-container">
           <wc-waterfall :gap="10" :cols="cols">
@@ -52,9 +55,6 @@
           />
         </div>
       </article>
-      <div class="topic-sidebar">
-        <topic-sidebar></topic-sidebar>
-      </div>
     </div>
   </div>
 </template>
@@ -72,6 +72,7 @@ const router = useRouter();
 
 onMounted(() => {
   getData();
+  setWaterfallCol();
   window.addEventListener("resize", setWaterfallCol, true);
 });
 
@@ -106,7 +107,7 @@ const bannerConfig = {
 
 const setWaterfallCol = () => {
   if (window.innerWidth <= 480) {
-    cols.value = 2;
+    cols.value = 1;
   } else {
     cols.value = 3;
   }
@@ -249,8 +250,8 @@ const getData = async () => {
 
   .is-top-box {
     position: absolute;
-    top: 3px;
-    left: 3px;
+    top: 5px;
+    left: 7px;
     z-index: 10;
 
     .bi {
@@ -262,10 +263,10 @@ const getData = async () => {
   .triangle-box {
     position: absolute;
     transform: rotate(45deg);
-    top: -10px;
-    left: -10px;
-    width: 35px;
-    height: 35px;
+    top: -30px;
+    left: -30px;
+    width: 60px;
+    height: 60px;
     background: #fff;
     z-index: 9;
   }

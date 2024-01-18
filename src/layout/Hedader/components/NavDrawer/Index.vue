@@ -68,18 +68,9 @@
             v-show="showToolsCollapse"
           >
             <ul @click="toPage">
-              <!-- <li>生活工具</li> -->
               <li data-router="/password">加密/解密</li>
-              <!-- <li>JSON工具</li>
-              <li>压缩/格式化</li>
-              <li>文档</li>
-              <li>前端工具</li>
-              <li>转换</li>
-              <li>单位换算</li>
-              <li>二维码工具</li>
-              <li>正则表达式</li>
-              <li>站长工具</li>
-              <li>其他</li> -->
+              <li data-router="/weather">天气查询</li>
+              <li data-router="/ip">ip地址查询</li>
             </ul>
           </div>
         </transition>

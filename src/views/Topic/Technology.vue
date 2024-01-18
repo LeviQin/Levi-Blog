@@ -2,6 +2,9 @@
   <div class="technology w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="technology-container page-container" ref="technologyRef">
+      <div class="topic-sidebar">
+        <topic-sidebar></topic-sidebar>
+      </div>
       <article class="technology-content">
         <div
           class="article-item"
@@ -54,9 +57,6 @@
           />
         </div>
       </article>
-      <div class="topic-sidebar">
-        <topic-sidebar></topic-sidebar>
-      </div>
     </div>
   </div>
 </template>

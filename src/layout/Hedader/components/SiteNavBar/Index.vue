@@ -40,18 +40,9 @@
         <li class="nav-li">小工具</li>
         <template #dropdown>
           <el-dropdown-menu>
-            <!-- <el-dropdown-item>生活工具</el-dropdown-item> -->
             <el-dropdown-item command="password">加密/解密</el-dropdown-item>
-            <!-- <el-dropdown-item>JSON工具</el-dropdown-item>
-            <el-dropdown-item>压缩/格式化</el-dropdown-item>
-            <el-dropdown-item>文档</el-dropdown-item>
-            <el-dropdown-item>前端工具</el-dropdown-item>
-            <el-dropdown-item>转换</el-dropdown-item>
-            <el-dropdown-item>单位换算</el-dropdown-item>
-            <el-dropdown-item>二维码工具</el-dropdown-item>
-            <el-dropdown-item>正则表达式</el-dropdown-item>
-            <el-dropdown-item>站长工具</el-dropdown-item>
-            <el-dropdown-item>其他</el-dropdown-item> -->
+            <el-dropdown-item command="weather">天气查询</el-dropdown-item>
+            <el-dropdown-item command="ip">ip地址查询</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>

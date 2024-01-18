@@ -5,7 +5,6 @@
     </header>
     <main class="main">
       <router-view />
-      <TwinklingStars />
     </main>
     <footer class="footer-card">
       <Footer />
@@ -18,19 +17,24 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import Hedader from "./Hedader/Index.vue";
 import Footer from "./Footer/Index.vue";
 import { useRoute } from "vue-router";
 import { ElNotification } from "element-plus";
 import FloatToolBar from "../components/FloatToolBar/Index.vue";
-import TwinklingStars from "../components/TwinklingStars/Index.vue";
+import { getStore } from "@/utils/storage.js";
 
 const route = useRoute();
 
 onMounted(() => {
   window.addEventListener("keydown", keydownEvent);
   window.addEventListener("scroll", scrollWidnow, true);
+  const image = getStore("WALLPAPER_URL");
+  if (image) {
+    const bannerBar = document.querySelector(".layout .banner-bar");
+    bannerBar.style.backgroundImage = `url(${image})`;
+  }
 });
 
 onUnmounted(() => {
@@ -112,7 +116,7 @@ const scrollWidnow = () => {
   bottom: 0;
   left: 0;
   right: 0;
-  background-image: url(../assets/images/banner/mingren.jpeg);
+  background-image: url(../assets/images/banner/fengjing2.jpeg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

@@ -7,3 +7,19 @@ export const identifyIpArea = (data) => {
         data
     });
 };
+
+export const weatherInfo = (data) => {
+    return request({
+        method: "post",
+        url: `/api/tools/weatherInfo`,
+        data
+    });
+};
+
+export const cityCode = (data) => {
+    return request({
+        method: "post",
+        url: `/api/tools/cityCode`,
+        data
+    });
+};

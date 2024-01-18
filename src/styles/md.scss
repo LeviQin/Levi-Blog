@@ -25,10 +25,11 @@
     margin-left: 25px !important;
     position: relative;
     transition: all 0.4s;
+
     &:hover {
-      transition: all 0.4s;
-      transform: translateX(15px);
-      color: var(--btnTagBgColor);
+        transition: all 0.4s;
+        transform: translateX(15px);
+        color: var(--btnTagBgColor);
     }
 }
 
@@ -70,8 +71,22 @@
     background: none !important;
 }
 
-.vuepress-markdown-body td, .vuepress-markdown-body th {
+.vuepress-markdown-body td,
+.vuepress-markdown-body th {
     border: 1px solid #282c34 !important;
+}
+
+.vuepress-markdown-body img {
+    max-width: 500px !important;
+    max-height: 250px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+@media (max-width: 860px) {
+    .vuepress-markdown-body img {
+        max-width: 100% !important;
+    }
 }
 
 @keyframes hupjianMove {

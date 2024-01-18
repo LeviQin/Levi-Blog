@@ -2,6 +2,9 @@
   <div class="daily-pet w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="daily-container page-container" ref="cutePetContainerRef">
+      <div class="topic-sidebar">
+        <topic-sidebar></topic-sidebar>
+      </div>
       <article class="daily-main">
         <div class="waterfall-container">
           <wc-waterfall :gap="10" :cols="cols">
@@ -48,9 +51,6 @@
           />
         </div>
       </article>
-      <div class="topic-sidebar">
-        <topic-sidebar></topic-sidebar>
-      </div>
     </div>
   </div>
 </template>

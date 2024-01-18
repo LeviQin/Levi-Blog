@@ -32,7 +32,7 @@ const emit = defineEmits(["toNextPage"]);
 <style lang="scss" scoped>
 .container {
   height: 100%;
-  background: #eee url(../../assets/images/banner/shenzi.jpg);
+  background: #eee url(../../assets/images/banner/fengjing6.webp);
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;

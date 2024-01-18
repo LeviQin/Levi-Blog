@@ -2,6 +2,28 @@
   <div class="topic-detail w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <article class="topic-detail-container page-container" ref="topicDetailRef">
+      <div class="topic-detail-sidebar">
+        <sidebar-user></sidebar-user>
+        <ul class="sidebar-ul nav" v-if="dataMap.titles.length">
+          <div class="sidebar-name">
+            <span>文章目录</span>
+          </div>
+          <el-divider />
+          <div class="sidebar-content">
+            <li
+              class="sidebar-li nav-item"
+              v-for="anchor in dataMap.titles"
+              :style="{
+                padding: `10px 0 10px ${anchor.indent ? anchor.indent * 40 : 20}px`,
+                fontSize: `${15 - anchor.indent}px`,
+              }"
+              @click="handleAnchorClick(anchor)"
+            >
+              <a class="sidebar-a nav-title">{{ anchor.title }}</a>
+            </li>
+          </div>
+        </ul>
+      </div>
       <div class="topic-detail-content">
         <div class="topic-detail-md">
           <div class="page-title">
@@ -53,34 +75,12 @@
         <!-- <div id="qrcode"></div> -->
         <!-- <div class="message-container">1</div> -->
       </div>
-      <div class="topic-detail-sidebar">
-        <sidebar-user></sidebar-user>
-        <ul class="sidebar-ul nav" v-if="dataMap.titles.length">
-          <div class="sidebar-name">
-            <span>文章目录</span>
-          </div>
-          <el-divider />
-          <div class="sidebar-content">
-            <li
-              class="sidebar-li nav-item"
-              v-for="anchor in dataMap.titles"
-              :style="{
-                padding: `10px 0 10px ${anchor.indent ? anchor.indent * 40 : 20}px`,
-                fontSize: `${15 - anchor.indent}px`,
-              }"
-              @click="handleAnchorClick(anchor)"
-            >
-              <a class="sidebar-a nav-title">{{ anchor.title }}</a>
-            </li>
-          </div>
-        </ul>
-      </div>
     </article>
   </div>
 </template>
 
 <script setup>
-import { onMounted, reactive, ref, watch } from "vue";
+import { onMounted, reactive, ref, watch, createApp } from "vue";
 import { useRoute } from "vue-router";
 import { articleDetail } from "@/api/articles.js";
 import MarkdownRenderer from "@/components/MarkdownRenderer/Index.vue";
@@ -203,7 +203,7 @@ const getArticleDetail = async () => {
 .topic-detail-sidebar {
   width: 22%;
   position: relative;
-  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .sidebar-ul {
@@ -252,6 +252,7 @@ const getArticleDetail = async () => {
   padding: 20px;
   border-radius: var(--themeRadius);
   min-height: 400px;
+  max-width: 890px;
 }
 
 .topic-detail-tool {
@@ -292,7 +293,7 @@ const getArticleDetail = async () => {
 }
 
 .topic-detail-tags {
-  padding: 20px 0;
+  padding: 20px;
 
   .bi {
     margin-right: 5px;
@@ -302,9 +303,9 @@ const getArticleDetail = async () => {
 .tags-item {
   margin: 0 5px;
   font-size: 12px;
-  background: #fff;
-  padding: 3px 5px;
-  border-radius: 2px;
+  background: #f4ebebef;
+  padding: 3px 7px;
+  border-radius: 10px;
   white-space: nowrap;
 }
 
@@ -321,7 +322,9 @@ const getArticleDetail = async () => {
   .topic-detail-sidebar {
     display: none;
   }
-
+  .topic-detail-md {
+    padding: 20px 0;
+  }
   .page-title h1 {
     font-size: 30px;
   }

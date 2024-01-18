@@ -1,17 +1,23 @@
 <template>
   <div class="float-tool-bar">
-    <div class="close-btn btn-item" title="收起工具栏" @click="awayToolbar">
+    <!-- <div class="close-btn btn-item" title="收起工具栏" @click="awayToolbar">
       <i class="bi bi-arrow-right-circle"></i>
+    </div> -->
+    <div class="back-top-btn btn-item" title="切换壁纸" @click="clickSwitchWallpaper">
+      <i class="bi bi-ubuntu"></i>
     </div>
     <div class="back-top-btn btn-item" title="回到顶部" @click="backToTop">
       <i class="bi bi-rocket-fill"></i>
     </div>
+
+    <switch-wallpaper ref="switchWallpaperRef"></switch-wallpaper>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import { scrollAnimation } from "@/utils/scrollAnimation.js";
+import SwitchWallpaper from "../SwitchWallpaper/Index.vue";
 
 onMounted(() => {
   handleScroll();
@@ -19,6 +25,7 @@ onMounted(() => {
 });
 
 let scrollTop = ref(0);
+let switchWallpaperRef = ref(null);
 
 const handleScroll = () => {
   const floatToolBar = document.querySelector(".float-tool-bar");
@@ -31,6 +38,10 @@ const handleScroll = () => {
 };
 
 const awayToolbar = () => {};
+
+const clickSwitchWallpaper = () => {
+  switchWallpaperRef.value.show();
+};
 
 const backToTop = () => {
   scrollAnimation(scrollTop.value, "top");

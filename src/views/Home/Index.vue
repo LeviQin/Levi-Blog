@@ -2,6 +2,9 @@
   <div class="home w">
     <top-banner @nextPosition="nextPosition" :bannerConfig="bannerConfig"></top-banner>
     <div class="home-container page-container" ref="homeContainerRef">
+      <div class="topic-sidebar">
+        <topic-sidebar></topic-sidebar>
+      </div>
       <article class="content">
         <div
           class="article-item"
@@ -58,9 +61,6 @@
           />
         </div>
       </article>
-      <div class="topic-sidebar">
-        <topic-sidebar></topic-sidebar>
-      </div>
     </div>
   </div>
 </template>
@@ -78,7 +78,7 @@ import { scrollAnimation } from "@/utils/scrollAnimation.js";
 const router = useRouter();
 const route = useRoute();
 
-onMounted(() => {
+onMounted(async () => {
   scrollWidnow();
   window.addEventListener("scroll", scrollWidnow, true);
   tagsList.value = tagMap.map((item) => item.label);
