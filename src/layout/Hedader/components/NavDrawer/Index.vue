@@ -99,6 +99,10 @@ const show = () => {
 const close = () => {
   showTopicCollapse.value = false;
   showToolsCollapse.value = false;
+  const biTopic = document.querySelector(".bi-topic-icon");
+  const biTools = document.querySelector(".bi-tools-icon");
+  biTopic.style.transform = `rotate(0deg)`;
+  biTools.style.transform = `rotate(0deg)`;
 };
 
 const toPage = (e) => {

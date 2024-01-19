@@ -52,7 +52,7 @@ const scrollWidnow = (e) => {
   const biSearch = document.querySelector(".search-card .bi-search");
   const collapseIcon = document.querySelector(".menu-icon-card .collapse-icon");
   const navlis = document.querySelectorAll(".nav-li");
-  const top = e?.srcElement.scrollingElement.scrollTop; // 获取页面滚动高度
+  const top = e?.srcElement?.scrollingElement?.scrollTop; // 获取页面滚动高度
   header.style.transition = "0.5s linear";
   header.style.background = `linear-gradient(60deg,rgba(255,215,228, ${
     top / 200

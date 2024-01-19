@@ -28,13 +28,6 @@ VMdPreview.use(vuepressTheme, {
     Prism,
 });
 
-import createKatexPlugin from '@kangc/v-md-editor/lib/plugins/katex/cdn';
-VMdPreview.use(createKatexPlugin());
-
-import createMermaidPlugin from '@kangc/v-md-editor/lib/plugins/mermaid/cdn';
-import '@kangc/v-md-editor/lib/plugins/mermaid/mermaid.css';
-VMdPreview.use(createMermaidPlugin());
-
 import createTodoListPlugin from '@kangc/v-md-editor/lib/plugins/todo-list/index';
 import '@kangc/v-md-editor/lib/plugins/todo-list/todo-list.css';
 VMdPreview.use(createTodoListPlugin());

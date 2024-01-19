@@ -3,8 +3,8 @@
     v-model="dialogVisible"
     title="Tips"
     :width="dialogWidth"
-    lock-scroll
-    append-to-body
+    :lock-scroll="false"
+    :append-to-body="true"
     :z-index="10002"
   >
     <template #header>

@@ -13,6 +13,7 @@
               @click="toDetail(item)"
               v-for="item in dataMap.data"
               :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
+              v-slid-in
             >
               <div class="is-top-box" v-if="item.is_top">
                 <i class="bi bi-pin-angle-fill"></i>
@@ -64,6 +65,7 @@ import { getCategoryArticles } from "@/api/articles.js";
 import dayjs from "dayjs";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
+import { vSlidIn } from "@/utils/vSlidIn.js";
 
 const router = useRouter();
 
@@ -156,14 +158,6 @@ const getData = async () => {
   flex: 1;
 }
 
-.waterfall-item {
-  background: var(--themeColor);
-  padding: 10px;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
-  border-radius: var(--themeRadius);
-  cursor: pointer;
-}
-
 .is-top-box {
   position: absolute;
   top: -13px;
@@ -185,38 +179,10 @@ const getData = async () => {
   }
 }
 
-.waterfall-item img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.waterfall-title {
-  font-size: 16px;
-  line-height: 30px;
-}
-
-.waterfall-footer {
-  display: flex;
-  align-items: center;
+.daily-pet .waterfall-footer {
   justify-content: space-between;
   flex-wrap: wrap;
   color: #3c3b3b;
-}
-
-.waterfall-footer-bar {
-  display: flex;
-  align-items: center;
-}
-
-.bi {
-  margin-right: 10px;
-  font-style: normal;
-  font-size: 16px;
-}
-
-.waterfall-footer-date {
-  color: #7f7d7d;
-  font-size: 16px;
 }
 
 .num-text {
@@ -226,21 +192,6 @@ const getData = async () => {
 @media (max-width: 860px) {
   .daily-sidebar {
     display: none;
-  }
-
-  .waterfall-title {
-    font-size: 12px;
-    line-height: 20px;
-    padding: 5px 0;
-  }
-
-  .bi {
-    margin-right: 5px;
-    font-size: 12px;
-  }
-
-  .waterfall-footer-date {
-    font-size: 12px;
   }
 
   .num-text {

@@ -155,13 +155,6 @@ const getData = async () => {
 .cute-pet-main {
   flex: 1;
 }
-.waterfall-item {
-  background: var(--themeColor);
-  padding: 10px;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
-  border-radius: var(--themeRadius);
-  cursor: pointer;
-}
 
 .is-top-box {
   position: absolute;
@@ -184,41 +177,6 @@ const getData = async () => {
   }
 }
 
-.waterfall-item img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.waterfall-title {
-  font-size: 16px;
-  line-height: 30px;
-  padding: 10px 0;
-}
-
-.waterfall-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  color: #3c3b3b;
-}
-
-.waterfall-footer-bar {
-  display: flex;
-  align-items: center;
-}
-
-.bi {
-  margin-right: 10px;
-  font-style: normal;
-  font-size: 16px;
-}
-
-.waterfall-footer-date {
-  color: #7f7d7d;
-  font-size: 16px;
-}
-
 .num-text {
   margin: 5px;
 }
@@ -226,21 +184,6 @@ const getData = async () => {
 @media (max-width: 860px) {
   .cute-pet-sidebar {
     display: none;
-  }
-
-  .waterfall-title {
-    font-size: 12px;
-    line-height: 20px;
-    padding: 5px 0;
-  }
-
-  .bi {
-    margin-right: 5px;
-    font-size: 12px;
-  }
-
-  .waterfall-footer-date {
-    font-size: 12px;
   }
 
   .num-text {

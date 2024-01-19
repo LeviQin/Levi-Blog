@@ -1,7 +1,6 @@
 import axios from "axios";
 import { ElNotification } from "element-plus";
 import { getBaseURL } from "@/utils/judgmentEnv";
-import { getToken } from "@/utils/auth";
 
 const service = axios.create({
     baseURL: getBaseURL() + "/",
@@ -11,13 +10,7 @@ const service = axios.create({
 // 请求拦截器
 service.interceptors.request.use(
     config => {
-        // 在发送请求之前做一些事情
-        config.headers["token"] = getToken();
         config.headers["Content-Type"] = "application/json;charset=utf-8"
-        // get请求时添加一个data参数，解决get请求无法设置content-type的问题
-        if (config.method === "get") config.data = { unused: 0 }
-        // 如果data不存在，则添加一个参数用来设置content-type
-        if (!config.data) config.data = { unused: 0 }
         return config;
     },
     err => {

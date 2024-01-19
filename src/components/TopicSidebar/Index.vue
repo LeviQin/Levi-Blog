@@ -1,6 +1,7 @@
 <template>
-  <sidebar-user></sidebar-user>
+  <sidebar-user v-slid-in></sidebar-user>
   <div
+    v-slid-in
     class="sidebar-category"
     :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
   >
@@ -50,6 +51,7 @@
     </div>
   </div>
   <div
+    v-slid-in
     class="sidebar-tags"
     :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
   >
@@ -71,6 +73,7 @@ import { useRoute, useRouter } from "vue-router";
 import SidebarUser from "../SidebarUser/Index.vue";
 import { tagMap } from "@/utils/tagMap.js";
 import { getRandomHexColor } from "@/utils/utils.js";
+import { vSlidIn } from "@/utils/vSlidIn.js";
 
 const route = useRoute();
 const router = useRouter();

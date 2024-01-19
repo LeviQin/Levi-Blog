@@ -24,22 +24,6 @@
                 fit="scale-down"
                 :alt="item.title"
               />
-              <!-- <div class="waterfall-title">
-              <span>{{ item.title }}</span>
-            </div>
-            <div class="waterfall-footer">
-              <div class="waterfall-footer-date">
-                <span>{{ item.updated_at }}</span>
-              </div>
-              <div class="waterfall-footer-bar">
-                <i class="bi bi-eye"
-                  ><span class="num-text">{{ item.view_count }}</span></i
-                >
-                <i class="bi bi-hand-thumbs-up"
-                  ><span class="num-text">{{ item.likes }}</span></i
-                >
-              </div>
-            </div> -->
             </div>
           </wc-waterfall>
         </div>
@@ -160,7 +144,8 @@ const getData = async () => {
 .landscape-main {
   flex: 1;
 }
-.waterfall-item {
+
+.landscape .waterfall-item {
   background: #fff;
   border-radius: var(--themeRadius);
   cursor: pointer;
@@ -191,37 +176,14 @@ const getData = async () => {
   z-index: 9;
 }
 
-.waterfall-item img {
-  width: 100%;
-  border-radius: 5px;
-}
-
-.waterfall-title {
-  font-size: 16px;
-  line-height: 30px;
-  padding: 10px 0;
-}
-
-.waterfall-footer {
-  display: flex;
-  align-items: center;
+.landscape .waterfall-footer {
   justify-content: space-between;
   flex-wrap: wrap;
-}
-
-.waterfall-footer-bar {
-  display: flex;
-  align-items: center;
 }
 
 .bi {
   margin-right: 10px;
   font-style: normal;
-  font-size: 16px;
-}
-
-.waterfall-footer-date {
-  color: #7f7d7d;
   font-size: 16px;
 }
 
@@ -232,21 +194,6 @@ const getData = async () => {
 @media (max-width: 860px) {
   .landscape-sidebar {
     display: none;
-  }
-
-  .waterfall-title {
-    font-size: 12px;
-    line-height: 20px;
-    padding: 5px 0;
-  }
-
-  .bi {
-    margin-right: 5px;
-    font-size: 12px;
-  }
-
-  .waterfall-footer-date {
-    font-size: 12px;
   }
 
   .num-text {

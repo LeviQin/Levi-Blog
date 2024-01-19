@@ -3,8 +3,8 @@
     v-model="dialogVisible"
     title="Tips"
     :width="modelWidth"
-    lock-scroll
-    append-to-body
+    :lock-scroll="false"
+    :append-to-body="true"
     :z-index="10002"
   >
     <template #header>
@@ -165,7 +165,7 @@ const dataMap = reactive({
 });
 
 let dialogVisible = ref(false);
-let modelWidth = ref("60%");
+let modelWidth = ref("780px");
 
 const show = () => {
   dialogVisible.value = true;
@@ -178,10 +178,10 @@ const setWallpaper = (image) => {
 };
 
 const setModelWidth = () => {
-  if (window.innerWidth <= 480) {
-    modelWidth.value = "75%";
+  if (window.innerWidth <= 900) {
+    modelWidth.value = "80%";
   } else {
-    modelWidth.value = "60%";
+    modelWidth.value = "780px";
   }
 };
 
@@ -191,6 +191,11 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
+.wallpaper-model-title {
+  color: var(--btnTagBgColor);
+  font-size: 18px;
+}
+
 .wallpaper-model-main {
   padding: 10px 20px 50px 20px;
 }
