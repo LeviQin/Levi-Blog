@@ -10,6 +10,7 @@
           class="article-item"
           v-for="item in dataMap.data"
           @click="toArticleDetail(item)"
+          v-slid-in
         >
           <div class="is-top-box" v-if="item.is_top">
             <i class="bi bi-pin-angle-fill"></i>
@@ -76,6 +77,7 @@ import { useRouter, useRoute } from "vue-router";
 import { tagMap } from "@/utils/tagMap.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { scrollAnimation } from "@/utils/scrollAnimation.js";
+import { vSlidIn } from "@/utils/vSlidIn.js";
 
 const router = useRouter();
 const route = useRoute();

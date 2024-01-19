@@ -1,6 +1,9 @@
 <template>
   <sidebar-user></sidebar-user>
-  <div class="sidebar-category">
+  <div
+    class="sidebar-category"
+    :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
+  >
     <div class="sidebar-category-title">
       <i class="bi bi-hdd-stack"></i>
       <span>分类</span>
@@ -46,7 +49,10 @@
       </ul>
     </div>
   </div>
-  <div class="sidebar-tags">
+  <div
+    class="sidebar-tags"
+    :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
+  >
     <div class="sidebar-tags-title">
       <i class="bi bi-tags-fill"></i>
       <span>标签</span>
@@ -82,11 +88,14 @@ onMounted(() => {
     return item;
   });
   activeCategory();
+  isSidebarVisible.value = true;
 });
 
 const dataMap = reactive({
   tags: [],
 });
+
+let isSidebarVisible = ref(false);
 
 const activeCategory = () => {
   const lis = document.querySelectorAll(".sidebar-category-li");

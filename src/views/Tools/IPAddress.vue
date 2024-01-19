@@ -1,6 +1,9 @@
 <template>
   <div class="ip-address w">
-    <div class="search-bar">
+    <div
+      class="search-bar"
+      :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
+    >
       <div class="search-bar-left">
         <div class="search-bar-item-box search-bar-left-title">
           <span>* 您的IP地址是：</span>
@@ -69,8 +72,10 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import { identifyIpArea } from "@/api/tools";
+import { ElEMessage } from "@/utils/resetMessage.js";
 
 onMounted(() => {
+  isSidebarVisible.value = true;
   getIpAddress();
 });
 
@@ -81,6 +86,7 @@ const dataMap = reactive({
 let ip = ref("");
 let userIp = ref("");
 let loading = ref(false);
+let isSidebarVisible = ref(false);
 
 const clearInfo = () => {
   ip.value = "";
@@ -94,6 +100,13 @@ const searchUserIp = () => {
 
 const searchIpAddress = async () => {
   try {
+    if (ip.value === "") {
+      ElEMessage({
+        type: "warning",
+        message: "请输入需要查询的IP",
+      });
+      return;
+    }
     loading.value = true;
     const res = await identifyIpArea({ ip: ip.value });
     const { code, data } = res.data;

@@ -1,5 +1,8 @@
 <template>
-  <div class="sidebar-info">
+  <div
+    class="sidebar-info"
+    :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
+  >
     <div class="sidebar-info-avatar">
       <img
         class="avatar"
@@ -79,10 +82,12 @@ const router = useRouter();
 
 onMounted(() => {
   getData();
+  isSidebarVisible.value = true;
 });
 
 let totalArticles = ref(0);
 let wxModelRef = ref(null);
+let isSidebarVisible = ref(false);
 
 const showWXModel = () => {
   wxModelRef.value.show();

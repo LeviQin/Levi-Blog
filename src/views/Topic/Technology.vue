@@ -10,6 +10,8 @@
           class="article-item"
           v-for="item in dataMap.data"
           @click="toArticleDetail(item)"
+          v-slid-in
+          :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
         >
           <div class="is-top-box" v-if="item.is_top">
             <i class="bi bi-pin-angle-fill"></i>
@@ -62,13 +64,14 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import { getCategoryArticles } from "@/api/articles.js";
 import { dateToString } from "@/utils/utils.js";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import { tagMap } from "@/utils/tagMap.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
+import { vSlidIn } from "@/utils/vSlidIn.js";
 
 const router = useRouter();
 
@@ -94,6 +97,7 @@ let technologyRef = ref(null);
 let tagsList = ref([]);
 let page = ref(1);
 let pageSize = ref(10);
+let isSidebarVisible = ref(false);
 
 const bannerConfig = {
   height: "30vh",
@@ -134,6 +138,9 @@ const getData = async () => {
         return item;
       });
       getTableData();
+      nextTick(() => {
+        isSidebarVisible.value = true;
+      });
     } else {
       console.log(message, "message--------------------");
     }

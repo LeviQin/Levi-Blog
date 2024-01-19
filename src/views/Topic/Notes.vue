@@ -12,6 +12,7 @@
               class="waterfall-item"
               @click="toDetail(item)"
               v-for="item in dataMap.data"
+              :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
             >
               <div class="is-top-box" v-if="item.is_top">
                 <i class="bi bi-pin-angle-fill"></i>
@@ -56,7 +57,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted } from "vue";
+import { ref, reactive, onMounted, onUnmounted, nextTick } from "vue";
 import { getCategoryArticles } from "@/api/articles.js";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
@@ -92,6 +93,7 @@ const dataMap = reactive({
 let cols = ref(3);
 let page = ref(1);
 let pageSize = ref(10);
+let isSidebarVisible = ref(false);
 
 const bannerConfig = {
   height: "30vh",
@@ -139,6 +141,9 @@ const getData = async () => {
         return item;
       });
       getTableData();
+      nextTick(() => {
+        isSidebarVisible.value = true;
+      });
     }
   } catch (error) {
     console.log(error, "error---------------------");

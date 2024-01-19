@@ -1,7 +1,10 @@
 <template>
   <div class="links w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
-    <div class="links-container">
+    <div
+      class="links-container"
+      :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
+    >
       <div class="links-title">
         <h2>技术支持</h2>
       </div>
@@ -32,8 +35,12 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
+
+onMounted(() => {
+  isSidebarVisible.value = true;
+});
 
 const dataMap = reactive({
   supportList: [
@@ -100,6 +107,8 @@ const dataMap = reactive({
     },
   ],
 });
+
+let isSidebarVisible = ref(false);
 
 const bannerConfig = {
   height: "30vh",

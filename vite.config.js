@@ -75,7 +75,7 @@ export default defineConfig({
     https: false, // 是否启用https
     cors: true, // 为开发服务器配置cors，默认启用并允许任何源
     open: true, // 服务启动时自动在浏览器打开应用
-    port: '8001',
+    port: '9527',
     strictPort: false, // 设为true时端口被占用直接退出，不会尝试其他可用端口
     hmr: true,
     usePolling: true,
@@ -85,9 +85,9 @@ export default defineConfig({
     /* 压缩大型输出文件可能会很慢，因此禁用该功能可能会提高大型项目的构建性能 */
     outDir: 'dist',
     /* 指定输出路径 */
-    cssCodeSplit: true,
+    cssCodeSplit: false,
     /* 整个项目中的所有 CSS 将被提取到一个 CSS 文件中 */
-    chunkSizeWarningLimit: 1500,
+    chunkSizeWarningLimit: 1000,
     /* chunk 大小警告的限制（以 kbs 为单位） */
     sourcemap: false,
     /* 构建后是否生成 source map 文件 */
