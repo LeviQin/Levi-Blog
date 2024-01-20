@@ -33,6 +33,7 @@
 + 雪花飘动组件：`components/MoveSpecialEffect`
 + 雪花飘动组件（canvas版）：`components/TwinklingStars`
 + 页面加载动画： `index.html`
++ 文章图片预览功能： `components/ImagePreview`
 ....
 
 ### 安装依赖

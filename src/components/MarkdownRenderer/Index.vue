@@ -5,12 +5,16 @@
     @copy-code-success="handleCopyCodeSuccess"
     ref="preview"
     default-show-toc
+    @image-click="initImageViewer"
   />
+
+  <image-preview ref="imagePreviewRef"></image-preview>
 </template>
 
 <script setup>
 import { ref, defineProps, defineExpose, nextTick, defineEmits, watch } from "vue";
 import { ElNotification } from "element-plus";
+import imagePreview from "../ImagePreview/Index.vue";
 
 const props = defineProps({
   markdownText: {
@@ -27,7 +31,12 @@ watch(
 );
 
 const preview = ref(null);
+const imagePreviewRef = ref(null);
 const titles = ref([]);
+
+const initImageViewer = (images, currentIndex) => {
+  imagePreviewRef.value.show(images, currentIndex);
+};
 
 const handleCopyCodeSuccess = () => {
   ElNotification({
