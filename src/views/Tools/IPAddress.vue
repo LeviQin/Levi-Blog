@@ -65,13 +65,12 @@
           </el-form-item>
           <el-form-item class="el-form-item-label" label="OS:">
             <span class="el-form-item-value">{{
-              `${dataMap.addressInfo.os.name} ${dataMap.addressInfo.os.versionName}` ||
-              "-"
+              `${dataMap.addressInfo.os || "-"} ${dataMap.addressInfo.osVer || ""}`
             }}</span>
           </el-form-item>
           <el-form-item class="el-form-item-label" label="浏览器:">
             <span class="el-form-item-value">{{
-              dataMap.addressInfo.browser.name || "-"
+              dataMap.addressInfo.browserName || "-"
             }}</span>
           </el-form-item>
         </el-form>
@@ -125,8 +124,12 @@ const searchIpAddress = async () => {
     if (code === 200) {
       const userAgent = navigator.userAgent;
       const browserInfo = Bowser.parse(userAgent);
-      console.log(browserInfo, 1111111);
-      dataMap.addressInfo = { ...data, ...browserInfo };
+      dataMap.addressInfo = {
+        ...data,
+        os: browserInfo.os.name,
+        osVer: browserInfo.os.versionName,
+        browserName: browserInfo.browser.name,
+      };
     }
   } catch (error) {
     console.log(error, "error----------------------------");

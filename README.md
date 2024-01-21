@@ -7,9 +7,8 @@
 [预览博客](https://leviqin.top)
 
 ## 预览截图
-![](./preview/1700236160346.jpg)
-![](./preview/1700236223056.jpg)
-![](./preview/1700236277724.jpg)
+![](./preview/1705851852657.jpg)![](./preview/1705851962454.jpg)![](./preview/1705852033628.jpg)![](./preview/1705852088265.jpg)
+![](./preview/1705852155419.jpg)![](./preview/1705852234945.jpg)
 
 ## 所使用的依赖包介绍
 + 打包工具： `vite`
