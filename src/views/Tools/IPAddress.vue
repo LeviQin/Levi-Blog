@@ -63,14 +63,15 @@
               dataMap.addressInfo.rectangle || "-"
             }}</span>
           </el-form-item>
-          <el-form-item class="el-form-item-label" label="Win版本:">
+          <el-form-item class="el-form-item-label" label="OS:">
             <span class="el-form-item-value">{{
-              dataMap.addressInfo.windowsVersion || "-"
+              `${dataMap.addressInfo.os.name} ${dataMap.addressInfo.os.versionName}` ||
+              "-"
             }}</span>
           </el-form-item>
           <el-form-item class="el-form-item-label" label="浏览器:">
             <span class="el-form-item-value">{{
-              dataMap.addressInfo.browser || "-"
+              dataMap.addressInfo.browser.name || "-"
             }}</span>
           </el-form-item>
         </el-form>
@@ -83,6 +84,7 @@
 import { ref, reactive, onMounted } from "vue";
 import { identifyIpArea } from "@/api/tools";
 import { ElEMessage } from "@/utils/resetMessage.js";
+import Bowser from "bowser";
 
 onMounted(() => {
   isSidebarVisible.value = true;
@@ -121,8 +123,10 @@ const searchIpAddress = async () => {
     const res = await identifyIpArea({ ip: ip.value });
     const { code, data } = res.data;
     if (code === 200) {
-      const browser = navigator.userAgent.split(" ").at(-2);
-      dataMap.addressInfo = { ...data, browser };
+      const userAgent = navigator.userAgent;
+      const browserInfo = Bowser.parse(userAgent);
+      console.log(browserInfo, 1111111);
+      dataMap.addressInfo = { ...data, ...browserInfo };
     }
   } catch (error) {
     console.log(error, "error----------------------------");
