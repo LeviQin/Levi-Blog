@@ -11,7 +11,7 @@
     </div>
     <div class="sidebar-category-content">
       <ul class="sidebar-category-ul" @click="selectCategory">
-        <li :class="`sidebar-category-li`" data-router="/home">
+        <li :class="`sidebar-category-li`" data-router="/">
           <span><i class="bi bi-browser-safari"></i>综合</span>
           <i class="bi bi-chevron-right"></i>
         </li>

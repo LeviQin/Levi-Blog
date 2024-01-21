@@ -1,9 +1,9 @@
 <template>
   <div class="nav-bar">
     <ul class="nav-ul" @click="toPage">
-      <li class="nav-li active-li" data-router="/home">首页</li>
+      <li class="nav-li active-li" data-router="/">首页</li>
       <el-dropdown @command="handleCommandToPage">
-        <li class="nav-li">文章分类</li>
+        <li class="nav-li">笔迹分类</li>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item command="daily"
@@ -43,6 +43,7 @@
             <el-dropdown-item command="password">加密/解密</el-dropdown-item>
             <el-dropdown-item command="weather">天气查询</el-dropdown-item>
             <el-dropdown-item command="ip">IP地址查询</el-dropdown-item>
+            <el-dropdown-item command="unit">单位换算</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>

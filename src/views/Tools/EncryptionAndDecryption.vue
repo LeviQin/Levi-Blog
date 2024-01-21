@@ -1,6 +1,6 @@
 <template>
-  <div class="encryption-and-decryption">
-    <div class="tabs-card w">
+  <div class="encryption-and-decryption w">
+    <div class="tabs-card">
       <el-tabs tab-position="top" class="demo-tabs" type="border-card">
         <el-tab-pane label="AES加/解密">
           <AESPassword></AESPassword>

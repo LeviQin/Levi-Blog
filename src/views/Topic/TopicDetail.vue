@@ -6,7 +6,7 @@
         <sidebar-user></sidebar-user>
         <ul class="sidebar-ul nav" v-if="dataMap.titles.length">
           <div class="sidebar-name">
-            <span>文章目录</span>
+            <span>目录</span>
           </div>
           <el-divider />
           <div class="sidebar-content">

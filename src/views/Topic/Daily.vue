@@ -7,7 +7,7 @@
       </div>
       <article class="daily-main">
         <div class="waterfall-container">
-          <wc-waterfall :gap="10" :cols="cols">
+          <wc-waterfall :gap="20" :cols="cols">
             <div
               class="waterfall-item"
               @click="toDetail(item)"

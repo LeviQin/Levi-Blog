@@ -16,6 +16,7 @@
           @input="changeSearch"
           v-model="keyword"
           placeholder="查询关键词"
+          ref="searchInputRef"
         ></el-input>
       </div>
       <div class="dividing-line">
@@ -43,18 +44,13 @@
 </template>
 
 <script setup>
-import { ref, defineExpose, reactive, nextTick } from "vue";
+import { ref, defineExpose, reactive, nextTick, onUnmounted } from "vue";
 import { getKeywordResult } from "@/api/articles.js";
 import { debounce } from "@/utils/utils.js";
 import { ElNotification } from "element-plus";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
-onMounted(() => {
-  setDialogWidth();
-  window.addEventListener("resize", setDialogWidth, true);
-});
 
 onUnmounted(() => {
   window.removeEventListener("resize", setDialogWidth, true);
@@ -67,6 +63,7 @@ const dataMap = reactive({
 let dialogVisible = ref(false);
 let dialogWidth = ref("500px");
 let keyword = ref("");
+let searchInputRef = ref(null);
 
 const setDialogWidth = () => {
   if (window.innerWidth <= 480) {
@@ -78,6 +75,11 @@ const setDialogWidth = () => {
 
 const show = () => {
   dialogVisible.value = true;
+  setDialogWidth();
+  window.addEventListener("resize", setDialogWidth, true);
+  nextTick(() => {
+    console.log(searchInputRef.value.focus(), 111111111111);
+  });
 };
 
 const close = () => {

@@ -63,6 +63,16 @@
               dataMap.addressInfo.rectangle || "-"
             }}</span>
           </el-form-item>
+          <el-form-item class="el-form-item-label" label="Win版本:">
+            <span class="el-form-item-value">{{
+              dataMap.addressInfo.windowsVersion || "-"
+            }}</span>
+          </el-form-item>
+          <el-form-item class="el-form-item-label" label="浏览器:">
+            <span class="el-form-item-value">{{
+              dataMap.addressInfo.browser || "-"
+            }}</span>
+          </el-form-item>
         </el-form>
       </div>
     </div>
@@ -111,7 +121,8 @@ const searchIpAddress = async () => {
     const res = await identifyIpArea({ ip: ip.value });
     const { code, data } = res.data;
     if (code === 200) {
-      dataMap.addressInfo = data;
+      const browser = navigator.userAgent.split(" ").at(-2);
+      dataMap.addressInfo = { ...data, browser };
     }
   } catch (error) {
     console.log(error, "error----------------------------");
@@ -213,6 +224,10 @@ const getIpAddress = async () => {
 .el-form-item-value {
   font-weight: 600;
   word-break: break-all;
+}
+
+::v-deep .el-form-item {
+  margin-bottom: 10px;
 }
 
 @media (max-width: 860px) {

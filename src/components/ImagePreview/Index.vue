@@ -150,7 +150,7 @@ defineExpose({
   cursor: pointer;
 
   .bi {
-    font-size: 30px;
+    font-size: 50px;
   }
 }
 

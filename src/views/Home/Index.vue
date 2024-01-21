@@ -122,7 +122,7 @@ const scrollWidnow = () => {
     requestAnimationFrame(() => {
       const top = window.scrollY;
       const bannerBar = document.querySelector(".banner-bar");
-      const threshold = route.path === "/home" ? 500 : 100;
+      const threshold = route.path === "/" ? 500 : 100;
       if (top > threshold) {
         bannerBar.classList.add("container-blur");
       } else {

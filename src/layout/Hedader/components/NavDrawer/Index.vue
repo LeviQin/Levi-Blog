@@ -19,7 +19,7 @@
         <li class="nav-drawer-li" data-router="/">首页</li>
         <div class="collapse-card">
           <li class="nav-drawer-li" id="topic" @click="clickTopic">
-            <span>文章分类</span><i class="bi bi-chevron-down bi-topic-icon"></i>
+            <span>笔迹分类</span><i class="bi bi-chevron-down bi-topic-icon"></i>
           </li>
           <transition name="bounce">
             <div
@@ -71,6 +71,7 @@
               <li data-router="/password">加密/解密</li>
               <li data-router="/weather">天气查询</li>
               <li data-router="/ip">IP地址查询</li>
+              <li data-router="/unit">单位换算</li>
             </ul>
           </div>
         </transition>

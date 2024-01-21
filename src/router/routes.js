@@ -4,13 +4,13 @@ import Home from "@/views/Home/Index.vue";
 export default [{
         path: "/",
         component: Layout,
-        redirect: "/home",
+        redirect: "/",
         children: [{
-                path: "/home",
+                path: "/",
                 component: Home,
                 name: "Home",
                 meta: {
-                    title: "Levi的博客，记录分享前端知识，工作中遇到的问题和心得，以及日常的生活风景与萌宠",
+                    title: "Levi 笔迹分享",
                 }
             },
             {
@@ -18,7 +18,7 @@ export default [{
                 component: () => import("@/views/Topic/Daily.vue"),
                 name: "Daily",
                 meta: {
-                    title: "文章分类（日常）",
+                    title: "笔迹分类（日常）",
                 }
             },
             {
@@ -26,7 +26,7 @@ export default [{
                 component: () => import("@/views/Topic/Technology.vue"),
                 name: "Technology",
                 meta: {
-                    title: "文章分类（技术）",
+                    title: "笔迹分类（技术）",
                 }
             },
             {
@@ -34,7 +34,7 @@ export default [{
                 component: () => import("@/views/Topic/CutePet.vue"),
                 name: "Cute Pet",
                 meta: {
-                    title: "文章分类（萌宠）",
+                    title: "笔迹分类（萌宠）",
                 }
             },
             {
@@ -42,7 +42,7 @@ export default [{
                 component: () => import("@/views/Topic/Landscape.vue"),
                 name: "Landscape",
                 meta: {
-                    title: "文章分类（风景）",
+                    title: "笔迹分类（风景）",
                 }
             },
             {
@@ -50,7 +50,7 @@ export default [{
                 component: () => import("@/views/Topic/notes.vue"),
                 name: "Notes",
                 meta: {
-                    title: "文章分类（笔记）",
+                    title: "笔迹分类（笔记）",
                 }
             },
             {
@@ -58,7 +58,7 @@ export default [{
                 component: () => import("@/views/Topic/Figure.vue"),
                 name: "Figure",
                 meta: {
-                    title: "文章分类（人物）",
+                    title: "笔迹分类（人物）",
                 }
             },
             {
@@ -66,7 +66,7 @@ export default [{
                 component: () => import("@/views/Topic/Game.vue"),
                 name: "Game",
                 meta: {
-                    title: "文章分类（游戏）",
+                    title: "笔迹分类（游戏）",
                 }
             },
             {
@@ -74,7 +74,7 @@ export default [{
                 component: () => import("@/views/Topic/Embarrassing.vue"),
                 name: "Embarrassing",
                 meta: {
-                    title: "文章分类（囧事）",
+                    title: "笔迹分类（囧事）",
                 }
             },
             {
@@ -82,7 +82,7 @@ export default [{
                 component: () => import("@/views/Topic/TopicDetail.vue"),
                 name: "Topic Detail",
                 meta: {
-                    title: "文章分类详情",
+                    title: "笔迹详情",
                 }
             },
             {
@@ -107,6 +107,14 @@ export default [{
                 name: "IP",
                 meta: {
                     title: "IP地址查询",
+                }
+            },
+            {
+                path: "/unit",
+                component: () => import("@/views/Tools/UnitConversion.vue"),
+                name: "Unit",
+                meta: {
+                    title: "单位换算",
                 }
             },
             {
