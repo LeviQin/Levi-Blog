@@ -1,16 +1,19 @@
 <template>
-  <div class="preview-modal" v-if="showPreview">
+  <div class="preview-modal" v-if="showPreview" @click="closePreview">
+    <div class="preview-num-box">
+      <span>{{ dataMap.currentIndex + 1 }}/{{ dataMap.images.length }}</span>
+    </div>
     <div class="close-button">
       <i class="bi bi-x-circle" @click="closePreview" title="关闭"></i>
     </div>
-    <div class="preview-img" @wheel="handleWheel">
+    <div class="preview-img" @wheel="handleWheel" @click.stop>
       <img
         :src="dataMap.images[dataMap.currentIndex]"
         alt="Preview"
         :style="{ transform: `scale(${scale}) rotate(${rotation}deg)` }"
       />
     </div>
-    <div class="preview-btn">
+    <div class="preview-btn" @click.stop>
       <i class="bi bi-zoom-in" title="放大" @click="scaleImage(`in`)"></i>
       <i class="bi bi-zoom-out" title="缩小" @click="scaleImage(`out`)"></i>
       <i class="bi bi-arrow-clockwise" title="旋转" @click="rotateImage"></i>
@@ -21,6 +24,7 @@
       @click="prevImage"
       v-show="dataMap.currentIndex > 0"
       title="上一张"
+      @click.stop
     >
       <i class="bi bi-chevron-left"></i>
     </div>
@@ -29,6 +33,7 @@
       @click="nextImage"
       v-show="dataMap.currentIndex < dataMap.images.length - 1"
       title="下一张"
+      @click.stop
     >
       <i class="bi bi-chevron-right"></i>
     </div>
@@ -36,7 +41,8 @@
 </template>
 
 <script setup>
-import { ref, reactive, defineExpose } from "vue";
+import { ref, reactive, defineExpose, nextTick } from "vue";
+import Hammer from "hammerjs";
 
 const dataMap = reactive({
   images: [],
@@ -92,6 +98,20 @@ const show = (images, currentIndex) => {
   dataMap.currentIndex = currentIndex;
   showPreview.value = true;
   document.body.style.overflow = "hidden"; // 禁止body滚动
+
+  nextTick(() => {
+    const container = document.querySelector(".preview-img");
+    // 初始化 Hammer 实例
+    const hammer = new Hammer(container);
+    // 监听左右滑动手势
+    hammer.on("swipeleft swiperight", (event) => {
+      if (event.type === "swipeleft") {
+        nextImage();
+      } else if (event.type === "swiperight") {
+        prevImage();
+      }
+    });
+  });
 };
 
 const closePreview = () => {
@@ -100,14 +120,25 @@ const closePreview = () => {
 };
 
 const nextImage = () => {
-  dataMap.currentIndex = (dataMap.currentIndex + 1) % dataMap.images.length;
-  scale.value = 1;
+  if (dataMap.currentIndex < dataMap.images.length - 1) {
+    dataMap.currentIndex++;
+    scale.value = 1;
+  } else {
+    // 如果已经是最后一张图片，禁止滑动
+    const hammer = new Hammer(document.querySelector(".preview-img"));
+    hammer.off("swipeleft"); // 移除 swipeleft 事件监听
+  }
 };
 
 const prevImage = () => {
-  dataMap.currentIndex =
-    (dataMap.currentIndex - 1 + dataMap.images.length) % dataMap.images.length;
-  scale.value = 1;
+  if (dataMap.currentIndex > 0) {
+    dataMap.currentIndex--;
+    scale.value = 1;
+  } else {
+    // 如果已经是第一张图片，禁止滑动
+    const hammer = new Hammer(document.querySelector(".preview-img"));
+    hammer.off("swiperight"); // 移除 swiperight 事件监听
+  }
 };
 
 defineExpose({
@@ -136,11 +167,22 @@ defineExpose({
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.3s ease; /* 添加过渡效果 */
+  transition: transform 0.3s ease;
+
+  /* 添加过渡效果 */
   img {
     width: 100%;
     height: 100%;
   }
+}
+
+.preview-num-box {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  z-index: 999999;
 }
 
 .close-button {
@@ -148,6 +190,7 @@ defineExpose({
   top: 20px;
   right: 30px;
   cursor: pointer;
+  z-index: 999999;
 
   .bi {
     font-size: 50px;
@@ -207,6 +250,11 @@ defineExpose({
     .bi {
       font-size: 30px;
     }
+  }
+
+  .prev-btn,
+  .next-btn {
+    display: none;
   }
 }
 </style>
