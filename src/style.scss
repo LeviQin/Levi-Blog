@@ -85,6 +85,7 @@
 .pagination-box {
   display: flex;
   justify-content: center;
+  margin-top: 30px;
 }
 
 .tags-item {
@@ -115,24 +116,30 @@
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
   border-radius: var(--themeRadius);
   cursor: pointer;
+}
+
+.waterfall-item .img-box {
+  margin: 10px;
   overflow: hidden;
+  border-radius: var(--themeRadius);
 }
 
 .waterfall-item img {
   width: 100%;
   transition: all .3s;
   object-fit: cover;
-  max-height: 260px;
+  max-height: 210px;
+  border-radius: var(--themeRadius);
 }
 
 .waterfall-item img:hover {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .waterfall-title {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 30px;
-  padding: 0 10px;
+  padding: 0 20px;
 }
 
 .waterfall-footer {
@@ -141,7 +148,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   color: #3c3b3b;
-  padding: 0 10px 20px 10px;
+  padding: 0 20px 20px 20px;
 }
 
 .waterfall-footer-bar {
@@ -164,7 +171,6 @@
   .waterfall-title {
     font-size: 12px;
     line-height: 20px;
-    padding: 0 10px;
   }
 
   .waterfall-footer {

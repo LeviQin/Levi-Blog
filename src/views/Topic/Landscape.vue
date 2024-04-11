@@ -145,14 +145,6 @@ const getData = async () => {
   flex: 1;
 }
 
-.landscape .waterfall-item {
-  background: #fff;
-  border-radius: var(--themeRadius);
-  cursor: pointer;
-  overflow: hidden;
-  display: flex;
-}
-
 .is-top-box {
   position: absolute;
   top: 5px;
@@ -189,6 +181,10 @@ const getData = async () => {
 
 .num-text {
   margin: 5px;
+}
+
+.waterfall-item {
+  background: transparent !important;
 }
 
 @media (max-width: 860px) {

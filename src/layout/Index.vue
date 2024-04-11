@@ -123,10 +123,4 @@ const scrollWidnow = () => {
   z-index: -1;
   transition: filter 2s ease, transform 2s ease;
 }
-
-@media (max-width: 860px) {
-  .layout {
-    display: block;
-  }
-}
 </style>

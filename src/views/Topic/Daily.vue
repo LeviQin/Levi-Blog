@@ -18,12 +18,14 @@
               <div class="is-top-box" v-if="item.is_top">
                 <i class="bi bi-pin-angle-fill"></i>
               </div>
-              <img
-                class="cover-img"
-                v-lazy="item.image"
-                fit="scale-down"
-                :alt="item.title"
-              />
+              <div class="img-box">
+                <img
+                  class="cover-img"
+                  v-lazy="item.image"
+                  fit="scale-down"
+                  :alt="item.title"
+                />
+              </div>
               <div class="waterfall-title">
                 <h2>{{ item.title }}</h2>
               </div>
