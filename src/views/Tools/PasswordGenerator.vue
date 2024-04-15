@@ -1,5 +1,5 @@
 <template>
-  <div class="weather w theme-bg-color"></div>
+  <div class="password w theme-bg-color"></div>
 </template>
 
 <script setup>
@@ -42,12 +42,12 @@ const getWeatherInfo = async (cityCode) => {
 </script>
 
 <style lang="scss" scoped>
-.weather {
+.password {
   border-radius: var(--themeRadius);
 }
 
 @media (max-width: 860px) {
-  .weather {
+  .password {
     margin: 0 20px;
   }
 }

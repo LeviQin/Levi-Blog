@@ -36,7 +36,6 @@
   min-width: var(--minWidth);
   height: 100%;
   margin: 0 auto;
-  padding: 0 20px;
 }
 
 .lv-card {
@@ -44,6 +43,10 @@
   padding: 20px;
   border-radius: 5px;
   border: 1px solid #dcdfe6;
+}
+
+.theme-bg-color {
+  background: var(--themeColor);
 }
 
 .red-text {

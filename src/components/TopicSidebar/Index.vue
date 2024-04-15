@@ -141,8 +141,7 @@ const selectCategory = (e) => {
 
 .tags-item {
   margin: 2px 5px;
-  font-weight: 600;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .bi-hdd-stack,

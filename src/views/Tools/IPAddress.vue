@@ -10,7 +10,13 @@
           <span class="user-ip" @click="searchUserIp">{{ userIp }}</span>
         </div>
         <div class="search-bar-item-box search-bar-inupt-card">
-          <el-input size="large" v-model="ip" placeholder="IP 地址"></el-input>
+          <el-input
+            @keyup.enter="searchIpAddress"
+            :prefix-icon="Location"
+            size="large"
+            v-model="ip"
+            placeholder="IP 地址"
+          ></el-input>
         </div>
         <div class="search-bar-item-box search-bar-btn-card">
           <el-button size="large" type="primary" @click="searchIpAddress">查询</el-button>
@@ -45,25 +51,20 @@
           <el-form-item class="el-form-item-label" label="IP地址:">
             <span class="el-form-item-value">{{ dataMap.addressInfo.ip || "-" }}</span>
           </el-form-item>
-          <el-form-item class="el-form-item-label" label="省:">
+          <el-form-item class="el-form-item-label" label="省份:">
             <span class="el-form-item-value">{{
               dataMap.addressInfo.province || "-"
             }}</span>
           </el-form-item>
-          <el-form-item class="el-form-item-label" label="市:">
+          <el-form-item class="el-form-item-label" label="城市:">
             <span class="el-form-item-value">{{ dataMap.addressInfo.city || "-" }}</span>
-          </el-form-item>
-          <el-form-item class="el-form-item-label" label="城市编码:">
-            <span class="el-form-item-value">{{
-              dataMap.addressInfo.adcode || "-"
-            }}</span>
           </el-form-item>
           <el-form-item class="el-form-item-label" label="经纬度:">
             <span class="el-form-item-value">{{
               dataMap.addressInfo.rectangle || "-"
             }}</span>
           </el-form-item>
-          <el-form-item class="el-form-item-label" label="OS:">
+          <el-form-item class="el-form-item-label" label="操作系统:">
             <span class="el-form-item-value">{{
               `${dataMap.addressInfo.os || "-"} ${dataMap.addressInfo.osVer || ""}`
             }}</span>
@@ -84,6 +85,7 @@ import { ref, reactive, onMounted } from "vue";
 import { identifyIpArea } from "@/api/tools";
 import { ElEMessage } from "@/utils/resetMessage.js";
 import Bowser from "bowser";
+import { Location } from "@element-plus/icons-vue";
 
 onMounted(() => {
   isSidebarVisible.value = true;
@@ -130,6 +132,15 @@ const searchIpAddress = async () => {
         osVer: browserInfo.os.versionName,
         browserName: browserInfo.browser.name,
       };
+      for (const key in dataMap.addressInfo) {
+        if (Object.hasOwnProperty.call(dataMap.addressInfo, key)) {
+          if (
+            Array.isArray(dataMap.addressInfo[key]) &&
+            dataMap.addressInfo[key].length < 1
+          )
+            dataMap.addressInfo[key] = "";
+        }
+      }
     }
   } catch (error) {
     console.log(error, "error----------------------------");
@@ -224,20 +235,24 @@ const getIpAddress = async () => {
 
 .details-box-title {
   font-size: 24px;
-  text-align: center;
   color: var(--balckTextColor);
 }
 
 .el-form-item-value {
-  font-weight: 600;
+  font-weight: 400;
   word-break: break-all;
 }
 
-::v-deep .el-form-item {
+:v-deep .el-form-item {
   margin-bottom: 10px;
+  font-weight: 600;
 }
 
 @media (max-width: 860px) {
+  .ip-address {
+    margin: 0 20px;
+  }
+
   .search-bar {
     display: block;
   }

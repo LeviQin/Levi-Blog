@@ -48,31 +48,11 @@ const clickCollapse = () => {
 
 const scrollWidnow = (e) => {
   const header = document.querySelector(".header");
-  const logh1 = document.querySelector(".log-text h1");
-  const biSearch = document.querySelector(".search-card .bi-search");
-  const collapseIcon = document.querySelector(".menu-icon-card .collapse-icon");
-  const navlis = document.querySelectorAll(".nav-li");
   const top = e?.srcElement?.scrollingElement?.scrollTop; // 获取页面滚动高度
   header.style.transition = "0.5s linear";
-  header.style.background = `linear-gradient(60deg,rgba(255,215,228, ${
+  header.style.background = `linear-gradient(60deg,rgba(0,0,0, ${
     top / 200
-  }) 0,rgba(200,241,255, ${top / 200}) 93%)`;
-  if (top > 100) {
-    logh1.style.color = `var(--balckTextColor)`;
-    biSearch.style.color = `var(--balckTextColor)`;
-    collapseIcon.style.color = `var(--balckTextColor)`;
-    navlis.forEach((ele) => {
-      ele.style.color = `var(--balckTextColor)`;
-    });
-  } else {
-    logh1.style.color = `var(--navTextColor)`;
-    biSearch.style.color = `var(--navTextColor)`;
-    collapseIcon.style.color = `var(--navTextColor)`;
-    navlis.forEach((ele) => {
-      ele.style.color = `var(--navTextColor)`;
-    });
-    header.style.boxShadow = `none`;
-  }
+  }) 0,rgba(0,0,0, ${top / 200}) 93%)`;
 };
 const showSearchModel = () => {
   searchModelRef.value.show();

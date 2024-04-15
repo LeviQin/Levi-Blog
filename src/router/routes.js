@@ -118,17 +118,25 @@ export default [{
                 }
             },
             {
-                path: "/password",
+                path: "/encryption",
                 component: () => import("@/views/Tools/EncryptionAndDecryption.vue"),
-                name: "Password",
+                name: "Encryption",
                 meta: {
-                    title: "密码",
+                    title: "加密/解密",
                 }
             },
             {
                 path: "/weather",
                 component: () => import("@/views/Tools/Weather.vue"),
                 name: "Weather",
+                meta: {
+                    title: "天气查询",
+                }
+            },
+            {
+                path: "/password",
+                component: () => import("@/views/Tools/PasswordGenerator.vue"),
+                name: "Password",
                 meta: {
                     title: "天气查询",
                 }

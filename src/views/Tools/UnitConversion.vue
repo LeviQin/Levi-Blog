@@ -1,5 +1,5 @@
 <template>
-  <div class="unit-conversion w">
+  <div class="unit-conversion w theme-bg-color">
     <div class="unit-conversion-container" ref="unitConversionContainerRef">
       <div class="unit-conversion-title">
         <h1>单位换算</h1>
@@ -268,7 +268,6 @@ const clearData = () => {
 
 <style lang="scss" scoped>
 .unit-conversion-container {
-  background: var(--themeColor);
   border-radius: var(--themeRadius);
   padding: 20px;
 }

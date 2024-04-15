@@ -68,10 +68,11 @@
             v-show="showToolsCollapse"
           >
             <ul @click="toPage">
-              <li data-router="/password">加密/解密</li>
+              <li data-router="/encryption">加密/解密</li>
               <li data-router="/weather">天气查询</li>
               <li data-router="/ip">IP地址查询</li>
               <li data-router="/unit">单位换算</li>
+              <li data-router="/password">密码生成器</li>
             </ul>
           </div>
         </transition>

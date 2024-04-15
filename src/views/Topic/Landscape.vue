@@ -17,7 +17,6 @@
               <div class="is-top-box" v-if="item.is_top">
                 <i class="bi bi-pin-angle-fill"></i>
               </div>
-              <div class="triangle-box" v-if="item.is_top"></div>
               <img
                 class="cover-img"
                 v-lazy="item.image"
@@ -147,36 +146,19 @@ const getData = async () => {
 
 .is-top-box {
   position: absolute;
-  top: 5px;
+  top: 0;
   left: 0;
   z-index: 10;
 
   .bi {
-    font-size: 26px;
+    font-size: 30px;
     color: var(--btnTagBgColor);
   }
-}
-
-.triangle-box {
-  position: absolute;
-  transform: rotate(45deg);
-  top: -40px;
-  left: -40px;
-  width: 80px;
-  height: 80px;
-  background: #fff;
-  z-index: 9;
 }
 
 .landscape .waterfall-footer {
   justify-content: space-between;
   flex-wrap: wrap;
-}
-
-.bi {
-  margin-right: 10px;
-  font-style: normal;
-  font-size: 16px;
 }
 
 .num-text {
@@ -194,29 +176,6 @@ const getData = async () => {
 
   .num-text {
     margin: 2px;
-  }
-
-  .is-top-box {
-    position: absolute;
-    top: 5px;
-    left: 7px;
-    z-index: 10;
-
-    .bi {
-      font-size: 16px;
-      color: rgb(240, 139, 8);
-    }
-  }
-
-  .triangle-box {
-    position: absolute;
-    transform: rotate(45deg);
-    top: -30px;
-    left: -30px;
-    width: 60px;
-    height: 60px;
-    background: #fff;
-    z-index: 9;
   }
 }
 </style>

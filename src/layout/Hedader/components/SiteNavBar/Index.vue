@@ -40,10 +40,11 @@
         <li class="nav-li">小工具</li>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item command="password">加密/解密</el-dropdown-item>
+            <el-dropdown-item command="encryption">加密/解密</el-dropdown-item>
             <el-dropdown-item command="weather">天气查询</el-dropdown-item>
             <el-dropdown-item command="ip">IP地址查询</el-dropdown-item>
             <el-dropdown-item command="unit">单位换算</el-dropdown-item>
+            <el-dropdown-item command="password">密码生成器</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>

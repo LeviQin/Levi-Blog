@@ -168,4 +168,8 @@ export const tagMap = [
     value: "42",
     label: "我家猫猫",
   },
+  {
+    value: "43",
+    label: "摄影",
+  },
 ];
