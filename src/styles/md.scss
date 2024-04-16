@@ -56,6 +56,7 @@
 
 .vuepress-markdown-body p {
     color: var(--balckTextColor);
+    overflow-wrap: break-word;
 }
 
 .vuepress-markdown-body h2 {
