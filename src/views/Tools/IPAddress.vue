@@ -51,6 +51,9 @@
       </div>
       <div class="search-bar-right theme-bg-color">
         <div class="search-bar-item-box details-box-title">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-IPdizhi"></use>
+          </svg>
           <span>IP地址详情</span>
         </div>
         <el-form
@@ -246,6 +249,14 @@ const getIpAddress = async () => {
 .details-box-title {
   font-size: 24px;
   color: var(--balckTextColor);
+  display: flex;
+  align-items: center;
+}
+
+.details-box-title .icon {
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 10px;
 }
 
 .el-form-item-value {

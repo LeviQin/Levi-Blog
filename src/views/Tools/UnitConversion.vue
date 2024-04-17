@@ -17,6 +17,9 @@
   <div class="unit-conversion w theme-bg-color">
     <div class="unit-conversion-container" ref="unitConversionContainerRef">
       <div class="unit-conversion-title">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-danweihuansuanx"></use>
+        </svg>
         <h1>单位换算</h1>
       </div>
       <div class="select-type-box">
@@ -287,9 +290,19 @@ const clearData = () => {
   padding: 20px;
 }
 
+.unit-conversion-title {
+  display: flex;
+  align-items: center;
+}
+
+.unit-conversion-title .icon {
+  width: 1.8em;
+  height: 1.8em;
+  margin-right: 10px;
+}
+
 .unit-conversion-title h1 {
   font-size: 24px;
-  padding-bottom: 10px;
 }
 
 .data-box,
@@ -357,6 +370,10 @@ const clearData = () => {
 }
 
 @media (max-width: 860px) {
+  .unit-conversion-title {
+    padding-bottom: 15px;
+  }
+
   .select-type-label,
   .data-input-label,
   .result-input-label {

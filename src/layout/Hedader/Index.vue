@@ -110,6 +110,10 @@ const showSearchModel = () => {
     height: var(--headerMobileBarHeight);
   }
 
+  .nav-card {
+    padding: 0 15px;
+  }
+
   .menu-icon-card {
     display: flex !important;
     align-items: center;

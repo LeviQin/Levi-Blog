@@ -70,4 +70,19 @@ const getWeatherInfo = async (cityCode) => {
 .password .content {
   padding: 20px;
 }
+
+.tool-title {
+  display: flex;
+  align-items: center;
+}
+
+.tool-title h1 {
+  font-size: 24px;
+}
+
+.tool-title .icon {
+  width: 1.8em;
+  height: 1.8em;
+  margin-right: 10px;
+}
 </style>

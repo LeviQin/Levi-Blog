@@ -144,10 +144,13 @@ const close = () => {
 };
 
 const toPage = (e) => {
-  const path = e.target.getAttribute("data-router");
-  if (path) {
-    router.push(path);
-    drawer.value = false;
+  const target = e.target.closest("li");
+  if (target) {
+    const path = target.getAttribute("data-router");
+    if (path) {
+      router.push(path);
+      drawer.value = false;
+    }
   }
 };
 

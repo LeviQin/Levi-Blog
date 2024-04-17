@@ -169,7 +169,6 @@ const getArticleDetail = async () => {
         item.published_at = dateToString(item.published_at);
         return item;
       })[0];
-      console.log(dataMap.articleInfo, 111111111);
       document.title = `${dataMap.articleInfo.title} - Levi 笔迹分享`;
     } else {
       console.log(message, "------------------------");
