@@ -1,73 +1,109 @@
 <template>
+  <Head>
+    <meta
+      name="keywords"
+      content="常用网站，网站导航，技术，设计，博客，论坛，工具服务，社交媒体，新闻资讯"
+    />
+    <meta
+      name="description"
+      content="在这里，我们为您汇聚了各种常用网站，包括技术、设计、博客、论坛、工具服务、社交媒体和新闻资讯等，方便您随时一键直达，提升您的上网体验。"
+    />
+    <meta
+      property="og:description"
+      content="在这里，我们为您汇聚了各种常用网站，包括技术、设计、博客、论坛、工具服务、社交媒体和新闻资讯等，方便您随时一键直达，提升您的上网体验。"
+    />
+  </Head>
+
   <div class="container">
     <div class="website-card w">
-      <!-- <el-tabs tab-position="left" class="tabs-card" type="border-card">
-        <el-tab-pane label="文档">
-          <div class="tab-item">
-            <div class="website-item-card" v-for="item in documentMap" :key="item.id">
-              <div class="website-item" @click="toSitePage(item.url)">
-                <div class="website-img">
-                  <img :src="item.image" :alt="item.title" />
-                </div>
-                <div class="website-title">
-                  <span>{{ item.title }}</span>
-                </div>
-              </div>
+      <div class="select-category-box">
+        <ul class="select-category-ul">
+          <li
+            v-for="category in categories"
+            :key="category.value"
+            @click="selectCategory(category)"
+            :class="{ 'active-category': selectedCategory === category.label }"
+          >
+            {{ category.label }}
+          </li>
+        </ul>
+      </div>
+      <div class="nav-content">
+        <div class="nav-item" v-for="item in dataMap.data" @click="toSitePage(item.url)">
+          <div class="nav-img">
+            <img :src="item.image" :alt="item.title" />
+          </div>
+          <div class="nav-item-content">
+            <div class="nav-title">
+              <h4>{{ item.title }}</h4>
+            </div>
+            <div class="nav-description">
+              <p>{{ item.description }}</p>
             </div>
           </div>
-        </el-tab-pane>
-        <el-tab-pane label="社区">
-          <div class="tab-item">
-            <div class="website-item-card" v-for="item in communityMap" :key="item.id">
-              <div class="website-item" @click="toSitePage(item.url)">
-                <div class="website-img">
-                  <img :src="item.image" :alt="item.title" />
-                </div>
-                <div class="website-title">
-                  <span>{{ item.title }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="工具">
-          <div class="tab-item">
-            <div class="website-item-card" v-for="item in toolMap" :key="item.id">
-              <div class="website-item" @click="toSitePage(item.url)">
-                <div class="website-img">
-                  <img :src="item.image" :alt="item.title" />
-                </div>
-                <div class="website-title">
-                  <span>{{ item.title }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </el-tab-pane>
-      </el-tabs> -->
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { getSiteList } from "@/api/webdev";
+import { Head } from "@vueuse/head";
 
 onMounted(() => {
   getSiteNavList();
 });
 
-let documentMap = ref([]);
-let communityMap = ref([]);
-let toolMap = ref([]);
+const dataMap = reactive({
+  tableData: [],
+  data: [],
+});
+
+let categories = [
+  {
+    value: 1,
+    label: "技术资源",
+  },
+  {
+    value: 2,
+    label: "设计资源",
+  },
+  {
+    value: 3,
+    label: "博客论坛",
+  },
+  {
+    value: 4,
+    label: "工具服务",
+  },
+  {
+    value: 5,
+    label: "学习平台",
+  },
+  {
+    value: 6,
+    label: "社交媒体",
+  },
+  {
+    value: 7,
+    label: "新闻资讯",
+  },
+];
+const selectedCategory = ref(categories[0].label);
+
+const selectCategory = (category) => {
+  selectedCategory.value = category.label;
+  dataMap.data = dataMap.tableData.filter((item) => item.type === category.value);
+};
 
 const getSiteNavList = async () => {
   const res = await getSiteList();
   const { code, data } = res.data;
   if (code === 200) {
-    documentMap.value = data.filter((item) => item.type === 1);
-    communityMap.value = data.filter((item) => item.type === 2);
-    toolMap.value = data.filter((item) => item.type === 3);
+    dataMap.tableData = data;
+    dataMap.data = dataMap.tableData.filter((item) => item.type === 1);
   }
 };
 
@@ -77,61 +113,99 @@ const toSitePage = (url) => {
 </script>
 
 <style lang="scss" scoped>
-.tab-item {
+.website-card {
+  padding-top: 20px;
+}
+
+.select-category-ul {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
 }
 
-.website-item-card {
-  position: relative;
-  width: 270px;
-  height: 150px;
+.select-category-ul li {
+  padding: 12px 18px;
+  border-radius: var(--themeRadius);
+  background: #fff;
+  cursor: pointer;
   margin: 10px;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  .website-item {
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    border-radius: 15px;
-    top: 0;
-    position: absolute;
-    transition: all 0.4s;
-    background: linear-gradient(to bottom, #ffffff, #ecf0f9);
-    border: 2px solid #fff;
-    box-shadow: 8px 8px 20px 0 rgb(55 99 170 / 10%);
-    background-image: linear-gradient(0deg, #fff, #f3f5f8);
+.active-category {
+  background: var(--btnTagBgColor) !important;
+  color: #fff;
+}
 
-    &:hover {
-      position: absolute;
-      top: -8px;
-      transition: all 0.4s;
-    }
+.nav-content {
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
 
-    .website-img {
-      margin-top: 20px;
-      width: 100%;
-      height: 70px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      img {
-        width: 80%;
-        height: 80%;
-        object-fit: contain;
-      }
-    }
-
-    .website-title {
-      text-align: center;
-      line-height: 50px;
-      color: #383e4a;
-      font-size: 22px;
-    }
+.nav-item {
+  padding: 15px;
+  border-radius: var(--themeRadius);
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  width: 25%;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s;
+  &:hover {
+    transform: translateY(-10px);
+    transition: all 0.3s;
   }
 }
 
-.tabs-card {
+.nav-item .nav-img {
+  width: 60px;
+  margin-right: 12px;
+}
+
+.nav-item-content {
+  flex: 1;
+}
+
+.nav-title h4 {
+  margin: 5px 0;
+}
+
+.nav-description p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.nav-item .nav-img img {
   width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 860px) {
+  .website-card {
+    padding-top: 0;
+  }
+
+  .select-category-ul li {
+    margin: 5px;
+  }
+}
+
+@media (max-width: 700px) {
+  .nav-item {
+    width: 40%;
+  }
+}
+
+@media (max-width: 550px) {
+  .nav-item {
+    width: 100%;
+  }
 }
 </style>
