@@ -1,4 +1,16 @@
 <template>
+  <Head>
+    <meta name="keywords" content="猫咪，萌宠，小狗，动物，宠物，可爱宠物，动物照片" />
+    <meta
+      name="description"
+      content="记录各种可爱的萌宠和小动物，呈现一个充满快乐和温暖的动物照片墙。"
+    />
+    <meta
+      property="og:description"
+      content="记录各种可爱的萌宠和小动物，呈现一个充满快乐和温暖的动物照片墙。"
+    />
+  </Head>
+
   <div class="cute-pet w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="cute-pet-container page-container" ref="cutePetContainerRef">
@@ -66,6 +78,7 @@ import { getCategoryArticles } from "@/api/articles.js";
 import dayjs from "dayjs";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
+import { Head } from "@vueuse/head";
 
 const router = useRouter();
 

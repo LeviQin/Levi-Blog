@@ -1,5 +1,6 @@
 <template>
   <Head>
+    <meta name="keywords" content="安全, 随机, 强大, 随机密码, 生成强密码, 密码生成器" />
     <meta
       name="description"
       content="✓安全 ✓随机 ✓强大 —— 使用我们的随机密码生成器生成强密码。"

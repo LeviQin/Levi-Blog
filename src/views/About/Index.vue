@@ -1,4 +1,22 @@
 <template>
+  <Head>
+    <meta
+      name="keywords"
+      content="前端开发，HTML5、CSS3、ES6、JavaScript，Vue2、Vue3，Flutter，跨平台开发，小程序，Node.js"
+    />
+    <meta
+      name="description"
+      content="我是一名Web前端开发，目前就职于深圳市笨鸟软件有限公司，有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术，擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js"
+    />
+    <meta
+      property="og:description"
+      content="我是一名Web前端开发，目前就职于深圳市笨鸟软件有限公司，有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术，擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js"
+    />
+    <meta
+      name="twitter:description"
+      content="我是一名Web前端开发，目前就职于深圳市笨鸟软件有限公司，有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术, 擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js"
+    />
+  </Head>
   <div class="about">
     <div class="about-header">
       <div class="about-header-nav w">
@@ -47,6 +65,7 @@ import Work from "./Work.vue";
 import Ability from "./Ability.vue";
 import Connect from "./Connect.vue";
 import Hammer from "hammerjs";
+import { Head } from "@vueuse/head";
 
 onMounted(() => {
   const mc = new Hammer(carouselRef.value.$el);

@@ -1,4 +1,10 @@
 <template>
+  <Head>
+    <meta name="keywords" :content="dataMap.articleInfo.title" />
+    <meta name="description" :content="dataMap.articleInfo.article_description" />
+    <meta property="og:description" :content="dataMap.articleInfo.article_description" />
+  </Head>
+
   <div class="topic-detail w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <article class="topic-detail-container page-container" ref="topicDetailRef">
@@ -84,7 +90,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref, watch, createApp } from "vue";
+import { onMounted, reactive, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { articleDetail } from "@/api/articles.js";
 import MarkdownRenderer from "@/components/MarkdownRenderer/Index.vue";
@@ -92,6 +98,7 @@ import SidebarUser from "@/components/SidebarUser/Index.vue";
 import { tagMap } from "@/utils/tagMap.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { dateToString } from "@/utils/utils.js";
+import { Head } from "@vueuse/head";
 
 const route = useRoute();
 
@@ -162,6 +169,7 @@ const getArticleDetail = async () => {
         item.published_at = dateToString(item.published_at);
         return item;
       })[0];
+      console.log(dataMap.articleInfo, 111111111);
       document.title = `${dataMap.articleInfo.title} - Levi 笔迹分享`;
     } else {
       console.log(message, "------------------------");
@@ -177,7 +185,7 @@ const getArticleDetail = async () => {
 <style lang="scss" scoped>
 .page-title,
 .page-info {
-  padding-left: 15px;
+  padding: 0 15px;
 }
 
 .page-title h1 {
@@ -322,12 +330,15 @@ const getArticleDetail = async () => {
   .page-container {
     display: block;
   }
+
   .topic-detail-sidebar {
     display: none;
   }
+
   .topic-detail-md {
     padding: 20px 0;
   }
+
   .page-title h1 {
     font-size: 30px;
   }

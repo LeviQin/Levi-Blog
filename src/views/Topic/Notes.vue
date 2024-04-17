@@ -1,4 +1,19 @@
 <template>
+  <Head>
+    <meta
+      name="keywords"
+      content="笔记，理论笔记，工作笔记，开发笔记，前端笔记，学习笔记"
+    />
+    <meta
+      name="description"
+      content="记录工作、生活和各种理论相关的笔记，包括前端开发、工作技巧、学习心得等内容。"
+    />
+    <meta
+      property="og:description"
+      content="记录工作、生活和各种理论相关的笔记，包括前端开发、工作技巧、学习心得等内容。"
+    />
+  </Head>
+
   <div class="notes w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="notes-container page-container">
@@ -66,6 +81,7 @@ import TopBanner from "@/components/TopBanner/Index.vue";
 import { useRouter } from "vue-router";
 import dayjs from "dayjs";
 import "wc-waterfall";
+import { Head } from "@vueuse/head";
 
 const router = useRouter();
 

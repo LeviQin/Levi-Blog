@@ -1,4 +1,18 @@
 <template>
+  <Head>
+    <meta
+      name="keywords"
+      content="人物，人像，拍摄人，人物摄影，人物特写，人物画像，人物表情，肖像，人物艺术，人物风采"
+    />
+    <meta
+      name="description"
+      content="记录分享见过的人物风采，生动形象，独特风貌，传递人物的故事与情感。这里有丰富多彩的人物摄影作品，包括人物特写、人物画像，捕捉到的人物表情和肖像带给您不一样的视觉体验。"
+    />
+    <meta
+      property="og:description"
+      content="记录分享见过的人物风采，生动形象，独特风貌，传递人物的故事与情感。这里有丰富多彩的人物摄影作品，包括人物特写、人物画像，捕捉到的人物表情和肖像带给您不一样的视觉体验。"
+    />
+  </Head>
   <div class="figure w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="figure-container page-container">
@@ -51,6 +65,7 @@ import { useRouter } from "vue-router";
 import dayjs from "dayjs";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
+import { Head } from "@vueuse/head";
 
 const router = useRouter();
 

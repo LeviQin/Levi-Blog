@@ -1,4 +1,19 @@
 <template>
+  <Head>
+    <meta
+      name="keywords"
+      content="日常，生活日常，工作日常，日常笔记，生活记录，工作记录"
+    />
+    <meta
+      name="description"
+      content="分享日常生活和工作的点滴，记录生活中的琐事和工作中的经验，让每一天都变得更有意义。"
+    />
+    <meta
+      property="og:description"
+      content="分享日常生活和工作的点滴，记录生活中的琐事和工作中的经验，让每一天都变得更有意义。"
+    />
+  </Head>
+
   <div class="daily-pet w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="daily-container page-container" ref="cutePetContainerRef">
@@ -68,6 +83,7 @@ import dayjs from "dayjs";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { vSlidIn } from "@/utils/vSlidIn.js";
+import { Head } from "@vueuse/head";
 
 const router = useRouter();
 

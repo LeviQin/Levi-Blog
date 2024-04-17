@@ -1,4 +1,9 @@
 <template>
+  <Head>
+    <meta name="keywords" content="游戏" />
+    <meta name="description" content="游戏" />
+    <meta property="og:description" content="游戏" />
+  </Head>
   <div class="notes w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="notes-container page-container">
@@ -13,6 +18,7 @@ import { getCategoryArticles } from "@/api/articles.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { useRouter } from "vue-router";
 import dayjs from "dayjs";
+import { Head } from "@vueuse/head";
 
 const router = useRouter();
 

@@ -13,6 +13,7 @@ import { getCategoryArticles } from "@/api/articles.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { useRouter } from "vue-router";
 import dayjs from "dayjs";
+import { Head } from "@vueuse/head";
 
 const router = useRouter();
 

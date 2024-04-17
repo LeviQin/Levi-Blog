@@ -1,4 +1,19 @@
 <template>
+  <Head>
+    <meta
+      name="keywords"
+      content="技术，程序员，前端开发，Vue，Node.js，小程序，代码分享"
+    />
+    <meta
+      name="description"
+      content="分享前端开发、Vue、Node.js 等技术相关内容，提供代码开发技术分享和前端技术探讨。"
+    />
+    <meta
+      property="og:description"
+      content="分享前端开发、Vue、Node.js 等技术相关内容，提供代码开发技术分享和前端技术探讨。"
+    />
+  </Head>
+
   <div class="technology w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="technology-container page-container" ref="technologyRef">
@@ -72,6 +87,7 @@ import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import { tagMap } from "@/utils/tagMap.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { vSlidIn } from "@/utils/vSlidIn.js";
+import { Head } from "@vueuse/head";
 
 const router = useRouter();
 

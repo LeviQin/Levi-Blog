@@ -1,4 +1,19 @@
 <template>
+  <Head>
+    <meta
+      name="keywords"
+      content="风景，雪山，大海，洱海，苍山，大自然景观，自然风光，森林，河流，海岛"
+    />
+    <meta
+      name="description"
+      content="记录分享大自然的绚丽美景，包括雪山、大海、洱海、苍山等，带您领略壮丽的山河风光，感受大自然的魅力。"
+    />
+    <meta
+      property="og:description"
+      content="记录分享大自然的绚丽美景，包括雪山、大海、洱海、苍山等，带您领略壮丽的山河风光，感受大自然的魅力。"
+    />
+  </Head>
+
   <div class="landscape w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="landscape-container page-container" ref="landscapeRef">
@@ -51,6 +66,7 @@ import { getCategoryArticles } from "@/api/articles.js";
 import dayjs from "dayjs";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
+import { Head } from "@vueuse/head";
 
 const router = useRouter();
 
