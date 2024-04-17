@@ -1,10 +1,21 @@
 <template>
+  <Head>
+    <meta property="og:title" content="IP 地址查询" />
+    <meta
+      name="description"
+      content="一款免费的 IP 地址查询工具，可查找您的 IP 地址及其地理位置。验证 IP 地址、主机名和互联网服务提供商（ISP），帮助检测恶意活动。"
+    />
+    <meta
+      property="og:description"
+      content="一款免费的 IP 地址查询工具，可查找您的 IP 地址及其地理位置。验证 IP 地址、主机名和互联网服务提供商（ISP），帮助检测恶意活动。"
+    />
+  </Head>
   <div class="ip-address w">
     <div
       class="search-bar"
       :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
     >
-      <div class="search-bar-left">
+      <div class="search-bar-left theme-bg-color">
         <div class="search-bar-item-box search-bar-left-title">
           <span>* 您的IP地址是：</span>
           <span class="user-ip" @click="searchUserIp">{{ userIp }}</span>
@@ -38,7 +49,7 @@
           >
         </div>
       </div>
-      <div class="search-bar-right">
+      <div class="search-bar-right theme-bg-color">
         <div class="search-bar-item-box details-box-title">
           <span>IP地址详情</span>
         </div>
@@ -86,6 +97,7 @@ import { identifyIpArea } from "@/api/tools";
 import { ElEMessage } from "@/utils/resetMessage.js";
 import Bowser from "bowser";
 import { Location } from "@element-plus/icons-vue";
+import { Head } from "@vueuse/head";
 
 onMounted(() => {
   isSidebarVisible.value = true;
@@ -176,8 +188,6 @@ const getIpAddress = async () => {
 
 .search-bar-left,
 .search-bar-right {
-  background: var(--themeColor);
-  border-radius: var(--themeRadius);
   padding: 40px;
 }
 
@@ -249,10 +259,6 @@ const getIpAddress = async () => {
 }
 
 @media (max-width: 860px) {
-  .ip-address {
-    margin: 0 20px;
-  }
-
   .search-bar {
     display: block;
   }

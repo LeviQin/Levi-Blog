@@ -170,7 +170,22 @@
   font-size: 16px;
 }
 
+.tool-title h1 {
+  font-size: 30px;
+}
+
+svg.icon {
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
 @media (max-width: 860px) {
+  svg.icon {
+    width: 1em;
+    height: 1em;
+  }
+
   .waterfall-title {
     font-size: 12px;
     line-height: 20px;

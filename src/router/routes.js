@@ -138,7 +138,7 @@ export default [{
                 component: () => import("@/views/Tools/PasswordGenerator.vue"),
                 name: "Password",
                 meta: {
-                    title: "天气查询",
+                    title: "密码生成器",
                 }
             },
             {

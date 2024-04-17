@@ -1,10 +1,34 @@
 <template>
-  <div class="password w theme-bg-color"></div>
+  <Head>
+    <meta
+      name="description"
+      content="✓安全 ✓随机 ✓强大 —— 使用我们的随机密码生成器生成强密码。"
+    />
+    <meta
+      property="og:description"
+      content="✓安全 ✓随机 ✓强大 —— 使用我们的随机密码生成器生成强密码。"
+    />
+    <meta
+      name="twitter:description"
+      content="✓安全 ✓随机 ✓强大 —— 使用我们的随机密码生成器生成强密码。"
+    />
+  </Head>
+  <div class="password w theme-bg-color">
+    <div class="content">
+      <div class="tool-title">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-mima"></use>
+        </svg>
+        <h1>随机密码生成器</h1>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import { identifyIpArea, cityCode, weatherInfo } from "@/api/tools";
+import { Head } from "@vueuse/head";
 
 onMounted(() => {
   getIpAddress();
@@ -42,13 +66,7 @@ const getWeatherInfo = async (cityCode) => {
 </script>
 
 <style lang="scss" scoped>
-.password {
-  border-radius: var(--themeRadius);
-}
-
-@media (max-width: 860px) {
-  .password {
-    margin: 0 20px;
-  }
+.password .content {
+  padding: 20px;
 }
 </style>

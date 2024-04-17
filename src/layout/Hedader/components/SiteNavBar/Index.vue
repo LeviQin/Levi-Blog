@@ -7,44 +7,79 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item command="daily"
-              ><i class="bi bi-balloon-heart bi-dropdown-item"></i>日常</el-dropdown-item
+              ><svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-woderichang"></use></svg
+              ><span>日常</span></el-dropdown-item
             >
             <el-dropdown-item command="technology"
-              ><i class="bi bi-code-slash bi-dropdown-item"></i>技术</el-dropdown-item
+              ><svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-jishurenyuan"></use></svg
+              ><span>技术</span></el-dropdown-item
             >
             <el-dropdown-item command="cute-pet"
-              ><i class="bi bi-twitter bi-dropdown-item"></i>萌宠</el-dropdown-item
+              ><svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-aichong03"></use></svg
+              ><span>萌宠</span></el-dropdown-item
             >
             <el-dropdown-item command="notes"
-              ><i class="bi bi-brush bi-dropdown-item"></i>笔记</el-dropdown-item
+              ><svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-biji"></use></svg
+              ><span>笔记</span></el-dropdown-item
             >
             <el-dropdown-item command="landscape"
-              ><i class="bi bi-globe-americas bi-dropdown-item"></i>风景</el-dropdown-item
+              ><svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-fengjing"></use></svg
+              ><span>风景</span></el-dropdown-item
             >
             <el-dropdown-item command="figure"
-              ><i class="bi bi-universal-access bi-dropdown-item"></i
-              >人物</el-dropdown-item
+              ><svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-168-boy-2"></use></svg
+              ><span>人物</span></el-dropdown-item
             >
-            <!-- <el-dropdown-item command="game"
-              ><i class="bi bi-controller bi-dropdown-item"></i>游戏</el-dropdown-item
-            > -->
+            <el-dropdown-item command="game"
+              ><svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-youxiji"></use></svg
+              ><span>游戏</span></el-dropdown-item
+            >
             <!-- <el-dropdown-item command="embarrassing"
-              ><i class="bi bi-emoji-dizzy bi-dropdown-item"></i>囧事</el-dropdown-item
+              ><svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-meirijiongtu"></use></svg
+              ><span>囧事</span></el-dropdown-item
             > -->
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <!-- <li class="nav-li" data-router="/nav">常用网站</li>
-      <li class="nav-li" data-router="/material">前端资料</li> -->
+      <li class="nav-li" data-router="/nav">常用网站</li>
+      <!-- <li class="nav-li" data-router="/material">前端资料</li> -->
       <el-dropdown @command="handleCommandToPage">
         <li class="nav-li">小工具</li>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item command="encryption">加密/解密</el-dropdown-item>
-            <el-dropdown-item command="weather">天气查询</el-dropdown-item>
-            <el-dropdown-item command="ip">IP地址查询</el-dropdown-item>
-            <el-dropdown-item command="unit">单位换算</el-dropdown-item>
-            <el-dropdown-item command="password">密码生成器</el-dropdown-item>
+            <el-dropdown-item command="encryption"
+              ><svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-jiamijiemi"></use></svg
+              ><span>加密/解密</span></el-dropdown-item
+            >
+            <el-dropdown-item command="weather"
+              ><svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-tianqi"></use></svg
+              ><span>天气查询</span></el-dropdown-item
+            >
+            <el-dropdown-item command="ip"
+              ><svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-IPdizhi"></use></svg
+              ><span>IP地址查询</span></el-dropdown-item
+            >
+            <el-dropdown-item command="unit"
+              ><svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-danweihuansuanx"></use></svg
+              ><span>单位换算</span></el-dropdown-item
+            >
+            <el-dropdown-item command="password"
+              ><svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-mima"></use></svg
+              ><span>密码生成器</span></el-dropdown-item
+            >
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -110,6 +145,7 @@ const handleCommandToPage = (val) => {
   font-size: 16px;
   transition: all 0.5s;
   border-bottom: 2px solid transparent;
+
   &:hover {
     border-bottom: 2px solid var(--themeTextColor);
     transition: all 0.5s;
@@ -118,6 +154,12 @@ const handleCommandToPage = (val) => {
 
 .active-li {
   border-bottom: 2px solid var(--themeTextColor);
+}
+
+svg.icon {
+  margin-right: 5px;
+  width: 1em;
+  height: 1em;
 }
 
 .bi {

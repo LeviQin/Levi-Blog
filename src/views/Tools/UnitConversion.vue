@@ -1,4 +1,19 @@
 <template>
+  <Head>
+    <meta
+      name="keywords"
+      content="长度得换算，重量单位换算，单位换算工具，压力功率换算，面积体积单位换算，温度单位换算，时间单位换算"
+    />
+    <meta
+      name="description"
+      content="长度重量单位换算工具，为跨境电商卖家提供在线单位转换器、非常用长度单位、重量转换换算、非常用重量单位等换算功能，可以帮助卖家快速准确地进行单位换算，方便处理跨境电商业务中的尺寸和重量问题。"
+    />
+    <meta property="og:title" content="长度重量单位换算工具-AMZ123跨境导航" />
+    <meta
+      property="og:description"
+      content="长度重量单位换算工具，为跨境电商卖家提供在线单位转换器、非常用长度单位、重量转换换算、非常用重量单位等换算功能，可以帮助卖家快速准确地进行单位换算，方便处理跨境电商业务中的尺寸和重量问题。"
+    />
+  </Head>
   <div class="unit-conversion w theme-bg-color">
     <div class="unit-conversion-container" ref="unitConversionContainerRef">
       <div class="unit-conversion-title">
@@ -126,6 +141,7 @@ import { ref, reactive, onMounted } from "vue";
 import { convertUnits, unitInTtype } from "@/utils/unitsTools.js";
 import { debounce } from "@/utils/utils.js";
 import { ElEMessage } from "@/utils/resetMessage.js";
+import { Head } from "@vueuse/head";
 
 onMounted(() => {
   selectType(typeVal.value);
@@ -268,7 +284,6 @@ const clearData = () => {
 
 <style lang="scss" scoped>
 .unit-conversion-container {
-  border-radius: var(--themeRadius);
   padding: 20px;
 }
 

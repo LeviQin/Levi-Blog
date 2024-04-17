@@ -104,7 +104,7 @@ const scrollWidnow = () => {
 
   .main {
     flex: 1;
-    margin-top: 80px;
+    margin: 80px 20px 0 20px;
   }
 }
 

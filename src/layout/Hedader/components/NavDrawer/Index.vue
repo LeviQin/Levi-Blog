@@ -29,35 +29,51 @@
             >
               <ul @click="toPage">
                 <li data-router="/daily">
-                  <i class="bi bi-balloon-heart bi-dropdown-item"></i>日常
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-woderichang"></use></svg
+                  ><span>日常</span>
                 </li>
                 <li data-router="/technology">
-                  <i class="bi bi-code-slash bi-dropdown-item"></i>技术
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-jishurenyuan"></use></svg
+                  ><span>技术</span>
                 </li>
                 <li data-router="/cute-pet">
-                  <i class="bi bi-twitter bi-dropdown-item"></i>萌宠
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-aichong03"></use></svg
+                  ><span>萌宠</span>
                 </li>
                 <li data-router="/notes">
-                  <i class="bi bi-brush bi-dropdown-item"></i>笔记
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-biji"></use></svg
+                  ><span>笔记</span>
                 </li>
                 <li data-router="/landscape">
-                  <i class="bi bi-globe-americas bi-dropdown-item"></i>风景
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-fengjing"></use></svg
+                  ><span>风景</span>
                 </li>
                 <li data-router="/figure">
-                  <i class="bi bi-universal-access bi-dropdown-item"></i>人物
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-168-boy-2"></use></svg
+                  ><span>人物</span>
                 </li>
-                <!-- <li data-router="/game">
-                  <i class="bi bi-controller bi-dropdown-item"></i>游戏
+                <li data-router="/game">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-youxiji"></use></svg
+                  ><span>游戏</span>
                 </li>
-                <li data-router="/embarrassing">
-                  <i class="bi bi-emoji-dizzy bi-dropdown-item"></i>囧事
+                <!-- <li data-router="/embarrassing">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-meirijiongtu"></use></svg
+                  ><span>囧事</span>
                 </li> -->
               </ul>
             </div>
           </transition>
         </div>
-        <!-- <li class="nav-drawer-li" data-router="/nav">常用网站</li>
-        <li class="nav-drawer-li" data-router="/material">前端资料</li> -->
+        <li class="nav-drawer-li" data-router="/nav">常用网站</li>
+        <!-- <li class="nav-drawer-li" data-router="/material">前端资料</li> -->
         <li class="nav-drawer-li" id="tools" @click="clickTools">
           <span>小工具</span><i class="bi bi-chevron-down bi-tools-icon"></i>
         </li>
@@ -68,11 +84,31 @@
             v-show="showToolsCollapse"
           >
             <ul @click="toPage">
-              <li data-router="/encryption">加密/解密</li>
-              <li data-router="/weather">天气查询</li>
-              <li data-router="/ip">IP地址查询</li>
-              <li data-router="/unit">单位换算</li>
-              <li data-router="/password">密码生成器</li>
+              <li data-router="/encryption">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-jiamijiemi"></use></svg
+                ><span>加密/解密</span>
+              </li>
+              <li data-router="/weather">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-tianqi"></use></svg
+                ><span>天气查询</span>
+              </li>
+              <li data-router="/ip">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-IPdizhi"></use></svg
+                ><span>IP地址查询</span>
+              </li>
+              <li data-router="/unit">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-danweihuansuanx"></use></svg
+                ><span>单位换算</span>
+              </li>
+              <li data-router="/password">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-mima"></use></svg
+                ><span>密码生成器</span>
+              </li>
             </ul>
           </div>
         </transition>
@@ -185,12 +221,16 @@ defineExpose({
 .nav-drawer-li-collapse {
   padding: 0 30px;
   margin-bottom: 15px;
+
   li {
     padding: 2px 0;
     font-size: 15px;
     cursor: pointer;
-    .bi {
+
+    .icon {
       margin-right: 10px;
+      width: 1em;
+      height: 1em;
     }
   }
 }
@@ -208,6 +248,7 @@ defineExpose({
 .bounce-enter-active {
   animation: bounce-in 0.5s;
 }
+
 .bounce-leave-active {
   animation: bounce-in 0.5s reverse;
 }
@@ -216,6 +257,7 @@ defineExpose({
   0% {
     transform: translateX(-200px);
   }
+
   100% {
     transform: translateX(0);
   }

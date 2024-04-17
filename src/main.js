@@ -12,31 +12,36 @@ import "element-plus/dist/index.css";
 
 import "./permission";
 
+import {
+    createHead
+} from "@vueuse/head";
+const head = createHead();
+
 // 预览组件以及样式
-import VMdPreview from '@kangc/v-md-editor/lib/preview';
-import '@kangc/v-md-editor/lib/style/preview.css';
+import VMdPreview from "@kangc/v-md-editor/lib/preview";
+import "@kangc/v-md-editor/lib/style/preview.css";
 // VuePress主题以及样式（这里也可以选择github主题）
-import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
-import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
+import vuepressTheme from "@kangc/v-md-editor/lib/theme/vuepress.js";
+import "@kangc/v-md-editor/lib/theme/style/vuepress.css";
 
 // Prism
-import Prism from 'prismjs';
+import Prism from "prismjs";
 // 代码高亮
-import 'prismjs/components/prism-json';
+import "prismjs/components/prism-json";
 // 选择使用主题
 VMdPreview.use(vuepressTheme, {
     Prism,
 });
 
-import createTodoListPlugin from '@kangc/v-md-editor/lib/plugins/todo-list/index';
-import '@kangc/v-md-editor/lib/plugins/todo-list/todo-list.css';
+import createTodoListPlugin from "@kangc/v-md-editor/lib/plugins/todo-list/index";
+import "@kangc/v-md-editor/lib/plugins/todo-list/todo-list.css";
 VMdPreview.use(createTodoListPlugin());
 
-import createCopyCodePlugin from '@kangc/v-md-editor/lib/plugins/copy-code/index';
-import '@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css';
+import createCopyCodePlugin from "@kangc/v-md-editor/lib/plugins/copy-code/index";
+import "@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css";
 VMdPreview.use(createCopyCodePlugin());
 
-import createAlignPlugin from '@kangc/v-md-editor/lib/plugins/align';
+import createAlignPlugin from "@kangc/v-md-editor/lib/plugins/align";
 VMdPreview.use(createAlignPlugin());
 
 const loadimage = "/src/assets/images/defualt-image.svg";
@@ -47,4 +52,4 @@ createApp(App).use(VMdPreview).use(VueLazyload, {
     loading: loadimage,
     error: errorimage,
     attempt: 1, // 尝试加载的次数
-}).use(router).mount("#app");
+}).use(router).use(head).mount("#app");

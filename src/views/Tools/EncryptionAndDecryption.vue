@@ -1,4 +1,11 @@
 <template>
+  <Head>
+    <meta name="keywords" content="加密,解密,对称加密,非对称加密" />
+    <meta
+      name="description"
+      content="支持多种对称&amp;非对称在线加密解密，AES、DES、MD5、RC4、Rabbit、TripleDes在线加密解密，并且支持密钥方式。"
+    />
+  </Head>
   <div class="encryption-and-decryption w">
     <div class="tabs-card">
       <el-tabs tab-position="top" class="demo-tabs" type="border-card">
@@ -36,6 +43,7 @@ import RabbitPassword from "./components/Password/RabbitPassword.vue";
 import TripleDESPassword from "./components/Password/TripleDESPassword.vue";
 import MD5Password from "./components/Password/MD5Password.vue";
 import Base64Password from "./components/Password/Base64Password.vue";
+import { Head } from "@vueuse/head";
 </script>
 
 <style lang="scss" scoped></style>

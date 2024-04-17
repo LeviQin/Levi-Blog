@@ -41,14 +41,4 @@ const getWeatherInfo = async (cityCode) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.weather {
-  border-radius: var(--themeRadius);
-}
-
-@media (max-width: 860px) {
-  .weather {
-    margin: 0 20px;
-  }
-}
-</style>
+<style lang="scss" scoped></style>
