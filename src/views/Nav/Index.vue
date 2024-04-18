@@ -90,6 +90,10 @@ let categories = [
     value: 7,
     label: "新闻资讯",
   },
+  {
+    value: 8,
+    label: "AI工具",
+  },
 ];
 const selectedCategory = ref(categories[0].label);
 
