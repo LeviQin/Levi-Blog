@@ -49,9 +49,9 @@
                   <span>{{ item.updated_at }}</span>
                 </div>
                 <div class="waterfall-footer-bar">
-                  <i class="bi bi-eye"
-                    ><span class="num-text">{{ item.view_count }}</span></i
-                  >
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-wode_zuijinliulan"></use></svg
+                  ><span class="num-text">{{ item.view_count }}</span>
                 </div>
               </div>
             </div>
@@ -203,8 +203,14 @@ const getData = async () => {
   color: #3c3b3b;
 }
 
-.num-text {
-  margin: 5px;
+.waterfall-footer-bar {
+  display: flex;
+  align-items: center;
+  .icon {
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: 5px;
+  }
 }
 
 @media (max-width: 860px) {

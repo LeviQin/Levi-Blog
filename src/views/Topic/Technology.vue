@@ -42,22 +42,30 @@
           <div class="article-item-footer">
             <div class="footer-info">
               <div class="footer-date">
-                <i class="bi bi-calendar3"></i>
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-riqi"></use>
+                </svg>
                 <span>{{ item.published_at }}</span>
               </div>
               <div class="footer-update">
-                <i class="bi bi-arrow-clockwise"></i>
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-gengxinmulu"></use>
+                </svg>
                 <span>{{ item.updated_at }}</span>
               </div>
               <div class="footer-view">
-                <i class="bi bi-eye"
-                  ><span class="num-text">{{ item.view_count }}</span></i
-                >
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-wode_zuijinliulan"></use></svg
+                ><span class="num-text">{{ item.view_count }}</span>
               </div>
             </div>
             <div class="footer-tags">
-              <i class="bi bi-tags-fill"></i>
-              <span v-for="key in item.article_tags">{{ tagsList[key - 1] }}</span>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-biaoqian_1"></use>
+              </svg>
+              <span class="tags-item" v-for="key in item.article_tags">{{
+                tagsList[key - 1]
+              }}</span>
             </div>
           </div>
         </div>
@@ -208,7 +216,6 @@ const getData = async () => {
 }
 
 .num-text {
-  margin: 5px;
   font-size: 14px;
 }
 
@@ -224,6 +231,14 @@ const getData = async () => {
   font-size: 14px;
   margin-right: 20px;
   position: relative;
+  display: flex;
+  align-items: center;
+
+  .icon {
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: 8px;
+  }
 
   &::before {
     content: "";
@@ -241,6 +256,14 @@ const getData = async () => {
   font-size: 14px;
   margin-right: 20px;
   position: relative;
+  display: flex;
+  align-items: center;
+
+  .icon {
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: 8px;
+  }
 
   &::before {
     content: "";
@@ -254,17 +277,26 @@ const getData = async () => {
   }
 }
 
-.footer-tags {
-  margin-bottom: 10px;
+.footer-view {
+  display: flex;
+  align-items: center;
+
+  .icon {
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: 8px;
+  }
 }
 
-.footer-tags span {
-  margin: 0 5px;
-  padding: 4px;
-  background: #fff;
-  border-radius: 4px;
-  font-size: 12px;
-  white-space: nowrap;
+.footer-tags {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+
+  .icon {
+    width: 1.2em;
+    height: 1.2em;
+  }
 }
 
 .article-item-title h2 {

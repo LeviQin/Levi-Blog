@@ -12,6 +12,9 @@
         <sidebar-user></sidebar-user>
         <ul class="sidebar-ul nav" v-if="dataMap.titles.length">
           <div class="sidebar-name">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-a-shuqianshumulu"></use>
+            </svg>
             <span>目录</span>
           </div>
           <el-divider />
@@ -37,21 +40,27 @@
           </div>
           <div class="page-info">
             <div class="page-info-category page-info-item">
-              <i class="bi bi-bookmark-dash"></i>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-fenlei"></use>
+              </svg>
               <span>{{ categoryList[dataMap.articleInfo.category - 1] }}</span>
             </div>
             <div class="page-info-date page-info-item">
-              <i class="bi bi-calendar3"></i>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-riqi"></use>
+              </svg>
               <span>{{ dataMap.articleInfo.published_at }}</span>
             </div>
             <div class="page-info-update page-info-item">
-              <i class="bi bi-arrow-clockwise"></i>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-gengxinmulu"></use>
+              </svg>
               <span>{{ dataMap.articleInfo.updated_at }}</span>
             </div>
             <div class="page-info-view page-info-item">
-              <i class="bi bi-eye"
-                ><span class="num-text">{{ dataMap.articleInfo.view_count }}</span></i
-              >
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-wode_zuijinliulan"></use></svg
+              ><span class="num-text">{{ dataMap.articleInfo.view_count }}</span>
             </div>
           </div>
           <div
@@ -203,16 +212,13 @@ const getArticleDetail = async () => {
   margin: 5px;
   font-size: 15px;
   color: #3c3b3b;
-}
-
-.bi {
-  margin-right: 10px;
-  font-style: normal;
-  font-size: 15px;
-}
-
-.num-text {
-  margin: 5px;
+  display: flex;
+  align-items: center;
+  .icon {
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: 5px;
+  }
 }
 
 .topic-detail-sidebar {
@@ -252,6 +258,13 @@ const getArticleDetail = async () => {
 
 .sidebar-name {
   font-size: 20px;
+  display: flex;
+  align-items: center;
+  .icon {
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: 10px;
+  }
 }
 
 .nav-title {

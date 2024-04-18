@@ -6,45 +6,81 @@
     :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
   >
     <div class="sidebar-category-title">
-      <i class="bi bi-hdd-stack"></i>
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-fenlei"></use>
+      </svg>
       <span>分类</span>
     </div>
     <div class="sidebar-category-content">
       <ul class="sidebar-category-ul" @click="selectCategory">
         <li :class="`sidebar-category-li`" data-router="/">
-          <span><i class="bi bi-browser-safari"></i>综合</span>
+          <span
+            ><svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-zonghelei"></use></svg
+            ><span>综合</span></span
+          >
           <i class="bi bi-chevron-right"></i>
         </li>
         <li class="sidebar-category-li" data-router="/daily">
-          <span><i class="bi bi-balloon-heart bi-dropdown-item"></i>日常</span>
+          <span
+            ><svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-woderichang"></use></svg
+            ><span>日常</span></span
+          >
           <i class="bi bi-chevron-right"></i>
         </li>
         <li class="sidebar-category-li" data-router="/technology">
-          <span><i class="bi bi-code-slash bi-dropdown-item"></i>技术</span>
+          <span
+            ><svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-jishurenyuan"></use></svg
+            ><span>技术</span></span
+          >
           <i class="bi bi-chevron-right"></i>
         </li>
         <li class="sidebar-category-li" data-router="/cute-pet">
-          <span><i class="bi bi-twitter bi-dropdown-item"></i>萌宠</span>
+          <span
+            ><svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-aichong03"></use></svg
+            ><span>萌宠</span></span
+          >
           <i class="bi bi-chevron-right"></i>
         </li>
         <li class="sidebar-category-li" data-router="/notes">
-          <span><i class="bi bi-brush bi-dropdown-item"></i>笔记</span>
+          <span>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-biji"></use></svg
+            ><span>笔记</span></span
+          >
           <i class="bi bi-chevron-right"></i>
         </li>
         <li class="sidebar-category-li" data-router="/landscape">
-          <span><i class="bi bi-globe-americas bi-dropdown-item"></i>风景</span>
+          <span>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-fengjing"></use></svg
+            ><span>风景</span></span
+          >
           <i class="bi bi-chevron-right"></i>
         </li>
         <li class="sidebar-category-li" data-router="/figure">
-          <span><i class="bi bi-universal-access bi-dropdown-item"></i>人物</span>
+          <span>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-168-boy-2"></use></svg
+            ><span>人物</span></span
+          >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <!-- <li class="sidebar-category-li" data-router="/game">
-          <span><i class="bi bi-controller bi-dropdown-item"></i>游戏</span>
+        <li class="sidebar-category-li" data-router="/game">
+          <span>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-youxiji"></use></svg
+            ><span>游戏</span></span
+          >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/embarrassing">
-          <span><i class="bi bi-emoji-dizzy bi-dropdown-item"></i>囧事</span>
+        <!-- <li class="sidebar-category-li" data-router="/embarrassing">
+          <span><svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-meirijiongtu"></use></svg
+                  ><span>囧事</span></span>
           <i class="bi bi-chevron-right"></i>
         </li> -->
       </ul>
@@ -56,7 +92,9 @@
     :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
   >
     <div class="sidebar-tags-title">
-      <i class="bi bi-tags-fill"></i>
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-biaoqian_1"></use>
+      </svg>
       <span>标签</span>
     </div>
     <div class="sidebar-tags-content">
@@ -131,7 +169,12 @@ const selectCategory = (e) => {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
-  padding: 0 10px;
+  padding: 0 5px;
+  .icon {
+    width: 1.5em;
+    height: 1.5em;
+    margin-right: 10px;
+  }
 }
 
 .sidebar-tags-content {
@@ -160,8 +203,10 @@ const selectCategory = (e) => {
   border-radius: 5px;
   font-size: 15px;
 
-  span > .bi {
+  span > .icon {
     margin-right: 10px;
+    width: 1.2em;
+    height: 1.2em;
   }
 
   &:hover {
