@@ -31,7 +31,7 @@
       <div class="nav-content">
         <div class="nav-item" v-for="item in dataMap.data" @click="toSitePage(item.url)">
           <div class="nav-img">
-            <img :src="item.image" :alt="item.title" />
+            <img v-lazy="item.image" :alt="item.title" />
           </div>
           <div class="nav-item-content">
             <div class="nav-title">
@@ -205,7 +205,7 @@ const toSitePage = (url) => {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 840px) {
   .nav-item {
     width: 40%;
   }
