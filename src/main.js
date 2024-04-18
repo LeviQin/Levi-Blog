@@ -46,8 +46,8 @@ VMdPreview.use(createCopyCodePlugin());
 import createAlignPlugin from "@kangc/v-md-editor/lib/plugins/align";
 VMdPreview.use(createAlignPlugin());
 
-const loadimage = "/src/assets/images/defualt-image.svg";
-const errorimage = "/src/assets/images/defualt-image.svg";
+import loadimage from '@/assets/images/defualt-image.svg';
+import errorimage from '@/assets/images/defualt-image.svg';
 
 createApp(App).use(VMdPreview).use(VueLazyload, {
     preLoad: 1.3, // 预加载的高度比例
