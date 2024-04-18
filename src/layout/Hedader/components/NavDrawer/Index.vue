@@ -86,7 +86,7 @@
             <ul @click="toPage">
               <li data-router="/encryption">
                 <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-jiamijiemi"></use></svg
+                  <use xlink:href="#icon-jiami"></use></svg
                 ><span>加密/解密</span>
               </li>
               <li data-router="/weather">

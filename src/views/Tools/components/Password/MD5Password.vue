@@ -82,7 +82,7 @@
 <script setup>
 import { ref } from "vue";
 import CryptoJS from "crypto-js";
-import { ElEMessage } from "@/utils/resetMessage.js";
+
 let textarea = ref("");
 let hashedText16 = ref("");
 let hashedText16UC = ref("");
@@ -91,9 +91,11 @@ let hashedText32UC = ref("");
 
 const encrypt = () => {
   if (textarea.value === "") {
-    ElEMessage({
-      type: "warning",
+    ElNotification({
+      title: "警告",
       message: "请输入需要混淆的内容",
+      type: "warning",
+      zIndex: 99999,
     });
     return;
   }
@@ -104,9 +106,11 @@ const encrypt = () => {
     hashedText16UC.value = hashedText16.value.toUpperCase(); // 16-bit upperCase
   } catch (e) {
     console.log(e, "----------------------");
-    ElEMessage({
-      type: "error",
+    ElNotification({
+      title: "失败",
       message: "混淆失败，请检查你输入的内容！",
+      type: "error",
+      zIndex: 99999,
     });
   }
 };
@@ -119,25 +123,31 @@ const clear = () => {
 };
 const copyResult = (val) => {
   if (val === "") {
-    ElEMessage({
-      type: "warning",
+    ElNotification({
+      title: "警告",
       message: "复制失败！结果为空",
+      type: "warning",
+      zIndex: 99999,
     });
     return;
   }
   navigator.clipboard
     .writeText(val)
     .then(() => {
-      ElEMessage({
+      ElNotification({
+        title: "成功",
+        message: "结果已复制到剪切板",
         type: "success",
-        message: "已复制到剪切板",
+        zIndex: 99999,
       });
       close();
     })
     .catch(() => {
-      ElEMessage({
-        type: "error",
+      ElNotification({
+        title: "失败",
         message: "复制出错，请重试",
+        type: "error",
+        zIndex: 99999,
       });
     });
 };

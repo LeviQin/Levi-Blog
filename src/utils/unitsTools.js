@@ -7,7 +7,6 @@
  * @returns {number|string} - 转换结果或错误信息
  */
 export const convertUnits = (type, inputUnit, outputUnit, inputValue) => {
-    console.log(type, inputUnit, outputUnit, inputValue)
     // 长度单位转换
     if (type === '长度') {
         const lengthConversionFactors = {

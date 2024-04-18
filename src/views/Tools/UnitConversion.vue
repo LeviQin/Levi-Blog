@@ -55,6 +55,7 @@
             size="large"
             style="width: 240px"
             controls-position="right"
+            :min="0"
             @input="changeData"
           >
           </el-input-number>
@@ -143,7 +144,6 @@
 import { ref, reactive, onMounted } from "vue";
 import { convertUnits, unitInTtype } from "@/utils/unitsTools.js";
 import { debounce } from "@/utils/utils.js";
-import { ElEMessage } from "@/utils/resetMessage.js";
 import { Head } from "@vueuse/head";
 
 onMounted(() => {
@@ -156,9 +156,9 @@ const dataMap = reactive({
 });
 
 let typeVal = ref("长度");
-let dataVal = ref("");
+let dataVal = ref(0);
 let dataUnit = ref("");
-let resultVal = ref("");
+let resultVal = ref(0);
 let resultUnit = ref("");
 
 const types = [
@@ -256,32 +256,38 @@ const exchangeData = () => {
 
 const copyData = () => {
   if (!resultVal.value) {
-    ElEMessage({
+    ElNotification({
+      title: "警告",
+      message: "复制失败！无效的结果。",
       type: "warning",
-      message: "复制失败！无效的结果",
+      zIndex: 99999,
     });
     return;
   }
   navigator.clipboard
     .writeText(resultVal.value)
     .then(() => {
-      ElEMessage({
+      ElNotification({
+        title: "成功",
+        message: "结果已复制到剪切板。",
         type: "success",
-        message: "已复制到剪切板",
+        zIndex: 99999,
       });
       close();
     })
     .catch(() => {
-      ElEMessage({
-        type: "error",
+      ElNotification({
+        title: "失败",
         message: "复制出错，请重试",
+        type: "error",
+        zIndex: 99999,
       });
     });
 };
 
 const clearData = () => {
-  dataVal.value = "";
-  resultVal.value = "";
+  dataVal.value = 0;
+  resultVal.value = 0;
 };
 </script>
 

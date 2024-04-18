@@ -57,7 +57,7 @@
           <el-dropdown-menu>
             <el-dropdown-item command="encryption"
               ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-jiamijiemi"></use></svg
+                <use xlink:href="#icon-jiami"></use></svg
               ><span>加密/解密</span></el-dropdown-item
             >
             <el-dropdown-item command="weather"

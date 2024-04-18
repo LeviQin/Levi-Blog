@@ -55,7 +55,6 @@
 <script setup>
 import { ref } from "vue";
 import CryptoJS from "crypto-js";
-import { ElEMessage } from "@/utils/resetMessage.js";
 
 let secretKey = ref("");
 let textarea = ref("");
@@ -63,9 +62,11 @@ let result = ref("");
 
 const encrypt = () => {
   if (textarea.value === "") {
-    ElEMessage({
-      type: "warning",
+    ElNotification({
+      title: "警告",
       message: "请输入需要加/解密的内容",
+      type: "warning",
+      zIndex: 99999,
     });
     return;
   }
@@ -73,34 +74,42 @@ const encrypt = () => {
   if (bytes.ciphertext.sigBytes && bytes.ciphertext.words) {
     result.value = bytes.toString();
   } else {
-    ElEMessage({
-      type: "error",
+    ElNotification({
+      title: "失败",
       message: "加密失败，请检查你输入的内容！",
+      type: "error",
+      zIndex: 99999,
     });
   }
 };
 const decrypt = () => {
   try {
     if (textarea.value === "") {
-      ElEMessage({
-        type: "warning",
+      ElNotification({
+        title: "警告",
         message: "请输入需要加/解密的内容",
+        type: "warning",
+        zIndex: 99999,
       });
       return;
     }
     const bytes = CryptoJS.Rabbit.decrypt(textarea.value, secretKey.value);
     result.value = bytes.toString(CryptoJS.enc.Utf8);
     if (!result.value) {
-      ElEMessage({
-        type: "error",
+      ElNotification({
+        title: "失败",
         message: "解密失败，请检查你的密钥是否正确！",
+        type: "error",
+        zIndex: 99999,
       });
     }
   } catch (e) {
     console.log(e, "----------------------");
-    ElEMessage({
-      type: "error",
+    ElNotification({
+      title: "失败",
       message: "解密失败，请检查你输入的内容！",
+      type: "error",
+      zIndex: 99999,
     });
   }
 };
@@ -111,25 +120,31 @@ const clear = () => {
 };
 const copyResult = () => {
   if (result.value === "") {
-    ElEMessage({
-      type: "warning",
+    ElNotification({
+      title: "警告",
       message: "复制失败！结果为空",
+      type: "warning",
+      zIndex: 99999,
     });
     return;
   }
   navigator.clipboard
     .writeText(result.value)
     .then(() => {
-      ElEMessage({
+      ElNotification({
+        title: "成功",
+        message: "结果已复制到剪切板",
         type: "success",
-        message: "已复制到剪切板",
+        zIndex: 99999,
       });
       close();
     })
     .catch(() => {
-      ElEMessage({
-        type: "error",
+      ElNotification({
+        title: "失败",
         message: "复制出错，请重试",
+        type: "error",
+        zIndex: 99999,
       });
     });
 };
