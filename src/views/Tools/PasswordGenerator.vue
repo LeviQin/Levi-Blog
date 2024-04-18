@@ -14,8 +14,8 @@
       content="✓安全 ✓随机 ✓强大 —— 使用我们的随机密码生成器生成强密码。"
     />
   </Head>
-  <div class="password w theme-bg-color">
-    <div class="content">
+  <div class="password w">
+    <div class="content theme-bg-color">
       <div class="tool-title">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-mima1"></use>
@@ -192,6 +192,12 @@ const copyText = () => {
 </script>
 
 <style lang="scss" scoped>
+.password {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .password .content {
   padding: 20px;
 }
@@ -250,10 +256,6 @@ const copyText = () => {
   height: 2em;
   cursor: pointer;
   margin-right: 10px;
-}
-
-.password-input {
-  width: 60%;
 }
 
 .config-item-box,
@@ -335,12 +337,8 @@ const copyText = () => {
     padding: 0;
   }
 
-  .password-input {
-    width: 100%;
-
-    .icon {
-      margin-right: 0;
-    }
+  .password-input .icon {
+    margin-right: 0;
   }
 
   .copy-icon-box {
