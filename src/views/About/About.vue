@@ -4,7 +4,9 @@
       <div class="info-content">
         <div class="info-item">
           <div class="left-icon">
-            <img class="bio-icon" src="../../assets/images/web2.svg" alt="" />
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-web"></use>
+            </svg>
           </div>
           <div class="right-content">
             <span class="bio-text">我是一名Web前端开发</span>
@@ -12,7 +14,9 @@
         </div>
         <div class="info-item">
           <div class="left-icon">
-            <img class="bio-icon" src="../../assets/images/location.svg" alt="" />
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-diqiuyi"></use>
+            </svg>
           </div>
           <div class="right-content">
             <span class="bio-text">目前就职于深圳市笨鸟软件有限公司</span>
@@ -20,7 +24,9 @@
         </div>
         <div class="info-item">
           <div class="left-icon">
-            <img class="bio-icon" src="../../assets/images/message.svg" alt="" />
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-gongzuojingyan"></use>
+            </svg>
           </div>
           <div class="right-content">
             <span class="bio-text"
@@ -30,7 +36,9 @@
         </div>
         <div class="info-item">
           <div class="left-icon">
-            <img class="bio-icon" src="../../assets/images/html5.svg" alt="" />
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-kaifa"></use>
+            </svg>
           </div>
           <div class="right-content">
             <span class="bio-text"
@@ -119,17 +127,16 @@ const emit = defineEmits(["toNextPage"]);
 }
 
 .left-icon {
-  width: 100px;
-  height: 100px;
   display: flex;
   align-items: center;
 }
 
-.bio-icon {
-  width: 60px;
-  height: 60px;
-  animation: bioIconIn 0.3s ease-out 0.7s 1 forwards;
+.icon {
+  width: 3.5em;
+  height: 4.5em;
+  margin-right: 15px;
   opacity: 0;
+  animation: bioIconIn 0.3s ease-out 0.7s 1 forwards;
 }
 
 .right-content {
@@ -201,18 +208,15 @@ const emit = defineEmits(["toNextPage"]);
     align-items: center;
   }
 
+  .icon {
+    height: 3.5em;
+  }
+
   .right-content {
     flex: 1;
     display: flex;
     align-items: center;
     text-align: left;
-  }
-
-  .bio-icon {
-    width: 2rem !important;
-    height: 2rem !important;
-    animation: none !important;
-    opacity: 1 !important;
   }
 
   .bio-text {
