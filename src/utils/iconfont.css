@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1713452222517') format('truetype');
+  src: url('iconfont.ttf?t=1713502494251') format('truetype');
 }
 
 .iconfont {
@@ -65,6 +65,10 @@
 
 .icon-IPdizhi:before {
   content: "\e6c3";
+}
+
+.icon-guanyu-:before {
+  content: "\e60d";
 }
 
 .icon-meirijiongtu:before {

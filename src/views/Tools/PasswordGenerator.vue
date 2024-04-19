@@ -14,8 +14,8 @@
       content="✓安全 ✓随机 ✓强大 —— 使用我们的随机密码生成器生成强密码。"
     />
   </Head>
-  <div class="password w">
-    <div class="content theme-bg-color">
+  <div class="password w theme-bg-color">
+    <div class="content">
       <div class="tool-title">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-mima1"></use>
@@ -34,10 +34,17 @@
                 <use xlink:href="#icon-shuaxin"></use>
               </svg>
             </div>
-            <div class="input-icon-box copy-icon-box" @click="copyText">复制</div>
+            <div
+              class="input-icon-box copy-icon-box"
+              @click="copyText(passwordVal.value)"
+            >
+              复制
+            </div>
           </template>
         </el-input>
-        <div class="input-icon-box m-copy-icon-box" @click="copyText">复制</div>
+        <div class="input-icon-box m-copy-icon-box" @click="copyText(passwordVal.value)">
+          复制
+        </div>
         <div class="config-item-box">
           <span
             ><svg class="icon" aria-hidden="true">
@@ -93,6 +100,40 @@
             :max="50"
           />
         </div>
+        <div class="history-box">
+          <div class="record-box">
+            <el-checkbox label="记录历史密码" v-model="isHistory" />
+            <span
+              >---该功能将记录您最近生成的100个密码。并且历史记录不是存储在我们云端服务器上，而是存储在您的浏览器本地存储中。</span
+            >
+          </div>
+          <div class="look-history-box">
+            <span @click="historyPassword"
+              >{{ isMore ? "隐藏历史记录" : "查看历史记录" }}
+              <i class="bi bi-chevron-down"></i
+            ></span>
+          </div>
+          <div class="remove-btn" v-if="isMore" @click="removeHistory">清除历史记录</div>
+          <div class="history-content" v-if="isMore">
+            <div
+              class="history-pw-item"
+              v-for="(item, idx) in dataMap.passList"
+              :key="idx"
+            >
+              <span @click="copyText(item)">{{ item }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-password-box">
+          <span
+            ><svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-guanyu-"></use></svg
+            ><span>关于密码生成器</span></span
+          >
+          <p>
+            密码是一种用来混淆的技术，它希望将正常的（可识别的）信息转变为无法识别的信息。当然，对一小部分人来说，这种无法识别的信息是可以再加工并恢复的。密码在中文里是“口令”（password）的通称。登录网站、电子邮箱和银行取款时输入的“密码”其实严格来讲应该仅被称作“口令”，因为它不是本来意义上的“加密代码”，但是也可以称为秘密的号码。
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -101,10 +142,19 @@
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import { Head } from "@vueuse/head";
+import { getStore, setStore, clearStore } from "@/utils/storage.js";
 
 onMounted(() => {
   updatePassword();
 });
+
+const dataMap = reactive({
+  passList: [],
+});
+
+if (getStore("PASS_WORD_LIST")?.length) {
+  dataMap.passList = getStore("PASS_WORD_LIST");
+}
 
 let passwordVal = ref("");
 let passLength = ref(12);
@@ -113,6 +163,21 @@ let lowercase = ref(true);
 let uppercase = ref(true);
 let symbols = ref(true);
 let exclude = ref(true);
+let isHistory = ref(true);
+let isMore = ref(false);
+let maxPw = ref(100);
+
+const removeHistory = () => {
+  clearStore("PASS_WORD_LIST");
+  dataMap.passList = getStore("PASS_WORD_LIST");
+  isMore.value = false;
+};
+
+const historyPassword = () => {
+  isMore.value = !isMore.value;
+  const moreIcon = document.querySelector(".bi-chevron-down");
+  moreIcon.classList.toggle("open-more");
+};
 
 const handleRefreshClick = () => {
   const iconBox = document.querySelector(".refresh-icon");
@@ -167,11 +232,17 @@ const updatePassword = () => {
     const randomIndex = Math.floor(Math.random() * allChars.length);
     passwordVal.value += allChars[randomIndex];
   }
+
+  dataMap.passList = getStore("PASS_WORD_LIST")?.length ? getStore("PASS_WORD_LIST") : [];
+  if (dataMap.passList.length < maxPw.value) {
+    dataMap.passList.push(passwordVal.value);
+    setStore("PASS_WORD_LIST", dataMap.passList);
+  }
 };
 
-const copyText = () => {
+const copyText = (val) => {
   navigator.clipboard
-    .writeText(passwordVal.value)
+    .writeText(val)
     .then(() => {
       ElNotification({
         title: "成功",
@@ -192,14 +263,8 @@ const copyText = () => {
 </script>
 
 <style lang="scss" scoped>
-.password {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .password .content {
-  padding: 20px;
+  padding: 50px 100px;
 }
 
 .tool-main {
@@ -240,6 +305,7 @@ const copyText = () => {
   align-items: center;
   justify-content: center;
   text-align: center;
+  user-select: none;
 
   &:hover {
     opacity: 0.8;
@@ -259,9 +325,9 @@ const copyText = () => {
 }
 
 .config-item-box,
-.password-length-box {
+.password-length-box,
+.about-password-box {
   margin: 20px 0;
-  padding: 0 5px;
 
   span {
     font-weight: 500;
@@ -285,6 +351,106 @@ const copyText = () => {
 
 .password-length-box .slider {
   width: 400px;
+}
+
+.history-box p {
+  font-size: 14px;
+}
+
+.record-box {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  span {
+    margin-left: 20px;
+  }
+}
+
+.look-history-box {
+  display: flex;
+  align-items: center;
+
+  span {
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+
+    .bi {
+      margin-left: 3px;
+    }
+  }
+}
+
+.bi-chevron-down::before {
+  transform: rotate(0deg);
+  transition: all 0.3s;
+  vertical-align: middle;
+}
+
+.bi-chevron-down.open-more::before {
+  transform: rotate(180deg);
+  transition: all 0.3s;
+}
+
+.remove-btn {
+  margin-top: 10px;
+  background-color: red;
+  width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 8px 0;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    background-color: rgb(229, 41, 41);
+    transition: all 0.2s;
+  }
+}
+
+.history-content {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #fff;
+  border-radius: 5px;
+  margin-top: 10px;
+  .history-pw-item {
+    padding: 8px 0;
+    width: 50%;
+    overflow-wrap: break-word;
+    span {
+      color: rgb(12, 6, 1);
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      &:hover {
+        color: var(--linkTextColor);
+        transition: all 0.2s;
+      }
+    }
+  }
+  p {
+    font-size: 14px;
+  }
+}
+
+.about-password-box {
+  margin-top: 30px;
+
+  p {
+    font-size: 14px;
+    margin: 10px 0;
+  }
 }
 
 :deep(.el-input__wrapper.is-focus) {
@@ -333,6 +499,10 @@ const copyText = () => {
 }
 
 @media (max-width: 860px) {
+  .password .content {
+    padding: 10px;
+  }
+
   .tool-main {
     padding: 0;
   }
@@ -351,6 +521,14 @@ const copyText = () => {
 
   .password-length-box .slider {
     width: 100%;
+  }
+
+  .look-history-box {
+    margin-top: 10px;
+  }
+
+  .history-pw-item {
+    width: 100% !important;
   }
 }
 </style>
