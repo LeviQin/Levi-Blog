@@ -191,42 +191,28 @@ const handleRefreshClick = () => {
 };
 
 const updatePassword = () => {
-  const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
-  const numberChars = "0123456789";
-  const specialChars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+  const charSets = {
+    uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    lowercase: "abcdefghijklmnopqrstuvwxyz",
+    numbers: "0123456789",
+    symbols: "!@#$%^&*()_+-=[]{}|;:,.<>?",
+  };
 
   let allChars = "";
-  passwordVal.value = "";
 
-  // 大写字母
-  if (uppercase.value) {
-    allChars += uppercaseChars;
-  } else {
-    allChars = allChars.replace(new RegExp("[" + uppercaseChars + "]", "g"), "");
+  for (const [key, value] of Object.entries(charSets)) {
+    if (key === "exclude" && exclude.value) {
+      allChars = allChars.replace(/[1lI0oO]/g, "");
+    } else if (key === "symbols" && symbols.value) {
+      allChars += value;
+    } else if (key !== "exclude" && key !== "symbols" && eval(`${key}.value`)) {
+      allChars += value;
+    } else {
+      allChars = allChars.replace(new RegExp("[" + value + "]", "g"), "");
+    }
   }
-  // 小写字母
-  if (lowercase.value) {
-    allChars += lowercaseChars;
-  } else {
-    allChars = allChars.replace(new RegExp("[" + lowercaseChars + "]", "g"), "");
-  }
-  // 数字
-  if (numbers.value) {
-    allChars += numberChars;
-  } else {
-    allChars = allChars.replace(new RegExp("[" + numberChars + "]", "g"), "");
-  }
-  // 特殊字符
-  if (symbols.value) {
-    allChars += specialChars;
-  } else {
-    allChars = allChars.replace(new RegExp("[" + specialChars + "]", "g"), "");
-  }
-  // 排除相似字符 oO0l1
-  if (exclude.value) {
-    allChars = allChars.replace(/[1lI0oO]/g, "");
-  }
+
+  passwordVal.value = "";
 
   for (let i = 0; i < passLength.value; i++) {
     const randomIndex = Math.floor(Math.random() * allChars.length);

@@ -92,11 +92,19 @@ let categories = [
   },
   {
     value: 8,
-    label: "AI工具",
+    label: "AI应用",
   },
   {
     value: 9,
     label: "招聘平台",
+  },
+  {
+    value: 10,
+    label: "视频剪辑",
+  },
+  {
+    value: 11,
+    label: "原型工具",
   },
 ];
 const selectedCategory = ref(categories[0].label);
