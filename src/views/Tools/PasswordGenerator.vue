@@ -233,10 +233,14 @@ const updatePassword = () => {
     passwordVal.value += allChars[randomIndex];
   }
 
-  dataMap.passList = getStore("PASS_WORD_LIST")?.length ? getStore("PASS_WORD_LIST") : [];
-  if (dataMap.passList.length < maxPw.value) {
-    dataMap.passList.push(passwordVal.value);
-    setStore("PASS_WORD_LIST", dataMap.passList);
+  if (isHistory.value) {
+    dataMap.passList = getStore("PASS_WORD_LIST")?.length
+      ? getStore("PASS_WORD_LIST")
+      : [];
+    if (dataMap.passList.length < maxPw.value) {
+      dataMap.passList.push(passwordVal.value);
+      setStore("PASS_WORD_LIST", dataMap.passList);
+    }
   }
 };
 
@@ -409,6 +413,7 @@ const copyText = (val) => {
   font-size: 12px;
   cursor: pointer;
   transition: all 0.2s;
+
   &:hover {
     background-color: rgb(229, 41, 41);
     transition: all 0.2s;
@@ -423,22 +428,26 @@ const copyText = (val) => {
   background-color: #fff;
   border-radius: 5px;
   margin-top: 10px;
+
   .history-pw-item {
     padding: 8px 0;
     width: 50%;
     overflow-wrap: break-word;
+
     span {
       color: rgb(12, 6, 1);
       font-weight: 500;
       font-size: 14px;
       cursor: pointer;
       transition: all 0.2s;
+
       &:hover {
         color: var(--linkTextColor);
         transition: all 0.2s;
       }
     }
   }
+
   p {
     font-size: 14px;
   }
