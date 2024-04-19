@@ -106,6 +106,14 @@ let categories = [
     value: 11,
     label: "原型工具",
   },
+  {
+    value: 12,
+    label: "开发软件",
+  },
+  {
+    value: 13,
+    label: "云服务器",
+  },
 ];
 const selectedCategory = ref(categories[0].label);
 
@@ -210,6 +218,7 @@ const toSitePage = (url) => {
 
   .select-category-ul li {
     margin: 5px;
+    padding: 8px 10px;
   }
 }
 
