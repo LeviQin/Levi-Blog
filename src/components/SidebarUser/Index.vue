@@ -23,7 +23,7 @@
     <div class="sidebar-info-data">
       <div class="sidebar-info-data-item">
         <div>
-          <span>笔迹</span>
+          <span>文章</span>
         </div>
         <div class="sidebar-info-data-num">
           <span>{{ totalArticles }}</span>

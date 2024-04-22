@@ -178,7 +178,7 @@ const getArticleDetail = async () => {
         item.published_at = dateToString(item.published_at);
         return item;
       })[0];
-      document.title = `${dataMap.articleInfo.title} - Levi 笔迹分享`;
+      document.title = `${dataMap.articleInfo.title} - Levi 博客分享`;
     } else {
       console.log(message, "------------------------");
     }
@@ -245,7 +245,7 @@ const getArticleDetail = async () => {
 
   /* 显示省略号 */
   &:hover .nav-title {
-    color: var(--themeTextColor);
+    color: var(--themeBtnHoverColor);
   }
 }
 

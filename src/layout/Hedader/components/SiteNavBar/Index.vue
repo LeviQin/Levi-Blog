@@ -3,7 +3,7 @@
     <ul class="nav-ul" @click="toPage">
       <li class="nav-li active-li" data-router="/">首页</li>
       <el-dropdown @command="handleCommandToPage">
-        <li class="nav-li">笔迹分类</li>
+        <li class="nav-li">文章分类</li>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item command="daily"
@@ -49,7 +49,6 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <li class="nav-li" data-router="/nav">常用网站</li>
       <!-- <li class="nav-li" data-router="/material">前端资料</li> -->
       <el-dropdown @command="handleCommandToPage">
         <li class="nav-li">小工具</li>
@@ -83,6 +82,8 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
+      <li class="nav-li" data-router="/nav">常用网站</li>
+      <li class="nav-li" data-router="/msg-board">留言板</li>
       <li class="nav-li" data-router="/links">友情链接</li>
       <li class="nav-li" data-router="/about">关于我</li>
     </ul>
@@ -147,13 +148,13 @@ const handleCommandToPage = (val) => {
   border-bottom: 2px solid transparent;
 
   &:hover {
-    border-bottom: 2px solid var(--themeTextColor);
+    border-bottom: 2px solid var(--themeBtnHoverColor);
     transition: all 0.5s;
   }
 }
 
 .active-li {
-  border-bottom: 2px solid var(--themeTextColor);
+  border-bottom: 2px solid var(--themeBtnHoverColor);
 }
 
 svg.icon {

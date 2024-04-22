@@ -10,7 +10,7 @@ export default [{
                 component: Home,
                 name: "Home",
                 meta: {
-                    title: "Levi 笔迹分享",
+                    title: "Levi 博客分享 - 开源博客、多端适应、全栈开发。可作为模版改造使用！",
                 }
             },
             {
@@ -18,7 +18,7 @@ export default [{
                 component: () => import("@/views/Topic/Daily.vue"),
                 name: "Daily",
                 meta: {
-                    title: "笔迹分类（日常）",
+                    title: "文章分类-日常",
                 }
             },
             {
@@ -26,7 +26,7 @@ export default [{
                 component: () => import("@/views/Topic/Technology.vue"),
                 name: "Technology",
                 meta: {
-                    title: "笔迹分类（技术）",
+                    title: "文章分类-技术",
                 }
             },
             {
@@ -34,7 +34,7 @@ export default [{
                 component: () => import("@/views/Topic/CutePet.vue"),
                 name: "Cute Pet",
                 meta: {
-                    title: "笔迹分类（萌宠）",
+                    title: "文章分类-萌宠",
                 }
             },
             {
@@ -42,7 +42,7 @@ export default [{
                 component: () => import("@/views/Topic/Landscape.vue"),
                 name: "Landscape",
                 meta: {
-                    title: "笔迹分类（风景）",
+                    title: "文章分类-风景",
                 }
             },
             {
@@ -50,7 +50,7 @@ export default [{
                 component: () => import("@/views/Topic/notes.vue"),
                 name: "Notes",
                 meta: {
-                    title: "笔迹分类（笔记）",
+                    title: "文章分类-笔记",
                 }
             },
             {
@@ -58,7 +58,7 @@ export default [{
                 component: () => import("@/views/Topic/Figure.vue"),
                 name: "Figure",
                 meta: {
-                    title: "笔迹分类（人物）",
+                    title: "文章分类-人物",
                 }
             },
             {
@@ -66,7 +66,7 @@ export default [{
                 component: () => import("@/views/Topic/Game.vue"),
                 name: "Game",
                 meta: {
-                    title: "笔迹分类（游戏）",
+                    title: "文章分类-游戏",
                 }
             },
             {
@@ -74,7 +74,7 @@ export default [{
                 component: () => import("@/views/Topic/Embarrassing.vue"),
                 name: "Embarrassing",
                 meta: {
-                    title: "笔迹分类（囧事）",
+                    title: "文章分类-囧事",
                 }
             },
             {
@@ -82,7 +82,7 @@ export default [{
                 component: () => import("@/views/Topic/TopicDetail.vue"),
                 name: "Topic Detail",
                 meta: {
-                    title: "笔迹详情",
+                    title: "文章详情",
                 }
             },
             {
@@ -91,6 +91,14 @@ export default [{
                 name: "Nav",
                 meta: {
                     title: "常用网站",
+                }
+            },
+            {
+                path: "/msg-board",
+                component: () => import("@/views/MessageBoard/Index.vue"),
+                name: "Message Board",
+                meta: {
+                    title: "留言板",
                 }
             },
             {

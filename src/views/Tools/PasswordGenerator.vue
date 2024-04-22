@@ -285,7 +285,7 @@ const copyText = (val) => {
 .copy-icon-box,
 .m-copy-icon-box {
   cursor: pointer;
-  background-color: var(--themeTextColor);
+  background-color: var(--themeBtnHoverColor);
   margin: 5px 0;
   padding: 5px 25px;
   border-radius: 2px;
@@ -457,11 +457,11 @@ const copyText = (val) => {
 }
 
 :deep(.el-slider__bar) {
-  background-color: var(--themeTextColor);
+  background-color: var(--themeBtnHoverColor);
 }
 
 :deep(.el-slider__button) {
-  border-color: var(--themeTextColor);
+  border-color: var(--themeBtnHoverColor);
 }
 
 :deep(.el-checkbox__label) {
@@ -469,8 +469,8 @@ const copyText = (val) => {
 }
 
 :deep(.el-checkbox__input.is-checked .el-checkbox__inner) {
-  background-color: var(--themeTextColor);
-  border-color: var(--themeTextColor);
+  background-color: var(--themeBtnHoverColor);
+  border-color: var(--themeBtnHoverColor);
 }
 
 :deep(.password-input .el-input__inner) {

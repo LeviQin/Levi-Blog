@@ -1,0 +1,251 @@
+<template>
+  <Head>
+    <meta name="keywords" content="留言板，交流，留言，问答，意见，建议，反馈" />
+    <meta
+      name="description"
+      content="欢迎来到留言板！在这里，您可以畅所欲言，分享您的想法、感受和建议。无论是对我们网站的赞美，还是对改进的建议，我们都非常乐意听取并与您交流。请尊重他人，文明用语，让我们共同营造一个友爱、和谐的留言环境。"
+    />
+    <meta
+      property="og:description"
+      content="欢迎来到留言板！在这里，您可以畅所欲言，分享您的想法、感受和建议。无论是对我们网站的赞美，还是对改进的建议，我们都非常乐意听取并与您交流。请尊重他人，文明用语，让我们共同营造一个友爱、和谐的留言环境。"
+    />
+  </Head>
+  <div class="msg-board">
+    <top-banner :bannerConfig="bannerConfig"></top-banner>
+    <div
+      class="msg-board-container"
+      :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
+    >
+      <div class="msg-board-main w">
+        <div class="topic-sidebar">
+          <sidebar-user></sidebar-user>
+        </div>
+        <div class="msg-board-box">
+          <div class="board-box theme-bg-color">
+            <div class="box-title">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-liuyanban"></use>
+              </svg>
+              <h2>留言板</h2>
+            </div>
+          </div>
+          <div class="message-box theme-bg-color">
+            <div class="box-title">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-faxiaoxi"></use>
+              </svg>
+              <h2>发送留言</h2>
+            </div>
+            <div class="box-content">
+              <div class="textarea-bpx">
+                <el-input
+                  v-model="mssageText"
+                  placeholder="留下你的一笔吧~"
+                  :autosize="{ minRows: 3, maxRows: 45 }"
+                  type="textarea"
+                ></el-input>
+              </div>
+              <div class="input-box">
+                <el-input
+                  v-model="mssageText"
+                  placeholder="昵称"
+                  class="input-item"
+                  size="large"
+                >
+                  <template #prefix>
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-nicheng"></use>
+                    </svg>
+                  </template>
+                </el-input>
+                <el-input
+                  v-model="mssageText"
+                  placeholder="邮箱"
+                  class="input-item"
+                  size="large"
+                >
+                  <template #prefix>
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-MAILBOX"></use>
+                    </svg>
+                  </template>
+                </el-input>
+                <el-input
+                  v-model="mssageText"
+                  placeholder="验证码"
+                  class="input-item code-input"
+                  size="large"
+                >
+                  <template #prefix>
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-yanzhengma"></use>
+                    </svg> </template
+                ></el-input>
+              </div>
+              <div class="btn-box">
+                <div class="emoji-icon-box">
+                  <svg class="icon" aria-hidden="true">
+                    <use
+                      xlink:href="#icon-a-gaoxinghaoxinqingbiaoqingxihuanbiaoqingxiaolian"
+                    ></use>
+                  </svg>
+                </div>
+                <div class="send-btn">
+                  <span>发送</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, reactive, onMounted } from "vue";
+import TopBanner from "@/components/TopBanner/Index.vue";
+import { Head } from "@vueuse/head";
+import SidebarUser from "@/components/SidebarUser/Index.vue";
+import { Promotion } from "@element-plus/icons-vue";
+
+onMounted(() => {
+  isSidebarVisible.value = true;
+});
+
+let isSidebarVisible = ref(false);
+let mssageText = ref("");
+
+const bannerConfig = {
+  height: "35vh",
+  showArrow: false,
+  title: "Levi",
+  text: "欢迎来到我们的留言板！期待您的留言和反馈！",
+};
+</script>
+
+<style lang="scss" scoped>
+.msg-board-main {
+  display: flex;
+}
+
+.msg-board-box {
+  flex: 1;
+}
+
+.board-box,
+.message-box {
+  border-radius: var(--themeRadius);
+  padding: 20px;
+}
+
+.message-box {
+  margin-top: 20px;
+}
+
+.box-title {
+  display: flex;
+  align-items: center;
+  h2 {
+    margin: 0;
+  }
+  .icon {
+    width: 2em;
+    height: 2em;
+    margin-right: 10px;
+  }
+}
+
+.box-content {
+  margin: 20px 0;
+}
+
+.input-box {
+  display: flex;
+  margin: 20px 0;
+  .input-item {
+    margin-right: 20px;
+    box-shadow: 0 1px 3px rgba(50, 50, 93, .15), 0 1px 0 rgba(0, 0, 0, .02);
+    .icon {
+      width: 1.2em;
+      height: 1.2em;
+    }
+  }
+  .input-item:last-child {
+    margin-right: 0;
+  }
+}
+
+.code-input {
+  position: relative;
+  &::after {
+    content: "5 * 9 = ";
+    position: absolute;
+    left: 0;
+    bottom: 30px;
+    background-color: var(--filingColor);
+    color: var(--whiteColor);
+    width: auto;
+    padding: 0 15px;
+    border-radius: 5px;
+    opacity: 0;
+    line-height: 30px;
+    transition: bottom 0.5s, opacity 0.5s;
+  }
+  &:hover::after {
+    bottom: 45px;
+    opacity: 0.8;
+  }
+}
+
+.btn-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  .emoji-icon-box {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .icon {
+      width: 1.5em;
+      height: 1.5em;
+      margin-right: 15px;
+    }
+  }
+  .send-btn {
+    background-color: var(--themeBtnHoverColor);
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--whiteColor);
+    font-size: 12px;
+    transition: all .3s;
+    &:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+@media (max-width: 860px) {
+  .input-box {
+    display: block;
+    .input-item {
+      margin-bottom: 20px;
+    }
+    .input-item:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+:deep(.el-textarea__inner:focus),
+:deep(.el-input__wrapper.is-focus) {
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+:deep(.el-textarea__inner:hover) {
+  box-shadow: none;
+}
+</style>
