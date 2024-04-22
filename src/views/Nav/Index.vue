@@ -53,6 +53,7 @@ import { getSiteList } from "@/api/webdev";
 import { Head } from "@vueuse/head";
 
 onMounted(() => {
+  selectedCategory.value = 1；
   getSiteNavList();
 });
 
@@ -127,7 +128,7 @@ const getSiteNavList = async () => {
   const { code, data } = res.data;
   if (code === 200) {
     dataMap.tableData = data;
-    dataMap.data = dataMap.tableData.filter((item) => item.type === 1);
+    selectCategory(selectedCategory.value);
   }
 };
 
