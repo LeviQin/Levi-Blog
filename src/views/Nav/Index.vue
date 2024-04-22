@@ -53,7 +53,7 @@ import { getSiteList } from "@/api/webdev";
 import { Head } from "@vueuse/head";
 
 onMounted(() => {
-  selectedCategory.value = 1；
+  selectedCategory.value = 1;
   getSiteNavList();
 });
 
