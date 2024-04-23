@@ -39,18 +39,21 @@
             <div class="box-content">
               <div class="textarea-bpx">
                 <el-input
+                  id="msg-content"
                   v-model="mssageText"
                   placeholder="留下你的一笔吧~"
                   :autosize="{ minRows: 3, maxRows: 45 }"
                   type="textarea"
+                  :disabled="loading"
                 ></el-input>
               </div>
               <div class="input-box">
                 <el-input
-                  v-model="mssageText"
+                  v-model="user_nickname"
                   placeholder="昵称"
                   class="input-item"
                   size="large"
+                  :disabled="loading"
                 >
                   <template #prefix>
                     <svg class="icon" aria-hidden="true">
@@ -59,10 +62,11 @@
                   </template>
                 </el-input>
                 <el-input
-                  v-model="mssageText"
+                  v-model="email"
                   placeholder="邮箱"
                   class="input-item"
                   size="large"
+                  :disabled="loading"
                 >
                   <template #prefix>
                     <svg class="icon" aria-hidden="true">
@@ -71,10 +75,11 @@
                   </template>
                 </el-input>
                 <el-input
-                  v-model="mssageText"
+                  v-model="verCode"
                   placeholder="验证码"
                   class="input-item code-input"
                   size="large"
+                  :disabled="loading"
                 >
                   <template #prefix>
                     <svg class="icon" aria-hidden="true">
@@ -83,9 +88,9 @@
                 ></el-input>
               </div>
               <div class="btn-box">
-                <EmojiIconBox />
-                <div class="send-btn">
-                  <span>发送</span>
+                <EmojiIconBox @ok="receiveMessage" />
+                <div class="send-btn" @click="sendMessage">
+                  <span>{{ loading ? "发送中" : "发送" }}</span>
                 </div>
               </div>
             </div>
@@ -102,19 +107,164 @@ import TopBanner from "@/components/TopBanner/Index.vue";
 import { Head } from "@vueuse/head";
 import SidebarUser from "@/components/SidebarUser/Index.vue";
 import EmojiIconBox from "./components/EmojiIconBox.vue";
+import { sendBoardMsg } from "@/api/messages.js";
 
 onMounted(() => {
   isSidebarVisible.value = true;
+  updateContent();
 });
 
 let isSidebarVisible = ref(false);
 let mssageText = ref("");
+let user_nickname = ref("");
+let email = ref("");
+let user_avatar_url = ref("");
+let parent_id = ref("");
+let verCode = ref("");
+let loading = ref(false);
+let codeNum = ref(0);
 
 const bannerConfig = {
   height: "35vh",
   showArrow: false,
   title: "Levi",
   text: "欢迎来到我们的留言板！期待您的留言和反馈！",
+};
+
+const receiveMessage = (emoji) => {
+  insertAtCursor(emoji.value);
+};
+
+const insertAtCursor = (text) => {
+  const textarea = document.getElementById("msg-content");
+  const startPos = textarea.selectionStart;
+  const endPos = textarea.selectionEnd;
+  const beforeText = mssageText.value.substring(0, startPos);
+  const afterText = mssageText.value.substring(endPos, mssageText.value.length);
+  mssageText.value = beforeText + text + afterText;
+};
+
+const sendMessage = async () => {
+  try {
+    if (!user_nickname.value) {
+      ElNotification({
+        title: "留言失败",
+        message: "昵称未填写",
+        type: "error",
+        zIndex: 99999,
+      });
+      return;
+    }
+    if (!email.value) {
+      ElNotification({
+        title: "留言失败",
+        message: "邮箱未填写",
+        type: "error",
+        zIndex: 99999,
+      });
+      return;
+    }
+    if (verCode.value != codeNum.value) {
+      ElNotification({
+        title: "留言失败",
+        message: "验证码错误",
+        type: "error",
+        zIndex: 99999,
+      });
+      return;
+    }
+    loading.value = true;
+    const { operatingSystem, browser } = getSystemInfo();
+    const res = await sendBoardMsg({
+      content: mssageText.value,
+      user_nickname: user_nickname.value,
+      email: email.value,
+      user_avatar_url: user_avatar_url.value,
+      parent_id: parent_id.value,
+      operatingSystem,
+      browser,
+    });
+    const { code, message } = res.data;
+    if (code === 200) {
+      mssageText.value = "";
+      getMessageList();
+      ElNotification({
+        title: "成功",
+        message,
+        type: "success",
+        zIndex: 99999,
+      });
+    } else {
+      ElNotification({
+        title: "失败",
+        message,
+        type: "error",
+        zIndex: 99999,
+      });
+    }
+  } catch (e) {
+    console.log(e, "----------------------");
+    ElNotification({
+      title: "失败",
+      message: "留言失败，请重试",
+      type: "error",
+      zIndex: 99999,
+    });
+  } finally {
+    loading.value = false;
+  }
+};
+
+const updateContent = () => {
+  const min = 1;
+  const max = 20;
+  const random1 = Math.floor(Math.random() * (max - min + 1)) + min;
+  const random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+
+  const newValue = `${random1} - ${random2} = `;
+
+  codeNum.value = random1 - random2;
+
+  document.documentElement.style.setProperty("--content-value", `"${newValue}"`);
+};
+
+const getSystemInfo = () => {
+  const userAgent = navigator.userAgent;
+
+  // 获取操作系统信息
+  let operatingSystem = "Unknown";
+  if (userAgent.match(/Windows/)) {
+    operatingSystem = "Windows";
+  } else if (userAgent.match(/Macintosh|Mac OS/)) {
+    operatingSystem = "Mac OS";
+  } else if (userAgent.match(/Android/)) {
+    operatingSystem = "Android";
+  } else if (userAgent.match(/iOS/)) {
+    operatingSystem = "iOS";
+  } else if (userAgent.match(/Linux/)) {
+    operatingSystem = "Linux";
+  }
+
+  // 获取浏览器信息
+  let browser = "Unknown";
+  if (userAgent.match(/Chrome/)) {
+    browser = "Chrome";
+  } else if (userAgent.match(/Safari/)) {
+    browser = "Safari";
+  } else if (userAgent.match(/Firefox/)) {
+    browser = "Firefox";
+  } else if (userAgent.match(/Edge/)) {
+    browser = "Edge";
+  } else if (userAgent.match(/Opera/)) {
+    browser = "Opera";
+  } else if (userAgent.match(/MSIE/)) {
+    browser = "Internet Explorer";
+  }
+
+  return {
+    operatingSystem,
+    browser,
+  };
 };
 </script>
 
@@ -174,7 +324,7 @@ const bannerConfig = {
 .code-input {
   position: relative;
   &::after {
-    content: "5 * 9 = ";
+    content: var(--content-value);
     position: absolute;
     left: 0;
     bottom: 30px;
