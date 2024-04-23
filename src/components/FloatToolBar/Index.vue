@@ -4,17 +4,6 @@
       <i class="bi bi-rocket-fill"></i>
     </div>
     <div
-      class="move-right-btn btn-item"
-      title="移至右侧"
-      @click="clickMoveBtn"
-      v-if="isLeft"
-    >
-      <i class="bi bi-chevron-right"></i>
-    </div>
-    <div class="move-left-btn btn-item" title="移至左侧" @click="clickMoveBtn" v-else>
-      <i class="bi bi-chevron-left"></i>
-    </div>
-    <div
       v-if="showToolBar"
       class="close-btn btn-item"
       title="收起工具栏"
@@ -25,6 +14,19 @@
     <div v-else class="open-btn btn-item" title="打开工具栏" @click="awayToolbar">
       <i class="bi bi-arrow-left-circle"></i>
     </div>
+    <template v-if="showToolBar">
+      <div
+        class="move-right-btn btn-item"
+        title="移至右侧"
+        @click="clickMoveBtn"
+        v-if="isLeft"
+      >
+        <i class="bi bi-chevron-right"></i>
+      </div>
+      <div class="move-left-btn btn-item" title="移至左侧" @click="clickMoveBtn" v-else>
+        <i class="bi bi-chevron-left"></i>
+      </div>
+    </template>
     <div
       class="switch-wallpaper-btn btn-item"
       title="切换壁纸"

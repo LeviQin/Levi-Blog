@@ -4,7 +4,7 @@
       <Hedader />
     </header>
     <main class="main">
-      <router-view />
+      <router-view :key="route.path" />
     </main>
     <footer class="footer-card">
       <Footer />
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import Hedader from "./Hedader/Index.vue";
 import Footer from "./Footer/Index.vue";
 import { useRoute } from "vue-router";

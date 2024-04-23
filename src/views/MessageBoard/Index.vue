@@ -83,13 +83,7 @@
                 ></el-input>
               </div>
               <div class="btn-box">
-                <div class="emoji-icon-box">
-                  <svg class="icon" aria-hidden="true">
-                    <use
-                      xlink:href="#icon-a-gaoxinghaoxinqingbiaoqingxihuanbiaoqingxiaolian"
-                    ></use>
-                  </svg>
-                </div>
+                <EmojiIconBox />
                 <div class="send-btn">
                   <span>发送</span>
                 </div>
@@ -103,11 +97,11 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { Head } from "@vueuse/head";
 import SidebarUser from "@/components/SidebarUser/Index.vue";
-import { Promotion } from "@element-plus/icons-vue";
+import EmojiIconBox from "./components/EmojiIconBox.vue";
 
 onMounted(() => {
   isSidebarVisible.value = true;
@@ -131,6 +125,7 @@ const bannerConfig = {
 
 .msg-board-box {
   flex: 1;
+  margin: 0 20px;
 }
 
 .board-box,
@@ -165,7 +160,7 @@ const bannerConfig = {
   margin: 20px 0;
   .input-item {
     margin-right: 20px;
-    box-shadow: 0 1px 3px rgba(50, 50, 93, .15), 0 1px 0 rgba(0, 0, 0, .02);
+    box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02);
     .icon {
       width: 1.2em;
       height: 1.2em;
@@ -203,15 +198,10 @@ const bannerConfig = {
   align-items: center;
   justify-content: flex-end;
   .emoji-icon-box {
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    .icon {
-      width: 1.5em;
-      height: 1.5em;
-      margin-right: 15px;
-    }
+    position: relative;
   }
   .send-btn {
     background-color: var(--themeBtnHoverColor);
@@ -220,7 +210,7 @@ const bannerConfig = {
     cursor: pointer;
     color: var(--whiteColor);
     font-size: 12px;
-    transition: all .3s;
+    transition: all 0.3s;
     &:hover {
       opacity: 0.9;
       transform: translateY(-2px);
