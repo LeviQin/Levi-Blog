@@ -4,12 +4,16 @@
       <div class="emoji-list-content">
         <div class="emoji-box" v-if="selectVal === `emoji`">
           <ul>
-            <li v-for="item in emojiList" :key="item.id" @click="selectEmoji(item)">{{ item.value }}</li>
+            <li v-for="item in emojiList" :key="item.id" @click="selectEmoji(item)">
+              {{ item.value }}
+            </li>
           </ul>
         </div>
         <div class="kaomoji-box" v-else>
           <ul>
-            <li v-for="item in kaomojiList" :key="item.id" @click="selectEmoji(item)">{{ item.value }}</li>
+            <li v-for="item in kaomojiList" :key="item.id" @click="selectEmoji(item)">
+              {{ item.value }}
+            </li>
           </ul>
         </div>
       </div>
@@ -60,8 +64,9 @@ const selectLi = (val, e) => {
 };
 
 const selectEmoji = (item) => {
-    emit("ok", item);
-}
+  showEmojiList.value = false;
+  emit("ok", item);
+};
 
 const emit = defineEmits(["ok"]);
 </script>

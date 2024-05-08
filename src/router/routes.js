@@ -82,7 +82,7 @@ export default [{
                 component: () => import("@/views/Topic/TopicDetail.vue"),
                 name: "Topic Detail",
                 meta: {
-                    title: "文章详情",
+                    title: "文章详情 - Levi",
                 }
             },
             {
@@ -90,7 +90,7 @@ export default [{
                 component: () => import("@/views/Nav/Index.vue"),
                 name: "Nav",
                 meta: {
-                    title: "常用网站",
+                    title: "常用网站 - Levi",
                 }
             },
             {
@@ -98,7 +98,7 @@ export default [{
                 component: () => import("@/views/MessageBoard/Index.vue"),
                 name: "Message Board",
                 meta: {
-                    title: "留言板",
+                    title: "留言板 - Levi",
                 }
             },
             {
@@ -106,7 +106,7 @@ export default [{
                 component: () => import("@/views/Material/Index.vue"),
                 name: "Material",
                 meta: {
-                    title: "前端资料",
+                    title: "前端资料 - Levi",
                 }
             },
             {
@@ -114,7 +114,7 @@ export default [{
                 component: () => import("@/views/Tools/IPAddress.vue"),
                 name: "IP",
                 meta: {
-                    title: "IP地址查询",
+                    title: "IP地址查询 - Levi",
                 }
             },
             {
@@ -122,7 +122,7 @@ export default [{
                 component: () => import("@/views/Tools/UnitConversion.vue"),
                 name: "Unit",
                 meta: {
-                    title: "单位换算",
+                    title: "单位换算 - Levi",
                 }
             },
             {
@@ -130,7 +130,7 @@ export default [{
                 component: () => import("@/views/Tools/EncryptionAndDecryption.vue"),
                 name: "Encryption",
                 meta: {
-                    title: "加密/解密",
+                    title: "加密/解密 - Levi",
                 }
             },
             {
@@ -138,7 +138,7 @@ export default [{
                 component: () => import("@/views/Tools/Weather.vue"),
                 name: "Weather",
                 meta: {
-                    title: "天气查询",
+                    title: "天气查询 - Levi",
                 }
             },
             {
@@ -146,7 +146,7 @@ export default [{
                 component: () => import("@/views/Tools/PasswordGenerator.vue"),
                 name: "Password",
                 meta: {
-                    title: "密码生成器",
+                    title: "密码生成器 - Levi",
                 }
             },
             {
@@ -154,7 +154,7 @@ export default [{
                 component: () => import("@/views/Tools/FrontEndTools.vue"),
                 name: "Front End",
                 meta: {
-                    title: "前端",
+                    title: "前端 - Levi",
                 }
             },
             {
@@ -162,7 +162,7 @@ export default [{
                 component: () => import("@/views/Links/Index.vue"),
                 name: "Links",
                 meta: {
-                    title: "友情链接",
+                    title: "友情链接 - Levi",
                 }
             },
         ]
@@ -172,7 +172,7 @@ export default [{
         component: () => import("@/views/About/Index.vue"),
         name: "About",
         meta: {
-            title: "关于我",
+            title: "关于我 - Levi",
         }
     },
     {

@@ -28,6 +28,12 @@
               </svg>
               <h2>留言板</h2>
             </div>
+            <div class="board-content">
+              <!-- 渲染树形结构的留言 -->
+              <template v-for="msg in dataMap.msgList" :key="msg.id">
+                <MessageItem :message="msg" :level="0" />
+              </template>
+            </div>
           </div>
           <div class="message-box theme-bg-color">
             <div class="box-title">
@@ -40,7 +46,7 @@
               <div class="textarea-bpx">
                 <el-input
                   id="msg-content"
-                  v-model="mssageText"
+                  v-model="messageText"
                   placeholder="留下你的一笔吧~"
                   :autosize="{ minRows: 3, maxRows: 45 }"
                   type="textarea"
@@ -88,9 +94,14 @@
                 ></el-input>
               </div>
               <div class="btn-box">
-                <EmojiIconBox @ok="receiveMessage" />
-                <div class="send-btn" @click="sendMessage">
-                  <span>{{ loading ? "发送中" : "发送" }}</span>
+                <div class="avatar-box">
+                  <AvatarSelect :avatarImg="user_avatar_url" @ok="selectAvatar" />
+                </div>
+                <div class="emoji-send-box">
+                  <EmojiIconBox @ok="receiveMessage" />
+                  <div class="send-btn" @click="sendMessage">
+                    <span>{{ loading ? "发送中" : "发送" }}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -102,23 +113,34 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { Head } from "@vueuse/head";
 import SidebarUser from "@/components/SidebarUser/Index.vue";
 import EmojiIconBox from "./components/EmojiIconBox.vue";
-import { sendBoardMsg } from "@/api/messages.js";
+import { sendBoardMsg, getMessageList } from "@/api/messages.js";
+import AvatarSelect from "./components/AvatarSelect.vue";
+import MessageItem from "./components/MessageItem.vue";
+import dayjs from "dayjs";
+import { dateToString } from "@/utils/utils.js";
 
 onMounted(() => {
   isSidebarVisible.value = true;
   updateContent();
+  getMessage();
+});
+
+const dataMap = reactive({
+  msgList: [],
 });
 
 let isSidebarVisible = ref(false);
-let mssageText = ref("");
+let messageText = ref("");
 let user_nickname = ref("");
 let email = ref("");
-let user_avatar_url = ref("");
+let user_avatar_url = ref(
+  "https://levi-oss-1301066479.cos.ap-guangzhou.myqcloud.com/avatarImages/Snipaste_2024-04-24_15-56-54.png"
+);
 let parent_id = ref("");
 let verCode = ref("");
 let loading = ref(false);
@@ -131,6 +153,10 @@ const bannerConfig = {
   text: "欢迎来到我们的留言板！期待您的留言和反馈！",
 };
 
+const selectAvatar = (avatar) => {
+  user_avatar_url.value = avatar;
+};
+
 const receiveMessage = (emoji) => {
   insertAtCursor(emoji.value);
 };
@@ -139,13 +165,61 @@ const insertAtCursor = (text) => {
   const textarea = document.getElementById("msg-content");
   const startPos = textarea.selectionStart;
   const endPos = textarea.selectionEnd;
-  const beforeText = mssageText.value.substring(0, startPos);
-  const afterText = mssageText.value.substring(endPos, mssageText.value.length);
-  mssageText.value = beforeText + text + afterText;
+  const beforeText = messageText.value.substring(0, startPos);
+  const afterText = messageText.value.substring(endPos, messageText.value.length);
+  messageText.value = beforeText + text + afterText;
+};
+
+const formatMsg = (msgList) => {
+  const formatItem = (item) => {
+    item.msgTime = dayjs(item.created_at).format("YYYY-MM-DD HH:mm:ss");
+    item.textDate = dateToString(item.created_at);
+    if (item.children) {
+      item.children = item.children.map(formatItem);
+    }
+    return item;
+  };
+
+  return msgList.map(formatItem);
+};
+
+const getMessage = async () => {
+  try {
+    const res = await getMessageList();
+    const { code, data, message } = res.data;
+    if (code === 200) {
+      dataMap.msgList = formatMsg(data);
+    } else {
+      console.log(e, "----------------------");
+      ElNotification({
+        title: "留言板加载失败",
+        message: message,
+        type: "error",
+        zIndex: 99999,
+      });
+    }
+  } catch (error) {
+    console.log(e, "----------------------");
+    ElNotification({
+      title: "留言板加载失败",
+      message: e,
+      type: "error",
+      zIndex: 99999,
+    });
+  }
 };
 
 const sendMessage = async () => {
   try {
+    if (!messageText.value) {
+      ElNotification({
+        title: "留言失败",
+        message: "留言内容未填写",
+        type: "error",
+        zIndex: 99999,
+      });
+      return;
+    }
     if (!user_nickname.value) {
       ElNotification({
         title: "留言失败",
@@ -176,20 +250,23 @@ const sendMessage = async () => {
     loading.value = true;
     const { operatingSystem, browser } = getSystemInfo();
     const res = await sendBoardMsg({
-      content: mssageText.value,
+      content: messageText.value,
       user_nickname: user_nickname.value,
       email: email.value,
       user_avatar_url: user_avatar_url.value,
       parent_id: parent_id.value,
-      operatingSystem,
+      operating_system: operatingSystem,
       browser,
     });
     const { code, message } = res.data;
     if (code === 200) {
-      mssageText.value = "";
-      getMessageList();
+      messageText.value = "";
+      user_nickname.value = "";
+      email.value = "";
+      verCode.value = "";
+      getMessage();
       ElNotification({
-        title: "成功",
+        title: "成功，等待审核中~",
         message,
         type: "success",
         zIndex: 99999,
@@ -275,7 +352,7 @@ const getSystemInfo = () => {
 
 .msg-board-box {
   flex: 1;
-  margin: 0 20px;
+  margin: 0 20px 100px 20px;
 }
 
 .board-box,
@@ -286,6 +363,10 @@ const getSystemInfo = () => {
 
 .message-box {
   margin-top: 20px;
+}
+
+.board-box .box-title {
+  margin-bottom: 30px;
 }
 
 .box-title {
@@ -346,26 +427,39 @@ const getSystemInfo = () => {
 .btn-box {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  .emoji-icon-box {
+  justify-content: space-between;
+  .emoji-send-box {
     display: flex;
     align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-  .send-btn {
-    background-color: var(--themeBtnHoverColor);
-    padding: 8px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    color: var(--whiteColor);
-    font-size: 12px;
-    transition: all 0.3s;
-    &:hover {
-      opacity: 0.9;
-      transform: translateY(-2px);
+    .emoji-icon-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .send-btn {
+      background-color: var(--themeBtnHoverColor);
+      padding: 8px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      color: var(--whiteColor);
+      font-size: 12px;
+      transition: all 0.3s;
+      &:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+      }
     }
   }
+}
+
+.board-content {
+  padding-bottom: 50px;
+}
+
+.sidebar-info {
+  position: sticky;
+  top: 80px;
 }
 
 @media (max-width: 860px) {
