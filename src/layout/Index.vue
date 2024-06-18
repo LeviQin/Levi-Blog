@@ -4,7 +4,7 @@
       <Hedader />
     </header>
     <main class="main">
-      <router-view />
+      <router-view :key="route.path" />
     </main>
     <footer class="footer-card">
       <Footer />
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import Hedader from "./Hedader/Index.vue";
 import Footer from "./Footer/Index.vue";
 import { useRoute } from "vue-router";
@@ -104,7 +104,7 @@ const scrollWidnow = () => {
 
   .main {
     flex: 1;
-    margin: 80px 20px 0 20px;
+    margin: 80px 0 0 0;
   }
 }
 
@@ -117,7 +117,6 @@ const scrollWidnow = () => {
   left: 0;
   right: 0;
   background-image: url(../assets/images/banner/fengjing2.jpg);
-  background-color: #0673a0;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

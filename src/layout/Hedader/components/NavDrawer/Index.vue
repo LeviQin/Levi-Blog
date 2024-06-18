@@ -19,7 +19,7 @@
         <li class="nav-drawer-li" data-router="/">首页</li>
         <div class="collapse-card">
           <li class="nav-drawer-li" id="topic" @click="clickTopic">
-            <span>笔迹分类</span><i class="bi bi-chevron-down bi-topic-icon"></i>
+            <span>文章分类</span><i class="bi bi-chevron-down bi-topic-icon"></i>
           </li>
           <transition name="bounce">
             <div
@@ -72,7 +72,6 @@
             </div>
           </transition>
         </div>
-        <li class="nav-drawer-li" data-router="/nav">常用网站</li>
         <!-- <li class="nav-drawer-li" data-router="/material">前端资料</li> -->
         <li class="nav-drawer-li" id="tools" @click="clickTools">
           <span>小工具</span><i class="bi bi-chevron-down bi-tools-icon"></i>
@@ -112,6 +111,7 @@
             </ul>
           </div>
         </transition>
+        <li class="nav-drawer-li" data-router="/nav">常用网站</li>
         <li class="nav-drawer-li" data-router="/links">友情链接</li>
         <li class="nav-drawer-li" data-router="/about">关于我</li>
       </ul>

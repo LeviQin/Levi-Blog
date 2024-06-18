@@ -28,7 +28,7 @@
           </li>
         </ul>
       </div>
-      <div class="nav-content">
+      <div class="nav-content" :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }">
         <div class="nav-item" v-for="item in dataMap.data" @click="toSitePage(item.url)">
           <div class="nav-img">
             <img v-lazy="item.image" :alt="item.title" />
@@ -53,8 +53,9 @@ import { getSiteList } from "@/api/webdev";
 import { Head } from "@vueuse/head";
 
 onMounted(() => {
-  selectedCategory.value = 1;
+  selectedCategory.value = "技术资源";
   getSiteNavList();
+  isSidebarVisible.value = true;
 });
 
 const dataMap = reactive({
@@ -116,7 +117,8 @@ let categories = [
     label: "云服务器",
   },
 ];
-const selectedCategory = ref(categories[0].label);
+const selectedCategory = ref("");
+let isSidebarVisible = ref(false);
 
 const selectCategory = (category) => {
   selectedCategory.value = category.label;
@@ -128,7 +130,8 @@ const getSiteNavList = async () => {
   const { code, data } = res.data;
   if (code === 200) {
     dataMap.tableData = data;
-    selectCategory(selectedCategory.value);
+    selectedCategory.value = "技术资源"
+    dataMap.data = dataMap.tableData.filter((item) => item.type === 1);
   }
 };
 

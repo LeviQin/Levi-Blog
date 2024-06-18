@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1713502494251') format('truetype');
+  src: url('iconfont.ttf?t=1713800312885') format('truetype');
 }
 
 .iconfont {
@@ -25,6 +25,10 @@
 
 .icon-zonghelei:before {
   content: "\e66e";
+}
+
+.icon-faxiaoxi:before {
+  content: "\e641";
 }
 
 .icon-kaifa:before {
@@ -88,11 +92,15 @@
 }
 
 .icon-168-boy-2:before {
-  content: "\e515";
+  content: "\e600";
 }
 
 .icon-woderichang:before {
   content: "\e6fb";
+}
+
+.icon-liuyanban:before {
+  content: "\e684";
 }
 
 .icon-jiami:before {
@@ -104,11 +112,11 @@
 }
 
 .icon-tianqi:before {
-  content: "\e55f";
+  content: "\e601";
 }
 
 .icon-changdu:before {
-  content: "\e508";
+  content: "\e602";
 }
 
 .icon-mima1:before {
@@ -123,7 +131,23 @@
   content: "\e7b3";
 }
 
+.icon-a-gaoxinghaoxinqingbiaoqingxihuanbiaoqingxiaolian:before {
+  content: "\e643";
+}
+
 .icon-a-shuqianshumulu:before {
   content: "\e6a9";
+}
+
+.icon-MAILBOX:before {
+  content: "\e603";
+}
+
+.icon-yanzhengma:before {
+  content: "\e60e";
+}
+
+.icon-nicheng:before {
+  content: "\e61d";
 }
 

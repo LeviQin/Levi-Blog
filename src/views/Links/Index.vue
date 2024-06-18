@@ -2,7 +2,7 @@
   <div class="links w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div
-      class="links-container"
+      class="links-container theme-bg-color"
       :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
     >
       <div class="links-title">
@@ -120,7 +120,6 @@ const bannerConfig = {
 
 <style lang="scss" scoped>
 .links-container {
-  background: var(--themeColor);
   border-radius: var(--themeRadius);
   padding: 20px;
 }
