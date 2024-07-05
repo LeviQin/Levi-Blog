@@ -79,7 +79,7 @@ const emit = defineEmits(["nextPosition"]);
   left: 50%;
   margin-left: -20px;
   opacity: 0.75;
-  z-index: 9999;
+  z-index: 1;
   cursor: pointer;
   animation: arrowMove 1s linear infinite;
 }

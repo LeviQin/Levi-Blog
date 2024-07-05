@@ -102,7 +102,7 @@ const emit = defineEmits(["toOnePage"]);
   opacity: 0.75;
   background: url(../../assets/images/arrow.png);
   transition: all 0.2s ease-in 0s;
-  z-index: 9999;
+  z-index: 1;
   transform: scale(0.8);
   cursor: pointer;
   background-position: -60px 0px;
