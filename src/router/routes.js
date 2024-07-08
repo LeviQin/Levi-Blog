@@ -26,7 +26,7 @@ export default [{
                 component: () => import("@/views/Topic/Technology.vue"),
                 name: "Technology",
                 meta: {
-                    title: "文章分类-技术",
+                    title: "文章分类-开发",
                 }
             },
             {
@@ -62,9 +62,9 @@ export default [{
                 }
             },
             {
-                path: "/game",
-                component: () => import("@/views/Topic/Game.vue"),
-                name: "Game",
+                path: "/games",
+                component: () => import("@/views/Topic/Games.vue"),
+                name: "Games",
                 meta: {
                     title: "文章分类-游戏",
                 }

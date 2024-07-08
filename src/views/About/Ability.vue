@@ -4,7 +4,7 @@
       <h1 class="info-title">相关技能</h1>
       <div class="info-content">
         <p>熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术</p>
-        <p>熟练掌握Vue全家桶, 能快速独立开发各种PC端和移动端项目</p>
+        <p>熟练掌握Vue全家桶，能快速独立开发各种PC端和移动端项目</p>
         <p>熟悉前端性能优化，网页SEO优化，Git和SVN代码管理工具的基本使用</p>
         <p>熟悉Webpack和Rollup的基本配置和使用</p>
         <p>曾独立完成JS SDK开发</p>

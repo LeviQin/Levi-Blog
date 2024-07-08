@@ -29,9 +29,14 @@
               <h2>留言板</h2>
             </div>
             <div class="board-content">
-              <!-- 渲染树形结构的留言 -->
-              <template v-for="msg in dataMap.msgList" :key="msg.id">
-                <MessageItem :message="msg" :level="0" />
+              <template v-if="dataMap.msgList.length">
+                <!-- 渲染树形结构的留言 -->
+                <template v-for="msg in dataMap.msgList" :key="msg.id">
+                  <MessageItem :message="msg" :level="0" />
+                </template>
+              </template>
+              <template v-else>
+                <p>留言板上暂时还没有留言呢~</p>
               </template>
             </div>
           </div>
@@ -190,7 +195,6 @@ const getMessage = async () => {
     if (code === 200) {
       dataMap.msgList = formatMsg(data);
     } else {
-      console.log(e, "----------------------");
       ElNotification({
         title: "留言板加载失败",
         message: message,
@@ -352,7 +356,7 @@ const getSystemInfo = () => {
 
 .msg-board-box {
   flex: 1;
-  margin: 0 20px 100px 20px;
+  margin: 0 0 100px 0;
 }
 
 .board-box,
@@ -372,9 +376,11 @@ const getSystemInfo = () => {
 .box-title {
   display: flex;
   align-items: center;
+
   h2 {
     margin: 0;
   }
+
   .icon {
     width: 2em;
     height: 2em;
@@ -389,14 +395,17 @@ const getSystemInfo = () => {
 .input-box {
   display: flex;
   margin: 20px 0;
+
   .input-item {
     margin-right: 20px;
     box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02);
+
     .icon {
       width: 1.2em;
       height: 1.2em;
     }
   }
+
   .input-item:last-child {
     margin-right: 0;
   }
@@ -404,6 +413,7 @@ const getSystemInfo = () => {
 
 .code-input {
   position: relative;
+
   &::after {
     content: var(--content-value);
     position: absolute;
@@ -418,6 +428,7 @@ const getSystemInfo = () => {
     line-height: 30px;
     transition: bottom 0.5s, opacity 0.5s;
   }
+
   &:hover::after {
     bottom: 45px;
     opacity: 0.8;
@@ -428,15 +439,18 @@ const getSystemInfo = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   .emoji-send-box {
     display: flex;
     align-items: center;
+
     .emoji-icon-box {
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
     }
+
     .send-btn {
       background-color: var(--themeBtnHoverColor);
       padding: 8px 20px;
@@ -445,6 +459,7 @@ const getSystemInfo = () => {
       color: var(--whiteColor);
       font-size: 12px;
       transition: all 0.3s;
+
       &:hover {
         opacity: 0.9;
         transform: translateY(-2px);
@@ -465,9 +480,11 @@ const getSystemInfo = () => {
 @media (max-width: 860px) {
   .input-box {
     display: block;
+
     .input-item {
       margin-bottom: 20px;
     }
+
     .input-item:last-child {
       margin-bottom: 0;
     }

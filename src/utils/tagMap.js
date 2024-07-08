@@ -172,4 +172,12 @@ export const tagMap = [
     value: "43",
     label: "摄影",
   },
+  {
+    value: "44",
+    label: "PHP",
+  },
+  {
+    value: "45",
+    label: "DNF手游",
+  },
 ];

@@ -106,15 +106,16 @@ const dataMap = reactive({
   },
 });
 
-let cols = ref(3);
-let page = ref(1);
-let pageSize = ref(10);
-let isSidebarVisible = ref(false);
+const cols = ref(3);
+const page = ref(1);
+const pageSize = ref(10);
+const isSidebarVisible = ref(false);
+const cutePetContainerRef = ref(null);
 
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
-  title: "Levi",
+  title: "萌宠",
   text: "从此,我拍照,你负责卖萌",
 };
 
@@ -144,7 +145,7 @@ const getTableData = () => {
 const handleCurrentChange = (val) => {
   page.value = val;
   getTableData();
-  technologyRef.value.scrollIntoView({ behavior: "smooth" });
+  cutePetContainerRef.value.scrollIntoView({ behavior: "smooth" });
 };
 
 const getData = async () => {
@@ -196,6 +197,7 @@ const getData = async () => {
 .waterfall-footer-bar {
   display: flex;
   align-items: center;
+
   .icon {
     width: 1.2em;
     height: 1.2em;

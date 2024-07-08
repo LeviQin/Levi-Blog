@@ -105,6 +105,7 @@ const scrollWidnow = () => {
   .main {
     flex: 1;
     margin: 80px 0 0 0;
+    padding: 0 20px;
   }
 }
 
@@ -116,7 +117,7 @@ const scrollWidnow = () => {
   bottom: 0;
   left: 0;
   right: 0;
-  background-image: url(../assets/images/banner/fengjing2.jpg);
+  background-image: url(../assets/images/banner/gufengnv.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

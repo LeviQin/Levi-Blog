@@ -147,8 +147,8 @@ const dataMap = reactive({
 });
 
 const markdownRendererRef = ref(null);
-let tagsList = ref([]);
-let loading = ref(false);
+const tagsList = ref([]);
+const loading = ref(false);
 
 const bannerConfig = {
   height: "30vh",
@@ -157,7 +157,7 @@ const bannerConfig = {
   text: "莫道桑榆晚，为霞尚满天",
 };
 
-const categoryList = ["日常", "技术", "萌宠", "笔记", "风景", "人物", "游戏", "囧事"];
+const categoryList = ["日常", "开发", "萌宠", "笔记", "风景", "人物", "游戏", "囧事"];
 
 const sendMdTitle = (titles) => {
   dataMap.titles = titles;

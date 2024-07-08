@@ -14,7 +14,7 @@
             <el-dropdown-item command="technology"
               ><svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-jishurenyuan"></use></svg
-              ><span>技术</span></el-dropdown-item
+              ><span>开发</span></el-dropdown-item
             >
             <el-dropdown-item command="cute-pet"
               ><svg class="icon" aria-hidden="true">
@@ -36,7 +36,7 @@
                 <use xlink:href="#icon-168-boy-2"></use></svg
               ><span>人物</span></el-dropdown-item
             >
-            <el-dropdown-item command="game"
+            <el-dropdown-item command="games"
               ><svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-youxiji"></use></svg
               ><span>游戏</span></el-dropdown-item

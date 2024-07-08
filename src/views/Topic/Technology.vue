@@ -117,16 +117,16 @@ const dataMap = reactive({
   },
 });
 
-let technologyRef = ref(null);
-let tagsList = ref([]);
-let page = ref(1);
-let pageSize = ref(10);
-let isSidebarVisible = ref(false);
+const technologyRef = ref(null);
+const tagsList = ref([]);
+const page = ref(1);
+const pageSize = ref(10);
+const isSidebarVisible = ref(false);
 
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
-  title: "Levi",
+  title: "开发",
   text: "talk is cheap,show me the code",
 };
 

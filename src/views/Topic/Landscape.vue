@@ -93,16 +93,16 @@ const dataMap = reactive({
   },
 });
 
-let cols = ref(3);
-let landscapeRef = ref(null);
-let page = ref(1);
-let pageSize = ref(10);
-let isSidebarVisible = ref(false);
+const cols = ref(3);
+const landscapeRef = ref(null);
+const page = ref(1);
+const pageSize = ref(10);
+const isSidebarVisible = ref(false);
 
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
-  title: "Levi",
+  title: "风景",
   text: "水澈而山青,云洁而心境。",
 };
 
@@ -132,7 +132,7 @@ const getTableData = () => {
 const handleCurrentChange = (val) => {
   page.value = val;
   getTableData();
-  technologyRef.value.scrollIntoView({ behavior: "smooth" });
+  landscapeRef.value.scrollIntoView({ behavior: "smooth" });
 };
 
 const getData = async () => {

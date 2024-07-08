@@ -16,7 +16,7 @@
 
   <div class="notes w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
-    <div class="notes-container page-container">
+    <div class="notes-container page-container" ref="notesContainerRef">
       <div class="topic-sidebar">
         <topic-sidebar></topic-sidebar>
       </div>
@@ -109,15 +109,16 @@ const dataMap = reactive({
   },
 });
 
-let cols = ref(3);
-let page = ref(1);
-let pageSize = ref(10);
-let isSidebarVisible = ref(false);
+const cols = ref(3);
+const page = ref(1);
+const pageSize = ref(10);
+const isSidebarVisible = ref(false);
+const notesContainerRef = ref(null);
 
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
-  title: "Levi",
+  title: "笔记",
   text: "快乐，不是因为拥有的多，而是计较的少",
 };
 
@@ -147,7 +148,7 @@ const getTableData = () => {
 const handleCurrentChange = (val) => {
   page.value = val;
   getTableData();
-  technologyRef.value.scrollIntoView({ behavior: "smooth" });
+  notesContainerRef.value.scrollIntoView({ behavior: "smooth" });
 };
 
 const getData = async () => {
@@ -205,6 +206,7 @@ const getData = async () => {
 .waterfall-footer-bar {
   display: flex;
   align-items: center;
+
   .icon {
     width: 1.2em;
     height: 1.2em;

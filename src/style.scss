@@ -122,7 +122,7 @@
 }
 
 .waterfall-item .img-box {
-  margin: 10px;
+  margin: 5px;
   overflow: hidden;
   border-radius: var(--themeRadius);
 }
@@ -140,6 +140,11 @@
 }
 
 .waterfall-title {
+  font-size: 14px;
+  padding: 0 20px;
+}
+
+.waterfall-desc {
   font-size: 14px;
   line-height: 30px;
   padding: 0 20px;

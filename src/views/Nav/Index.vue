@@ -2,15 +2,15 @@
   <Head>
     <meta
       name="keywords"
-      content="常用网站，网站导航，技术，设计，博客，论坛，工具服务，社交媒体，新闻资讯"
+      content="常用网站，网站导航，开发，设计，博客，论坛，工具服务，社交媒体，新闻资讯"
     />
     <meta
       name="description"
-      content="在这里，我们为您汇聚了各种常用网站，包括技术、设计、博客、论坛、工具服务、社交媒体和新闻资讯等，方便您随时一键直达，提升您的上网体验。"
+      content="在这里，我们为您汇聚了各种常用网站，包括开发、设计、博客、论坛、工具服务、社交媒体和新闻资讯等，方便您随时一键直达，提升您的上网体验。"
     />
     <meta
       property="og:description"
-      content="在这里，我们为您汇聚了各种常用网站，包括技术、设计、博客、论坛、工具服务、社交媒体和新闻资讯等，方便您随时一键直达，提升您的上网体验。"
+      content="在这里，我们为您汇聚了各种常用网站，包括开发、设计、博客、论坛、工具服务、社交媒体和新闻资讯等，方便您随时一键直达，提升您的上网体验。"
     />
   </Head>
 
@@ -28,7 +28,10 @@
           </li>
         </ul>
       </div>
-      <div class="nav-content" :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }">
+      <div
+        class="nav-content"
+        :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
+      >
         <div class="nav-item" v-for="item in dataMap.data" @click="toSitePage(item.url)">
           <div class="nav-img">
             <img v-lazy="item.image" :alt="item.title" />
@@ -53,7 +56,7 @@ import { getSiteList } from "@/api/webdev";
 import { Head } from "@vueuse/head";
 
 onMounted(() => {
-  selectedCategory.value = "技术资源";
+  selectedCategory.value = "开发资源";
   getSiteNavList();
   isSidebarVisible.value = true;
 });
@@ -66,7 +69,7 @@ const dataMap = reactive({
 let categories = [
   {
     value: 1,
-    label: "技术资源",
+    label: "开发资源",
   },
   {
     value: 2,
@@ -130,7 +133,7 @@ const getSiteNavList = async () => {
   const { code, data } = res.data;
   if (code === 200) {
     dataMap.tableData = data;
-    selectedCategory.value = "技术资源"
+    selectedCategory.value = "开发资源";
     dataMap.data = dataMap.tableData.filter((item) => item.type === 1);
   }
 };

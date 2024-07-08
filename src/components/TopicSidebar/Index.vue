@@ -33,7 +33,7 @@
           <span
             ><svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-jishurenyuan"></use></svg
-            ><span>技术</span></span
+            ><span>开发</span></span
           >
           <i class="bi bi-chevron-right"></i>
         </li>

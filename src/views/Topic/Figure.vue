@@ -15,7 +15,7 @@
   </Head>
   <div class="figure w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
-    <div class="figure-container page-container">
+    <div class="figure-container page-container" ref="figureContainerRef">
       <div class="topic-sidebar">
         <topic-sidebar></topic-sidebar>
       </div>
@@ -92,15 +92,16 @@ const dataMap = reactive({
   },
 });
 
-let cols = ref(3);
-let page = ref(1);
-let pageSize = ref(10);
-let isSidebarVisible = ref(false);
+const cols = ref(3);
+const page = ref(1);
+const pageSize = ref(10);
+const isSidebarVisible = ref(false);
+const figureContainerRef = ref(null);
 
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
-  title: "Levi",
+  title: "人物",
   text: "快乐，不是因为拥有的多，而是计较的少",
 };
 
@@ -130,7 +131,7 @@ const getTableData = () => {
 const handleCurrentChange = (val) => {
   page.value = val;
   getTableData();
-  technologyRef.value.scrollIntoView({ behavior: "smooth" });
+  figureContainerRef.value.scrollIntoView({ behavior: "smooth" });
 };
 
 const getData = async () => {
