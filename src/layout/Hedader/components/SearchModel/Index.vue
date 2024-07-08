@@ -17,6 +17,7 @@
           v-model="keyword"
           placeholder="查询关键词"
           ref="searchInputRef"
+          clearable
         ></el-input>
       </div>
       <div class="dividing-line">
