@@ -78,9 +78,6 @@ const show = () => {
   dialogVisible.value = true;
   setDialogWidth();
   window.addEventListener("resize", setDialogWidth, true);
-  nextTick(() => {
-    console.log(searchInputRef.value.focus(), 111111111111);
-  });
 };
 
 const close = () => {

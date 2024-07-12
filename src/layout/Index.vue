@@ -1,9 +1,9 @@
 <template>
   <div class="layout">
-    <header>
+    <header class="lv-header">
       <Hedader />
     </header>
-    <main class="main">
+    <main class="lv-main">
       <router-view :key="route.path" />
     </main>
     <footer class="footer-card">
@@ -28,8 +28,9 @@ import { getStore } from "@/utils/storage.js";
 const route = useRoute();
 
 onMounted(() => {
+  bannerBar.value = document.querySelector(".banner-bar");
   window.addEventListener("keydown", keydownEvent);
-  window.addEventListener("scroll", scrollWidnow, true);
+  window.addEventListener("scroll", scrollWindow);
   const image = getStore("WALLPAPER_URL");
   if (image) {
     const bannerBar = document.querySelector(".layout .banner-bar");
@@ -39,11 +40,12 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener("keydown", keydownEvent);
-  window.removeEventListener("scroll", scrollWidnow, true);
+  window.removeEventListener("scroll", scrollWindow);
 });
 
-let isScrolling = ref(false);
-let isF12 = ref(false);
+const isScrolling = ref(false);
+const isF12 = ref(false);
+const bannerBar = ref(null);
 
 const keydownEvent = (event) => {
   // 检测是否按下了 F12 键
@@ -76,21 +78,19 @@ const keydownEvent = (event) => {
   }
 };
 
-const scrollWidnow = () => {
+const scrollWindow = () => {
   if (!isScrolling.value) {
+    const top = window.scrollY;
+    const threshold = route.path === "/" ? 500 : 100;
+    if (top > threshold) {
+      bannerBar.value.classList.add("container-blur");
+    } else {
+      bannerBar.value.classList.remove("container-blur");
+    }
     requestAnimationFrame(() => {
-      const top = window.scrollY;
-      const bannerBar = document.querySelector(".banner-bar");
-      const threshold = route.path === "/" ? 500 : 100;
-      if (top > threshold) {
-        bannerBar.classList.add("container-blur");
-      } else {
-        bannerBar.classList.remove("container-blur");
-      }
-
+      scrollWindow();
       isScrolling.value = false;
     });
-
     isScrolling.value = true;
   }
 };
@@ -101,10 +101,13 @@ const scrollWidnow = () => {
   display: flex;
   flex-direction: column;
   height: 100%;
-
-  .main {
+  .lv-header {
+    height: var(--headerBarHeight);
+    min-height: 60px;
+    display: block;
+  }
+  .lv-main {
     flex: 1;
-    margin: 80px 0 0 0;
     padding: 0 20px;
   }
 }

@@ -139,30 +139,30 @@ const backToTop = () => {
   border-radius: 5px;
   z-index: 1000;
   transition: all 0.5s;
+}
 
-  .btn-item {
-    background: var(--btnTagBgColor);
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 3px;
-    cursor: pointer;
-    margin-bottom: 10px;
+.btn-item {
+  background: var(--btnTagBgColor);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: all 0.2s;
+  position: relative;
+
+  &:hover {
     transition: all 0.2s;
-    position: relative;
+    background: var(--themeBtnHoverColor);
+    transform: translateY(-1px);
+  }
 
-    &:hover {
-      transition: all 0.2s;
-      background: var(--themeBtnHoverColor);
-      transform: translateY(-1px);
-    }
-
-    .bi {
-      transition: all 0.2s;
-      color: #fff;
-    }
+  .bi {
+    transition: all 0.2s;
+    color: #fff;
   }
 }
 
@@ -211,5 +211,11 @@ const backToTop = () => {
 
 .move-left-btn::after {
   content: "移至左侧";
+}
+
+@media (hover: none) {
+  .btn-item:hover {
+    background-color: var(--btnTagBgColor);
+  }
 }
 </style>

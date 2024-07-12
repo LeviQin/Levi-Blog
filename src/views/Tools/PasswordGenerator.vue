@@ -14,16 +14,16 @@
       content="✓安全 ✓随机 ✓强大 —— 使用我们的随机密码生成器生成强密码。"
     />
   </Head>
-  <div class="password w theme-bg-color">
+  <div class="password w theme-bg-color tools-container">
     <div class="content">
       <div class="tool-title">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-mima1"></use>
+          <use xlink:href="#levi-mima1"></use>
         </svg>
         <h1>密码生成器</h1>
       </div>
       <div class="tool-main">
-        <el-input class="password-input" size="large" v-model="passwordVal">
+        <el-input class="password-input" size="large" v-model="passwordVal" @click.stop>
           <template #suffix>
             <div class="input-icon-box">
               <svg
@@ -31,24 +31,21 @@
                 aria-hidden="true"
                 @click="handleRefreshClick"
               >
-                <use xlink:href="#icon-shuaxin"></use>
+                <use xlink:href="#levi-shuaxin"></use>
               </svg>
             </div>
-            <div
-              class="input-icon-box copy-icon-box"
-              @click="copyText(passwordVal.value)"
-            >
+            <div class="input-icon-box copy-icon-box" @click="copyText(passwordVal)">
               复制
             </div>
           </template>
         </el-input>
-        <div class="input-icon-box m-copy-icon-box" @click="copyText(passwordVal.value)">
+        <div class="input-icon-box m-copy-icon-box" @click="copyText(passwordVal)">
           复制
         </div>
         <div class="config-item-box">
           <span
             ><svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-peizhi"></use></svg
+              <use xlink:href="#levi-peizhi"></use></svg
             ><span>配置项</span></span
           >
           <div>
@@ -88,7 +85,7 @@
         <div class="password-length-box">
           <span
             ><svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-changdu"></use></svg
+              <use xlink:href="#levi-changdu"></use></svg
             ><span>密码长度</span></span
           >
           <el-slider
@@ -127,7 +124,7 @@
         <div class="about-password-box">
           <span
             ><svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-guanyu-"></use></svg
+              <use xlink:href="#levi-guanyu-"></use></svg
             ><span>关于密码生成器</span></span
           >
           <p>
@@ -253,8 +250,13 @@ const copyText = (val) => {
 </script>
 
 <style lang="scss" scoped>
+.tools-container {
+  max-width: 670px;
+  border-radius: var(--themeRadius);
+}
+
 .password .content {
-  padding: 50px 100px;
+  padding: 20px;
 }
 
 .tool-main {

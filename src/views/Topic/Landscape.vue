@@ -44,6 +44,7 @@
         <div class="pagination-box">
           <el-pagination
             :page-sizes="dataMap.paginationDatas.pageSizes"
+            :default-page-size="pageSize"
             :small="dataMap.paginationDatas.small"
             :disabled="dataMap.paginationDatas.disabled"
             :background="dataMap.paginationDatas.background"
@@ -93,10 +94,10 @@ const dataMap = reactive({
   },
 });
 
-const cols = ref(3);
+const cols = ref(4);
 const landscapeRef = ref(null);
 const page = ref(1);
-const pageSize = ref(10);
+const pageSize = ref(12);
 const isSidebarVisible = ref(false);
 
 const bannerConfig = {
@@ -109,8 +110,12 @@ const bannerConfig = {
 const setWaterfallCol = () => {
   if (window.innerWidth <= 480) {
     cols.value = 1;
-  } else {
+  } else if (window.innerWidth <= 960) {
+    cols.value = 2;
+  } else if (window.innerWidth <= 1200) {
     cols.value = 3;
+  } else {
+    cols.value = 4;
   }
 };
 

@@ -4,7 +4,7 @@
     direction="ltr"
     close-on-click-modal
     append-to-body
-    size="300px"
+    size="320px"
     :z-index="10002"
     @close="close"
   >
@@ -29,42 +29,42 @@
             <ul @click="toPage">
               <li data-router="/daily">
                 <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-woderichang"></use></svg
+                  <use xlink:href="#levi-woderichang"></use></svg
                 ><span>日常</span>
               </li>
               <li data-router="/technology">
                 <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-jishurenyuan"></use></svg
+                  <use xlink:href="#levi-jishurenyuan"></use></svg
                 ><span>开发</span>
               </li>
               <li data-router="/cute-pet">
                 <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-aichong03"></use></svg
+                  <use xlink:href="#levi-aichong03"></use></svg
                 ><span>萌宠</span>
               </li>
               <li data-router="/notes">
                 <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-biji"></use></svg
+                  <use xlink:href="#levi-biji"></use></svg
                 ><span>笔记</span>
               </li>
               <li data-router="/landscape">
                 <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-fengjing"></use></svg
+                  <use xlink:href="#levi-fengjing"></use></svg
                 ><span>风景</span>
               </li>
               <li data-router="/figure">
                 <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-168-boy-2"></use></svg
+                  <use xlink:href="#levi-168-boy-2"></use></svg
                 ><span>人物</span>
               </li>
               <li data-router="/games">
                 <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-youxiji"></use></svg
+                  <use xlink:href="#levi-youxiji"></use></svg
                 ><span>游戏</span>
               </li>
               <!-- <li data-router="/embarrassing">
                   <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-meirijiongtu"></use></svg
+                    <use xlink:href="#levi-meirijiongtu"></use></svg
                   ><span>囧事</span>
                 </li> -->
             </ul>
@@ -78,33 +78,43 @@
           <ul @click="toPage">
             <li data-router="/encryption">
               <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-jiami"></use></svg
+                <use xlink:href="#levi-jiami"></use></svg
               ><span>加密/解密</span>
             </li>
-            <li data-router="/weather">
+            <!-- <li data-router="/weather">
               <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-tianqi"></use></svg
+                <use xlink:href="#levi-tianqi"></use></svg
               ><span>天气查询</span>
             </li>
             <li data-router="/ip">
               <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-IPdizhi"></use></svg
+                <use xlink:href="#levi-IPdizhi"></use></svg
               ><span>IP地址查询</span>
-            </li>
+            </li> -->
             <li data-router="/unit">
               <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-danweihuansuanx"></use></svg
+                <use xlink:href="#levi-danweihuansuanx"></use></svg
               ><span>单位换算</span>
             </li>
             <li data-router="/password">
               <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-mima"></use></svg
+                <use xlink:href="#levi-mima"></use></svg
               ><span>密码生成器</span>
             </li>
+            <li data-router="/image-processing">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#levi-tupianchuli"></use></svg
+              ><span>图片处理</span>
+            </li>
+            <!-- <li data-router="/qr">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#levi-erweimashengchenggongju"></use></svg
+              ><span>二维码生成</span>
+            </li> -->
           </ul>
         </div>
         <li class="nav-drawer-li" data-router="/nav">常用网站</li>
-        <li class="nav-drawer-li" data-router="/msg-board">留言板</li>
+        <li class="nav-drawer-li" data-router="/comments">留言板</li>
         <li class="nav-drawer-li" data-router="/links">友情链接</li>
         <li class="nav-drawer-li" data-router="/about">关于我</li>
       </ul>
@@ -219,7 +229,7 @@ defineExpose({
   margin-bottom: 15px;
 
   li {
-    padding: 2px 0;
+    padding: 5px 0;
     font-size: 15px;
     cursor: pointer;
 

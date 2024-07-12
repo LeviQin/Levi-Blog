@@ -2,7 +2,7 @@
   <Head>
     <meta
       name="keywords"
-      content="常用网站，网站导航，开发，设计，博客，论坛，工具服务，社交媒体，新闻资讯"
+      content="常用网站，网站导航， AI， 开发，设计，博客，论坛，工具服务，社交媒体，新闻资讯"
     />
     <meta
       name="description"
@@ -66,7 +66,7 @@ const dataMap = reactive({
   data: [],
 });
 
-let categories = [
+const categories = [
   {
     value: 1,
     label: "开发资源",
@@ -121,7 +121,7 @@ let categories = [
   },
 ];
 const selectedCategory = ref("");
-let isSidebarVisible = ref(false);
+const isSidebarVisible = ref(false);
 
 const selectCategory = (category) => {
   selectedCategory.value = category.label;
@@ -152,6 +152,7 @@ const toSitePage = (url) => {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
 .select-category-ul li {
@@ -159,7 +160,6 @@ const toSitePage = (url) => {
   border-radius: var(--themeRadius);
   background: #fff;
   cursor: pointer;
-  margin: 10px;
   font-size: 14px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -172,9 +172,10 @@ const toSitePage = (url) => {
 .nav-content {
   display: flex;
   align-items: center;
-  padding-top: 20px;
+  padding-top: 40px;
   align-items: stretch;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
 .nav-item {
@@ -183,8 +184,7 @@ const toSitePage = (url) => {
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  width: 25%;
-  margin: 10px;
+  width: 20%;
   display: flex;
   align-items: center;
   transition: all 0.3s;
@@ -216,6 +216,12 @@ const toSitePage = (url) => {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+@media (max-width: 1000px) {
+  .nav-item {
+    width: 27%;
+  }
 }
 
 @media (max-width: 860px) {

@@ -13,7 +13,7 @@
         <ul class="sidebar-ul nav" v-if="dataMap.titles.length">
           <div class="sidebar-name">
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-a-shuqianshumulu"></use>
+              <use xlink:href="#levi-a-shuqianshumulu"></use>
             </svg>
             <span>目录</span>
           </div>
@@ -33,7 +33,11 @@
           </div>
         </ul>
       </div>
-      <div class="topic-detail-content">
+      <div
+        class="topic-detail-content"
+        v-loading="loading"
+        element-loading-background="rgba(122, 122, 122, 0)"
+      >
         <div class="topic-detail-md">
           <div class="page-title">
             <h1>{{ dataMap.articleInfo.title }}</h1>
@@ -41,33 +45,29 @@
           <div class="page-info">
             <div class="page-info-category page-info-item">
               <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-fenlei"></use>
+                <use xlink:href="#levi-fenlei"></use>
               </svg>
               <span>{{ categoryList[dataMap.articleInfo.category - 1] }}</span>
             </div>
             <div class="page-info-date page-info-item">
               <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-riqi"></use>
+                <use xlink:href="#levi-riqi"></use>
               </svg>
               <span>{{ dataMap.articleInfo.published_at }}</span>
             </div>
             <div class="page-info-update page-info-item">
               <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-gengxinmulu"></use>
+                <use xlink:href="#levi-gengxinmulu"></use>
               </svg>
               <span>{{ dataMap.articleInfo.updated_at }}</span>
             </div>
             <div class="page-info-view page-info-item">
               <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-wode_zuijinliulan"></use></svg
+                <use xlink:href="#levi-wode_zuijinliulan"></use></svg
               ><span class="num-text">{{ dataMap.articleInfo.view_count }}</span>
             </div>
           </div>
-          <div
-            class="markdown-renderer-card"
-            v-loading="loading"
-            element-loading-background="rgba(122, 122, 122, 0)"
-          >
+          <div class="markdown-renderer-card">
             <markdown-renderer
               ref="markdownRendererRef"
               :markdownText="dataMap.articleInfo.content"
@@ -214,6 +214,7 @@ const getArticleDetail = async () => {
   color: #3c3b3b;
   display: flex;
   align-items: center;
+
   .icon {
     width: 1.2em;
     height: 1.2em;
@@ -224,7 +225,6 @@ const getArticleDetail = async () => {
 .topic-detail-sidebar {
   width: 22%;
   position: relative;
-  margin-right: 20px;
 }
 
 .sidebar-ul {
@@ -260,6 +260,7 @@ const getArticleDetail = async () => {
   font-size: 20px;
   display: flex;
   align-items: center;
+
   .icon {
     width: 1.2em;
     height: 1.2em;

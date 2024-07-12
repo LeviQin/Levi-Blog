@@ -8,17 +8,16 @@
       name="description"
       content="长度重量单位换算工具，为跨境电商卖家提供在线单位转换器、非常用长度单位、重量转换换算、非常用重量单位等换算功能，可以帮助卖家快速准确地进行单位换算，方便处理跨境电商业务中的尺寸和重量问题。"
     />
-    <meta property="og:title" content="长度重量单位换算工具-AMZ123跨境导航" />
     <meta
       property="og:description"
       content="长度重量单位换算工具，为跨境电商卖家提供在线单位转换器、非常用长度单位、重量转换换算、非常用重量单位等换算功能，可以帮助卖家快速准确地进行单位换算，方便处理跨境电商业务中的尺寸和重量问题。"
     />
   </Head>
-  <div class="unit-conversion w theme-bg-color">
+  <div class="unit-conversion w theme-bg-color tools-container">
     <div class="unit-conversion-container" ref="unitConversionContainerRef">
       <div class="unit-conversion-title">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-danweihuansuanx"></use>
+          <use xlink:href="#levi-danweihuansuanx"></use>
         </svg>
         <h1>单位换算</h1>
       </div>
@@ -64,6 +63,7 @@
           v-model="dataUnit"
           class="m-2"
           placeholder="数据单位"
+          style="width: 296px"
           size="large"
           filterable
           @change="changeData"
@@ -95,6 +95,7 @@
           v-model="resultUnit"
           class="m-2"
           placeholder="结果单位"
+          style="width: 296px"
           size="large"
           filterable
           @change="changeData"
@@ -292,6 +293,11 @@ const clearData = () => {
 </script>
 
 <style lang="scss" scoped>
+.tools-container {
+  max-width: 670px;
+  border-radius: var(--themeRadius);
+}
+
 .unit-conversion-container {
   padding: 20px;
 }
@@ -361,16 +367,16 @@ const clearData = () => {
   font-size: 14px;
 }
 
-::v-deep .el-input__wrapper {
+:deep(.el-input__wrapper) {
   border-radius: 0;
   box-shadow: none;
 }
 
-::v-deep .el-input-number .el-input__inner {
+:deep(.el-input-number .el-input__inner) {
   text-align: left;
 }
 
-::v-deep .el-input.is-disabled .el-input__inner {
+:deep(.el-input.is-disabled .el-input__inner) {
   color: var(--color);
   -webkit-text-fill-color: var(--color);
 }

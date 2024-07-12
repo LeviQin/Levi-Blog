@@ -22,7 +22,10 @@
     </div>
     <div class="sidebar-info-data">
       <div class="sidebar-info-data-item">
-        <div>
+        <div class="sidebar-info-data-item-title">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#levi-wenzhang"></use>
+          </svg>
           <span>文章</span>
         </div>
         <div class="sidebar-info-data-num">
@@ -30,7 +33,10 @@
         </div>
       </div>
       <div class="sidebar-info-data-item">
-        <div>
+        <div class="sidebar-info-data-item-title">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#levi-fenlei"></use>
+          </svg>
           <span>分类</span>
         </div>
         <div class="sidebar-info-data-num">
@@ -38,7 +44,10 @@
         </div>
       </div>
       <div class="sidebar-info-data-item">
-        <div>
+        <div class="sidebar-info-data-item-title">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#levi-biaoqian_1"></use>
+          </svg>
           <span>标签</span>
         </div>
         <div class="sidebar-info-data-num">
@@ -159,6 +168,17 @@ const getData = async () => {
   padding: 10px 0;
   display: flex;
   justify-content: center;
+  font-weight: 500;
+}
+
+.sidebar-info-data-item .sidebar-info-data-item-title {
+  display: flex;
+  align-items: center;
+  .icon {
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: 2px;
+  }
 }
 
 .sidebar-info-contact {

@@ -97,7 +97,7 @@ const show = (images, currentIndex) => {
   dataMap.images = images;
   dataMap.currentIndex = currentIndex;
   showPreview.value = true;
-  document.body.style.overflow = "hidden"; // 禁止body滚动
+  document.documentElement.style.overflow = "hidden"; // 禁止body滚动
 
   nextTick(() => {
     const container = document.querySelector(".preview-img");
@@ -116,7 +116,7 @@ const show = (images, currentIndex) => {
 
 const closePreview = () => {
   showPreview.value = false;
-  document.body.style.overflow = "auto"; // 恢复body滚动
+  document.documentElement.style.overflow = "auto"; // 恢复body滚动
 };
 
 const nextImage = () => {
@@ -167,12 +167,13 @@ defineExpose({
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.3s ease;
+  transition: transform 1.3s ease;
 
   /* 添加过渡效果 */
   img {
     width: 100%;
     height: 100%;
+    transition: transform 1.3s ease;
   }
 }
 
@@ -191,6 +192,16 @@ defineExpose({
   right: 30px;
   cursor: pointer;
   z-index: 999999;
+  transition: all 0.3s;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  &:hover {
+    transform: rotate(90deg);
+  }
 
   .bi {
     font-size: 50px;

@@ -32,28 +32,33 @@ import NavDrawer from "./components/NavDrawer/Index.vue";
 const router = useRouter();
 
 onMounted(() => {
-  window.addEventListener("scroll", scrollWidnow, true);
+  header.value = document.querySelector(".header");
+  window.addEventListener("scroll", scrollWindow, true);
 });
 
 onUnmounted(() => {
-  window.removeEventListener("scroll", scrollWidnow, true);
+  window.removeEventListener("scroll", scrollWindow, true);
 });
 
-let navDrawerRef = ref(null);
-let searchModelRef = ref(null);
+const navDrawerRef = ref(null);
+const searchModelRef = ref(null);
+const header = ref(null);
 
 const clickCollapse = () => {
   navDrawerRef.value.show();
 };
 
-const scrollWidnow = (e) => {
-  const header = document.querySelector(".header");
-  const top = e?.srcElement?.scrollingElement?.scrollTop; // 获取页面滚动高度
-  header.style.transition = "0.5s linear";
-  header.style.background = `linear-gradient(60deg,rgba(0,0,0, ${
+const scrollWindow = () => {
+  const top = document.documentElement.scrollTop;
+  const background = `linear-gradient(60deg,rgba(0,0,0, ${top / 200}) 0,rgba(0,0,0, ${
     top / 200
-  }) 0,rgba(0,0,0, ${top / 200}) 93%)`;
+  }) 93%)`;
+  if (header.value.style.background !== background) {
+    header.value.style.transition = "0.5s linear";
+    header.value.style.background = background;
+  }
 };
+
 const showSearchModel = () => {
   searchModelRef.value.show();
 };
@@ -66,7 +71,6 @@ const showSearchModel = () => {
 
 .header {
   background-color: rgba(0, 0, 0, 0);
-  height: var(--headerBarHeight);
   min-width: var(--minWidth);
   position: fixed;
   top: 0;

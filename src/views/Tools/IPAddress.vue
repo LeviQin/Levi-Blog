@@ -10,7 +10,7 @@
       content="一款免费的 IP 地址查询工具，可查找您的 IP 地址及其地理位置。验证 IP 地址、主机名和互联网服务提供商（ISP），帮助检测恶意活动。"
     />
   </Head>
-  <div class="ip-address w">
+  <div class="ip-address w tools-container">
     <div
       class="search-bar"
       :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
@@ -52,7 +52,7 @@
       <div class="search-bar-right theme-bg-color">
         <div class="search-bar-item-box details-box-title">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-IPdizhi"></use>
+            <use xlink:href="#levi-IPdizhi"></use>
           </svg>
           <span>IP地址详情</span>
         </div>

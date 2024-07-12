@@ -32,9 +32,8 @@
 }
 
 .w {
-  max-width: var(--heeartWidth);
+  max-width: var(--heartWidth);
   min-width: var(--minWidth);
-  height: 100%;
   margin: 0 auto;
 }
 
@@ -54,19 +53,21 @@
 }
 
 .topic-sidebar {
-  width: 22%;
-  margin-right: 20px;
+  width: 250px;
 }
 
 .page-container {
   display: flex;
   padding-top: 80px;
+  gap: 20px;
 }
 
 /* 添加模糊效果的样式 */
 .container-blur {
   filter: blur(6px);
-  transform: scale(1.02);
+  will-change: transform, filter; /* 提示浏览器进行硬件加速 */
+  transform: scale(1.02) translateZ(0); 
+  transition: transform 0.3s ease, filter 0.3s ease; /* 添加平滑过渡效果 */
 }
 
 .dividing-line {
@@ -185,7 +186,15 @@ svg.icon {
   overflow: hidden;
 }
 
+.tools-container {
+  margin-top: 50px;
+}
+
 @media (max-width: 860px) {
+  .tools-container {
+    margin-top: 20px;
+  }
+
   svg.icon {
     width: 1em;
     height: 1em;

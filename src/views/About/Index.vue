@@ -142,6 +142,10 @@ const changeCarousel = (val) => {
   }
 }
 
+.about-header-nav {
+  height: 100%;
+}
+
 .about {
   display: flex;
   flex-direction: column;

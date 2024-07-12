@@ -1,5 +1,10 @@
+@font-face {
+  font-family: 'CustomFont';
+  src: url('@/assets/fonts/MaoKenWangXingYuan-2.ttf') format('truetype');
+}
+
 :root {
-  --font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  --font-family: 'CustomFont', sans-serif;
   --font-size: 16px;
 
   --color: #000;
@@ -16,7 +21,7 @@
   --linkTextColor: #409eff;
   --btnTagBgColor: #ff8b26;
   --minWidth: 200px;
-  --heeartWidth: 1200px;
+  --heartWidth: 1360px;
   --headerBarHeight: 60px;
   --headerMobileBarHeight: 50px;
   --themeRadius: 10px;
@@ -70,6 +75,7 @@ html {
   font-size: var(--font-size);
   color: var(--color);
   background: var(--background);
+  overflow: auto;
 }
 
 body {
@@ -79,6 +85,9 @@ body {
   display: flex;
   place-items: center;
   cursor: url(./assets/images/feijihangban.ico) 16 16, auto !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--color);
 }
 
 h1 {

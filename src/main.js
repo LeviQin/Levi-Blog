@@ -12,7 +12,7 @@ import "element-plus/dist/index.css";
 
 import "./permission";
 
-import "./utils/iconfont";
+import "./assets/fonts/iconfont";
 
 import {
     createHead

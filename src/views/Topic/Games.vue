@@ -46,7 +46,7 @@
                     </div>
                     <div class="waterfall-footer-bar">
                       <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-wode_zuijinliulan"></use></svg
+                        <use xlink:href="#levi-wode_zuijinliulan"></use></svg
                       ><span class="num-text">{{ item.view_count }}</span>
                     </div>
                   </div>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="waterfall-footer-bar">
                       <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-wode_zuijinliulan"></use></svg
+                        <use xlink:href="#levi-wode_zuijinliulan"></use></svg
                       ><span class="num-text">{{ item.view_count }}</span>
                     </div>
                   </div>
@@ -264,6 +264,14 @@ const getData = async () => {
 @media (max-width: 860px) {
   .daily-sidebar {
     display: none;
+  }
+
+  .waterfall-item {
+    flex-direction: column;
+  }
+
+  .waterfall-info-block {
+    width: 100%;
   }
 
   .num-text {

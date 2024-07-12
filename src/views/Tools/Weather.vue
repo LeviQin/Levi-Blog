@@ -1,9 +1,9 @@
 <template>
-  <div class="weather w theme-bg-color">
+  <div class="weather w theme-bg-color tools-container">
     <div class="content">
       <div class="tool-title">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-tianqi"></use>
+          <use xlink:href="#levi-tianqi"></use>
         </svg>
         <h1>天气查询</h1>
       </div>

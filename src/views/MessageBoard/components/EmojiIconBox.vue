@@ -27,7 +27,7 @@
       </div>
     </div>
     <svg class="icon" aria-hidden="true" @click.stop="showEmojiList = !showEmojiList">
-      <use xlink:href="#icon-a-gaoxinghaoxinqingbiaoqingxihuanbiaoqingxiaolian"></use>
+      <use xlink:href="#levi-a-gaoxinghaoxinqingbiaoqingxihuanbiaoqingxiaolian"></use>
     </svg>
   </div>
 </template>

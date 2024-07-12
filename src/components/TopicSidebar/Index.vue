@@ -7,7 +7,7 @@
   >
     <div class="sidebar-category-title">
       <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-fenlei"></use>
+        <use xlink:href="#levi-fenlei"></use>
       </svg>
       <span>分类</span>
     </div>
@@ -16,7 +16,7 @@
         <li :class="`sidebar-category-li`" data-router="/">
           <span
             ><svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-zonghelei"></use></svg
+              <use xlink:href="#levi-zonghelei"></use></svg
             ><span>综合</span></span
           >
           <i class="bi bi-chevron-right"></i>
@@ -24,7 +24,7 @@
         <li class="sidebar-category-li" data-router="/daily">
           <span
             ><svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-woderichang"></use></svg
+              <use xlink:href="#levi-woderichang"></use></svg
             ><span>日常</span></span
           >
           <i class="bi bi-chevron-right"></i>
@@ -32,7 +32,7 @@
         <li class="sidebar-category-li" data-router="/technology">
           <span
             ><svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-jishurenyuan"></use></svg
+              <use xlink:href="#levi-jishurenyuan"></use></svg
             ><span>开发</span></span
           >
           <i class="bi bi-chevron-right"></i>
@@ -40,7 +40,7 @@
         <li class="sidebar-category-li" data-router="/cute-pet">
           <span
             ><svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-aichong03"></use></svg
+              <use xlink:href="#levi-aichong03"></use></svg
             ><span>萌宠</span></span
           >
           <i class="bi bi-chevron-right"></i>
@@ -48,7 +48,7 @@
         <li class="sidebar-category-li" data-router="/notes">
           <span>
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-biji"></use></svg
+              <use xlink:href="#levi-biji"></use></svg
             ><span>笔记</span></span
           >
           <i class="bi bi-chevron-right"></i>
@@ -56,7 +56,7 @@
         <li class="sidebar-category-li" data-router="/landscape">
           <span>
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-fengjing"></use></svg
+              <use xlink:href="#levi-fengjing"></use></svg
             ><span>风景</span></span
           >
           <i class="bi bi-chevron-right"></i>
@@ -64,22 +64,22 @@
         <li class="sidebar-category-li" data-router="/figure">
           <span>
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-168-boy-2"></use></svg
+              <use xlink:href="#levi-168-boy-2"></use></svg
             ><span>人物</span></span
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/game">
+        <li class="sidebar-category-li" data-router="/games">
           <span>
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-youxiji"></use></svg
+              <use xlink:href="#levi-youxiji"></use></svg
             ><span>游戏</span></span
           >
           <i class="bi bi-chevron-right"></i>
         </li>
         <!-- <li class="sidebar-category-li" data-router="/embarrassing">
           <span><svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-meirijiongtu"></use></svg
+                    <use xlink:href="#levi-meirijiongtu"></use></svg
                   ><span>囧事</span></span>
           <i class="bi bi-chevron-right"></i>
         </li> -->
@@ -93,7 +93,7 @@
   >
     <div class="sidebar-tags-title">
       <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-biaoqian_1"></use>
+        <use xlink:href="#levi-biaoqian_1"></use>
       </svg>
       <span>标签</span>
     </div>

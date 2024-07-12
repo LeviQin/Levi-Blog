@@ -5,7 +5,7 @@
         <div class="info-item">
           <div class="left-icon">
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-web"></use>
+              <use xlink:href="#levi-web"></use>
             </svg>
           </div>
           <div class="right-content">
@@ -15,7 +15,7 @@
         <div class="info-item">
           <div class="left-icon">
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-diqiuyi"></use>
+              <use xlink:href="#levi-diqiuyi"></use>
             </svg>
           </div>
           <div class="right-content">
@@ -25,7 +25,7 @@
         <div class="info-item">
           <div class="left-icon">
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-gongzuojingyan"></use>
+              <use xlink:href="#levi-gongzuojingyan"></use>
             </svg>
           </div>
           <div class="right-content">
@@ -38,7 +38,7 @@
         <div class="info-item">
           <div class="left-icon">
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-kaifa"></use>
+              <use xlink:href="#levi-kaifa"></use>
             </svg>
           </div>
           <div class="right-content">

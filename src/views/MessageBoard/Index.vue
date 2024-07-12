@@ -10,21 +10,21 @@
       content="欢迎来到留言板！在这里，您可以畅所欲言，分享您的想法、感受和建议。无论是对我们网站的赞美，还是对改进的建议，我们都非常乐意听取并与您交流。请尊重他人，文明用语，让我们共同营造一个友爱、和谐的留言环境。"
     />
   </Head>
-  <div class="msg-board">
+  <div class="comments">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div
-      class="msg-board-container"
+      class="comments-container"
       :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
     >
-      <div class="msg-board-main w">
+      <div class="comments-main w">
         <div class="topic-sidebar">
           <sidebar-user></sidebar-user>
         </div>
-        <div class="msg-board-box">
+        <div class="comments-box">
           <div class="board-box theme-bg-color">
             <div class="box-title">
               <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-liuyanban"></use>
+                <use xlink:href="#levi-liuyanban"></use>
               </svg>
               <h2>留言板</h2>
             </div>
@@ -43,7 +43,7 @@
           <div class="message-box theme-bg-color">
             <div class="box-title">
               <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-faxiaoxi"></use>
+                <use xlink:href="#levi-faxiaoxi"></use>
               </svg>
               <h2>发送留言</h2>
             </div>
@@ -68,7 +68,7 @@
                 >
                   <template #prefix>
                     <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#icon-nicheng"></use>
+                      <use xlink:href="#levi-nicheng"></use>
                     </svg>
                   </template>
                 </el-input>
@@ -81,7 +81,7 @@
                 >
                   <template #prefix>
                     <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#icon-MAILBOX"></use>
+                      <use xlink:href="#levi-MAILBOX"></use>
                     </svg>
                   </template>
                 </el-input>
@@ -94,7 +94,7 @@
                 >
                   <template #prefix>
                     <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#icon-yanzhengma"></use>
+                      <use xlink:href="#levi-yanzhengma"></use>
                     </svg> </template
                 ></el-input>
               </div>
@@ -350,11 +350,12 @@ const getSystemInfo = () => {
 </script>
 
 <style lang="scss" scoped>
-.msg-board-main {
+.comments-main {
   display: flex;
+  gap: 20px;
 }
 
-.msg-board-box {
+.comments-box {
   flex: 1;
   margin: 0 0 100px 0;
 }

@@ -43,25 +43,25 @@
             <div class="footer-info">
               <div class="footer-date">
                 <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-riqi"></use>
+                  <use xlink:href="#levi-riqi"></use>
                 </svg>
                 <span>{{ item.published_at }}</span>
               </div>
               <div class="footer-update">
                 <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-gengxinmulu"></use>
+                  <use xlink:href="#levi-gengxinmulu"></use>
                 </svg>
                 <span>{{ item.updated_at }}</span>
               </div>
               <div class="footer-view">
                 <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-wode_zuijinliulan"></use></svg
+                  <use xlink:href="#levi-wode_zuijinliulan"></use></svg
                 ><span class="num-text">{{ item.view_count }}</span>
               </div>
             </div>
             <div class="footer-tags">
               <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-biaoqian_1"></use>
+                <use xlink:href="#levi-biaoqian_1"></use>
               </svg>
               <span class="tags-item" v-for="key in item.article_tags">{{
                 tagsList[key - 1]
@@ -334,13 +334,15 @@ const getData = async () => {
     font-size: 14px;
   }
 
-  .footer-date {
+  .footer-date,
+  .footer-update,
+  .footer-view .num-text {
     font-size: 12px;
   }
 
   .footer-tags,
   .footer-info {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 
   .footer-tags span {
