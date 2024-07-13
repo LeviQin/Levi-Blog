@@ -102,7 +102,7 @@ const scrollWindow = () => {
   flex-direction: column;
   height: 100%;
   .lv-header {
-    height: var(--headerBarHeight);
+    height: var(--header-bar-height);
     min-height: 60px;
     display: block;
   }

@@ -139,17 +139,19 @@ const dataMap = reactive({
   msgList: [],
 });
 
-let isSidebarVisible = ref(false);
-let messageText = ref("");
-let user_nickname = ref("");
-let email = ref("");
-let user_avatar_url = ref(
+const isSidebarVisible = ref(false);
+const messageText = ref("");
+const user_nickname = ref("");
+const email = ref("");
+const user_avatar_url = ref(
   "https://levi-oss-1301066479.cos.ap-guangzhou.myqcloud.com/avatarImages/Snipaste_2024-04-24_15-56-54.png"
 );
-let parent_id = ref("");
-let verCode = ref("");
-let loading = ref(false);
-let codeNum = ref(0);
+const parent_id = ref("");
+const verCode = ref("");
+const loading = ref(false);
+const codeNum = ref(0);
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const bannerConfig = {
   height: "35vh",
@@ -237,6 +239,15 @@ const sendMessage = async () => {
       ElNotification({
         title: "留言失败",
         message: "邮箱未填写",
+        type: "error",
+        zIndex: 99999,
+      });
+      return;
+    }
+    if (!emailRegex.test(email.value)) {
+      ElNotification({
+        title: "留言失败",
+        message: "邮箱验证失败，请重试",
         type: "error",
         zIndex: 99999,
       });
@@ -362,7 +373,7 @@ const getSystemInfo = () => {
 
 .board-box,
 .message-box {
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
   padding: 20px;
 }
 
@@ -420,8 +431,8 @@ const getSystemInfo = () => {
     position: absolute;
     left: 0;
     bottom: 30px;
-    background-color: var(--filingColor);
-    color: var(--whiteColor);
+    background-color: var(--filing-color);
+    color: var(--white-color);
     width: auto;
     padding: 0 15px;
     border-radius: 5px;
@@ -453,11 +464,11 @@ const getSystemInfo = () => {
     }
 
     .send-btn {
-      background-color: var(--themeBtnHoverColor);
+      background-color: var(--theme-btn-hover-color);
       padding: 8px 20px;
       border-radius: 5px;
       cursor: pointer;
-      color: var(--whiteColor);
+      color: var(--white-color);
       font-size: 12px;
       transition: all 0.3s;
 

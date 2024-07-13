@@ -196,39 +196,39 @@ const changeCarousel = (val) => {
 
     li.about:hover {
       transition: all 0.4s;
-      color: var(--aboutColor);
+      color: var(--about-color);
     }
 
     li.work:hover {
       transition: all 0.4s;
-      color: var(--workColor);
+      color: var(--work-color);
     }
 
     li.ability:hover {
       transition: all 0.4s;
-      color: var(--abilityColor);
+      color: var(--ability-color);
     }
 
     li.connect:hover {
       transition: all 0.4s;
-      color: var(--connectColor);
+      color: var(--connect-color);
     }
   }
 }
 
 .active-nav.about {
-  color: var(--aboutColor) !important;
+  color: var(--about-color) !important;
 }
 
 .active-nav.work {
-  color: var(--workColor) !important;
+  color: var(--work-color) !important;
 }
 
 .active-nav.ability {
-  color: var(--abilityColor) !important;
+  color: var(--ability-color) !important;
 }
 
 .active-nav.connect {
-  color: var(--connectColor) !important;
+  color: var(--connect-color) !important;
 }
 </style>

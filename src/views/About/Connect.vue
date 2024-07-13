@@ -57,22 +57,23 @@ const emit = defineEmits(["toOnePage"]);
   color: #fff;
   text-align: left;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
-  padding: 40px;
+  padding: 30px 60px;
   border-radius: 20px;
   text-shadow: 0 5px 15px rgb(0, 0, 0) !important;
+  background-color: #00000081;
 }
 
-.info::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  backdrop-filter: blur(15px);
-  border-radius: 20px;
-  z-index: -1;
-}
+// .info::before {
+//   content: "";
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   bottom: 0;
+//   left: 0;
+//   backdrop-filter: blur(15px);
+//   border-radius: 20px;
+//   z-index: -1;
+// }
 
 .info-content-item {
   margin-bottom: 12px;

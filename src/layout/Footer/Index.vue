@@ -51,7 +51,7 @@ import { ref } from "vue";
 
 <style lang="scss" scoped>
 .footer {
-  min-width: var(--minWidth);
+  min-width: var(--min-width);
   display: flex;
   justify-content: center;
   backdrop-filter: blur(20px);
@@ -62,7 +62,7 @@ import { ref } from "vue";
 
 .info-item a,
 .info-item span {
-  color: var(--navTextColor);
+  color: var(--nav-text-color);
   font-size: 16px;
   text-shadow: 0 5px 15px rgba(0, 0, 0, 1) !important;
 }
@@ -94,7 +94,7 @@ import { ref } from "vue";
 
   .info-item a,
   .info-item span {
-    color: var(--navTextColor);
+    color: var(--nav-text-color);
     font-size: 14px;
   }
 

@@ -121,7 +121,7 @@ const emit = defineEmits(["ok"]);
   height: 300px;
   top: -610px;
   left: 0;
-  background-color: var(--whiteColor);
+  background-color: var(--white-color);
   transform: translateY(100%) scale(0.9);
   transform-origin: top;
   transition: all 0.3s ease;
@@ -130,7 +130,7 @@ const emit = defineEmits(["ok"]);
   box-shadow: 0 0 0 1px var(--el-input-border-color, var(--el-border-color)) inset;
   display: flex;
   flex-direction: column;
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
   overflow: hidden;
   .avatar-list-content {
     flex: 1;

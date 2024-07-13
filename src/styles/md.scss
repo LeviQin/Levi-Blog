@@ -21,7 +21,7 @@
 .vuepress-markdown-body h1,
 .vuepress-markdown-body h2,
 .vuepress-markdown-body h3 {
-    color: var(--balckTextColor);
+    color: var(--balck-text-color);
     margin-left: 25px !important;
     position: relative;
     transition: all 0.4s;
@@ -29,7 +29,7 @@
     &:hover {
         transition: all 0.4s;
         transform: translateX(15px);
-        color: var(--btnTagBgColor);
+        color: var(--btn-tag-bg-color);
     }
 }
 
@@ -55,7 +55,7 @@
 }
 
 .vuepress-markdown-body p {
-    color: var(--balckTextColor);
+    color: var(--balck-text-color);
     overflow-wrap: break-word;
 }
 

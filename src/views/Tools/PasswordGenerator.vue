@@ -252,7 +252,7 @@ const copyText = (val) => {
 <style lang="scss" scoped>
 .tools-container {
   max-width: 670px;
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
 }
 
 .password .content {
@@ -287,7 +287,7 @@ const copyText = (val) => {
 .copy-icon-box,
 .m-copy-icon-box {
   cursor: pointer;
-  background-color: var(--themeBtnHoverColor);
+  background-color: var(--btn-tag-bg-color);
   margin: 5px 0;
   padding: 5px 25px;
   border-radius: 2px;
@@ -300,7 +300,7 @@ const copyText = (val) => {
   user-select: none;
 
   &:hover {
-    opacity: 0.8;
+    background-color: var(--theme-btn-hover-color);
   }
 }
 
@@ -430,7 +430,7 @@ const copyText = (val) => {
       transition: all 0.2s;
 
       &:hover {
-        color: var(--linkTextColor);
+        color: var(--link-text-color);
         transition: all 0.2s;
       }
     }
@@ -459,26 +459,26 @@ const copyText = (val) => {
 }
 
 :deep(.el-slider__bar) {
-  background-color: var(--themeBtnHoverColor);
+  background-color: var(--theme-btn-hover-color);
 }
 
 :deep(.el-slider__button) {
-  border-color: var(--themeBtnHoverColor);
+  border-color: var(--theme-btn-hover-color);
 }
 
 :deep(.el-checkbox__label) {
-  color: var(--balckTextColor) !important;
+  color: var(--balck-text-color) !important;
 }
 
 :deep(.el-checkbox__input.is-checked .el-checkbox__inner) {
-  background-color: var(--themeBtnHoverColor);
-  border-color: var(--themeBtnHoverColor);
+  background-color: var(--theme-btn-hover-color);
+  border-color: var(--theme-btn-hover-color);
 }
 
 :deep(.password-input .el-input__inner) {
   font-size: 20px;
   font-weight: 600;
-  color: var(--balckTextColor);
+  color: var(--balck-text-color);
 }
 
 .rotate-animation {

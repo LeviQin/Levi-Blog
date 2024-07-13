@@ -192,7 +192,7 @@ defineExpose({
 
 <style lang="scss" scoped>
 .wallpaper-model-title {
-  color: var(--btnTagBgColor);
+  color: var(--btn-tag-bg-color);
   font-size: 18px;
 }
 

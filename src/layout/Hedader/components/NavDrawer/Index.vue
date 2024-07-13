@@ -27,42 +27,42 @@
             v-show="showTopicCollapse"
           >
             <ul @click="toPage">
-              <li data-router="/daily">
+              <li data-router="/category/daily">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#levi-woderichang"></use></svg
                 ><span>日常</span>
               </li>
-              <li data-router="/technology">
+              <li data-router="/category/technology">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#levi-jishurenyuan"></use></svg
                 ><span>开发</span>
               </li>
-              <li data-router="/cute-pet">
+              <li data-router="/category/cute-pet">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#levi-aichong03"></use></svg
                 ><span>萌宠</span>
               </li>
-              <li data-router="/notes">
+              <li data-router="/category/notes">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#levi-biji"></use></svg
                 ><span>笔记</span>
               </li>
-              <li data-router="/landscape">
+              <li data-router="/category/landscape">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#levi-fengjing"></use></svg
                 ><span>风景</span>
               </li>
-              <li data-router="/figure">
+              <li data-router="/category/figure">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#levi-168-boy-2"></use></svg
                 ><span>人物</span>
               </li>
-              <li data-router="/games">
+              <li data-router="/category/games">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#levi-youxiji"></use></svg
                 ><span>游戏</span>
               </li>
-              <!-- <li data-router="/embarrassing">
+              <!-- <li data-router="/category/embarrassing">
                   <svg class="icon" aria-hidden="true">
                     <use xlink:href="#levi-meirijiongtu"></use></svg
                   ><span>囧事</span>
@@ -196,13 +196,13 @@ defineExpose({
 }
 
 .nav-drawer-header-title {
-  color: var(--themeColor);
+  color: var(--theme-color);
   font-size: 18px;
   margin-bottom: 15px;
 }
 
 .nav-drawer-header-description {
-  color: var(--themeColor);
+  color: var(--theme-color);
   font-size: 16px;
 }
 

@@ -12,7 +12,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--themeBtnHoverColor);
+  background: var(--theme-btn-hover-color);
   border-radius: 2px;
 }
 
@@ -32,8 +32,8 @@
 }
 
 .w {
-  max-width: var(--heartWidth);
-  min-width: var(--minWidth);
+  max-width: var(--heart-width);
+  min-width: var(--min-width);
   margin: 0 auto;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .theme-bg-color {
-  background: var(--themeColor);
+  background: var(--theme-color);
 }
 
 .red-text {
@@ -73,13 +73,13 @@
 .dividing-line {
   position: relative;
   margin: 20px auto;
-  border: 2px dashed var(--btnTagBgColor);
+  border: 2px dashed var(--btn-tag-bg-color);
 }
 
 
 .bi-rocket-takeoff-fill {
   position: absolute;
-  color: var(--btnTagBgColor);
+  color: var(--btn-tag-bg-color);
   top: -10px;
   left: 5%;
   font-size: 24px;
@@ -116,16 +116,16 @@
 .waterfall-item {
   min-width: 120px;
   min-height: 120px;
-  background: var(--themeColor);
+  background: var(--theme-color);
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
   cursor: pointer;
 }
 
 .waterfall-item .img-box {
   margin: 5px;
   overflow: hidden;
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
 }
 
 .waterfall-item img {
@@ -133,7 +133,7 @@
   transition: all .3s;
   object-fit: cover;
   max-height: 210px;
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
 }
 
 .waterfall-item img:hover {

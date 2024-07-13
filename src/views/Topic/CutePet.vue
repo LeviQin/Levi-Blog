@@ -183,7 +183,7 @@ const getData = async () => {
   top: -13px;
   left: -13px;
   z-index: 10;
-  background: var(--btnTagBgColor);
+  background: var(--btn-tag-bg-color);
   border-radius: 50%;
   width: 20px;
   height: 20px;

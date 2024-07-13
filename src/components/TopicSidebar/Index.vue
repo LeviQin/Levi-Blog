@@ -21,7 +21,7 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/daily">
+        <li class="sidebar-category-li" data-router="/category/daily">
           <span
             ><svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-woderichang"></use></svg
@@ -29,7 +29,7 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/technology">
+        <li class="sidebar-category-li" data-router="/category/technology">
           <span
             ><svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-jishurenyuan"></use></svg
@@ -37,7 +37,7 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/cute-pet">
+        <li class="sidebar-category-li" data-router="/category/cute-pet">
           <span
             ><svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-aichong03"></use></svg
@@ -45,7 +45,7 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/notes">
+        <li class="sidebar-category-li" data-router="/category/notes">
           <span>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-biji"></use></svg
@@ -53,7 +53,7 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/landscape">
+        <li class="sidebar-category-li" data-router="/category/landscape">
           <span>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-fengjing"></use></svg
@@ -61,7 +61,7 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/figure">
+        <li class="sidebar-category-li" data-router="/category/figure">
           <span>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-168-boy-2"></use></svg
@@ -69,7 +69,7 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/games">
+        <li class="sidebar-category-li" data-router="/category/games">
           <span>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-youxiji"></use></svg
@@ -77,7 +77,7 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <!-- <li class="sidebar-category-li" data-router="/embarrassing">
+        <!-- <li class="sidebar-category-li" data-router="/category/embarrassing">
           <span><svg class="icon" aria-hidden="true">
                     <use xlink:href="#levi-meirijiongtu"></use></svg
                   ><span>囧事</span></span>
@@ -158,8 +158,8 @@ const selectCategory = (e) => {
 <style lang="scss" scoped>
 .sidebar-category,
 .sidebar-tags {
-  background: var(--themeColor);
-  border-radius: var(--themeRadius);
+  background: var(--theme-color);
+  border-radius: var(--theme-radius);
   margin-bottom: 20px;
   padding: 20px;
 }
@@ -212,13 +212,13 @@ const selectCategory = (e) => {
   &:hover {
     transition: all 0.3s;
     background: #e9e6e69e;
-    color: var(--linkTextColor);
+    color: var(--link-text-color);
   }
 }
 
 .active-category {
   transition: all 0.3s;
   background: #e9e6e69e;
-  color: var(--linkTextColor);
+  color: var(--link-text-color);
 }
 </style>

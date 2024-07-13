@@ -228,8 +228,8 @@ const getArticleDetail = async () => {
 }
 
 .sidebar-ul {
-  background: var(--themeColor);
-  border-radius: var(--themeRadius);
+  background: var(--theme-color);
+  border-radius: var(--theme-radius);
   position: sticky;
   left: 0;
   top: 80px;
@@ -245,7 +245,7 @@ const getArticleDetail = async () => {
 
   /* 显示省略号 */
   &:hover .nav-title {
-    color: var(--themeBtnHoverColor);
+    color: var(--theme-btn-hover-color);
   }
 }
 
@@ -277,9 +277,9 @@ const getArticleDetail = async () => {
 }
 
 .topic-detail-md {
-  background: var(--themeColor);
+  background: var(--theme-color);
   padding: 20px;
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
   min-height: 400px;
   max-width: 890px;
 }
@@ -296,7 +296,7 @@ const getArticleDetail = async () => {
 
   .tool-itme {
     cursor: pointer;
-    background: var(--btnTagBgColor);
+    background: var(--btn-tag-bg-color);
     margin: 0 10px;
     border-radius: 5px;
     padding: 5px 10px;
@@ -334,8 +334,8 @@ const getArticleDetail = async () => {
 }
 
 .message-container {
-  background: var(--themeColor);
-  border-radius: var(--themeRadius);
+  background: var(--theme-color);
+  border-radius: var(--theme-radius);
   margin: 20px 0;
 }
 

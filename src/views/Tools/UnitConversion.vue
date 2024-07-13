@@ -295,7 +295,7 @@ const clearData = () => {
 <style lang="scss" scoped>
 .tools-container {
   max-width: 670px;
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
 }
 
 .unit-conversion-container {

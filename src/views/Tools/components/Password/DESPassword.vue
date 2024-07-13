@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs-item">
+  <div class="tabs-item theme-bg-color">
     <el-form label-position="top">
       <el-form-item>
         <el-button type="primary" @click="encrypt">加密</el-button>

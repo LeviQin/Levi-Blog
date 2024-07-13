@@ -157,7 +157,7 @@ const toSitePage = (url) => {
 
 .select-category-ul li {
   padding: 12px 18px;
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
   background: #fff;
   cursor: pointer;
   font-size: 14px;
@@ -165,7 +165,7 @@ const toSitePage = (url) => {
 }
 
 .active-category {
-  background: var(--btnTagBgColor) !important;
+  background: var(--btn-tag-bg-color) !important;
   color: #fff;
 }
 
@@ -180,7 +180,7 @@ const toSitePage = (url) => {
 
 .nav-item {
   padding: 15px;
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;

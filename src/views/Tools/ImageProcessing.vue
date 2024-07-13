@@ -18,11 +18,23 @@
     />
   </Head>
   <div class="image-processing w tools-container">
-    <div class="image-tool-block">
-      <div class="image-tool-item theme-bg-color">1</div>
-      <div class="image-tool-item theme-bg-color">1</div>
-      <div class="image-tool-item theme-bg-color">1</div>
-      <div class="image-tool-item theme-bg-color">1</div>
+    <div></div>
+    <div class="image-tool-block" @click="toPage">
+      <div class="image-tool-item theme-bg-color" data-router="image-compression">
+        图片压缩
+      </div>
+      <!-- <div class="image-tool-item theme-bg-color" data-router="image-format-conversion">
+        图片格式转换
+      </div>
+      <div class="image-tool-item theme-bg-color" data-router="image-compression">
+        图片加水印
+      </div>
+      <div class="image-tool-item theme-bg-color" data-router="image-compression">
+        旋转图片
+      </div>
+      <div class="image-tool-item theme-bg-color" data-router="image-compression">
+        图片转文字
+      </div> -->
     </div>
   </div>
 </template>
@@ -30,9 +42,17 @@
 <script setup>
 import { ref } from "vue";
 import { Head } from "@vueuse/head";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const toPage = (e) => {
+  const path = e.target.getAttribute("data-router");
+  path && router.push(path);
+};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .image-processing {
   padding: 20px;
 }
@@ -44,6 +64,12 @@ import { Head } from "@vueuse/head";
 
 .image-tool-item {
   flex: 1;
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 </style>

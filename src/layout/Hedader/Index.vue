@@ -33,6 +33,7 @@ const router = useRouter();
 
 onMounted(() => {
   header.value = document.querySelector(".header");
+  nav.value = document.querySelector(".nav-card");
   window.addEventListener("scroll", scrollWindow, true);
 });
 
@@ -43,6 +44,9 @@ onUnmounted(() => {
 const navDrawerRef = ref(null);
 const searchModelRef = ref(null);
 const header = ref(null);
+const nav = ref(null);
+const maxHeaderHeight = "80px";
+const minHeaderHeight = "60px";
 
 const clickCollapse = () => {
   navDrawerRef.value.show();
@@ -50,13 +54,10 @@ const clickCollapse = () => {
 
 const scrollWindow = () => {
   const top = document.documentElement.scrollTop;
-  const background = `linear-gradient(60deg,rgba(0,0,0, ${top / 200}) 0,rgba(0,0,0, ${
-    top / 200
-  }) 93%)`;
-  if (header.value.style.background !== background) {
-    header.value.style.transition = "0.5s linear";
-    header.value.style.background = background;
-  }
+  nav.value.style.transition = "0.3s linear";
+  nav.value.style.height = top === 0 ? maxHeaderHeight : minHeaderHeight;
+  const opacity = Math.min(top / 400, 1); // 确保透明度在 0 到 1 之间
+  document.documentElement.style.setProperty("--header-bar-color-opacity", opacity);
 };
 
 const showSearchModel = () => {
@@ -70,8 +71,8 @@ const showSearchModel = () => {
 }
 
 .header {
-  background-color: rgba(0, 0, 0, 0);
-  min-width: var(--minWidth);
+  background-color: rgba(var(--header-bar-bg-color), var(--header-bar-color-opacity));
+  min-width: var(--min-width);
   position: fixed;
   top: 0;
   width: 100%;
@@ -84,12 +85,12 @@ const showSearchModel = () => {
   justify-content: space-between;
 
   .log-crad {
-    height: var(--headerBarHeight);
     display: flex;
     align-items: center;
+    gap: 20px;
 
     span {
-      color: var(--navTextColor);
+      color: var(--nav-text-color);
     }
   }
 }
@@ -98,20 +99,20 @@ const showSearchModel = () => {
   font-size: 25px;
   cursor: pointer !important;
   margin-right: 20px;
-  color: var(--navBarTextColor);
+  color: var(---nav-bar-text-color);
   font-weight: 500;
   transition: all 0.5s;
 }
 
 .search-card i {
-  color: var(--navBarTextColor);
+  color: var(---nav-bar-text-color);
   cursor: pointer;
   font-size: 22px;
 }
 
 @media (max-width: 860px) {
   .header {
-    height: var(--headerMobileBarHeight);
+    height: var(--header-mobile-bar-height);
   }
 
   .nav-card {
@@ -126,7 +127,7 @@ const showSearchModel = () => {
     cursor: pointer;
 
     .collapse-icon {
-      color: var(--navTextColor);
+      color: var(--nav-text-color);
       font-size: 1.8rem;
     }
   }

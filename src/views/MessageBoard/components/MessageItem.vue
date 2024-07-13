@@ -60,7 +60,7 @@ const props = defineProps({
 .message-item-content {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--whiteColor);
+  border-bottom: 1px solid var(--white-color);
   padding: 15px 0 30px 0;
   .message-item-avatar {
     width: 40px;
@@ -90,9 +90,9 @@ const props = defineProps({
       color: #323438;
     }
     .admin-name {
-      background-color: var(--btnTagBgColor);
+      background-color: var(--btn-tag-bg-color);
       opacity: 0.8;
-      color: var(--whiteColor);
+      color: var(--white-color);
       font-size: 12px;
       padding: 3px 5px;
       border-radius: 4px;
@@ -109,7 +109,7 @@ const props = defineProps({
       position: absolute;
       top: -10px;
       left: -94px;
-      background-color: var(--balckTextColor);
+      background-color: var(--balck-text-color);
       padding: 5px 0;
       opacity: 0;
       border-radius: 5px;

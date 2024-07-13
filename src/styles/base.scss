@@ -10,41 +10,45 @@
   --color: #000;
   --background: #efefef;
 
-  --themeColor: linear-gradient(60deg, rgba(225, 215, 240, 0.9) 0, rgba(200, 241, 255, 0.9) 93%);
-  --whiteColor: #fff;
-  --greyColor: #ececec;
-  --navBarTextColor: var(--whiteColor);
-  --themeBtnHoverColor: #5a8cbd;
-  --navTextColor: var(--whiteColor);
-  --filingColor: #000;
-  --balckTextColor: #181a2a;
-  --linkTextColor: #409eff;
-  --btnTagBgColor: #ff8b26;
-  --minWidth: 200px;
-  --heartWidth: 1360px;
-  --headerBarHeight: 60px;
-  --headerMobileBarHeight: 50px;
-  --themeRadius: 10px;
-  --themeMinRadius: 5px;
+  --theme-color: #dbe6eeda;
+  --header-bar-bg-color: 0, 0, 0;
+  --header-bar-color-opacity: 0;
+  // --theme-color: linear-gradient(60deg, rgba(225, 215, 240, 0.9) 0, rgba(200, 241, 255, 0.9) 93%);
+  --white-color: #fff;
+  --grey-color: #ececec;
+  --red-color: red;
+  ---nav-bar-text-color: var(--white-color);
+  --theme-btn-hover-color: #5a8cbd;
+  --nav-text-color: var(--white-color);
+  --filing-color: #000;
+  --balck-text-color: #181a2a;
+  --link-text-color: #409eff;
+  --btn-tag-bg-color: #ff8b26;
+  --min-width: 200px;
+  --heart-width: 1360px;
+  --header-bar-height: 80px;
+  --header-mobile-bar-height: 50px;
+  --theme-radius: 10px;
+  --theme-min-radius: 5px;
 
-  --aboutColor: #95a5a6;
-  --workColor: #79bbff;
-  --abilityColor: #792a31;
-  --connectColor: #eebe77;
+  --about-color: #95a5a6;
+  --work-color: #79bbff;
+  --ability-color: #792a31;
+  --connect-color: #eebe77;
   overflow-x: hidden;
 }
 
 [data-theme='dart'] {
   --color: #fff;
   --background: #ffffff;
-  --themeColor: #000;
-  --navBarTextColor: #fff;
-  --themeBtnHoverColor: #5a8cbd;
-  --navTextColor: #fff;
-  --filingColor: #000;
-  --balckTextColor: #181a2a;
-  --linkTextColor: #409eff;
-  --btnTagBgColor: #ff8b26;
+  --theme-color: #000;
+  ---nav-bar-text-color: #fff;
+  --theme-btn-hover-color: #5a8cbd;
+  --nav-text-color: #fff;
+  --filing-color: #000;
+  --balck-text-color: #181a2a;
+  --link-text-color: #409eff;
+  --btn-tag-bg-color: #ff8b26;
 }
 
 a {
@@ -123,16 +127,6 @@ ul {
 
 li {
   list-style: none;
-}
-
-@keyframes accelerate {
-  0% {
-    transform: rotate(0);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
 }
 
 @keyframes fadeIn {

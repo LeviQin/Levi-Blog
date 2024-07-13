@@ -172,7 +172,7 @@ const getData = async () => {
 
   .bi {
     font-size: 30px;
-    color: var(--btnTagBgColor);
+    color: var(--btn-tag-bg-color);
   }
 }
 

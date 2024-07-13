@@ -120,7 +120,7 @@ const bannerConfig = {
 
 <style lang="scss" scoped>
 .links-container {
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
   padding: 20px;
 }
 
@@ -140,7 +140,7 @@ const bannerConfig = {
   background: #fff;
   padding: 10px;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
   cursor: pointer;
   position: relative;
   padding-left: 45px;
@@ -172,7 +172,7 @@ const bannerConfig = {
 .links-category-title {
   font-size: 20px;
   padding: 5px 0;
-  color: var(--balckTextColor);
+  color: var(--balck-text-color);
 }
 
 .links-category-describe {
@@ -183,14 +183,14 @@ const bannerConfig = {
 .links h1,
 .links h2,
 .links h3 {
-  color: var(--balckTextColor);
+  color: var(--balck-text-color);
   margin-left: 25px !important;
   position: relative;
   transition: all 0.4s;
   &:hover {
     transition: all 0.4s;
     transform: translateX(15px);
-    color: var(--btnTagBgColor);
+    color: var(--btn-tag-bg-color);
   }
 }
 

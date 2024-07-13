@@ -232,7 +232,7 @@ const getIpAddress = async () => {
 
 .user-ip {
   cursor: pointer;
-  color: var(--linkTextColor);
+  color: var(--link-text-color);
 }
 
 .ip-tips-card {
@@ -240,15 +240,15 @@ const getIpAddress = async () => {
 }
 
 .details-box {
-  background: var(--themeColor);
+  background: var(--theme-color);
   padding: 20px;
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
   margin-top: 20px;
 }
 
 .details-box-title {
   font-size: 24px;
-  color: var(--balckTextColor);
+  color: var(--balck-text-color);
   display: flex;
   align-items: center;
 }

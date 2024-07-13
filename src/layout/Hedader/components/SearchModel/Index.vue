@@ -70,7 +70,7 @@ const setDialogWidth = () => {
   if (window.innerWidth <= 480) {
     dialogWidth.value = "90%";
   } else {
-    dialogWidth.value = "500px";
+    dialogWidth.value = "550px";
   }
 };
 
@@ -137,7 +137,7 @@ defineExpose({
 
 <style lang="scss" scoped>
 .search-model-title {
-  color: var(--btnTagBgColor);
+  color: var(--btn-tag-bg-color);
   font-size: 18px;
 }
 
@@ -159,7 +159,7 @@ defineExpose({
 }
 
 .result-content-item {
-  border-left: 2px solid var(--btnTagBgColor);
+  border-left: 2px solid var(--btn-tag-bg-color);
   overflow: hidden;
   margin-bottom: 15px;
   padding: 10px;
@@ -174,7 +174,7 @@ defineExpose({
 .result-content-item-title {
   font-size: 16px;
   font-weight: 600;
-  color: var(--balckTextColor);
+  color: var(--balck-text-color);
   transition: all 0.4s;
 }
 

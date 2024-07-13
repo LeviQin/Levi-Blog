@@ -4,73 +4,77 @@
     :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
   >
     <div class="sidebar-info-avatar">
-      <img
-        class="avatar"
-        src="../../assets/images/levi2.jpg"
-        fit="scale-dow"
-        alt="levi"
-        @click="router.push(`/about`)"
-      />
-    </div>
-    <div class="sidebar-info-introduce">
-      <div class="sidebar-info-introduce-item sidebar-info-introduce-name">
-        <p><i class="bi bi-stars"></i>Levi</p>
-      </div>
-      <div class="sidebar-info-introduce-item sidebar-info-introduce-sign">
-        <span>莫道桑榆晚，为霞尚满天</span>
+      <div class="avatar-block">
+        <img
+          class="avatar"
+          src="../../assets/images/levi2.jpg"
+          fit="scale-dow"
+          alt="levi"
+          @click="router.push(`/about`)"
+        />
       </div>
     </div>
-    <div class="sidebar-info-data">
-      <div class="sidebar-info-data-item">
-        <div class="sidebar-info-data-item-title">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#levi-wenzhang"></use>
-          </svg>
-          <span>文章</span>
+    <div class="sidebar-info-introduce-wrap">
+      <div class="sidebar-info-introduce">
+        <div class="sidebar-info-introduce-item sidebar-info-introduce-name">
+          <p><i class="bi bi-stars"></i>Levi</p>
         </div>
-        <div class="sidebar-info-data-num">
-          <span>{{ totalArticles }}</span>
+        <div class="sidebar-info-introduce-item sidebar-info-introduce-sign">
+          <span>莫道桑榆晚，为霞尚满天</span>
         </div>
       </div>
-      <div class="sidebar-info-data-item">
-        <div class="sidebar-info-data-item-title">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#levi-fenlei"></use>
-          </svg>
-          <span>分类</span>
+      <div class="sidebar-info-data">
+        <div class="sidebar-info-data-item">
+          <div class="sidebar-info-data-item-title">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-wenzhang"></use>
+            </svg>
+            <span>文章</span>
+          </div>
+          <div class="sidebar-info-data-num">
+            <span>{{ totalArticles }}</span>
+          </div>
         </div>
-        <div class="sidebar-info-data-num">
-          <span>6</span>
+        <div class="sidebar-info-data-item">
+          <div class="sidebar-info-data-item-title">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-fenlei"></use>
+            </svg>
+            <span>分类</span>
+          </div>
+          <div class="sidebar-info-data-num">
+            <span>6</span>
+          </div>
+        </div>
+        <div class="sidebar-info-data-item">
+          <div class="sidebar-info-data-item-title">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-biaoqian_1"></use>
+            </svg>
+            <span>标签</span>
+          </div>
+          <div class="sidebar-info-data-num">
+            <span>{{ tagMap.length }}</span>
+          </div>
         </div>
       </div>
-      <div class="sidebar-info-data-item">
-        <div class="sidebar-info-data-item-title">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#levi-biaoqian_1"></use>
-          </svg>
-          <span>标签</span>
+      <div class="sidebar-info-contact">
+        <a href="https://github.com/LeviQin" target="_blank">
+          <div class="contact-item" title="GitHub">
+            <i class="bi bi-github"></i>
+          </div>
+        </a>
+        <a href="mailto:qinbiao_web@163.com">
+          <div class="contact-item envelope-box" title="邮箱">
+            <i class="bi bi-envelope-at"></i>
+          </div>
+        </a>
+        <div class="contact-item wecht-box" title="微信" @click="showWXModel">
+          <i class="bi bi-wechat"></i>
         </div>
-        <div class="sidebar-info-data-num">
-          <span>{{ tagMap.length }}</span>
+        <div class="contact-item" title="QQ" @click="showQQmodel">
+          <i class="bi bi-tencent-qq"></i>
         </div>
-      </div>
-    </div>
-    <div class="sidebar-info-contact">
-      <a href="https://github.com/LeviQin" target="_blank">
-        <div class="contact-item" title="GitHub">
-          <i class="bi bi-github"></i>
-        </div>
-      </a>
-      <a href="mailto:qinbiao_web@163.com">
-        <div class="contact-item envelope-box" title="邮箱">
-          <i class="bi bi-envelope-at"></i>
-        </div>
-      </a>
-      <div class="contact-item wecht-box" title="微信" @click="showWXModel">
-        <i class="bi bi-wechat"></i>
-      </div>
-      <div class="contact-item" title="QQ" @click="showQQmodel">
-        <i class="bi bi-tencent-qq"></i>
       </div>
     </div>
 
@@ -126,26 +130,40 @@ const getData = async () => {
 
 <style lang="scss" scoped>
 .sidebar-info {
-  background: var(--themeColor);
-  border-radius: var(--themeRadius);
+  background: var(--theme-color);
+  border-radius: var(--theme-radius);
   margin-bottom: 20px;
-  padding: 20px;
+  overflow: hidden;
 }
 
 .sidebar-info-avatar {
   display: flex;
   justify-content: center;
+  background-color: red;
+  background-image: url("../../assets/images/banner/fengjing2.jpg");
+  background-size: cover;
+  position: relative;
+}
+
+.avatar-block {
+  transform: translateY(50px);
 }
 
 .avatar {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   cursor: pointer;
-
+  transition: transform 0.6s ease-in-out;
+  border: 2px solid #fff;
   &:hover {
-    animation: accelerate 0.6s infinite linear;
+    transform: rotate(720deg);
   }
+}
+
+.sidebar-info-introduce-wrap {
+  padding: 20px;
+  margin-top: 30px;
 }
 
 .sidebar-info-introduce-item {
@@ -194,7 +212,7 @@ const getData = async () => {
 
   .bi {
     font-size: 26px;
-    color: var(--balckTextColor);
+    color: var(--balck-text-color);
   }
 
   &:hover {
@@ -227,6 +245,15 @@ const getData = async () => {
     height: 90px;
   }
 
+  .sidebar-info-introduce-wrap {
+    padding: 0;
+    margin-top: 60px;
+  }
+
+  .sidebar-info-avatar {
+    padding: 15px;
+  }
+
   .sidebar-info-introduce {
     display: none;
   }
@@ -235,13 +262,18 @@ const getData = async () => {
     font-size: 17px;
   }
 
-  .sidebar-info {
-    padding: 20px 0 0 0;
-    margin: 10px;
-  }
-
   .sidebar-info-contact {
     display: none;
+  }
+}
+
+@keyframes accelerate {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>

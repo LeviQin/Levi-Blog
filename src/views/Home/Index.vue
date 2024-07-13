@@ -207,8 +207,8 @@ const getData = async () => {
 }
 
 .article-item {
-  background: var(--themeColor);
-  border-radius: var(--themeRadius);
+  background: var(--theme-color);
+  border-radius: var(--theme-radius);
   padding: 10px 20px;
   cursor: pointer;
   margin-bottom: 20px;
@@ -308,7 +308,7 @@ const getData = async () => {
   font-size: 14px;
   margin-right: 20px;
   position: relative;
-  color: var(--balckTextColor);
+  color: var(--balck-text-color);
   display: flex;
   align-items: center;
 

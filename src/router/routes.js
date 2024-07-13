@@ -14,7 +14,7 @@ export default [{
                 }
             },
             {
-                path: "/daily",
+                path: "/category/daily",
                 component: () => import("@/views/Topic/Daily.vue"),
                 name: "Daily",
                 meta: {
@@ -22,7 +22,7 @@ export default [{
                 }
             },
             {
-                path: "/technology",
+                path: "/category/technology",
                 component: () => import("@/views/Topic/Technology.vue"),
                 name: "Technology",
                 meta: {
@@ -30,7 +30,7 @@ export default [{
                 }
             },
             {
-                path: "/cute-pet",
+                path: "/category/cute-pet",
                 component: () => import("@/views/Topic/CutePet.vue"),
                 name: "Cute Pet",
                 meta: {
@@ -38,7 +38,7 @@ export default [{
                 }
             },
             {
-                path: "/landscape",
+                path: "/category/landscape",
                 component: () => import("@/views/Topic/Landscape.vue"),
                 name: "Landscape",
                 meta: {
@@ -46,7 +46,7 @@ export default [{
                 }
             },
             {
-                path: "/notes",
+                path: "/category/notes",
                 component: () => import("@/views/Topic/notes.vue"),
                 name: "Notes",
                 meta: {
@@ -54,7 +54,7 @@ export default [{
                 }
             },
             {
-                path: "/figure",
+                path: "/category/figure",
                 component: () => import("@/views/Topic/Figure.vue"),
                 name: "Figure",
                 meta: {
@@ -62,7 +62,7 @@ export default [{
                 }
             },
             {
-                path: "/games",
+                path: "/category/games",
                 component: () => import("@/views/Topic/Games.vue"),
                 name: "Games",
                 meta: {
@@ -70,7 +70,7 @@ export default [{
                 }
             },
             {
-                path: "/embarrassing",
+                path: "/category/embarrassing",
                 component: () => import("@/views/Topic/Embarrassing.vue"),
                 name: "Embarrassing",
                 meta: {
@@ -167,7 +167,7 @@ export default [{
             },
             {
                 path: "/image-compression",
-                component: () => import("@/views/Tools/components/Image/ImageCompression.vue"),
+                component: () => import("@/views/Tools/components/ImagePage/ImageCompression.vue"),
                 name: "Image Compression",
                 meta: {
                     title: "图片压缩 - 智能压缩 WebP、PNG 和 JPEG 图像 - Levi",
@@ -175,7 +175,7 @@ export default [{
             },
             {
                 path: "/image-format-conversion",
-                component: () => import("@/views/Tools/components/Image/ImageFormatConversion.vue"),
+                component: () => import("@/views/Tools/components/ImagePage/ImageFormatConversion.vue"),
                 name: "Image Format Conversion",
                 meta: {
                     title: "图片格式转换 - 在线图片格式转换器、JPG/GIF/PNG/WEBP/HEIC图片文件类型在线修改 - Levi",
@@ -197,6 +197,14 @@ export default [{
                     title: "友情链接 - Levi",
                 }
             },
+            {
+                path: "/404",
+                name: "Error404",
+                component: () => import("@/views/ErrorPage/404.vue"),
+                meta: {
+                    title: "页面不存在",
+                },
+            },
         ]
     },
     {
@@ -212,14 +220,6 @@ export default [{
         redirect: "/404",
         meta: {
             title: "重定向",
-        },
-    },
-    {
-        path: "/404",
-        name: "Error404",
-        component: () => import("@/views/ErrorPage/404.vue"),
-        meta: {
-            title: "页面不存在",
         },
     },
 ]

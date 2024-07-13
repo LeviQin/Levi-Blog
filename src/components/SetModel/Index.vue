@@ -52,7 +52,7 @@ defineExpose({
 
 <style lang="scss" scoped>
 .wx-model-title {
-  color: var(--btnTagBgColor);
+  color: var(--btn-tag-bg-color);
   font-size: 18px;
 }
 

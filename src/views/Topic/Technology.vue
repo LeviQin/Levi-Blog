@@ -180,8 +180,8 @@ const getData = async () => {
 }
 
 .article-item {
-  background: var(--themeColor);
-  border-radius: var(--themeRadius);
+  background: var(--theme-color);
+  border-radius: var(--theme-radius);
   padding: 10px 20px;
   cursor: pointer;
   margin-bottom: 20px;
@@ -193,7 +193,7 @@ const getData = async () => {
   position: absolute;
   top: -13px;
   left: -13px;
-  background: var(--btnTagBgColor);
+  background: var(--btn-tag-bg-color);
   border-radius: 50%;
   display: flex;
   align-items: center;

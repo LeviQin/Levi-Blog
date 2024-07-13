@@ -142,7 +142,7 @@ const backToTop = () => {
 }
 
 .btn-item {
-  background: var(--btnTagBgColor);
+  background: var(--btn-tag-bg-color);
   width: 30px;
   height: 30px;
   display: flex;
@@ -156,7 +156,7 @@ const backToTop = () => {
 
   &:hover {
     transition: all 0.2s;
-    background: var(--themeBtnHoverColor);
+    background: var(--theme-btn-hover-color);
     transform: translateY(-1px);
   }
 
@@ -215,7 +215,7 @@ const backToTop = () => {
 
 @media (hover: none) {
   .btn-item:hover {
-    background-color: var(--btnTagBgColor);
+    background-color: var(--btn-tag-bg-color);
   }
 }
 </style>

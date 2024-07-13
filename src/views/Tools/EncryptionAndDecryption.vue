@@ -27,7 +27,7 @@
         </ul>
       </div>
       <div
-        class="tabs-block theme-bg-color"
+        class="tabs-block"
         :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
       >
         <component :is="selectedCategoryComponent" />
@@ -101,7 +101,7 @@ onMounted(() => {
 
 .select-category-ul li {
   padding: 12px 18px;
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
   background: #fff;
   cursor: pointer;
   font-size: 14px;
@@ -110,13 +110,16 @@ onMounted(() => {
 }
 
 .active-category {
-  background: var(--btnTagBgColor) !important;
+  background: var(--btn-tag-bg-color) !important;
   color: #fff;
 }
 
 .tabs-block {
   flex: 1;
+}
+
+:deep(.tabs-item) {
   padding: 20px;
-  border-radius: var(--themeRadius);
+  border-radius: var(--theme-radius);
 }
 </style>
