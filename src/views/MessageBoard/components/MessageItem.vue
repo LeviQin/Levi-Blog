@@ -15,7 +15,24 @@
               {{ message.user_nickname }}
             </div>
             <span class="admin-name" v-if="message.is_admin">博主</span>
-            <div calss="item-useragent"></div>
+            <div class="item-useragent">
+              <svg class="icon" aria-hidden="true">
+                <use
+                  :xlink:href="`#levi-${browserMap[message.browser] || `liulanqi`}`"
+                ></use>
+              </svg>
+              <span>{{ message.browser }}</span>
+            </div>
+            <div class="item-useragent">
+              <svg class="icon" aria-hidden="true">
+                <use
+                  :xlink:href="`#levi-${
+                    systemMap[message.operating_system] || `caozuoxitong`
+                  }`"
+                ></use>
+              </svg>
+              <span>{{ message.operating_system }}</span>
+            </div>
           </div>
           <div class="item-time">
             <span class="item-time-detail">{{ message.msgTime }}</span>
@@ -42,7 +59,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps } from "vue";
+import { defineProps } from "vue";
 
 const props = defineProps({
   message: {
@@ -54,6 +71,23 @@ const props = defineProps({
     default: 0,
   },
 });
+
+const browserMap = {
+  Chrome: "gugeliulanqi",
+  Safari: "icons8-pingguoliulanqi",
+  Firefox: "huohuliulanqi",
+  Edge: "edgeliulanqi",
+  Opera: "opera",
+  "Internet Explorer": "IEliulanqi",
+};
+
+const systemMap = {
+  Windows: "beifenx",
+  "Mac OS": "mac-os",
+  Android: "anzhuo",
+  iOS: "ios",
+  Linux: "linux",
+};
 </script>
 
 <style lang="scss" scoped>
@@ -84,10 +118,21 @@ const props = defineProps({
     flex: 1;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
     .item-author {
       font-size: 16px;
       font-weight: 600;
       color: #323438;
+    }
+    .item-useragent {
+      display: flex;
+      align-items: center;
+      .icon {
+        width: 1em;
+        height: 1em;
+        margin-right: 5px;
+      }
     }
     .admin-name {
       background-color: var(--btn-tag-bg-color);
@@ -96,7 +141,6 @@ const props = defineProps({
       font-size: 12px;
       padding: 3px 5px;
       border-radius: 4px;
-      margin-left: 10px;
     }
   }
 
@@ -129,5 +173,23 @@ const props = defineProps({
 
 .message-item-main-content {
   padding-top: 10px;
+}
+
+@media (max-width: 860px) {
+  .message-item-avatar {
+    transform: scale(0.8);
+  }
+  .message-item-main-bar .item-name {
+    font-size: 12px;
+    gap: 5px;
+  }
+
+  .message-item-main-bar .item-time {
+    font-size: 12px;
+  }
+
+  .message-item-content {
+    padding: 10px 0 20px 0;
+  }
 }
 </style>

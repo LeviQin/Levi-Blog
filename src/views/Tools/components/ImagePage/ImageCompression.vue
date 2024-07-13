@@ -98,7 +98,9 @@
                 下载压缩后的图片
               </div>
               <div class="cancel-btn">
-                <span @click="cancelCompression">重新选择图片</span>
+                <span @click="returnlCompression" style="margin-right: 15px"
+                  >返回重新压缩</span
+                ><span @click="cancelCompression">重新选择图片</span>
               </div>
             </div>
           </div>
@@ -170,7 +172,6 @@ const compressorImage = () => {
     quality: levelVal.value / 100,
     convertSize: 10000000,
     success: (compressedFile) => {
-      console.log(compressedFile, 1);
       compressedFormat.value = compressedFile.type.split("/")[1];
       compressedSize.value = sizeChangeUnit(compressedFile.size);
       imageName.value = compressedFile.name;
@@ -195,6 +196,12 @@ const cancelCompression = () => {
   isCompressor.value = false;
 };
 
+const returnlCompression = () => {
+  compressionProgress.value = 0;
+  isCompressor.value = false;
+  compressedImage.value = "";
+};
+
 const downloadCompressorImage = () => {
   ElNotification({
     title: "下载中",
@@ -202,13 +209,20 @@ const downloadCompressorImage = () => {
     type: "success",
     zIndex: 99999,
   });
-  const downloadLink = document.createElement("a");
-  downloadLink.href = compressedImage.value;
-  downloadLink.download = `${imageName.value}`;
-  downloadLink.style.display = "none";
-  document.body.appendChild(downloadLink);
-  downloadLink.click();
-  document.body.removeChild(downloadLink);
+
+  fetch(compressedImage.value)
+    .then((res) => res.blob())
+    .then((blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = url;
+      downloadLink.download = `${imageName.value}`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      window.URL.revokeObjectURL(url);
+    })
+    .catch((err) => console.error("下载失败", err));
 };
 </script>
 

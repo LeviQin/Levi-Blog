@@ -561,44 +561,4 @@ export const emojiList = [
         value: '👋',
         name: 'robot'
     },
-    {
-        id: 169,
-        value: '👋',
-        name: 'robot'
-    },
-    {
-        id: 169,
-        value: '👋',
-        name: 'robot'
-    },
-    {
-        id: 169,
-        value: '👋',
-        name: 'robot'
-    },
-    {
-        id: 169,
-        value: '👋',
-        name: 'robot'
-    },
-    {
-        id: 169,
-        value: '👋',
-        name: 'robot'
-    },
-    {
-        id: 169,
-        value: '👋',
-        name: 'robot'
-    },
-    {
-        id: 169,
-        value: '👋',
-        name: 'robot'
-    },
-    {
-        id: 169,
-        value: '👋',
-        name: 'robot'
-    },
 ]
