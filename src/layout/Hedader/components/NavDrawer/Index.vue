@@ -115,7 +115,7 @@
         </div>
         <li class="nav-drawer-li" data-router="/nav">常用网站</li>
         <li class="nav-drawer-li" data-router="/comments">留言板</li>
-        <li class="nav-drawer-li" data-router="/links">友情链接</li>
+        <li class="nav-drawer-li" data-router="/friendlinks">友情链接</li>
         <li class="nav-drawer-li" data-router="/about">关于我</li>
       </ul>
     </div>
@@ -207,7 +207,6 @@ defineExpose({
 }
 
 .nav-drawer-ul {
-  background: #fff;
   animation: headerTransform 1s forwards;
   padding: 20px 0 0 10px;
 }
@@ -232,7 +231,6 @@ defineExpose({
     padding: 5px 0;
     font-size: 15px;
     cursor: pointer;
-
     .icon {
       margin-right: 10px;
       width: 1em;

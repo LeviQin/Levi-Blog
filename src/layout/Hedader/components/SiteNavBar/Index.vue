@@ -94,7 +94,7 @@
       </el-dropdown>
       <li class="nav-li" data-router="/nav">常用网站</li>
       <li class="nav-li" data-router="/comments">留言板</li>
-      <li class="nav-li" data-router="/links">友情链接</li>
+      <li class="nav-li" data-router="/friendlinks">友情链接</li>
       <li class="nav-li" data-router="/about">关于我</li>
     </ul>
   </div>
@@ -151,7 +151,7 @@ const handleCommandToPage = (val) => {
   display: flex;
   align-items: center;
   height: var(--header-bar-height);
-  color: var(---nav-bar-text-color);
+  color: var(--nav-bar-text-color);
   cursor: pointer;
   font-size: 16px;
   transition: all 0.5s;

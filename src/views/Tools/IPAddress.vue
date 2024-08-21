@@ -248,7 +248,7 @@ const getIpAddress = async () => {
 
 .details-box-title {
   font-size: 24px;
-  color: var(--balck-text-color);
+  color: var(--black-text-color);
   display: flex;
   align-items: center;
 }

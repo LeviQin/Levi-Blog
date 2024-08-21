@@ -1,4 +1,15 @@
 <template>
+  <Head>
+    <meta name="keywords" content="友链，友情链接，技术支持，友人帐，好友，交换友链" />
+    <meta
+      name="description"
+      content="下列友链与本博客相互独立，并不代认同并支持友链博客的观点。帅气美丽的小伙伴们，欢迎交换友链"
+    />
+    <meta
+      property="og:description"
+      content="下列友链与本博客相互独立，并不代认同并支持友链博客的观点。帅气美丽的小伙伴们，欢迎交换友链"
+    />
+  </Head>
   <div class="links w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div
@@ -37,6 +48,7 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
+import { Head } from "@vueuse/head";
 
 onMounted(() => {
   isSidebarVisible.value = true;
@@ -108,7 +120,7 @@ const dataMap = reactive({
   ],
 });
 
-let isSidebarVisible = ref(false);
+const isSidebarVisible = ref(false);
 
 const bannerConfig = {
   height: "30vh",
@@ -133,7 +145,7 @@ const bannerConfig = {
 
 .links-describe {
   padding: 0 0 10px 10px;
-  color: #393939;
+  color: var(--color);
 }
 
 .links-category-item {
@@ -172,7 +184,7 @@ const bannerConfig = {
 .links-category-title {
   font-size: 20px;
   padding: 5px 0;
-  color: var(--balck-text-color);
+  color: var(--black-text-color);
 }
 
 .links-category-describe {
@@ -180,10 +192,8 @@ const bannerConfig = {
   font-size: 14px;
 }
 
-.links h1,
-.links h2,
-.links h3 {
-  color: var(--balck-text-color);
+.links h2 {
+  color: var(--color);
   margin-left: 25px !important;
   position: relative;
   transition: all 0.4s;

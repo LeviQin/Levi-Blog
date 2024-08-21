@@ -21,9 +21,9 @@
     <div class="image-compression-container" ref="unitConversionContainerRef">
       <div class="image-compression-title">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#levi-tupianyasuo"></use>
+          <use xlink:href="#levi-a-jpgtopdf"></use>
         </svg>
-        <h1>图片压缩</h1>
+        <h1>图片格式转换</h1>
       </div>
       <div class="image-compression-content">
         <div class="image-compression-preview" v-if="originalImage">

@@ -467,7 +467,7 @@ const copyText = (val) => {
 }
 
 :deep(.el-checkbox__label) {
-  color: var(--balck-text-color) !important;
+  color: var(--black-text-color) !important;
 }
 
 :deep(.el-checkbox__input.is-checked .el-checkbox__inner) {
@@ -478,7 +478,7 @@ const copyText = (val) => {
 :deep(.password-input .el-input__inner) {
   font-size: 20px;
   font-weight: 600;
-  color: var(--balck-text-color);
+  color: var(--black-text-color);
 }
 
 .rotate-animation {

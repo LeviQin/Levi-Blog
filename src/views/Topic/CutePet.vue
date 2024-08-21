@@ -44,11 +44,17 @@
                 <div class="waterfall-footer-date">
                   <span>{{ item.updated_at }}</span>
                 </div>
-                <div class="waterfall-footer-bar">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-wode_zuijinliulan"></use>
-                  </svg>
-                  <span class="num-text">{{ item.view_count }}</span>
+                <div class="waterfall-icon-block">
+                  <div class="waterfall-footer-bar">
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#levi-wode_zuijinliulan"></use></svg
+                    ><span class="num-text">{{ item.view_count }}</span>
+                  </div>
+                  <div class="waterfall-footer-bar">
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#levi-yidianzan"></use></svg
+                    ><span class="num-text">{{ item.likes }}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -199,13 +205,19 @@ const getData = async () => {
   }
 }
 
+.waterfall-icon-block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .waterfall-footer-bar {
   display: flex;
   align-items: center;
 
   .icon {
-    width: 1.2em;
-    height: 1.2em;
+    width: 1em;
+    height: 1em;
     margin-right: 5px;
   }
 }

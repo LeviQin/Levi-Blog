@@ -36,3 +36,11 @@ export const getStatistics = () => {
         url: `/api/articles/statistics`,
     });
 };
+
+export const ArticleLikes = (data) => {
+    return request({
+        method: 'post',
+        url: `/api/articles/likes`,
+        data
+    });
+};

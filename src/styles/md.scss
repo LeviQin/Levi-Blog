@@ -21,16 +21,20 @@
 .vuepress-markdown-body h1,
 .vuepress-markdown-body h2,
 .vuepress-markdown-body h3 {
-    color: var(--balck-text-color);
+    color: var(--color);
     margin-left: 25px !important;
     position: relative;
     transition: all 0.4s;
-
+    display: table;
     &:hover {
         transition: all 0.4s;
         transform: translateX(15px);
         color: var(--btn-tag-bg-color);
     }
+}
+
+.vuepress-markdown-body a, .vuepress-markdown-body p a code {
+    color: var(--theme-btn-hover-color) !important;
 }
 
 
@@ -43,11 +47,11 @@
     left: -35px;
     width: 30px;
     height: 30px;
-    background: url(../assets/images/md/huojian.svg);
+    background: url(../assets/images/md/fengche.svg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    animation: hupjianMove 1.5s linear infinite;
+    animation: fengcheMove 3s linear infinite;
 }
 
 .vuepress-markdown-body li {
@@ -55,7 +59,7 @@
 }
 
 .vuepress-markdown-body p {
-    color: var(--balck-text-color);
+    color: var(--color);
     overflow-wrap: break-word;
 }
 
@@ -78,7 +82,7 @@
 }
 
 .vuepress-markdown-body img {
-    max-width: 500px !important;
+    max-width: 300px !important;
     max-height: 250px;
     margin-right: 15px;
     cursor: pointer;
@@ -96,20 +100,12 @@
     }
 }
 
-@keyframes hupjianMove {
+@keyframes fengcheMove {
     0% {
-        transform: translateY(4px);
-    }
-
-    40% {
-        transform: translateY(-6px);
-    }
-
-    80% {
-        transform: translateY(-2px);
+        transform: rotate(0deg);
     }
 
     100% {
-        transform: translateY(4px);
+        transform: rotate(360deg);
     }
 }

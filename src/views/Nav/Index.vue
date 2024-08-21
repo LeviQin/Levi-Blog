@@ -146,6 +146,7 @@ const toSitePage = (url) => {
 <style lang="scss" scoped>
 .website-card {
   padding-top: 20px;
+  color: var(--black-text-color);
 }
 
 .select-category-ul {
@@ -227,6 +228,10 @@ const toSitePage = (url) => {
 @media (max-width: 860px) {
   .website-card {
     padding-top: 0;
+  }
+
+  .select-category-ul {
+    gap: 10px;
   }
 
   .select-category-ul li {

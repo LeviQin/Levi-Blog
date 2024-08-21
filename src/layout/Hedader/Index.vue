@@ -99,13 +99,13 @@ const showSearchModel = () => {
   font-size: 25px;
   cursor: pointer !important;
   margin-right: 20px;
-  color: var(---nav-bar-text-color);
+  color: var(--nav-bar-text-color);
   font-weight: 500;
   transition: all 0.5s;
 }
 
 .search-card i {
-  color: var(---nav-bar-text-color);
+  color: var(--nav-bar-text-color);
   cursor: pointer;
   font-size: 22px;
 }

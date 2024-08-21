@@ -11,7 +11,7 @@
   </Head>
   <div class="home w">
     <top-banner @nextPosition="nextPosition" :bannerConfig="bannerConfig"></top-banner>
-    <div class="home-container page-container" ref="homeContainerRef">
+    <div class="home-container page-container">
       <div class="topic-sidebar">
         <topic-sidebar></topic-sidebar>
       </div>
@@ -57,6 +57,11 @@
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#levi-wode_zuijinliulan"></use></svg
                 ><span class="num-text">{{ item.view_count }}</span>
+              </div>
+              <div class="footer-likes">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#levi-yidianzan"></use></svg
+                ><span class="num-text">{{ item.likes }}</span>
               </div>
             </div>
             <div class="footer-tags">
@@ -106,6 +111,7 @@ onMounted(async () => {
   window.addEventListener("scroll", scrollWidnow, true);
   tagsList.value = tagMap.map((item) => item.label);
   getData();
+  banner.value = document.querySelector(".banner-bar");
 });
 
 const dataMap = reactive({
@@ -121,11 +127,11 @@ const dataMap = reactive({
   },
 });
 
-let homeContainerRef = ref(null);
-let tagsList = ref([]);
-let isScrolling = ref(false);
-let page = ref(1);
-let pageSize = ref(10);
+const banner = ref(null);
+const tagsList = ref([]);
+const isScrolling = ref(false);
+const page = ref(1);
+const pageSize = ref(10);
 
 const bannerConfig = {
   height: "100vh",
@@ -140,12 +146,11 @@ const scrollWidnow = () => {
   if (!isScrolling.value) {
     requestAnimationFrame(() => {
       const top = window.scrollY;
-      const bannerBar = document.querySelector(".banner-bar");
       const threshold = route.path === "/" ? 500 : 100;
       if (top > threshold) {
-        bannerBar.classList.add("container-blur");
+        banner.value.classList.add("container-blur");
       } else {
-        bannerBar.classList.remove("container-blur");
+        banner.value.classList.remove("container-blur");
       }
 
       isScrolling.value = false;
@@ -156,8 +161,7 @@ const scrollWidnow = () => {
 };
 
 const nextPosition = () => {
-  const banner = document.querySelector(".banner-bar");
-  scrollAnimation(banner.scrollHeight, "bottom");
+  scrollAnimation(banner.value.scrollHeight, "bottom");
 };
 
 const toArticleDetail = (item) => {
@@ -178,7 +182,7 @@ const getTableData = () => {
 const handleCurrentChange = (val) => {
   page.value = val;
   getTableData();
-  homeContainerRef.value.scrollIntoView({ behavior: "smooth" });
+  scrollAnimation(banner.value.scrollHeight, "bottom", 16);
 };
 
 const getData = async () => {
@@ -204,6 +208,7 @@ const getData = async () => {
 <style lang="scss" scoped>
 .content {
   flex: 1;
+  width: 100%;
 }
 
 .article-item {
@@ -308,7 +313,7 @@ const getData = async () => {
   font-size: 14px;
   margin-right: 20px;
   position: relative;
-  color: var(--balck-text-color);
+  color: var(--black-text-color);
   display: flex;
   align-items: center;
 
@@ -331,6 +336,32 @@ const getData = async () => {
 }
 
 .footer-view {
+  font-size: 14px;
+  margin-right: 20px;
+  position: relative;
+  color: var(--black-text-color);
+  display: flex;
+  align-items: center;
+
+  .icon {
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: 8px;
+  }
+
+  &::before {
+    content: "";
+    width: 1px;
+    height: 15px;
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    transform: translateY(-50%);
+    background-color: rgba(156, 156, 156, 0.816);
+  }
+}
+
+.footer-likes {
   display: flex;
   align-items: center;
 
@@ -359,6 +390,10 @@ const getData = async () => {
     transition: all 0.4s;
     transform: translateX(15px);
   }
+}
+
+.article-item-description {
+  line-height: 28px;
 }
 
 @media (max-width: 860px) {

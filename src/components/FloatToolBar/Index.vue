@@ -39,12 +39,12 @@
       <div
         class="light-btn btn-item"
         title="白天模式"
-        @click="modelSwitch"
-        v-if="theme === `light`"
+        @click="toggleTheme"
+        v-if="theme === `dark`"
       >
         <i class="bi bi-brightness-high-fill"></i>
       </div>
-      <div class="dark-btn btn-item" title="黑暗模式" @click="modelSwitch" v-else>
+      <div class="dark-btn btn-item" title="黑暗模式" @click="toggleTheme" v-else>
         <i class="bi bi-moon-stars"></i>
       </div>
     </template> -->
@@ -68,18 +68,20 @@ import { ref, onMounted } from "vue";
 import { scrollAnimation } from "@/utils/scrollAnimation.js";
 import SwitchWallpaper from "../SwitchWallpaper/Index.vue";
 import SetModel from "../SetModel/Index.vue";
+import { useTheme } from "@/hooks/useTheme.js";
+
+const { theme, toggleTheme } = useTheme();
 
 onMounted(() => {
   handleScroll();
   window.addEventListener("scroll", handleScroll);
 });
 
-let scrollTop = ref(0);
-let switchWallpaperRef = ref(null);
-let showToolBar = ref(true);
-let theme = ref("light");
-let setModelRef = ref(null);
-let isLeft = ref(false);
+const scrollTop = ref(0);
+const switchWallpaperRef = ref(null);
+const showToolBar = ref(true);
+const setModelRef = ref(null);
+const isLeft = ref(false);
 
 const handleScroll = () => {
   const backTopBtn = document.querySelector(".back-top-btn");
@@ -110,15 +112,6 @@ const clickMoveBtn = () => {
     btnBar.style.left = `0`;
   }
   isLeft.value = !isLeft.value;
-};
-
-const modelSwitch = () => {
-  if (theme.value === `light`) {
-    theme.value = `dart`;
-  } else {
-    theme.value = `light`;
-  }
-  document.documentElement.setAttribute("data-theme", theme.value);
 };
 
 const showSetModel = () => {

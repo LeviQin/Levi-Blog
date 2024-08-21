@@ -28,12 +28,20 @@ export const scrollAnimation = (start, type = "top", time = 100) => {
         const progress = (timestamp - startTime) / time;
 
         if (progress >= 1) {
-            window.scrollTo(0, targetPosition);
+            window.scrollTo({
+                left: 0,
+                top: targetPosition,
+                behavior: "smooth",
+            });
             isMoving = false;
         } else {
             const next = Math.floor(easeInOutQuad(10 * progress, startPosition, targetPosition - startPosition, 1));
 
-            window.scrollTo(0, next);
+            window.scrollTo({
+                left: 0,
+                top: next,
+                behavior: "smooth",
+            });
 
             requestAnimationFrame(animateScroll);
         }

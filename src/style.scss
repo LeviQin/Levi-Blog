@@ -29,6 +29,7 @@
 #app {
   width: 100%;
   height: 100%;
+  color: var(--color);
 }
 
 .w {
@@ -53,7 +54,7 @@
 }
 
 .topic-sidebar {
-  width: 250px;
+  width: 260px;
 }
 
 .page-container {
@@ -65,7 +66,7 @@
 /* 添加模糊效果的样式 */
 .container-blur {
   filter: blur(6px);
-  will-change: transform, filter; /* 提示浏览器进行硬件加速 */
+  will-change: transform, filter, backdrop-filter;; /* 提示浏览器进行硬件加速 */
   transform: scale(1.02) translateZ(0); 
   transition: transform 0.3s ease, filter 0.3s ease; /* 添加平滑过渡效果 */
 }

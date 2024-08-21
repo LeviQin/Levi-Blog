@@ -212,7 +212,7 @@ const getData = async () => {
 
   .bi {
     font-size: 26px;
-    color: var(--balck-text-color);
+    color: var(--black-text-color);
   }
 
   &:hover {

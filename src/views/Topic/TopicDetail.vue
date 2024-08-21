@@ -66,6 +66,11 @@
                 <use xlink:href="#levi-wode_zuijinliulan"></use></svg
               ><span class="num-text">{{ dataMap.articleInfo.view_count }}</span>
             </div>
+            <div class="page-info-likes page-info-item">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#levi-yidianzan"></use></svg
+              ><span class="num-text">{{ dataMap.articleInfo.likes }}</span>
+            </div>
           </div>
           <div class="markdown-renderer-card">
             <markdown-renderer
@@ -74,16 +79,20 @@
               @sendMdTitle="sendMdTitle"
             ></markdown-renderer>
           </div>
-          <!-- <div class="topic-detail-tool">
+          <div class="topic-detail-tool">
             <div class="tool-likes-btn tool-itme" @click="clickLikes">
               <i class="bi bi-hand-thumbs-up"></i>
-              <span>赞赏</span>
+              <span>点赞</span>
+              <span class="like-num" v-if="dataMap.articleInfo.likes > 0">{{
+                dataMap.articleInfo.likes
+              }}</span>
+              <span class="plus-one"><i class="bi bi-suit-heart-fill"></i></span>
             </div>
-            <div class="tool-message-btn tool-itme">
+            <!-- <div class="tool-message-btn tool-itme">
               <i class="bi bi-chat"></i>
               <span>评论</span>
-            </div>
-          </div> -->
+            </div> -->
+          </div>
           <div class="topic-detail-tags">
             <i class="bi bi-tags-fill"></i>
             <span class="tags-item" v-for="item in dataMap.articleInfo.article_tags">{{
@@ -92,7 +101,7 @@
           </div>
         </div>
         <!-- <div id="qrcode"></div> -->
-        <!-- <div class="message-container">1</div> -->
+        <!-- <Comments /> -->
       </div>
     </article>
   </div>
@@ -101,13 +110,15 @@
 <script setup>
 import { onMounted, reactive, ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import { articleDetail } from "@/api/articles.js";
+import { articleDetail, ArticleLikes } from "@/api/articles.js";
 import MarkdownRenderer from "@/components/MarkdownRenderer/Index.vue";
 import SidebarUser from "@/components/SidebarUser/Index.vue";
 import { tagMap } from "@/utils/tagMap.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { dateToString } from "@/utils/utils.js";
 import { Head } from "@vueuse/head";
+import { getStore, setStore } from "@/utils/storage.js";
+import Comments from "./components/Comments.vue";
 
 const route = useRoute();
 
@@ -142,6 +153,8 @@ const dataMap = reactive({
     title: "",
     updated_at: "",
     view_count: "",
+    likes: 0,
+    id: "",
   },
   titles: [],
 });
@@ -165,6 +178,48 @@ const sendMdTitle = (titles) => {
 
 const handleAnchorClick = (anchor) => {
   markdownRendererRef.value.handleAnchorClick(anchor);
+};
+
+const clickLikes = () => {
+  const isLike = getStore(`LEVI_LIKES_${dataMap.articleInfo.id}`);
+  if (isLike) {
+    ElNotification({
+      title: "重复点赞通知",
+      message: "你已经点过赞了哦~",
+      type: "info",
+      zIndex: 99999,
+    });
+    return;
+  }
+  const plusOne = document.querySelector(".plus-one");
+  dataMap.articleInfo.likes += 1;
+  plusOne.classList.add("show");
+  setTimeout(() => {
+    plusOne.classList.remove("show");
+  }, 1000);
+  requsetLikes();
+};
+
+const requsetLikes = async () => {
+  try {
+    const res = await ArticleLikes({ id: dataMap.articleInfo.id });
+    const { code, message } = res.data;
+    if (code == 200) {
+      setStore(`LEVI_LIKES_${dataMap.articleInfo.id}`, "1");
+    } else {
+      dataMap.articleInfo.likes -= 1;
+      console.log(message, "------------------------");
+      ElNotification({
+        title: "失败",
+        message: "点赞出错啦，请稍后重试。",
+        type: "error",
+        zIndex: 99999,
+      });
+    }
+  } catch (error) {
+    dataMap.articleInfo.likes -= 1;
+    console.log(error, "------------------------");
+  }
 };
 
 const getArticleDetail = async () => {
@@ -211,7 +266,7 @@ const getArticleDetail = async () => {
 .page-info-item {
   margin: 5px;
   font-size: 15px;
-  color: #3c3b3b;
+  color: var(--color);
   display: flex;
   align-items: center;
 
@@ -269,7 +324,7 @@ const getArticleDetail = async () => {
 }
 
 .nav-title {
-  color: #000;
+  color: var(--color);
 }
 
 .topic-detail-content {
@@ -281,7 +336,7 @@ const getArticleDetail = async () => {
   padding: 20px;
   border-radius: var(--theme-radius);
   min-height: 400px;
-  max-width: 890px;
+  max-width: 1000px;
 }
 
 .markdown-renderer-card {
@@ -293,21 +348,21 @@ const getArticleDetail = async () => {
   align-items: center;
   justify-content: center;
   margin: 40px 0 10px 0;
+  gap: 25px;
 
   .tool-itme {
     cursor: pointer;
     background: var(--btn-tag-bg-color);
-    margin: 0 10px;
     border-radius: 5px;
-    padding: 5px 10px;
+    padding: 10px 15px;
     transition: all 0.5s;
     text-shadow: 0 5px 15px rgba(0, 0, 0, 1) !important;
-    font-size: 14px;
-
+    font-size: 16px;
+    user-select: none;
     &:hover {
       will-change: transform;
       transition: all 0.5s;
-      transform: scale(1.05) translateZ(0);
+      transform: scale(1.01) translateZ(0);
       transform-origin: top;
       box-shadow: 0 8px 20px rgba(10, 5, 61, 0.2);
     }
@@ -319,10 +374,13 @@ const getArticleDetail = async () => {
     i,
     span {
       font-size: 1em;
-      /* 保持字体大小不变 */
       color: #fff;
     }
   }
+}
+
+.like-num {
+  margin-left: 8px;
 }
 
 .topic-detail-tags {
@@ -333,10 +391,51 @@ const getArticleDetail = async () => {
   }
 }
 
-.message-container {
-  background: var(--theme-color);
-  border-radius: var(--theme-radius);
-  margin: 20px 0;
+.tool-likes-btn {
+  position: relative;
+  display: inline-block;
+  font-family: "Arial", sans-serif;
+}
+
+.plus-one {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  font-size: 24px;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  padding: 10px 15px;
+  border-radius: 50%;
+  transform: scale(0) translate(-50%, -50%);
+  transform-origin: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.plus-one i {
+  color: red !important;
+}
+
+.plus-one.show {
+  opacity: 1;
+  animation: fireworks 1s forwards;
+}
+
+@keyframes fireworks {
+  0% {
+    transform: scale(0) translate(-50%, -50%);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3) translate(-50%, -30px);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.3) translate(-50%, -80px);
+    opacity: 0;
+  }
 }
 
 @media (max-width: 860px) {
@@ -354,6 +453,10 @@ const getArticleDetail = async () => {
 
   .page-title h1 {
     font-size: 30px;
+  }
+
+  .topic-detail-tool {
+    margin-top: 20px;
   }
 }
 </style>

@@ -47,7 +47,7 @@
             <el-button
               type="success"
               @click="copyResult(hashedText16UC)"
-              data-clipboard-target="#copy-span-16UC"
+              class="clipboardBtn"
               >复制</el-button
             >
           </div>
@@ -179,10 +179,10 @@ const copyResult = (val) => {
   .item-label {
     width: 80px;
   }
+}
 
-  .clipboardBtn {
-    margin-left: 10px;
-  }
+.clipboardBtn {
+  margin-left: 10px;
 }
 
 @media (max-width: 800px) {

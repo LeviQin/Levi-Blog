@@ -32,6 +32,7 @@
 
 .el-drawer__body {
   padding: 0 !important;
+  background: var(--theme-color) !important;
 }
 
 .el-dialog__body {
@@ -50,6 +51,6 @@
 }
 
 .el-form-item__label {
-  color: var(--balck-text-color) !important;
+  color: var(--black-text-color) !important;
   font-size: 17px !important;
 }

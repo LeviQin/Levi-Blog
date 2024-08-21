@@ -2,33 +2,33 @@
   <Head>
     <meta
       name="keywords"
-      content="免费在线图像压缩器！使用智能有损压缩引擎减小 WEBP、JPG 和 PNG 图像的文件大小。"
+      content="图像，图片处理，调整尺寸，裁剪，旋转，jpeg,png,gif,tiff,raw"
     />
     <meta
       name="description"
-      content="免费在线图像压缩器！使用智能有损压缩引擎减小 WEBP、JPG 和 PNG 图像的文件大小。"
+      content="按照你的需求裁剪JPG、PNG或GIF文件。在线裁剪图像文件，轻松便捷，完全免费"
     />
     <meta
       property="og:description"
-      content="免费在线图像压缩器！使用智能有损压缩引擎减小 WEBP、JPG 和 PNG 图像的文件大小。"
+      content="按照你的需求裁剪JPG、PNG或GIF文件。在线裁剪图像文件，轻松便捷，完全免费"
     />
     <meta
       name="twitter:description"
-      content="免费在线图像压缩器！使用智能有损压缩引擎减小 WEBP、JPG 和 PNG 图像的文件大小。"
+      content="按照你的需求裁剪JPG、PNG或GIF文件。在线裁剪图像文件，轻松便捷，完全免费"
     />
   </Head>
-  <div class="image-compression w theme-bg-color tools-container">
-    <div class="image-compression-container" ref="unitConversionContainerRef">
-      <div class="image-compression-title">
+  <div class="image-crop w theme-bg-color tools-container">
+    <div class="image-crop-container" ref="unitConversionContainerRef">
+      <div class="image-crop-title">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#levi-tupianyasuo"></use>
+          <use xlink:href="#levi-tupianxuxianbiankuang"></use>
         </svg>
-        <h1>图片压缩</h1>
+        <h1>图片裁切</h1>
       </div>
-      <div class="image-compression-content">
-        <div class="image-compression-preview" v-if="originalImage">
+      <div class="image-crop-content">
+        <div class="image-crop-preview" v-if="originalImage">
           <div class="title">原始图像</div>
-          <div class="image-compression-preview-container">
+          <div class="image-crop-preview-container">
             <div class="preview-image-block">
               <img class="preview-image" :src="originalImage" alt="" />
             </div>
@@ -42,8 +42,8 @@
                   <span>压缩级别:</span>
                   <el-slider :min="1" :max="99" v-model="levelVal" />
                 </div>
-                <div class="compression-btn-block">
-                  <div class="compression-btn" @click="compressorImage">开始压缩</div>
+                <div class="crop-btn-block">
+                  <div class="crop-btn" @click="compressorImage">开始压缩</div>
                   <div class="cancel-btn">
                     <span @click="cancelCompression">取消压缩</span>
                   </div>
@@ -52,7 +52,7 @@
               <template v-else>
                 <el-progress
                   v-if="!compressedImage"
-                  :percentage="compressionProgress"
+                  :percentage="cropProgress"
                   :stroke-width="15"
                   status="success"
                   striped
@@ -79,22 +79,19 @@
           <div class="el-upload__text">将文件拖放到此处或 <em>点击上传</em></div>
         </el-upload>
       </div>
-      <div
-        class="image-compression-success"
-        v-if="compressedImage && compressionProgress === 100"
-      >
+      <div class="image-crop-success" v-if="compressedImage && cropProgress === 100">
         <div class="title">压缩图像</div>
-        <div class="image-compression-success-container">
-          <div class="compression-image-block">
-            <img class="compression-image" :src="compressedImage" alt="" />
+        <div class="image-crop-success-container">
+          <div class="crop-image-block">
+            <img class="crop-image" :src="compressedImage" alt="" />
           </div>
-          <div class="compression-image-info-block">
+          <div class="crop-image-info-block">
             <p>
               图片格式:<span>{{ compressedFormat }}</span
               >， 图片大小:<span>{{ compressedSize }}</span>
             </p>
-            <div class="compression-btn-block">
-              <div class="compression-btn" @click="downloadCompressorImage">
+            <div class="crop-btn-block">
+              <div class="crop-btn" @click="downloadCompressorImage">
                 下载压缩后的图片
               </div>
               <div class="cancel-btn">
@@ -106,22 +103,18 @@
           </div>
         </div>
       </div>
-      <div class="image-compression-desc">
+      <div class="image-crop-desc">
         <span class="title"
           ><svg class="icon" aria-hidden="true">
             <use xlink:href="#levi-guanyu-"></use></svg
-          ><span>关于图片压缩</span></span
+          ><span>关于图片裁切</span></span
         >
         <span class="desc-text">
-          图片大小裁剪工具，提供在线图片大小裁剪，头像制作功能。裁剪支持矩形裁剪和圆形裁剪，支持自定义选取区域大小。
+          图片裁剪工具，提供在线图片大小裁剪，头像制作功能，旋转图片，图片尺寸调整。裁剪支持矩形裁剪和圆形裁剪，支持自定义选取区域大小。
           裁剪后的图片可以免费下载到本地保存。
         </span>
         <span class="desc-text"
-          >压缩级别：级别越高，压缩率越低, 压缩后的图片清晰度越高,
-          文件大小更接近原图。</span
-        >
-        <span class="desc-text"
-          >当压缩的图片超过10M时会被转为JPEG格式，这是为了减少文件大小和提高压缩效率。JPEG格式在处理大图像时具有更高的压缩率，这意味着可以显著减小文件体积，而在视觉上保持相对较好的图像质量。</span
+          >待裁剪的图片，支持 jpg,jpeg,png,gif,webp 等图片格式。最大支持30MB。</span
         >
       </div>
     </div>
@@ -130,10 +123,10 @@
 
 <script setup>
 import { ref } from "vue";
-import Compressor from "compressorjs";
-import "cropperjs/dist/cropper.css";
 import { Head } from "@vueuse/head";
+import Cropper from "cropperjs";
 import { sizeChangeUnit } from "@/utils/utils";
+import Compressor from "compressorjs";
 
 const originalImage = ref("");
 const compressedImage = ref("");
@@ -146,8 +139,6 @@ const imageName = ref("compressed-image");
 const levelVal = ref(70);
 const compressionProgress = ref(0);
 const isCompressor = ref(false);
-
-const CROPPER = ref(null);
 
 const handleBeforeUpload = (file) => {
   if (file.size > 1024 * 1024 * 30) {
@@ -231,30 +222,30 @@ const downloadCompressorImage = () => {
 </script>
 
 <style lang="scss" scoped>
-.image-compression {
+.image-crop {
   padding: 20px;
   border-radius: var(--theme-radius);
   max-width: 800px;
 }
 
-.image-compression-container {
+.image-crop-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.image-compression-title {
+.image-crop-title {
   display: flex;
   align-items: center;
 }
 
-.image-compression-title .icon {
+.image-crop-title .icon {
   width: 1.8em;
   height: 1.8em;
   margin-right: 10px;
 }
 
-.image-compression-title h1 {
+.image-crop-title h1 {
   font-size: 24px;
 }
 
@@ -263,26 +254,26 @@ const downloadCompressorImage = () => {
   height: 5em;
 }
 
-.image-compression-preview .title {
+.image-crop-preview .title {
   margin-bottom: 10px;
 }
 
-.image-compression-preview-container,
-.image-compression-success-container {
+.image-crop-preview-container,
+.image-crop-success-container {
   display: flex;
   align-items: center;
   gap: 60px;
 }
 
 .preview-image,
-.compression-image {
+.crop-image {
   max-height: 200px;
   max-width: 400px;
   border-radius: var(--theme-radius);
 }
 
 .preview-image-info-block p span,
-.compression-image-info-block p span {
+.crop-image-info-block p span {
   margin-left: 10px;
 }
 
@@ -295,11 +286,11 @@ const downloadCompressorImage = () => {
   width: 110px;
 }
 
-.compression-btn-block {
+.crop-btn-block {
   margin-top: 15px;
 }
 
-.compression-btn {
+.crop-btn {
   background-color: var(--btn-tag-bg-color);
   cursor: pointer;
   transition: all 0.3s;
@@ -325,24 +316,24 @@ const downloadCompressorImage = () => {
   }
 }
 
-.image-compression-desc .title {
+.image-crop-desc .title {
   font-weight: 500;
   display: flex;
   align-items: center;
 }
 
-.image-compression-desc .title .icon {
+.image-crop-desc .title .icon {
   width: 1.2em;
   height: 1.2em;
   margin-right: 10px;
 }
 
-.image-compression-desc .desc-text {
+.image-crop-desc .desc-text {
   margin: 10px 0;
   display: flex;
 }
 
-.image-compression-success .title {
+.image-crop-success .title {
   margin-bottom: 10px;
 }
 
@@ -351,18 +342,18 @@ const downloadCompressorImage = () => {
 }
 
 @media (max-width: 860px) {
-  .image-compression-preview {
+  .image-crop-preview {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
 
-  .image-compression-container {
+  .image-crop-container {
     gap: 10px;
   }
 
-  .image-compression-preview-container,
-  .image-compression-success-container {
+  .image-crop-preview-container,
+  .image-crop-success-container {
     flex-direction: column;
     gap: 10px;
     align-items: flex-start;
@@ -373,7 +364,7 @@ const downloadCompressorImage = () => {
   }
 
   .preview-image,
-  .compression-image {
+  .crop-image {
     max-width: 100%;
   }
 }

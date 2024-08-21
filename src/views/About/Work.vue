@@ -146,6 +146,7 @@ const emit = defineEmits(["toNextPage"]);
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  gap: 30px;
 }
 
 .info-item {
@@ -153,7 +154,6 @@ const emit = defineEmits(["toNextPage"]);
   height: 200px;
   overflow: hidden;
   position: relative;
-  margin-bottom: 40px;
   border-radius: 10px;
 }
 
@@ -216,6 +216,7 @@ const emit = defineEmits(["toNextPage"]);
   .info-content {
     padding: 0.5rem 0 0 0 !important;
     width: 100% !important;
+    gap: 10px;
   }
 
   .info-title {

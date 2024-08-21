@@ -43,9 +43,9 @@ onUnmounted(() => {
   window.removeEventListener("scroll", scrollWindow);
 });
 
-const isScrolling = ref(false);
 const isF12 = ref(false);
 const bannerBar = ref(null);
+const isBlur = ref(false);
 
 const keydownEvent = (event) => {
   // 检测是否按下了 F12 键
@@ -78,21 +78,28 @@ const keydownEvent = (event) => {
   }
 };
 
-const scrollWindow = () => {
-  if (!isScrolling.value) {
-    const top = window.scrollY;
-    const threshold = route.path === "/" ? 500 : 100;
-    if (top > threshold) {
-      bannerBar.value.classList.add("container-blur");
-    } else {
-      bannerBar.value.classList.remove("container-blur");
+const updateBlurEffect = () => {
+  const top = window.scrollY;
+  const threshold = route.path === "/" ? 500 : 100;
+  const bannerElement = bannerBar.value;
+
+  if (top > threshold) {
+    if (!isBlur.value) {
+      isBlur.value = true;
+      bannerElement.classList.add("container-blur");
     }
-    requestAnimationFrame(() => {
-      scrollWindow();
-      isScrolling.value = false;
-    });
-    isScrolling.value = true;
+  } else {
+    if (isBlur.value) {
+      isBlur.value = false;
+      bannerElement.classList.remove("container-blur");
+    }
   }
+};
+
+const scrollWindow = () => {
+  requestAnimationFrame(() => {
+    updateBlurEffect();
+  });
 };
 </script>
 

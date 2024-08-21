@@ -16,6 +16,7 @@
     "bootstrap-icons": "^1.11.1",
     "bowser": "^2.11.0",
     "compressorjs": "^1.2.1",
+    "cropperjs": "^1.6.2",
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.10",
     "element-plus": "^2.4.2",

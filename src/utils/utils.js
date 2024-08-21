@@ -21,7 +21,12 @@ export const debounce = (func, wait = 0) => {
     }
 }
 
-// 节流throttle代码（定时器）：
+/**
+ * @description 节流throttle代码（定时器
+ * @param {function} func 
+ * @param {number} delay 
+ * @returns 
+ */
 export const throttle = (func, delay) => {
     let timer = null;
     return function () {
@@ -47,7 +52,7 @@ export const _isMobile = () => {
 };
 
 /**
- * 生成随机色值
+ * @description 生成随机色值
  * @returns 
  */
 export const getRandomHexColor = () => {
@@ -59,8 +64,8 @@ export const getRandomHexColor = () => {
 
 
 /**
- * 时间显示格式化： 多少分钟前，多少天前
- * @param {*} timestamp 
+ * @description 时间显示格式化： 多少分钟前，多少天前
+ * @param {date} timestamp 
  * @returns 
  */
 export const dateToString = (timestamp) => {
@@ -113,8 +118,8 @@ export const dateToString = (timestamp) => {
 };
 
 /**
- * 文件大小转为B/KB/MB/GB
- * @param {Number} limit 文件大小
+ * @description 文件大小转为B/KB/MB/GB
+ * @param {number} limit 文件大小
  * @returns 
  */
 export const sizeChangeUnit = (limit) => {

@@ -107,6 +107,7 @@ onMounted(() => {
   font-size: 14px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
+  color: var(--color);
 }
 
 .active-category {
@@ -121,5 +122,44 @@ onMounted(() => {
 :deep(.tabs-item) {
   padding: 20px;
   border-radius: var(--theme-radius);
+}
+
+:deep(.input-block) {
+  display: flex;
+  gap: 20px;
+}
+
+:deep(.input-block .el-form-item) {
+  flex: 1;
+}
+
+:deep(.copy-btn-card) {
+  width: 100%;
+}
+
+@media (max-width: 860px) {
+  .encryption-decryption-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .sidebar-block {
+    width: 100%;
+  }
+
+  .select-category-ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .select-category-ul li {
+    font-size: 12px;
+  }
+
+  :deep(.input-block) {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 </style>

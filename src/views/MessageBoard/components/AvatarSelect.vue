@@ -154,6 +154,7 @@ const emit = defineEmits(["ok"]);
         font-size: 14px;
         transition: all 0.3s;
         border-bottom: 3px solid #fff;
+        color: var(--black-text-color);
         &:hover {
           background: #f5f5f5;
         }

@@ -1,115 +1,70 @@
 <template>
-  <Head>
-    <meta name="keywords" content="留言板，交流，留言，问答，意见，建议，反馈" />
-    <meta
-      name="description"
-      content="欢迎来到留言板！在这里，您可以畅所欲言，分享您的想法、感受和建议。无论是对我们网站的赞美，还是对改进的建议，我们都非常乐意听取并与您交流。请尊重他人，文明用语，让我们共同营造一个友爱、和谐的留言环境。"
-    />
-    <meta
-      property="og:description"
-      content="欢迎来到留言板！在这里，您可以畅所欲言，分享您的想法、感受和建议。无论是对我们网站的赞美，还是对改进的建议，我们都非常乐意听取并与您交流。请尊重他人，文明用语，让我们共同营造一个友爱、和谐的留言环境。"
-    />
-  </Head>
-  <div class="comments">
-    <top-banner :bannerConfig="bannerConfig"></top-banner>
-    <div
-      class="comments-container"
-      :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
-    >
-      <div class="comments-main w">
-        <div class="topic-sidebar">
-          <sidebar-user></sidebar-user>
+  <div class="comments theme-bg-color">
+    <div class="box-title">
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#levi-faxiaoxi"></use>
+      </svg>
+      <h2>发送评论</h2>
+    </div>
+    <div class="box-content">
+      <div class="textarea-bpx">
+        <el-input
+          id="msg-content"
+          v-model="messageText"
+          placeholder="留下你的一笔吧~"
+          :autosize="{ minRows: 3, maxRows: 45 }"
+          type="textarea"
+          :disabled="loading"
+        ></el-input>
+      </div>
+      <div class="input-box">
+        <el-input
+          v-model="user_nickname"
+          placeholder="昵称"
+          class="input-item"
+          size="large"
+          :disabled="loading"
+        >
+          <template #prefix>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-nicheng"></use>
+            </svg>
+          </template>
+        </el-input>
+        <el-input
+          v-model="email"
+          placeholder="邮箱"
+          class="input-item"
+          size="large"
+          :disabled="loading"
+        >
+          <template #prefix>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-MAILBOX"></use>
+            </svg>
+          </template>
+        </el-input>
+        <el-input
+          v-model="verCode"
+          placeholder="验证码"
+          class="input-item code-input"
+          size="large"
+          :disabled="loading"
+        >
+          <template #prefix>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-yanzhengma"></use>
+            </svg> </template
+        ></el-input>
+      </div>
+      <div class="btn-box">
+        <div class="avatar-box">
+          <AvatarSelect :avatarImg="user_avatar_url" @ok="selectAvatar" />
         </div>
-        <div class="comments-box">
-          <div class="board-box theme-bg-color">
-            <div class="box-title">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-liuyanban"></use>
-              </svg>
-              <h2>留言板</h2>
-            </div>
-            <div class="board-content">
-              <template v-if="dataMap.msgList.length">
-                <!-- 渲染树形结构的留言 -->
-                <template v-for="msg in dataMap.msgList" :key="msg.id">
-                  <MessageItem :message="msg" :level="0" />
-                </template>
-              </template>
-              <template v-else>
-                <p>留言板上暂时还没有留言呢~</p>
-              </template>
-            </div>
-          </div>
-          <div class="message-box theme-bg-color">
-            <div class="box-title">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-faxiaoxi"></use>
-              </svg>
-              <h2>发送留言</h2>
-            </div>
-            <div class="box-content">
-              <div class="textarea-bpx">
-                <el-input
-                  id="msg-content"
-                  v-model="messageText"
-                  placeholder="留下你的一笔吧~"
-                  :autosize="{ minRows: 3, maxRows: 45 }"
-                  type="textarea"
-                  :disabled="loading"
-                ></el-input>
-              </div>
-              <div class="input-box">
-                <el-input
-                  v-model="user_nickname"
-                  placeholder="昵称"
-                  class="input-item"
-                  size="large"
-                  :disabled="loading"
-                >
-                  <template #prefix>
-                    <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#levi-nicheng"></use>
-                    </svg>
-                  </template>
-                </el-input>
-                <el-input
-                  v-model="email"
-                  placeholder="邮箱"
-                  class="input-item"
-                  size="large"
-                  :disabled="loading"
-                >
-                  <template #prefix>
-                    <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#levi-MAILBOX"></use>
-                    </svg>
-                  </template>
-                </el-input>
-                <el-input
-                  v-model="verCode"
-                  placeholder="验证码"
-                  class="input-item code-input"
-                  size="large"
-                  :disabled="loading"
-                >
-                  <template #prefix>
-                    <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#levi-yanzhengma"></use>
-                    </svg> </template
-                ></el-input>
-              </div>
-              <div class="btn-box">
-                <div class="avatar-box">
-                  <AvatarSelect :avatarImg="user_avatar_url" @ok="selectAvatar" />
-                </div>
-                <div class="emoji-send-box">
-                  <EmojiIconBox @ok="receiveMessage" />
-                  <div class="send-btn" @click="sendMessage">
-                    <span>{{ loading ? "发送中" : "发送" }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div class="emoji-send-box">
+          <EmojiIconBox @ok="receiveMessage" />
+          <div class="send-btn" @click="sendMessage">
+            <span>{{ loading ? "发送中" : "发送" }}</span>
           </div>
         </div>
       </div>
@@ -118,47 +73,25 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
-import TopBanner from "@/components/TopBanner/Index.vue";
-import { Head } from "@vueuse/head";
-import SidebarUser from "@/components/SidebarUser/Index.vue";
-import EmojiIconBox from "./components/EmojiIconBox.vue";
-import { sendBoardMsg, getMessageList } from "@/api/messages.js";
-import AvatarSelect from "./components/AvatarSelect.vue";
-import MessageItem from "./components/MessageItem.vue";
-import dayjs from "dayjs";
-import { dateToString } from "@/utils/utils.js";
+import { ref, onMounted } from "vue";
+import EmojiIconBox from "../../MessageBoard/components/EmojiIconBox.vue";
+import AvatarSelect from "../../MessageBoard/components/AvatarSelect.vue";
 
 onMounted(() => {
-  isSidebarVisible.value = true;
   updateContent();
-  getMessage();
 });
 
-const dataMap = reactive({
-  msgList: [],
-});
-
-const isSidebarVisible = ref(false);
 const messageText = ref("");
 const user_nickname = ref("");
 const email = ref("");
 const user_avatar_url = ref(
   "https://levi-oss-1301066479.cos.ap-guangzhou.myqcloud.com/avatarImages/Snipaste_2024-04-24_16-53-27.png"
 );
-const parent_id = ref("");
 const verCode = ref("");
 const loading = ref(false);
 const codeNum = ref(0);
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-const bannerConfig = {
-  height: "35vh",
-  showArrow: false,
-  title: "Levi",
-  text: "欢迎来到我们的留言板！期待您的留言和反馈！",
-};
 
 const selectAvatar = (avatar) => {
   user_avatar_url.value = avatar;
@@ -175,44 +108,6 @@ const insertAtCursor = (text) => {
   const beforeText = messageText.value.substring(0, startPos);
   const afterText = messageText.value.substring(endPos, messageText.value.length);
   messageText.value = beforeText + text + afterText;
-};
-
-const formatMsg = (msgList) => {
-  const formatItem = (item) => {
-    item.msgTime = dayjs(item.created_at).format("YYYY-MM-DD HH:mm:ss");
-    item.textDate = dateToString(item.created_at);
-    if (item.children) {
-      item.children = item.children.map(formatItem);
-    }
-    return item;
-  };
-
-  return msgList.map(formatItem);
-};
-
-const getMessage = async () => {
-  try {
-    const res = await getMessageList();
-    const { code, data, message } = res.data;
-    if (code === 200) {
-      dataMap.msgList = formatMsg(data);
-    } else {
-      ElNotification({
-        title: "留言板加载失败",
-        message: message,
-        type: "error",
-        zIndex: 99999,
-      });
-    }
-  } catch (error) {
-    console.log(e, "----------------------");
-    ElNotification({
-      title: "留言板加载失败",
-      message: e,
-      type: "error",
-      zIndex: 99999,
-    });
-  }
 };
 
 const sendMessage = async () => {
@@ -362,14 +257,10 @@ const getSystemInfo = () => {
 </script>
 
 <style lang="scss" scoped>
-.comments-main {
-  display: flex;
-  gap: 20px;
-}
-
-.comments-box {
-  flex: 1;
-  margin: 0 0 100px 0;
+.comments {
+  padding: 20px;
+  border-radius: var(--theme-radius);
+  margin: 20px 0;
 }
 
 .board-box,

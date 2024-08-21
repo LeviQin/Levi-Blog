@@ -14,28 +14,34 @@
         ></el-input>
         <span class="key-tips">密钥为可选项，可以不输入</span>
       </el-form-item>
-      <el-form-item label="需要加/解密的内容:">
-        <el-input
-          v-model="textarea"
-          :rows="8"
-          type="textarea"
-          placeholder="在此输入需要加/解密的内容"
-        />
-      </el-form-item>
-      <el-form-item label="结果:">
-        <el-input
-          readonly
-          v-model="result"
-          :rows="8"
-          type="textarea"
-          placeholder="加/解密的结果"
-        />
-        <div class="copy-btn-card">
-          <el-button type="success" @click="copyResult" class="clipboardBtn"
-            >一键复制结果</el-button
-          >
-        </div>
-      </el-form-item>
+      <div class="input-block">
+        <el-form-item label="需要加/解密的内容:">
+          <el-input
+            v-model="textarea"
+            :rows="8"
+            type="textarea"
+            placeholder="在此输入需要加/解密的内容"
+          />
+        </el-form-item>
+        <el-form-item label="结果:">
+          <el-input
+            readonly
+            v-model="result"
+            :rows="8"
+            type="textarea"
+            placeholder="加/解密的结果"
+          />
+          <div class="copy-btn-card">
+            <el-button
+              style="width: 100%"
+              type="success"
+              @click="copyResult"
+              class="clipboardBtn"
+              >一键复制结果</el-button
+            >
+          </div>
+        </el-form-item>
+      </div>
     </el-form>
     <div>
       <div>3DES（Triple DES） 介绍</div>

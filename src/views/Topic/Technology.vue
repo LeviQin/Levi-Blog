@@ -58,6 +58,11 @@
                   <use xlink:href="#levi-wode_zuijinliulan"></use></svg
                 ><span class="num-text">{{ item.view_count }}</span>
               </div>
+              <div class="footer-likes">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#levi-yidianzan"></use></svg
+                ><span class="num-text">{{ item.likes }}</span>
+              </div>
             </div>
             <div class="footer-tags">
               <svg class="icon" aria-hidden="true">
@@ -278,6 +283,31 @@ const getData = async () => {
 }
 
 .footer-view {
+  font-size: 14px;
+  margin-right: 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .icon {
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: 8px;
+  }
+
+  &::before {
+    content: "";
+    width: 1px;
+    height: 15px;
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    transform: translateY(-50%);
+    background-color: rgba(156, 156, 156, 0.816);
+  }
+}
+
+.footer-likes {
   display: flex;
   align-items: center;
 
@@ -306,6 +336,10 @@ const getData = async () => {
     transition: all 0.4s;
     transform: translateX(15px);
   }
+}
+
+.article-item-description {
+  line-height: 28px;
 }
 
 @media (max-width: 860px) {

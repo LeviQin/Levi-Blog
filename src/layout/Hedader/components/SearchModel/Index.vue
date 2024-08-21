@@ -6,6 +6,7 @@
     :lock-scroll="false"
     :append-to-body="true"
     :z-index="10002"
+    :before-close="close"
   >
     <template #header>
       <span class="search-model-title">全站查询</span>
@@ -61,10 +62,10 @@ const dataMap = reactive({
   articleData: [],
 });
 
-let dialogVisible = ref(false);
-let dialogWidth = ref("500px");
-let keyword = ref("");
-let searchInputRef = ref(null);
+const dialogVisible = ref(false);
+const dialogWidth = ref("500px");
+const keyword = ref("");
+const searchInputRef = ref(null);
 
 const setDialogWidth = () => {
   if (window.innerWidth <= 480) {
@@ -78,11 +79,17 @@ const show = () => {
   dialogVisible.value = true;
   setDialogWidth();
   window.addEventListener("resize", setDialogWidth, true);
+  nextTick(() => {
+    requestAnimationFrame(() => {
+      searchInputRef.value.focus();
+    });
+  });
 };
 
 const close = () => {
   dialogVisible.value = false;
   keyword.value = "";
+  dataMap.articleData = [];
 };
 
 const toArticleDetail = (item) => {
@@ -174,7 +181,7 @@ defineExpose({
 .result-content-item-title {
   font-size: 16px;
   font-weight: 600;
-  color: var(--balck-text-color);
+  color: var(--black-text-color);
   transition: all 0.4s;
 }
 

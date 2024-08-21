@@ -14,7 +14,7 @@
         </div>
         <div class="info-item">
           <div class="left-icon">
-            <svg class="icon" aria-hidden="true">
+            <svg class="icon diqiuyi" aria-hidden="true">
               <use xlink:href="#levi-diqiuyi"></use>
             </svg>
           </div>
@@ -43,7 +43,7 @@
           </div>
           <div class="right-content">
             <span class="bio-text"
-              >擅长使用Vue2、Vue3全家桶，并有Flutter跨平台开发经验，
+              >擅长使用Vue2、Vue3全家桶，并有Flutter跨平台开发经验和Wordpress开发经验，
               熟悉小程序和Node.js</span
             >
           </div>
@@ -135,8 +135,8 @@ const emit = defineEmits(["toNextPage"]);
 }
 
 .icon {
-  width: 3.5em;
-  height: 4.5em;
+  width: 3.2em;
+  height: 4.2em;
   margin-right: 15px;
   opacity: 0;
   animation: bioIconIn 0.3s ease-out 0.7s 1 forwards;
@@ -152,7 +152,7 @@ const emit = defineEmits(["toNextPage"]);
 .bio-text {
   animation: bioTextIn 0.3s ease-out 0.7s 1 forwards;
   opacity: 0;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 30px;
 }
 

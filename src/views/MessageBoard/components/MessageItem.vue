@@ -94,8 +94,7 @@ const systemMap = {
 .message-item-content {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--white-color);
-  padding: 15px 0 30px 0;
+  padding: 12px 0;
   .message-item-avatar {
     width: 40px;
     height: 40px;
@@ -123,11 +122,12 @@ const systemMap = {
     .item-author {
       font-size: 16px;
       font-weight: 600;
-      color: #323438;
+      color: var(--message-author-color);
     }
     .item-useragent {
       display: flex;
       align-items: center;
+      font-size: 14px;
       .icon {
         width: 1em;
         height: 1em;
@@ -153,7 +153,7 @@ const systemMap = {
       position: absolute;
       top: -10px;
       left: -94px;
-      background-color: var(--balck-text-color);
+      background-color: var(--black-text-color);
       padding: 5px 0;
       opacity: 0;
       border-radius: 5px;
