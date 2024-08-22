@@ -76,6 +76,7 @@
         </div>
         <div class="pagination-box">
           <el-pagination
+            :current-page="page"
             :page-sizes="dataMap.paginationDatas.pageSizes"
             :small="dataMap.paginationDatas.small"
             :disabled="dataMap.paginationDatas.disabled"
@@ -102,6 +103,7 @@ import TopBanner from "@/components/TopBanner/Index.vue";
 import { scrollAnimation } from "@/utils/scrollAnimation.js";
 import { vSlidIn } from "@/utils/vSlidIn.js";
 import { Head } from "@vueuse/head";
+import { getStore, setStore } from "@/utils/storage.js";
 
 const router = useRouter();
 const route = useRoute();
@@ -112,6 +114,11 @@ onMounted(async () => {
   tagsList.value = tagMap.map((item) => item.label);
   getData();
   banner.value = document.querySelector(".banner-bar");
+  const previousRouteName = getStore("LEVI_PREVIONS_ROUTE_NAME");
+  const pageStatus = getStore("LEVI_PAGE_STATUS");
+  if (previousRouteName === `Topic Detail`) {
+    page.value = pageStatus.page;
+  }
 });
 
 const dataMap = reactive({
@@ -171,6 +178,7 @@ const toArticleDetail = (item) => {
       id: item.id,
     },
   });
+  setStore("LEVI_PAGE_STATUS", { page: page.value, scrollY: window.scrollY });
 };
 
 const getTableData = () => {

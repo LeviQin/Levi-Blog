@@ -43,6 +43,7 @@
         </div>
         <div class="pagination-box">
           <el-pagination
+            :current-page="page"
             :page-sizes="dataMap.paginationDatas.pageSizes"
             :default-page-size="pageSize"
             :small="dataMap.paginationDatas.small"
@@ -68,6 +69,7 @@ import dayjs from "dayjs";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { Head } from "@vueuse/head";
+import { getStore, setStore } from "@/utils/storage.js";
 
 const router = useRouter();
 
@@ -75,6 +77,11 @@ onMounted(() => {
   getData();
   setWaterfallCol();
   window.addEventListener("resize", setWaterfallCol, true);
+  const previousRouteName = getStore("LEVI_PREVIONS_ROUTE_NAME");
+  const pageStatus = getStore("LEVI_PAGE_STATUS");
+  if (previousRouteName === `Topic Detail`) {
+    page.value = pageStatus.page;
+  }
 });
 
 onUnmounted(() => {
@@ -126,6 +133,7 @@ const toDetail = (item) => {
       id: item.id,
     },
   });
+  setStore("LEVI_PAGE_STATUS", { page: page.value, scrollY: window.scrollY });
 };
 
 const getTableData = () => {

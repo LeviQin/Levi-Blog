@@ -103,6 +103,7 @@
         </div>
         <div class="pagination-box">
           <el-pagination
+            :current-page="page"
             :page-sizes="dataMap.paginationDatas.pageSizes"
             :small="dataMap.paginationDatas.small"
             :disabled="dataMap.paginationDatas.disabled"
@@ -128,11 +129,17 @@ import TopBanner from "@/components/TopBanner/Index.vue";
 import { Head } from "@vueuse/head";
 import "wc-waterfall";
 import { vSlidIn } from "@/utils/vSlidIn.js";
+import { getStore, setStore } from "@/utils/storage.js";
 
 const router = useRouter();
 
 onMounted(() => {
   getData();
+  const previousRouteName = getStore("LEVI_PREVIONS_ROUTE_NAME");
+  const pageStatus = getStore("LEVI_PAGE_STATUS");
+  if (previousRouteName === `Topic Detail`) {
+    page.value = pageStatus.page;
+  }
 });
 
 const dataMap = reactive({
@@ -168,6 +175,7 @@ const toDetail = (item) => {
       id: item.id,
     },
   });
+  setStore("LEVI_PAGE_STATUS", { page: page.value, scrollY: window.scrollY });
 };
 
 const getTableData = () => {
