@@ -115,7 +115,7 @@ onMounted(async () => {
   getData();
   banner.value = document.querySelector(".banner-bar");
   const previousRouteName = getStore("LEVI_PREVIONS_ROUTE_NAME");
-  const pageStatus = getStore("LEVI_PAGE_STATUS");
+  const pageStatus = getStore("LEVI_HOME_PAGE_STATUS");
   if (previousRouteName === `Topic Detail`) {
     page.value = pageStatus.page;
   }
@@ -178,7 +178,7 @@ const toArticleDetail = (item) => {
       id: item.id,
     },
   });
-  setStore("LEVI_PAGE_STATUS", { page: page.value, scrollY: window.scrollY });
+  setStore("LEVI_HOME_PAGE_STATUS", { page: page.value, scrollY: window.scrollY });
 };
 
 const getTableData = () => {
