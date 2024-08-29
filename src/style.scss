@@ -54,7 +54,7 @@
 }
 
 .topic-sidebar {
-  width: 260px;
+  width: 250px;
 }
 
 .page-container {
@@ -121,6 +121,7 @@
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
   border-radius: var(--theme-radius);
   cursor: pointer;
+  overflow: hidden;
 }
 
 .waterfall-item .img-box {

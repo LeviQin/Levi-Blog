@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <div class="info">
+    <div class="info card">
+      <div class="banner">
+        <span class="banner-text">前端开发</span>
+      </div>
+      <div class="info-title">我的个人简介</div>
       <div class="info-content">
         <div class="info-item">
           <div class="left-icon">
@@ -43,7 +47,7 @@
           </div>
           <div class="right-content">
             <span class="bio-text"
-              >擅长使用Vue2、Vue3全家桶，并有Flutter跨平台开发经验和Wordpress开发经验，
+              >擅长使用Vue全家桶，并有Flutter跨平台开发经验和Wordpress开发经验，
               熟悉小程序和Node.js</span
             >
           </div>
@@ -67,7 +71,7 @@ const emit = defineEmits(["toNextPage"]);
 <style lang="scss" scoped>
 .container {
   height: 100%;
-  background: #eee url(../../assets/images/banner/fengjing2.jpg);
+  background: #eee url(../../assets/images/banner/dongmannv04.jpg);
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
@@ -78,29 +82,80 @@ const emit = defineEmits(["toNextPage"]);
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  text-align: left;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
-  background-color: #00000081;
-  padding: 40px;
-  border-radius: 20px;
+  box-sizing: border-box;
+  font-family: cursive;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 30px;
+  background: #fff;
+  border: 8px solid #000;
+  box-shadow: 15px 15px 0 #000;
+  transform: translate(-50%, -50%) rotate(-2deg);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  width: 800px;
 }
 
-// .info::before {
-//   content: "";
-//   position: absolute;
-//   top: 0;
-//   right: 0;
-//   bottom: 0;
-//   left: 0;
-//   backdrop-filter: blur(15px);
-//   border-radius: 20px;
-//   z-index: -1;
-// }
+.card:hover {
+  transform: translate(-50%, -50%) rotate(0deg) scale(1.02);
+  box-shadow: 20px 20px 0 #000;
+}
+
+.banner {
+  position: absolute;
+  top: 3px;
+  right: -95px;
+  background: #000;
+  color: #fff;
+  padding: 15px;
+  width: 350px;
+  text-align: center;
+  transform: rotate(45deg);
+  font-weight: bold;
+  font-size: 18px;
+  letter-spacing: 2px;
+  overflow: hidden;
+  transition: background 0.5s ease;
+}
+
+.banner-text {
+  display: inline-block;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  width: 100%;
+  position: absolute;
+  left: 15%;
+  top: 0;
+}
 
 .info-title {
   font-size: 30px;
+  font-weight: 700;
+  color: #000;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: block;
+  border-bottom: 2px solid #000;
+  width: 50%;
+}
+
+.sign-up {
+  border: 4px solid #000;
+  background: #000;
+  color: #fff;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sign-up:hover {
+  background: #fff;
+  color: #000;
+  transform: translateY(-5px);
+  box-shadow: 0 5px 0 #000;
 }
 
 .info-item {
@@ -182,25 +237,25 @@ const emit = defineEmits(["toNextPage"]);
   }
 }
 
-@keyframes hoverBioIcon {
-  0% {
-    transform: rotate(-90deg);
-  }
-
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
 @media (max-width: 860px) {
   .info {
     width: 80% !important;
     padding: 10px;
+    top: 45%;
+  }
+
+  .info-title {
+    font-size: 20px;
   }
 
   .info-content {
     padding: 0 !important;
     width: 100%;
+  }
+
+  .banner {
+    top: -5px;
+    right: -110px;
   }
 
   .left-icon {

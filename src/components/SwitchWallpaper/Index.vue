@@ -44,6 +44,10 @@ import fengjing7Imag from "../../assets/images/banner/fengjing7.jpg";
 import fengjing8Imag from "../../assets/images/banner/fengjing8.webp";
 import fengjing9Imag from "../../assets/images/banner/fengjing9.jpg";
 import fengjing10Imag from "../../assets/images/banner/fengjing10.webp";
+import dongmannvImag from "../../assets/images/banner/dongmannv.webp";
+import dongmannv02Imag from "../../assets/images/banner/dongmannv02.webp";
+import dongmannv03Imag from "../../assets/images/banner/dongmannv03.webp";
+import dongmannv04Imag from "../../assets/images/banner/dongmannv04.jpg";
 
 onMounted(() => {
   setModelWidth();
@@ -70,6 +74,26 @@ const dataMap = reactive({
       url: gufengnvImag,
       name: "gufengnv",
       id: 3,
+    },
+    {
+      url: dongmannvImag,
+      name: "dongmannv",
+      id: 30,
+    },
+    {
+      url: dongmannv02Imag,
+      name: "dongmannv02",
+      id: 31,
+    },
+    {
+      url: dongmannv03Imag,
+      name: "dongmannv03",
+      id: 32,
+    },
+    {
+      url: dongmannv04Imag,
+      name: "dongmannv04",
+      id: 33,
     },
     {
       url: leidianjiangjunImag,

@@ -164,7 +164,7 @@ const isSidebarVisible = ref(false);
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
-  title: "游戏",
+  title: "游戏时光",
   text: "畅游游戏海洋，共享无限乐趣",
 };
 

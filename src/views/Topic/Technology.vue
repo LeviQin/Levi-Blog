@@ -138,7 +138,7 @@ const isSidebarVisible = ref(false);
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
-  title: "开发",
+  title: "开发心得",
   text: "talk is cheap,show me the code",
 };
 

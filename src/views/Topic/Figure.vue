@@ -109,7 +109,7 @@ const figureContainerRef = ref(null);
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
-  title: "人物",
+  title: "人物故事",
   text: "快乐，不是因为拥有的多，而是计较的少",
 };
 

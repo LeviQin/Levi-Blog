@@ -54,3 +54,11 @@
   color: var(--black-text-color) !important;
   font-size: 17px !important;
 }
+
+.el-pagination.is-background .btn-next.is-active, .el-pagination.is-background .btn-prev.is-active, .el-pagination.is-background .el-pager li.is-active {
+  background: var(--btn-tag-bg-color) !important;
+}
+
+.el-pager li:hover {
+  color: var(--theme-btn-hover-color) !important;
+}

@@ -18,7 +18,7 @@ export default [{
                 component: () => import("@/views/Topic/Daily.vue"),
                 name: "Daily",
                 meta: {
-                    title: "文章分类 - 日常",
+                    title: "文章分类 - 日常随记",
                 }
             },
             {
@@ -26,7 +26,7 @@ export default [{
                 component: () => import("@/views/Topic/Technology.vue"),
                 name: "Technology",
                 meta: {
-                    title: "文章分类 - 开发",
+                    title: "文章分类 - 开发心得",
                 }
             },
             {
@@ -34,7 +34,7 @@ export default [{
                 component: () => import("@/views/Topic/CutePet.vue"),
                 name: "Cute Pet",
                 meta: {
-                    title: "文章分类 - 萌宠",
+                    title: "文章分类 - 萌宠日记",
                 }
             },
             {
@@ -42,7 +42,7 @@ export default [{
                 component: () => import("@/views/Topic/Landscape.vue"),
                 name: "Landscape",
                 meta: {
-                    title: "文章分类 - 风景",
+                    title: "文章分类 - 自然风光",
                 }
             },
             {
@@ -50,7 +50,7 @@ export default [{
                 component: () => import("@/views/Topic/notes.vue"),
                 name: "Notes",
                 meta: {
-                    title: "文章分类 - 笔记",
+                    title: "文章分类 - 学习笔记",
                 }
             },
             {
@@ -58,7 +58,7 @@ export default [{
                 component: () => import("@/views/Topic/Figure.vue"),
                 name: "Figure",
                 meta: {
-                    title: "文章分类 - 人物",
+                    title: "文章分类 - 人物故事",
                 }
             },
             {
@@ -66,7 +66,7 @@ export default [{
                 component: () => import("@/views/Topic/Games.vue"),
                 name: "Games",
                 meta: {
-                    title: "文章分类 - 游戏",
+                    title: "文章分类 - 游戏时光",
                 }
             },
             {
@@ -74,7 +74,7 @@ export default [{
                 component: () => import("@/views/Topic/Embarrassing.vue"),
                 name: "Embarrassing",
                 meta: {
-                    title: "文章分类 - 囧事",
+                    title: "文章分类 - 趣事囧闻",
                 }
             },
             {
@@ -221,6 +221,14 @@ export default [{
         name: "About",
         meta: {
             title: "关于我 - Levi",
+        }
+    },
+    {
+        path: "/portfolio",
+        component: () => import("@/views/About/Portfolio.vue"),
+        name: "Portfolio",
+        meta: {
+            title: "作品集 - Levi",
         }
     },
     {

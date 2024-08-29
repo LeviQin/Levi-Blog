@@ -137,7 +137,7 @@ const cutePetContainerRef = ref(null);
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
-  title: "日常",
+  title: "日常随记",
   text: "一定要站在你所热爱的世界里闪闪发光。",
 };
 

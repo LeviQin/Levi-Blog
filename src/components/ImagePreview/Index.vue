@@ -167,13 +167,14 @@ defineExpose({
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 1.3s ease;
+  transition: transform 0.4s ease;
 
   /* 添加过渡效果 */
   img {
     width: 100%;
+    max-width: 900px;
     height: 100%;
-    transition: transform 1.3s ease;
+    transition: transform 0.4s ease;
   }
 }
 

@@ -9,42 +9,42 @@
             <el-dropdown-item command="category/daily"
               ><svg class="icon" aria-hidden="true">
                 <use xlink:href="#levi-woderichang"></use></svg
-              ><span>日常</span></el-dropdown-item
+              ><span>日常随记</span></el-dropdown-item
             >
             <el-dropdown-item command="category/technology"
               ><svg class="icon" aria-hidden="true">
                 <use xlink:href="#levi-jishurenyuan"></use></svg
-              ><span>开发</span></el-dropdown-item
+              ><span>开发心得</span></el-dropdown-item
             >
             <el-dropdown-item command="category/cute-pet"
               ><svg class="icon" aria-hidden="true">
                 <use xlink:href="#levi-aichong03"></use></svg
-              ><span>萌宠</span></el-dropdown-item
+              ><span>萌宠日记</span></el-dropdown-item
             >
             <el-dropdown-item command="category/notes"
               ><svg class="icon" aria-hidden="true">
                 <use xlink:href="#levi-biji"></use></svg
-              ><span>笔记</span></el-dropdown-item
+              ><span>学习笔记</span></el-dropdown-item
             >
             <el-dropdown-item command="category/landscape"
               ><svg class="icon" aria-hidden="true">
                 <use xlink:href="#levi-fengjing"></use></svg
-              ><span>风景</span></el-dropdown-item
+              ><span>自然风光</span></el-dropdown-item
             >
             <el-dropdown-item command="category/figure"
               ><svg class="icon" aria-hidden="true">
                 <use xlink:href="#levi-168-boy-2"></use></svg
-              ><span>人物</span></el-dropdown-item
+              ><span>人物故事</span></el-dropdown-item
             >
             <el-dropdown-item command="category/games"
               ><svg class="icon" aria-hidden="true">
                 <use xlink:href="#levi-youxiji"></use></svg
-              ><span>游戏</span></el-dropdown-item
+              ><span>游戏时光</span></el-dropdown-item
             >
             <!-- <el-dropdown-item command="category/embarrassing"
               ><svg class="icon" aria-hidden="true">
                 <use xlink:href="#levi-meirijiongtu"></use></svg
-              ><span>囧事</span></el-dropdown-item
+              ><span>趣事囧闻</span></el-dropdown-item
             > -->
           </el-dropdown-menu>
         </template>

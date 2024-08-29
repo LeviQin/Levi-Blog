@@ -110,7 +110,7 @@ const isSidebarVisible = ref(false);
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
-  title: "风景",
+  title: "自然风光",
   text: "水澈而山青,云洁而心境。",
 };
 

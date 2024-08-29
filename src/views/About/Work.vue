@@ -11,7 +11,8 @@
               alt="IM SDK"
             />
             <div class="info-text">
-              <span>IM SDK</span>
+              <div class="info-item-title"><span>IM SDK</span></div>
+              <div class="info-item-desc m-hide-box">1</div>
             </div>
           </a>
         </div>
@@ -23,8 +24,8 @@
               alt="可访APP Flutter版"
             />
             <div class="info-text">
-              <div><span>可访APP Flutter版</span></div>
-              <!-- <div class="m-hide-box">1</div> -->
+              <div class="info-item-title"><span>可访APP Flutter版</span></div>
+              <div class="info-item-desc m-hide-box">1</div>
             </div>
           </a>
         </div>
@@ -36,7 +37,7 @@
               alt="可访Web版"
             />
             <div class="info-text">
-              <span>可访Web版</span>
+              <div class="info-item-title"><span>可访Web版</span></div>
             </div>
           </a>
         </div>
@@ -48,7 +49,7 @@
               alt="领兀云官网"
             />
             <div class="info-text">
-              <span>领兀云官网</span>
+              <div class="info-item-title"><span>领兀云官网</span></div>
             </div>
           </a>
         </div>
@@ -60,7 +61,7 @@
               alt="开发者平台"
             />
             <div class="info-text">
-              <span>开发者平台</span>
+              <div class="info-item-title"><span>开发者平台</span></div>
             </div>
           </a>
         </div>
@@ -72,13 +73,13 @@
               alt="爱华盈通官网"
             />
             <div class="info-text">
-              <span>爱华盈通官网</span>
+              <div class="info-item-title"><span>爱华盈通官网</span></div>
             </div>
           </a>
         </div>
       </div>
-      <!-- <div class="button-card m-hide-box">
-        <div class="button">查看更多</div>
+      <!-- <div class="button-card">
+        <div class="button" @click="toPage">查看更多</div>
       </div> -->
     </div>
     <div class="button-arrow" @click="toNextPage"></div>
@@ -86,12 +87,17 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-
+import { useRouter } from "vue-router";
 import { defineEmits } from "vue";
+
+const router = useRouter();
 
 const toNextPage = () => {
   emit("toNextPage");
+};
+
+const toPage = () => {
+  router.push("/portfolio");
 };
 
 const emit = defineEmits(["toNextPage"]);
@@ -100,8 +106,14 @@ const emit = defineEmits(["toNextPage"]);
 <style lang="scss" scoped>
 @media (any-hover: hover) {
   .info-item:hover {
+    transform: rotate(-5deg) scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .info-item:hover {
     .info-text {
-      top: 0;
+      transform: translate(-50%, -50%) rotate(0deg);
+      opacity: 0.9;
     }
 
     .info-img {
@@ -122,7 +134,7 @@ const emit = defineEmits(["toNextPage"]);
 
 .container {
   height: 100%;
-  background: #eee url(../../assets/images/banner/dipingxian.jpg);
+  background: #eee url(../../assets/images/banner/dongmannv02.webp);
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
@@ -155,6 +167,7 @@ const emit = defineEmits(["toNextPage"]);
   overflow: hidden;
   position: relative;
   border-radius: 10px;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .info-img {
@@ -165,14 +178,26 @@ const emit = defineEmits(["toNextPage"]);
 
 .info-text {
   position: absolute;
-  top: 160px;
-  padding: 10px;
-  left: 0;
-  right: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  width: 100%;
   height: 100%;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.8);
-  transition: all 0.3s ease-in;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #fff;
+  opacity: 0;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  color: var(--color);
+}
+
+.info-item-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.info-item-desc {
+  margin: 10px 0;
 }
 
 .button-arrow {
@@ -195,7 +220,7 @@ const emit = defineEmits(["toNextPage"]);
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -20px;
+  margin-top: 35px;
 
   .button {
     background: rgba(0, 0, 0, 0.652);
@@ -209,8 +234,8 @@ const emit = defineEmits(["toNextPage"]);
 
 @media (max-width: 860px) {
   .info {
-    width: 80%;
-    top: 45%;
+    width: 85%;
+    top: 43%;
   }
 
   .info-content {
@@ -228,7 +253,6 @@ const emit = defineEmits(["toNextPage"]);
   .info-item {
     height: 3.5rem !important;
     width: 100% !important;
-    margin-bottom: 1rem !important;
     backdrop-filter: blur(15px);
     text-shadow: 0 5px 15px rgb(0, 0, 0) !important;
   }
@@ -236,10 +260,6 @@ const emit = defineEmits(["toNextPage"]);
   .info-item a {
     display: flex !important;
     height: 100%;
-  }
-
-  .m-hide-box {
-    display: none !important;
   }
 
   .info-img {
@@ -256,6 +276,13 @@ const emit = defineEmits(["toNextPage"]);
     height: auto !important;
     display: flex;
     align-items: center;
+    opacity: 1;
+    transform: none;
+    color: var(--white-color);
+  }
+
+  .button-card {
+    margin-top: 10px;
   }
 }
 </style>

@@ -30,42 +30,42 @@
               <li data-router="/category/daily">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#levi-woderichang"></use></svg
-                ><span>日常</span>
+                ><span>日常随记</span>
               </li>
               <li data-router="/category/technology">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#levi-jishurenyuan"></use></svg
-                ><span>开发</span>
+                ><span>开发心得</span>
               </li>
               <li data-router="/category/cute-pet">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#levi-aichong03"></use></svg
-                ><span>萌宠</span>
+                ><span>萌宠日记</span>
               </li>
               <li data-router="/category/notes">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#levi-biji"></use></svg
-                ><span>笔记</span>
+                ><span>学习笔记</span>
               </li>
               <li data-router="/category/landscape">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#levi-fengjing"></use></svg
-                ><span>风景</span>
+                ><span>自然风光</span>
               </li>
               <li data-router="/category/figure">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#levi-168-boy-2"></use></svg
-                ><span>人物</span>
+                ><span>人物故事</span>
               </li>
               <li data-router="/category/games">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#levi-youxiji"></use></svg
-                ><span>游戏</span>
+                ><span>游戏时光</span>
               </li>
               <!-- <li data-router="/category/embarrassing">
                   <svg class="icon" aria-hidden="true">
                     <use xlink:href="#levi-meirijiongtu"></use></svg
-                  ><span>囧事</span>
+                  ><span>趣事囧闻</span>
                 </li> -->
             </ul>
           </div>

@@ -135,7 +135,7 @@ const notesContainerRef = ref(null);
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
-  title: "笔记",
+  title: "学习笔记",
   text: "快乐，不是因为拥有的多，而是计较的少",
 };
 

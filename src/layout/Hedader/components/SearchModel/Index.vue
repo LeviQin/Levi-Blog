@@ -9,7 +9,7 @@
     :before-close="close"
   >
     <template #header>
-      <span class="search-model-title">全站查询</span>
+      <span class="search-model-title">全站文章查询</span>
     </template>
     <div class="search-model-main">
       <div>
@@ -24,7 +24,7 @@
       <div class="dividing-line">
         <i class="bi bi-rocket-takeoff-fill"></i>
       </div>
-      <div class="result-content" v-if="keyword">
+      <div class="result-content" v-if="keyword" v-loading="loading">
         <div v-if="dataMap.articleData.length">
           <div
             class="result-content-item"
@@ -63,6 +63,7 @@ const dataMap = reactive({
 });
 
 const dialogVisible = ref(false);
+const loading = ref(false);
 const dialogWidth = ref("500px");
 const keyword = ref("");
 const searchInputRef = ref(null);
@@ -112,6 +113,7 @@ const changeSearch = debounce(() => {
 
 const getData = async () => {
   try {
+    loading.value = true;
     const res = await getKeywordResult({ keyword: keyword.value });
     const { code, data, message } = res.data;
     if (code === 200) {
@@ -134,6 +136,8 @@ const getData = async () => {
     }
   } catch (error) {
     console.log(error, "error---------------------");
+  } finally {
+    loading.value = false;
   }
 };
 
@@ -188,6 +192,10 @@ defineExpose({
 .result-content-item-description {
   font-size: 14px;
   padding-top: 10px;
+}
+
+.loading-box {
+  width: 25px;
 }
 
 @media (max-width: 860px) {

@@ -129,7 +129,7 @@ const cutePetContainerRef = ref(null);
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
-  title: "萌宠",
+  title: "萌宠日记",
   text: "从此,我拍照,你负责卖萌",
 };
 

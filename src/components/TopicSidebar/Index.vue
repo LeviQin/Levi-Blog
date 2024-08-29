@@ -25,7 +25,7 @@
           <span
             ><svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-woderichang"></use></svg
-            ><span>日常</span></span
+            ><span>日常随记</span></span
           >
           <i class="bi bi-chevron-right"></i>
         </li>
@@ -33,7 +33,7 @@
           <span
             ><svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-jishurenyuan"></use></svg
-            ><span>开发</span></span
+            ><span>开发心得</span></span
           >
           <i class="bi bi-chevron-right"></i>
         </li>
@@ -41,7 +41,7 @@
           <span
             ><svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-aichong03"></use></svg
-            ><span>萌宠</span></span
+            ><span>萌宠日记</span></span
           >
           <i class="bi bi-chevron-right"></i>
         </li>
@@ -49,7 +49,7 @@
           <span>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-biji"></use></svg
-            ><span>笔记</span></span
+            ><span>学习笔记</span></span
           >
           <i class="bi bi-chevron-right"></i>
         </li>
@@ -57,7 +57,7 @@
           <span>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-fengjing"></use></svg
-            ><span>风景</span></span
+            ><span>自然风光</span></span
           >
           <i class="bi bi-chevron-right"></i>
         </li>
@@ -65,7 +65,7 @@
           <span>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-168-boy-2"></use></svg
-            ><span>人物</span></span
+            ><span>人物故事</span></span
           >
           <i class="bi bi-chevron-right"></i>
         </li>
@@ -73,14 +73,14 @@
           <span>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-youxiji"></use></svg
-            ><span>游戏</span></span
+            ><span>游戏时光</span></span
           >
           <i class="bi bi-chevron-right"></i>
         </li>
         <!-- <li class="sidebar-category-li" data-router="/category/embarrassing">
           <span><svg class="icon" aria-hidden="true">
                     <use xlink:href="#levi-meirijiongtu"></use></svg
-                  ><span>囧事</span></span>
+                  ><span>趣事囧闻</span></span>
           <i class="bi bi-chevron-right"></i>
         </li> -->
       </ul>
