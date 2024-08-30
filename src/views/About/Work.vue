@@ -12,7 +12,7 @@
             />
             <div class="info-text">
               <div class="info-item-title"><span>IM SDK</span></div>
-              <div class="info-item-desc m-hide-box">1</div>
+              <div class="info-item-desc m-hide-box"></div>
             </div>
           </a>
         </div>
@@ -25,7 +25,7 @@
             />
             <div class="info-text">
               <div class="info-item-title"><span>可访APP Flutter版</span></div>
-              <div class="info-item-desc m-hide-box">1</div>
+              <div class="info-item-desc m-hide-box"></div>
             </div>
           </a>
         </div>
@@ -154,16 +154,15 @@ const emit = defineEmits(["toNextPage"]);
 }
 
 .info-content {
-  width: 1000px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 30px;
+  width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
 }
 
 .info-item {
-  width: 30%;
-  height: 200px;
+  width: 100%;
+  height: 300px;
   overflow: hidden;
   position: relative;
   border-radius: 10px;

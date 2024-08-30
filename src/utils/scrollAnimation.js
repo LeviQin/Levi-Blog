@@ -12,7 +12,7 @@ let isMoving = false;
  * @param {Number} time 延迟时间启动
  * @returns 
  */
-export const scrollAnimation = (start, type = "top", time = 100) => {
+export const scrollAnimation = (start, type = "top", time = 50) => {
     if (isMoving) return;
 
     const targetPosition = type === "top" ? 0 : start;
@@ -35,7 +35,7 @@ export const scrollAnimation = (start, type = "top", time = 100) => {
             });
             isMoving = false;
         } else {
-            const next = Math.floor(easeInOutQuad(10 * progress, startPosition, targetPosition - startPosition, 1));
+            const next = Math.floor(easeInOutQuad(progress, startPosition, targetPosition - startPosition, 1));
 
             window.scrollTo({
                 left: 0,
