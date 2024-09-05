@@ -16,6 +16,7 @@
           <img v-lazy="item.url" :alt="item.name" />
         </li>
       </ul>
+      <div class="reset-btn" @click="setWallpaper(gufengnvImag)">恢复默认壁纸</div>
     </div>
   </el-dialog>
 </template>
@@ -221,37 +222,69 @@ defineExpose({
 }
 
 .wallpaper-model-main {
-  padding: 10px 20px 50px 20px;
+  padding-bottom: 20px;
+  overflow: hidden;
 }
 
 .wallpaper-model-main ul {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   max-height: 600px;
   overflow: auto;
-
+  gap: 20px;
+  padding: 10px 30px;
   li {
-    width: 220px;
-    height: 130px;
-    margin: 12px;
     cursor: pointer;
-    &:hover img {
-      transform: scale(1.1);
+    position: relative;
+    &:hover::after {
+      opacity: 1;
     }
-
+    &::after {
+      content: "点击切换壁纸";
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #000000af;
+      transition: all 0.3s;
+      border-radius: 5px;
+    }
     img {
       width: 100%;
       height: 100%;
-      border-radius: 10px;
-      transition: all 0.3s;
+      border-radius: 5px;
     }
+  }
+}
+
+.reset-btn {
+  background-color: var(--btn-tag-bg-color);
+  color: #fff;
+  width: 140px;
+  padding: 10px 15px;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-top: 15px;
+  transition: all 0.3s;
+  &:hover {
+    background-color: var(--theme-btn-hover-color);
   }
 }
 
 @media (max-width: 860px) {
   .wallpaper-model-main ul {
     max-height: 400px;
-    justify-content: center;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 0 10px;
   }
 }
 </style>

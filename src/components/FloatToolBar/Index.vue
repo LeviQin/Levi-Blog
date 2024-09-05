@@ -86,12 +86,14 @@ const isLeft = ref(false);
 const handleScroll = () => {
   const backTopBtn = document.querySelector(".back-top-btn");
   scrollTop.value = document.documentElement.scrollTop || document.body.scrollTop;
-  if (scrollTop.value > 400) {
-    backTopBtn.style.transform = `translateY(0)`;
-    backTopBtn.style.opacity = 1;
-  } else {
-    backTopBtn.style.transform = `translateY(40px)`;
-    backTopBtn.style.opacity = 0;
+  if (backTopBtn) {
+    if (scrollTop.value > 400) {
+      backTopBtn.style.transform = `translateY(0)`;
+      backTopBtn.style.opacity = 1;
+    } else {
+      backTopBtn.style.transform = `translateY(40px)`;
+      backTopBtn.style.opacity = 0;
+    }
   }
 };
 
@@ -162,7 +164,7 @@ const backToTop = () => {
 .btn-item::after {
   display: none;
   position: absolute;
-  left: -80px;
+  left: -70px;
   top: 0;
   background-color: #000;
   color: #fff;
@@ -175,7 +177,7 @@ const backToTop = () => {
 
 .close-btn::after,
 .open-btn::after {
-  left: -90px;
+  left: -80px;
 }
 
 .btn-item:hover::after {

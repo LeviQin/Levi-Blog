@@ -131,7 +131,6 @@ const getData = async () => {
 <style lang="scss" scoped>
 .sidebar-info {
   background: var(--theme-color);
-  border-radius: var(--theme-radius);
   margin-bottom: 20px;
   overflow: hidden;
 }
@@ -139,7 +138,6 @@ const getData = async () => {
 .sidebar-info-avatar {
   display: flex;
   justify-content: center;
-  background-color: red;
   background-image: url("../../assets/images/banner/fengjing2.jpg");
   background-size: cover;
   position: relative;

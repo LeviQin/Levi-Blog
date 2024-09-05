@@ -68,6 +68,8 @@ import Hammer from "hammerjs";
 import { Head } from "@vueuse/head";
 
 onMounted(() => {
+  // 重置非关于我页面的顶部导航栏透明度
+  document.documentElement.style.setProperty("--header-bar-color-opacity", 0);
   const mc = new Hammer(carouselRef.value.$el);
   mc.get("pan").set({ direction: Hammer.DIRECTION_ALL });
   mc.get("swipe").set({ direction: Hammer.DIRECTION_VERTICAL });

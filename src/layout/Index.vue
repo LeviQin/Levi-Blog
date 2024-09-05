@@ -110,7 +110,7 @@ const scrollWindow = () => {
   height: 100%;
   .lv-header {
     height: var(--header-bar-height);
-    min-height: 60px;
+    min-height: var(--header-bar-height);
     display: block;
   }
   .lv-main {

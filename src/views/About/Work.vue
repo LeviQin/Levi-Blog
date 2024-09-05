@@ -154,7 +154,7 @@ const emit = defineEmits(["toNextPage"]);
 }
 
 .info-content {
-  width: 1200px;
+  width: 1000px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 50px;
@@ -162,7 +162,7 @@ const emit = defineEmits(["toNextPage"]);
 
 .info-item {
   width: 100%;
-  height: 300px;
+  height: 200px;
   overflow: hidden;
   position: relative;
   border-radius: 10px;
@@ -238,6 +238,7 @@ const emit = defineEmits(["toNextPage"]);
   }
 
   .info-content {
+    grid-template-columns: repeat(1, 1fr);
     padding: 0.5rem 0 0 0 !important;
     width: 100% !important;
     gap: 10px;
