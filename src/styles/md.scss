@@ -2,30 +2,35 @@
 
 /** 这里是md渲染器的样式 **/
 
-.vuepress-markdown-body {
+.md-editor {
     background: transparent !important;
 }
 
-.vuepress-markdown-body:not(.custom) {
+.md-editor-preview-wrapper {
+    padding: 0 !important;
+}
+
+.md-editor-preview {
     padding: 0 20px !important;
 }
 
-.vuepress-markdown-body img {
+.md-editor img {
     border-radius: 5px;
 }
 
-.vuepress-markdown-body h2 {
+.md-editor h2 {
     border: 0 !important;
 }
 
-.vuepress-markdown-body h1,
-.vuepress-markdown-body h2,
-.vuepress-markdown-body h3 {
-    color: var(--color);
-    margin-left: 25px !important;
+.md-editor h1,
+.md-editor h2,
+.md-editor h3 {
+    color: var(--color) !important;
+    margin-left: 30px !important;
     position: relative;
     transition: all 0.4s;
     display: table;
+
     &:hover {
         transition: all 0.4s;
         transform: translateX(15px);
@@ -33,14 +38,19 @@
     }
 }
 
-.vuepress-markdown-body a, .vuepress-markdown-body p a code {
+.md-editor h4 {
+    color: var(--color) !important;
+}
+
+.md-editor a,
+.md-editor p a code {
     color: var(--theme-btn-hover-color) !important;
 }
 
 
-.vuepress-markdown-body h1::before,
-.vuepress-markdown-body h2::before,
-.vuepress-markdown-body h3::before {
+.md-editor h1::before,
+.md-editor h2::before,
+.md-editor h3::before {
     content: '';
     position: absolute;
     top: 0;
@@ -54,49 +64,53 @@
     animation: fengcheMove 3s linear infinite;
 }
 
-.vuepress-markdown-body li {
+.md-editor li {
     list-style: circle;
+    color: var(--color);
 }
 
-.vuepress-markdown-body p {
+.md-editor p {
     color: var(--color);
     overflow-wrap: break-word;
 }
 
-.vuepress-markdown-body h2 {
+.md-editor h2 {
     border-bottom: none;
 }
 
-.vuepress-markdown-body p code {
+.md-editor p code {
     background: #5a8bbd29 !important;
     color: #164577 !important;
 }
 
-.vuepress-markdown-body tr:nth-child(2n) {
+.md-editor tr:nth-child(2n) {
     background: none !important;
 }
 
-.vuepress-markdown-body td,
-.vuepress-markdown-body th {
+.md-editor td,
+.md-editor th {
     border: 1px solid #282c34 !important;
 }
 
-.vuepress-markdown-body img {
-    max-width: 300px !important;
-    max-height: 250px;
+.md-editor img {
+    max-height: 265px;
     margin-right: 15px;
     cursor: pointer;
 }
 
-.vuepress-markdown-body blockquote {
+.md-editor blockquote {
     background-color: #ececec;
     border-left: 5px solid #35b378 !important;
 }
 
 @media (max-width: 860px) {
-    .vuepress-markdown-body img {
+    .md-editor img {
         max-width: 100% !important;
         max-height: 100% !important;
+    }
+
+    .md-editor-preview .md-editor-code {
+        margin: 20px -1.5rem !important;
     }
 }
 

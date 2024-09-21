@@ -131,6 +131,7 @@ const getData = async () => {
 <style lang="scss" scoped>
 .sidebar-info {
   background: var(--theme-color);
+  border-radius: var(--theme-radius);
   margin-bottom: 20px;
   overflow: hidden;
 }

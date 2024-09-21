@@ -17,7 +17,7 @@
           <span
             ><svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-zonghelei"></use></svg
-            ><span>综合</span></span
+            ><span>综合文章</span></span
           >
           <i class="bi bi-chevron-right"></i>
         </li>

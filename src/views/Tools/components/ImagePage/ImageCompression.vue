@@ -112,10 +112,6 @@
             <use xlink:href="#levi-guanyu-"></use></svg
           ><span>关于图片压缩</span></span
         >
-        <span class="desc-text">
-          图片大小裁剪工具，提供在线图片大小裁剪，头像制作功能。裁剪支持矩形裁剪和圆形裁剪，支持自定义选取区域大小。
-          裁剪后的图片可以免费下载到本地保存。
-        </span>
         <span class="desc-text"
           >压缩级别：级别越高，压缩率越低, 压缩后的图片清晰度越高,
           文件大小更接近原图。</span

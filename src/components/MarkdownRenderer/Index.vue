@@ -1,20 +1,18 @@
 <template>
-  <v-md-preview
-    :text="props.markdownText"
-    left-toolbar="undo redo | tip"
-    @copy-code-success="handleCopyCodeSuccess"
-    ref="preview"
-    default-show-toc
-    @image-click="initImageViewer"
+  <MdPreview
+    :modelValue="props.markdownText"
+    @onGetCatalog="onGetCatalog"
+    :codeFoldable="true"
+    :autoFoldThreshold="30"
   />
-
   <image-preview ref="imagePreviewRef"></image-preview>
 </template>
 
 <script setup>
-import { ref, defineProps, defineExpose, nextTick, defineEmits, watch } from "vue";
-import { ElNotification } from "element-plus";
+import { ref, defineProps, defineExpose, defineEmits, nextTick } from "vue";
 import imagePreview from "../ImagePreview/Index.vue";
+import { MdPreview } from "md-editor-v3";
+import "md-editor-v3/lib/preview.css";
 
 const props = defineProps({
   markdownText: {
@@ -23,56 +21,30 @@ const props = defineProps({
   },
 });
 
-watch(
-  () => props.markdownText,
-  () => {
-    buildDirectory();
-  }
-);
+const dataMap = reactive({
+  images: [],
+});
 
-const preview = ref(null);
 const imagePreviewRef = ref(null);
-const titles = ref([]);
 
-const initImageViewer = (images, currentIndex) => {
-  imagePreviewRef.value.show(images, currentIndex);
+const onHtmlChanged = () => {
+  imagePreviewRef.value.show(dataMap.images, currentIndex);
 };
 
-const handleCopyCodeSuccess = () => {
-  ElNotification({
-    title: "成功",
-    message: "已复制代码",
-    type: "success",
-    zIndex: 99999,
-  });
+const onGetCatalog = (tites) => {
+  emit("sendMdTitle", tites);
 };
 
-const buildDirectory = () => {
-  nextTick(() => {
-    const anchors = preview.value.$el.querySelectorAll("h1,h2,h3,h4,h5,h6");
-    titles.value = Array.from(anchors).filter((title) => !!title.innerText.trim());
-    const hTags = Array.from(new Set(titles.value.map((title) => title.tagName))).sort();
-
-    titles.value = titles.value.map((el) => ({
-      title: el.innerText,
-      lineIndex: el.getAttribute("data-v-md-line"),
-      indent: hTags.indexOf(el.tagName),
-    }));
-    emit("sendMdTitle", titles.value);
-  });
-};
-
-const handleAnchorClick = (anchor) => {
-  const { lineIndex } = anchor;
-
-  const heading = preview.value.$el.querySelector(`[data-v-md-line="${lineIndex}"]`);
-
-  if (heading) {
-    preview.value.scrollToTarget({
-      target: heading,
-      scrollContainer: window,
-      top: 60,
-    });
+const handleAnchorClick = (id) => {
+  if (id) {
+    const targetElement = document.getElementById(id);
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      window.scrollBy(0, -60);
+    }
   }
 };
 

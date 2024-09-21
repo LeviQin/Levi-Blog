@@ -23,12 +23,12 @@
               class="sidebar-li nav-item"
               v-for="anchor in dataMap.titles"
               :style="{
-                padding: `10px 0 10px ${anchor.indent ? anchor.indent * 40 : 20}px`,
-                fontSize: `${15 - anchor.indent}px`,
+                padding: `8px 0 8px ${anchor.level ? anchor.level * 8 : 10}px`,
+                fontSize: `${18 - anchor.level}px`,
               }"
-              @click="handleAnchorClick(anchor)"
+              @click="handleAnchorClick(anchor.text)"
             >
-              <a class="sidebar-a nav-title">{{ anchor.title }}</a>
+              <a class="sidebar-a nav-title">{{ anchor.text }}</a>
             </li>
           </div>
         </ul>
@@ -185,8 +185,8 @@ const sendMdTitle = (titles) => {
   dataMap.titles = titles;
 };
 
-const handleAnchorClick = (anchor) => {
-  markdownRendererRef.value.handleAnchorClick(anchor);
+const handleAnchorClick = (title) => {
+  markdownRendererRef.value.handleAnchorClick(title);
 };
 
 const clickLikes = () => {
@@ -261,15 +261,14 @@ const getArticleDetail = async () => {
 }
 
 .page-title h1 {
-  font-size: 40px;
-  margin-bottom: 10px;
+  font-size: 36px;
+  margin: 20px 0;
 }
 
 .page-info {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 20px;
 }
 
 .page-info-item {
@@ -287,7 +286,7 @@ const getArticleDetail = async () => {
 }
 
 .topic-detail-sidebar {
-  width: 22%;
+  width: 20%;
   position: relative;
 }
 
@@ -302,12 +301,8 @@ const getArticleDetail = async () => {
 
 .sidebar-li {
   white-space: nowrap;
-  /* 不换行 */
   overflow: hidden;
-  /* 隐藏溢出部分 */
   text-overflow: ellipsis;
-
-  /* 显示省略号 */
   &:hover .nav-title {
     color: var(--theme-btn-hover-color);
   }
@@ -363,7 +358,7 @@ const getArticleDetail = async () => {
     cursor: pointer;
     background: var(--btn-tag-bg-color);
     border-radius: 5px;
-    padding: 10px 15px;
+    padding: 6px 15px;
     transition: all 0.5s;
     text-shadow: 0 5px 15px rgba(0, 0, 0, 1) !important;
     font-size: 16px;

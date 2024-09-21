@@ -25,53 +25,58 @@
           <div class="is-top-box" v-if="item.is_top">
             <i class="bi bi-pin-angle-fill"></i>
           </div>
-          <div class="article-item-title">
-            <h2>{{ item.title }}</h2>
-          </div>
-          <div class="article-item-description">
-            <p>
-              {{ item.article_description }}
-            </p>
-          </div>
-          <div class="article-item-footer">
-            <div class="footer-info">
-              <div class="footer-category">
+          <div class="article-item-info">
+            <div class="article-item-title">
+              <h2>{{ item.title }}</h2>
+            </div>
+            <div class="article-item-description">
+              <p>
+                {{ item.article_description }}
+              </p>
+            </div>
+            <div class="article-item-footer">
+              <div class="footer-info">
+                <div class="footer-category">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#levi-fenlei"></use>
+                  </svg>
+                  <span>{{ categoryList[item.category - 1] }}</span>
+                </div>
+                <div class="footer-date">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#levi-riqi"></use>
+                  </svg>
+                  <span>{{ item.published_at }}</span>
+                </div>
+                <div class="footer-update">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#levi-gengxinmulu"></use>
+                  </svg>
+                  <span>{{ item.updated_at }}</span>
+                </div>
+                <div class="footer-view">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#levi-wode_zuijinliulan"></use></svg
+                  ><span class="num-text">{{ item.view_count }}</span>
+                </div>
+                <div class="footer-likes">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#levi-yidianzan"></use></svg
+                  ><span class="num-text">{{ item.likes }}</span>
+                </div>
+              </div>
+              <div class="footer-tags">
                 <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-fenlei"></use>
+                  <use xlink:href="#levi-biaoqian_1"></use>
                 </svg>
-                <span>{{ categoryList[item.category - 1] }}</span>
-              </div>
-              <div class="footer-date">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-riqi"></use>
-                </svg>
-                <span>{{ item.published_at }}</span>
-              </div>
-              <div class="footer-update">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-gengxinmulu"></use>
-                </svg>
-                <span>{{ item.updated_at }}</span>
-              </div>
-              <div class="footer-view">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-wode_zuijinliulan"></use></svg
-                ><span class="num-text">{{ item.view_count }}</span>
-              </div>
-              <div class="footer-likes">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-yidianzan"></use></svg
-                ><span class="num-text">{{ item.likes }}</span>
+                <span class="tags-item" v-for="key in item.article_tags">{{
+                  tagsList[key - 1]
+                }}</span>
               </div>
             </div>
-            <div class="footer-tags">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-biaoqian_1"></use>
-              </svg>
-              <span class="tags-item" v-for="key in item.article_tags">{{
-                tagsList[key - 1]
-              }}</span>
-            </div>
+          </div>
+          <div v-if="item.image" class="article-item-img">
+            <img :src="item.image" alt="" />
           </div>
         </div>
         <div class="pagination-box">
@@ -236,6 +241,25 @@ const getData = async () => {
   margin-bottom: 20px;
   position: relative;
   transition: all 0.2s;
+  display: flex;
+  gap: 30px;
+}
+
+.article-item-info {
+  flex: 1;
+}
+
+.article-item-img {
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
 }
 
 .is-top-box {
