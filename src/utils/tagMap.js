@@ -1,6 +1,4 @@
-
-export const tagMap = [
-  {
+export const tagMap = [{
     value: "1",
     label: "前端",
   },
@@ -179,5 +177,21 @@ export const tagMap = [
   {
     value: "45",
     label: "DNF手游",
+  },
+  {
+    value: "46",
+    label: "Windows",
+  },
+  {
+    value: "47",
+    label: "VPN",
+  },
+  {
+    value: "48",
+    label: "菜谱",
+  },
+  {
+    value: "49",
+    label: "富文本",
   },
 ];

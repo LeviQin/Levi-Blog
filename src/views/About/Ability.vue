@@ -105,7 +105,6 @@ const emit = defineEmits(["toNextPage"]);
 
 .info-content p {
   margin: 0;
-  text-indent: 1rem;
   padding-bottom: 1.2rem;
   color: #fff;
   line-height: 20px;

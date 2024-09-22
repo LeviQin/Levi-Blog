@@ -103,6 +103,10 @@
     border-left: 5px solid #35b378 !important;
 }
 
+.md-editor .md-editor-codetab-label label {
+    color: #fff !important;
+}
+
 @media (max-width: 860px) {
     .md-editor img {
         max-width: 100% !important;
