@@ -81,6 +81,7 @@
         </div>
         <div class="pagination-box">
           <el-pagination
+            :pager-count="5"
             :current-page="page"
             :page-sizes="dataMap.paginationDatas.pageSizes"
             :small="dataMap.paginationDatas.small"
@@ -251,9 +252,11 @@ const getData = async () => {
 
 .article-item-img {
   width: 200px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: end;
+  overflow: hidden;
   img {
     width: 200px;
     height: 200px;
@@ -483,6 +486,10 @@ const getData = async () => {
 
   .num-tex {
     font-size: 12px;
+  }
+
+  .article-item-img {
+    display: none;
   }
 }
 </style>

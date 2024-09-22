@@ -4,13 +4,14 @@
     @onGetCatalog="onGetCatalog"
     :codeFoldable="true"
     :autoFoldThreshold="30"
+    noImgZoomIn
   />
   <image-preview ref="imagePreviewRef"></image-preview>
 </template>
 
 <script setup>
 import { ref, defineProps, defineExpose, defineEmits, nextTick } from "vue";
-import imagePreview from "../ImagePreview/Index.vue";
+import ImagePreview from "../ImagePreview/Index.vue";
 import { MdPreview } from "md-editor-v3";
 import "md-editor-v3/lib/preview.css";
 
@@ -28,10 +29,20 @@ const dataMap = reactive({
 const imagePreviewRef = ref(null);
 
 const onHtmlChanged = () => {
-  imagePreviewRef.value.show(dataMap.images, currentIndex);
+  const imageDoms = document.querySelectorAll(".md-editor img");
+  dataMap.images = Array.from(imageDoms).map((img) => img.src);
+  imageDoms.forEach((img) => {
+    img.removeEventListener("click", img.clickHandler);
+    img.clickHandler = () => {
+      const currentIndex = Array.from(imageDoms).indexOf(img);
+      imagePreviewRef.value.show(dataMap.images, currentIndex);
+    };
+    img.addEventListener("click", img.clickHandler);
+  });
 };
 
 const onGetCatalog = (tites) => {
+  onHtmlChanged();
   emit("sendMdTitle", tites);
 };
 

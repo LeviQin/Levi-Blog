@@ -98,6 +98,10 @@
     cursor: pointer;
 }
 
+.md-editor img[alt="max"] {
+    max-height: 500px !important;
+}
+
 .md-editor blockquote {
     background-color: #ececec;
     border-left: 5px solid #35b378 !important;

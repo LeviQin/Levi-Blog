@@ -69,6 +69,7 @@
         </div>
         <div class="pagination-box">
           <el-pagination
+            :pager-count="5"
             :current-page="page"
             :page-sizes="dataMap.paginationDatas.pageSizes"
             :default-page-size="pageSize"
