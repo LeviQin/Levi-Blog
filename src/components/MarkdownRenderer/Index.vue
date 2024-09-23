@@ -42,8 +42,10 @@ const onHtmlChanged = () => {
 };
 
 const onGetCatalog = (tites) => {
-  onHtmlChanged();
   emit("sendMdTitle", tites);
+  nextTick(() => {
+    onHtmlChanged();
+  });
 };
 
 const handleAnchorClick = (id) => {
