@@ -52,11 +52,9 @@ const handleAnchorClick = (id) => {
   if (id) {
     const targetElement = document.getElementById(id);
     if (targetElement) {
-      targetElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-      window.scrollBy(0, -60);
+      const yOffset = -60;
+      const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
     }
   }
 };
