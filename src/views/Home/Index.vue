@@ -16,83 +16,86 @@
         <topic-sidebar></topic-sidebar>
       </div>
       <article class="content">
-        <div
-          class="article-item"
-          v-for="item in dataMap.data"
-          @click="toArticleDetail(item)"
-          v-slid-in
-        >
-          <div class="is-top-box" v-if="item.is_top">
-            <i class="bi bi-pin-angle-fill"></i>
-          </div>
-          <div class="article-item-info">
-            <div class="article-item-title">
-              <h2>{{ item.title }}</h2>
+        <ArticleSkeleton v-if="loading" />
+        <template v-else>
+          <div
+            class="article-item"
+            v-for="item in dataMap.data"
+            @click="toArticleDetail(item)"
+            v-slid-in
+          >
+            <div class="is-top-box" v-if="item.is_top">
+              <i class="bi bi-pin-angle-fill"></i>
             </div>
-            <div class="article-item-description">
-              <p>
-                {{ item.article_description }}
-              </p>
-            </div>
-            <div class="article-item-footer">
-              <div class="footer-info">
-                <div class="footer-category">
+            <div class="article-item-info">
+              <div class="article-item-title">
+                <h2>{{ item.title }}</h2>
+              </div>
+              <div class="article-item-description">
+                <p>
+                  {{ item.article_description }}
+                </p>
+              </div>
+              <div class="article-item-footer">
+                <div class="footer-info">
+                  <div class="footer-category">
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#levi-fenlei"></use>
+                    </svg>
+                    <span>{{ categoryList[item.category - 1] }}</span>
+                  </div>
+                  <div class="footer-date">
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#levi-riqi"></use>
+                    </svg>
+                    <span>{{ item.published_at }}</span>
+                  </div>
+                  <div class="footer-update">
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#levi-gengxinmulu"></use>
+                    </svg>
+                    <span>{{ item.updated_at }}</span>
+                  </div>
+                  <div class="footer-view">
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#levi-wode_zuijinliulan"></use></svg
+                    ><span class="num-text">{{ item.view_count }}</span>
+                  </div>
+                  <div class="footer-likes">
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#levi-yidianzan"></use></svg
+                    ><span class="num-text">{{ item.likes }}</span>
+                  </div>
+                </div>
+                <div class="footer-tags">
                   <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-fenlei"></use>
+                    <use xlink:href="#levi-biaoqian_1"></use>
                   </svg>
-                  <span>{{ categoryList[item.category - 1] }}</span>
-                </div>
-                <div class="footer-date">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-riqi"></use>
-                  </svg>
-                  <span>{{ item.published_at }}</span>
-                </div>
-                <div class="footer-update">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-gengxinmulu"></use>
-                  </svg>
-                  <span>{{ item.updated_at }}</span>
-                </div>
-                <div class="footer-view">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-wode_zuijinliulan"></use></svg
-                  ><span class="num-text">{{ item.view_count }}</span>
-                </div>
-                <div class="footer-likes">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-yidianzan"></use></svg
-                  ><span class="num-text">{{ item.likes }}</span>
+                  <span class="tags-item" v-for="key in item.article_tags">{{
+                    tagsList[key - 1]
+                  }}</span>
                 </div>
               </div>
-              <div class="footer-tags">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-biaoqian_1"></use>
-                </svg>
-                <span class="tags-item" v-for="key in item.article_tags">{{
-                  tagsList[key - 1]
-                }}</span>
-              </div>
+            </div>
+            <div v-if="item.image" class="article-item-img">
+              <img :src="item.image" alt="" />
             </div>
           </div>
-          <div v-if="item.image" class="article-item-img">
-            <img :src="item.image" alt="" />
+          <div class="pagination-box">
+            <el-pagination
+              :pager-count="5"
+              :current-page="page"
+              :page-sizes="dataMap.paginationDatas.pageSizes"
+              :small="dataMap.paginationDatas.small"
+              :disabled="dataMap.paginationDatas.disabled"
+              :background="dataMap.paginationDatas.background"
+              :layout="dataMap.paginationDatas.layout"
+              :total="dataMap.paginationDatas.total"
+              @current-change="handleCurrentChange"
+              :hide-on-single-page="true"
+            />
           </div>
-        </div>
-        <div class="pagination-box">
-          <el-pagination
-            :pager-count="5"
-            :current-page="page"
-            :page-sizes="dataMap.paginationDatas.pageSizes"
-            :small="dataMap.paginationDatas.small"
-            :disabled="dataMap.paginationDatas.disabled"
-            :background="dataMap.paginationDatas.background"
-            :layout="dataMap.paginationDatas.layout"
-            :total="dataMap.paginationDatas.total"
-            @current-change="handleCurrentChange"
-            :hide-on-single-page="true"
-          />
-        </div>
+        </template>
       </article>
     </div>
   </div>
@@ -110,6 +113,7 @@ import { scrollAnimation } from "@/utils/scrollAnimation.js";
 import { vSlidIn } from "@/utils/vSlidIn.js";
 import { Head } from "@vueuse/head";
 import { getStore, setStore } from "@/utils/storage.js";
+import ArticleSkeleton from "@/components/ArticleSkeleton/Index.vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -145,6 +149,7 @@ const tagsList = ref([]);
 const isScrolling = ref(false);
 const page = ref(1);
 const pageSize = ref(10);
+const loading = ref(false);
 
 const bannerConfig = {
   height: "100vh",
@@ -198,8 +203,8 @@ const toArticleDetail = (item) => {
 
 const getTableData = () => {
   dataMap.paginationDatas.total = dataMap.tableData.length;
-  let firstIndex = pageSize.value * page.value - pageSize.value; // 开始查找的数据下标
-  dataMap.data = dataMap.tableData.slice(firstIndex, pageSize.value + firstIndex); // 截取分页数据
+  let firstIndex = pageSize.value * page.value - pageSize.value;
+  dataMap.data = dataMap.tableData.slice(firstIndex, pageSize.value + firstIndex);
 };
 
 const handleCurrentChange = (val) => {
@@ -210,6 +215,7 @@ const handleCurrentChange = (val) => {
 
 const getData = async () => {
   try {
+    loading.value = true;
     const res = await getArticleList();
     const { code, data, message } = res.data;
     if (code === 200) {
@@ -224,6 +230,8 @@ const getData = async () => {
     }
   } catch (error) {
     console.log(error, "error--------------------");
+  } finally {
+    loading.value = false;
   }
 };
 </script>
