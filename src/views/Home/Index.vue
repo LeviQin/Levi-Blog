@@ -122,6 +122,7 @@ const router = useRouter();
 const route = useRoute();
 
 onMounted(async () => {
+  banner.value = document.querySelector(".banner-bar");
   scrollWindow();
   tagsList.value = tagMap.map((item) => item.label);
   getData();
@@ -146,7 +147,7 @@ const dataMap = reactive({
   },
 });
 
-const banner = ref(document.querySelector(".banner-bar"));
+const banner = ref(null);
 const tagsList = ref([]);
 const page = ref(1);
 const pageSize = ref(10);
