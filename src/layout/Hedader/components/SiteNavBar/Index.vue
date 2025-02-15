@@ -101,7 +101,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();

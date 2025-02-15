@@ -1,6 +1,7 @@
 import {
     createApp
 } from "vue";
+import { createPinia } from 'pinia';
 import "./style.scss";
 import "./styles/element.scss";
 import "./styles/md.scss";
@@ -13,6 +14,8 @@ import "element-plus/dist/index.css";
 import "./permission";
 
 import "./assets/fonts/iconfont";
+
+const pinia = createPinia();
 
 import {
     createHead
@@ -27,4 +30,4 @@ createApp(App).use(VueLazyload, {
     loading: loadimage,
     error: errorimage,
     attempt: 2, // 尝试加载的次数
-}).use(router).use(head).mount("#app");
+}).use(router).use(head).use(pinia).mount("#app");

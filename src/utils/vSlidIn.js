@@ -3,7 +3,7 @@
  */
 
 const DISTANCE = 120; // 位移距离
-const DURACTION = 500; // 动画时间
+const DURACTION = 800; // 动画时间
 const map = new WeakMap();
 
 const ob = new IntersectionObserver((entries) => {
@@ -31,7 +31,7 @@ export const vSlidIn = {
         const animation = el.animate(
             [{
                     transform: `translateY(${DISTANCE}px)`,
-                    opacity: 0.7,
+                    opacity: 0.3,
                     transition: `opacity 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)`
                 },
                 {

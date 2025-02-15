@@ -118,32 +118,30 @@ export const dateToString = (timestamp) => {
 };
 
 /**
- * @description 文件大小转为B/KB/MB/GB
- * @param {number} limit 文件大小
- * @returns 
+ * 将字节大小转换为优化小数显示的人性化格式
+ * 
+ * 示例：
+ * - 1023字节 → "1023 B"
+ * - 1024字节 → "1 KB"
+ * - 1536字节 → "1.5 KB"
+ * - 1048576字节 → "1 MB"
+ * - 1572864字节 → "1.5 MB"
+ * - 1610612736字节 → "1.5 GB"
+ * 
+ * @param {number} limit - 字节大小
+ * @returns {string} 优化后的格式字符串
  */
 export const sizeChangeUnit = (limit) => {
-    let size = "";
-    if (limit < 1 * 1024) {
-        //小于1KB，则转化成B
-        size = limit.toFixed(2) + "B";
-    } else if (limit < 1 * 1024 * 1024) {
-        //小于1MB，则转化成KB
-        size = (limit / 1024).toFixed(2) + "KB";
-    } else if (limit < 1 * 1024 * 1024 * 1024) {
-        //小于1GB，则转化成MB
-        size = (limit / (1024 * 1024)).toFixed(2) + "MB";
+    const KB = 1024;
+    const MB = KB * 1024;
+    const GB = MB * 1024;
+    if (limit < KB) {
+        return `${limit} B`;
+    } else if (limit < MB) {
+        return `${parseFloat((limit / KB).toFixed(2))} KB`;
+    } else if (limit < GB) {
+        return `${parseFloat((limit / MB).toFixed(2))} MB`;
     } else {
-        //其他转化成GB
-        size = (limit / (1024 * 1024 * 1024)).toFixed(2) + "GB";
+        return `${parseFloat((limit / GB).toFixed(2))} GB`;
     }
-
-    let sizeStr = size + ""; //转成字符串
-    let index = sizeStr.indexOf("."); //获取小数点处的索引
-    let dou = sizeStr.substring(index + 1, 2); //获取小数点后两位的值
-    if (dou == "00") {
-        //判断后两位是否为00，如果是则删除00
-        return sizeStr.substring(0, index) + sizeStr.substring(index + 3, 2);
-    }
-    return size;
-}
+};

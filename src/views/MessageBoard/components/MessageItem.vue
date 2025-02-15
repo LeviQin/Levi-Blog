@@ -145,7 +145,7 @@ const systemMap = {
   }
 
   .item-time {
-    width: 80px;
+    width: 85px;
     font-size: 14px;
     color: #4e4c4c;
     position: relative;

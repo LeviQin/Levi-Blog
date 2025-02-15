@@ -129,9 +129,9 @@ import SidebarUser from "@/components/SidebarUser/Index.vue";
 
 const router = useRouter();
 
-let drawer = ref(false);
-let showTopicCollapse = ref(false);
-let showToolsCollapse = ref(false);
+const drawer = ref(false);
+const showTopicCollapse = ref(false);
+const showToolsCollapse = ref(false);
 
 const show = () => {
   drawer.value = true;

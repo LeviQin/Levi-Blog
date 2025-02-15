@@ -114,16 +114,18 @@ import { vSlidIn } from "@/utils/vSlidIn.js";
 import { Head } from "@vueuse/head";
 import { getStore, setStore } from "@/utils/storage.js";
 import ArticleSkeleton from "@/components/ArticleSkeleton/Index.vue";
+import { useMainStore } from "@/stores/mainStore";
+
+const mainStore = useMainStore();
 
 const router = useRouter();
 const route = useRoute();
 
 onMounted(async () => {
-  scrollWidnow();
-  window.addEventListener("scroll", scrollWidnow, true);
+  scrollWindow();
   tagsList.value = tagMap.map((item) => item.label);
   getData();
-  banner.value = document.querySelector(".banner-bar");
+  window.addEventListener("scroll", scrollWindow, { passive: true });
   const previousRouteName = getStore("LEVI_PREVIONS_ROUTE_NAME");
   const pageStatus = getStore("LEVI_HOME_PAGE_STATUS");
   if (previousRouteName === `Topic Detail`) {
@@ -144,12 +146,13 @@ const dataMap = reactive({
   },
 });
 
-const banner = ref(null);
+const banner = ref(document.querySelector(".banner-bar"));
 const tagsList = ref([]);
-const isScrolling = ref(false);
 const page = ref(1);
 const pageSize = ref(10);
 const loading = ref(false);
+const debounceTime = 100;
+let lastCall = 0;
 
 const bannerConfig = {
   height: "100vh",
@@ -169,22 +172,16 @@ const categoryList = [
   "趣事囧闻",
 ];
 
-const scrollWidnow = () => {
-  if (!isScrolling.value) {
-    requestAnimationFrame(() => {
-      const top = window.scrollY;
-      const threshold = route.path === "/" ? 500 : 100;
-      if (top > threshold) {
-        banner.value.classList.add("container-blur");
-      } else {
-        banner.value.classList.remove("container-blur");
-      }
-
-      isScrolling.value = false;
-    });
-
-    isScrolling.value = true;
-  }
+const scrollWindow = () => {
+  const now = Date.now();
+  if (now - lastCall < debounceTime) return;
+  lastCall = now;
+  requestAnimationFrame(() => {
+    const top = window.scrollY || document.documentElement.scrollTop;
+    const threshold = route.path === "/" ? 500 : 100;
+    const shouldBlur = top > threshold;
+    mainStore.setBlur(shouldBlur);
+  });
 };
 
 const nextPosition = () => {

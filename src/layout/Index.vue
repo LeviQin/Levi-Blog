@@ -10,7 +10,7 @@
       <Footer />
     </footer>
 
-    <div class="banner-bar"></div>
+    <div class="banner-bar" :class="{ 'container-blur': mainStore.shouldBlur }"></div>
 
     <float-tool-bar></float-tool-bar>
   </div>
@@ -24,13 +24,15 @@ import { useRoute } from "vue-router";
 import { ElNotification } from "element-plus";
 import FloatToolBar from "../components/FloatToolBar/Index.vue";
 import { getStore } from "@/utils/storage.js";
+import { useMainStore } from "@/stores/mainStore";
+
+const mainStore = useMainStore();
 
 const route = useRoute();
 
 onMounted(() => {
-  bannerBar.value = document.querySelector(".banner-bar");
   window.addEventListener("keydown", keydownEvent);
-  window.addEventListener("scroll", scrollWindow);
+  window.addEventListener("scroll", scrollWindow, { passive: true });
   const image = getStore("WALLPAPER_URL");
   if (image) {
     const bannerBar = document.querySelector(".layout .banner-bar");
@@ -44,8 +46,8 @@ onUnmounted(() => {
 });
 
 const isF12 = ref(false);
-const bannerBar = ref(null);
-const isBlur = ref(false);
+const debounceTime = 100;
+let lastCall = 0;
 
 const keydownEvent = (event) => {
   // 检测是否按下了 F12 键
@@ -58,47 +60,35 @@ const keydownEvent = (event) => {
         zIndex: 99999,
       });
       console.log(
-        "%c" + "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿",
-        "font-family: monospace;"
+        "%c" + "🎉 欢迎来到 Levi-Blog! 🚀",
+        "font-size: 20px; color: #ff6347; text-shadow: 1px 1px 2px #555;"
       );
       console.log(
-        "%c嘿嘿, 欢迎查看我的网站，开发者朋友！🕵️",
+        "%c" + "🔍 按下 F12 键，你发现了隐藏的世界！",
         "font-size: 20px; color: #3498db; text-shadow: 1px 1px 2px #555;"
       );
       console.log(
-        "%c欢迎互相探讨学习哦~",
-        "font-size: 20px; color: #3498db; text-shadow: 1px 1px 2px #555;"
+        "%c" + "💬 欢迎在 GitHub 上与我交流！🔗 https://github.com/LeviQin",
+        "font-size: 20px; color: #2ecc71; text-shadow: 1px 1px 2px #555;"
       );
       console.log(
-        "%c" + "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿",
-        "font-family: monospace;"
+        "%c" + "🌟 如果你喜欢这个项目，请给我一个 star！⭐",
+        "font-size: 20px; color: #f1c40f; text-shadow: 1px 1px 2px #555;"
       );
       isF12.value = true;
     }
   }
 };
 
-const updateBlurEffect = () => {
-  const top = window.scrollY;
-  const threshold = route.path === "/" ? 500 : 100;
-  const bannerElement = bannerBar.value;
-
-  if (top > threshold) {
-    if (!isBlur.value) {
-      isBlur.value = true;
-      bannerElement.classList.add("container-blur");
-    }
-  } else {
-    if (isBlur.value) {
-      isBlur.value = false;
-      bannerElement.classList.remove("container-blur");
-    }
-  }
-};
-
 const scrollWindow = () => {
+  const now = Date.now();
+  if (now - lastCall < debounceTime) return;
+  lastCall = now;
   requestAnimationFrame(() => {
-    updateBlurEffect();
+    const top = window.scrollY || document.documentElement.scrollTop;
+    const threshold = route.path === "/" ? 500 : 100;
+    const shouldBlur = top > threshold;
+    mainStore.setBlur(shouldBlur);
   });
 };
 </script>

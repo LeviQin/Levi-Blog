@@ -9,7 +9,7 @@
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#levi-fenlei"></use>
       </svg>
-      <span>分类</span>
+      <span>全部分类</span>
     </div>
     <div class="sidebar-category-content">
       <ul class="sidebar-category-ul" @click="selectCategory">
@@ -95,7 +95,7 @@
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#levi-biaoqian_1"></use>
       </svg>
-      <span>标签</span>
+      <span>所有标签</span>
     </div>
     <div class="sidebar-tags-content">
       <div class="tags-item" v-for="item in dataMap.tags" :style="`color: ${item.color}`">
