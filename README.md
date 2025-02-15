@@ -1,12 +1,21 @@
 # Levi博客前端项目，基于Vue3+Vite, 少部分Element Plus，并使用响应式完美兼容移动端
-### 具有轻量, 美观, 流畅, 响应式, 开箱即用等特点
-### 封装了大量组件和动画
-### 尚未开发完毕，努力迭代更新中...
+[![Vue3](https://img.shields.io/badge/Vue-3.3.0-4FC08D?logo=vuedotjs)](https://vuejs.org/) [![Vite](https://img.shields.io/badge/Vite-3.0.7-646CFF?logo=vite)](https://vitejs.dev/) [![Element Plus](https://img.shields.io/badge/Element%20Plus-2.4.2-409EFF?logo=element)](https://element-plus.org/) [![Responsive](https://img.shields.io/badge/Responsive-✓-1572B6?logo=responsive-design)]()
 
-## 预览地址
-+ 博客在线预览：[传送门](https://leviqin.top)
+> **轻量化 | 高性能 | 工程化 | 美观化 | 响应式 | 持续迭代中...**
 
-## 封装的功能
+📮 欢迎使用和贡献
+[项目仓库](https://github.com/LeviQin/Levi-Blog) | [在线预览](https://leviqin.top)
+
+## 🚀 核心优势
+- **开源免费**：博客所有代码组件开源免费使用
+- **极速体验**：Vite构建 + 路由懒加载
+- **完美响应**：响应式布局，兼容各种设备
+- **深度优化**：
+  - 图片懒加载 + WebP自动转换
+  - 组件级代码分割
+- **界面精美**：自主设计主题
+
+## 核心组件库
 + 元素平滑上升： `utils/vSlidIn.js`
 + 页面滚动动画： `utils/scrollAnimation.js`
 + localStorage封装： `utils/storage.js`
@@ -43,17 +52,20 @@
 + 友情链接：[传送门](https://leviqin.top/friendlinks)
 + 关于我：[传送门](https://leviqin.top/about)
 
+
+## 🛠️ 开发指南
+
 ### 安装依赖
 ```
-yarn
+yarn install
 ```
 
-### 开发运行
+### 开发模式
 ```
-yarn run dev
+yarn dev
 ```
 
-### 打包生产
+### 生产构建
 ```
-yarn run build
+yarn build
 ```
