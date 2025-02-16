@@ -256,6 +256,7 @@ defineExpose({
       border-radius: 5px;
     }
     img {
+      max-height: 131px;
       width: 100%;
       height: 100%;
       border-radius: 5px;

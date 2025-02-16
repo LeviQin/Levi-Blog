@@ -184,7 +184,6 @@ const selectCategory = (e) => {
 }
 
 .tags-item {
-  margin: 2px 3px;
   padding: 2px 3px;
   background-color: transparent;
 }

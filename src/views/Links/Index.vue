@@ -16,30 +16,100 @@
       class="links-container theme-bg-color"
       :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
     >
-      <div class="links-title">
-        <h2>技术支持</h2>
+      <div class="links-container-box">
+        <div class="links-title">
+          <h2>朋友们</h2>
+        </div>
+        <div class="links-describe">
+          <span
+            >以下友情链接与本博客相互独立，不代表博主Levi认同其观点。若发现友链内容异常（如涉黄赌毒等违规信息），请留言举报，博主将根据严重程度及时处理。博主会不定期清理失效链接，恕不另行通知。互联网并非法外之地，愿大家保持独立思考，共建清朗网络环境！</span
+          >
+        </div>
+        <div class="links-category-box">
+          <a
+            :href="item.link"
+            target="_blank"
+            rel="noopener external nofollow noreferrer"
+            class="links-category-item"
+            v-for="item in dataMap.friendList"
+          >
+            <div class="links-category-icon">
+              <img :src="item.icon" />
+            </div>
+            <div class="links-category-title">
+              <span>{{ item.title }}</span>
+            </div>
+            <div class="links-category-describe">
+              <span>{{ item.describe }}</span>
+            </div>
+          </a>
+        </div>
       </div>
-      <div class="links-describe">
-        <span>本网站搭建由以下提供技术支持</span>
+      <div class="links-container-box">
+        <div class="links-title">
+          <h2>技术支持</h2>
+        </div>
+        <div class="links-describe">
+          <span>本网站搭建由以下提供技术支持</span>
+        </div>
+        <div class="links-category-box">
+          <a
+            :href="item.link"
+            target="_blank"
+            rel="noopener external nofollow noreferrer"
+            class="links-category-item"
+            v-for="item in dataMap.supportList"
+          >
+            <div class="links-category-icon">
+              <img :src="item.icon" />
+            </div>
+            <div class="links-category-title">
+              <span>{{ item.title }}</span>
+            </div>
+            <div class="links-category-describe">
+              <span>{{ item.describe }}</span>
+            </div>
+          </a>
+        </div>
       </div>
-      <div class="links-category-box">
-        <a
-          :href="item.link"
-          target="_blank"
-          rel="noopener external nofollow noreferrer"
-          class="links-category-item"
-          v-for="item in dataMap.supportList"
-        >
-          <div class="links-category-icon">
-            <img :src="item.icon" />
+      <div class="links-container-box">
+        <div class="links-title">
+          <h2>本站信息</h2>
+        </div>
+        <div class="site-info">
+          <div class="site-info-item">名称： Levi 博客分享</div>
+          <div class="site-info-item">地址： https://leviqin.top</div>
+          <div class="site-info-item">
+            头像： https://leviqin.top/static/jpg/levi2.a8ebab86.jpg
           </div>
-          <div class="links-category-title">
-            <span>{{ item.title }}</span>
+          <div class="site-info-item">
+            描述： 免费开源博客，各种文章，组件，简历，小工具应有尽有。
           </div>
-          <div class="links-category-describe">
-            <span>{{ item.describe }}</span>
+        </div>
+      </div>
+      <div class="links-container-box">
+        <div class="links-title">
+          <h2>友链须知</h2>
+        </div>
+        <div class="note-info">
+          <div class="note-info-item">全站使用HTTPS</div>
+          <div class="note-info-item">定时清除无效链接</div>
+          <div class="note-info-item">站点内容最好是原创</div>
+          <div class="note-info-item">最好是先添加本站在申请，互相友链</div>
+          <div class="note-info-item">
+            需要更新友链时请移步到
+            <span class="link-text" @click="router.push('/comments')">留言板</span>
+            进行留言(*╹▽╹*)
           </div>
-        </a>
+        </div>
+      </div>
+      <div class="links-container-box">
+        <div class="links-title">
+          <h2>友链申请</h2>
+        </div>
+        <div class="apply-btn-box">
+          <div class="apply-btn" @click="router.push('/comments')">前往留言板申请</div>
+        </div>
       </div>
     </div>
   </div>
@@ -47,8 +117,11 @@
 
 <script setup>
 import { ref, reactive, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { Head } from "@vueuse/head";
+
+const router = useRouter();
 
 onMounted(() => {
   isSidebarVisible.value = true;
@@ -118,6 +191,44 @@ const dataMap = reactive({
       icon: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAb1BMVEX/X0z/XUn/VD7/V0L/Wkb/VT//aln/3Nn/2dX/4d7/x8H/fG7/vrj/mY//Ujv/gXT/zMj/Tjf/SzL/sqv/uLH/WEP/nZT/j4T/7Ov/hHj/zsr/ZFL/Ph//dGX/1NH/5+X/8/H/qqP/pZz/RCn/bl4B693MAAAAtUlEQVR4AewPgwHDACysbfv/G7fqhjE24I3gD0hEvOunYAFQ3KMEoHzGDdOyHQJ0PWLHl8AKEYBsI4hM29srDD9O0izXqChFq7hugn2A2YZNF7f7hH5QoDEQM7FI/HLM4SzAyanju0DHZF6WCZCW5S6QuI4q2guaJPHSdZRw8VgjF0GB1irot7gbNwTcJsv24tpRjCtiJ8S8QXvMtDdt29N9R7y/uT8JwfmkgjI/BvX+IAKjAABRwgoJl0bnsAAAAABJRU5ErkJggg==`,
     },
   ],
+  friendList: [
+    {
+      title: "Bensz",
+      link: "https://blognas.hwb0307.com",
+      describe: "百代繁华一朝都，谁非过客；千秋明月吹角寒，花是主人。",
+      icon: `https://blognas.hwb0307.com/logo.jpg`,
+    },
+    {
+      title: "如诗",
+      link: "https://likepoems.com",
+      describe: "学习笔记",
+      icon: `https://likepoems.com/static/cdn/images/logo.jpg`,
+    },
+    {
+      title: "东篱blog",
+      link: "https://blog.donglistudio.com",
+      describe: "一个有温度的技术小站",
+      icon: `https://blog.donglistudio.com/wp-content/uploads/2023/12/head.jpg`,
+    },
+    {
+      title: "Riseforever",
+      link: "https://www.riseforever.cn/",
+      describe: "爱你所爱，行你所行；只问初心，只问敢勇，无问西东。",
+      icon: `https://cravatar.cn/avatar/2734a0c93ff866a2c8887c693707e078?s=128&d=mm&r=g`,
+    },
+    {
+      title: "KAMIASUKA’s Blog",
+      link: "https://kamiasuka.top/index.html",
+      describe: "Patience is key in life",
+      icon: `https://foruda.gitee.com/avatar/1699007508663606881/13417927_kamiasuka_1699007508.png!avatar200`,
+    },
+    {
+      title: "Ball’s Blog",
+      link: "https://www.feiball.cn",
+      describe: "记录互联网小白的成长历程～",
+      icon: `https://feiball.cn/wp-content/uploads/2023/07/logo.jpg`,
+    },
+  ],
 });
 
 const isSidebarVisible = ref(false);
@@ -134,6 +245,24 @@ const bannerConfig = {
 .links-container {
   border-radius: var(--theme-radius);
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.links-title {
+  display: flex;
+  justify-content: center;
+}
+
+.site-info,
+.note-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
 }
 
 .links-category-box {
@@ -144,7 +273,7 @@ const bannerConfig = {
 }
 
 .links-describe {
-  padding: 0 0 10px 10px;
+  padding: 0 0 20px 10px;
   color: var(--color);
 }
 
@@ -156,7 +285,7 @@ const bannerConfig = {
   cursor: pointer;
   position: relative;
   padding-left: 45px;
-  width: 26%;
+  width: 40%;
   margin: 10px;
   transition: all 0.3s;
 
@@ -179,6 +308,12 @@ const bannerConfig = {
   align-items: center;
   padding: 5px;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .links-category-title {
@@ -213,17 +348,32 @@ const bannerConfig = {
   left: -35px;
   width: 30px;
   height: 30px;
-  background: url(../../assets/images/md/huojian.svg);
+  background: url(../../assets/images/md/fengche.svg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  animation: hupjianMove 1.5s linear infinite;
+  animation: fengcheMove 1.5s linear infinite;
 }
 
-@media (max-width: 1100px) {
-  .links-category-item {
-    width: 40%;
-    transition: all 0.3s;
+.link-text {
+  color: var(--link-text-color);
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.apply-btn-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  .apply-btn {
+    background-color: var(--btn-tag-bg-color);
+    color: #fff;
+    padding: 8px 25px;
+    border-radius: 5px;
+    cursor: pointer;
   }
 }
 
