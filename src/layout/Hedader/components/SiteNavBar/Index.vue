@@ -1,7 +1,9 @@
 <template>
   <div class="nav-bar">
     <ul class="nav-ul" @click="toPage">
-      <li class="nav-li active-li" data-router="/">首页</li>
+      <li class="nav-li" data-router="/" :class="{ 'active-li': route.path === `/` }">
+        首页
+      </li>
       <el-dropdown @command="handleCommandToPage">
         <li class="nav-li">文章分类</li>
         <template #dropdown>
@@ -92,46 +94,47 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <li class="nav-li" data-router="/nav">常用网站</li>
-      <li class="nav-li" data-router="/comments">留言板</li>
-      <li class="nav-li" data-router="/friendlinks">友情链接</li>
-      <li class="nav-li" data-router="/about">关于我</li>
+      <li
+        class="nav-li"
+        data-router="/nav"
+        :class="{ 'active-li': route.path === `/nav` }"
+      >
+        常用网站
+      </li>
+      <li
+        class="nav-li"
+        data-router="/comments"
+        :class="{ 'active-li': route.path === `/comments` }"
+      >
+        留言板
+      </li>
+      <li
+        class="nav-li"
+        data-router="/friendlinks"
+        :class="{ 'active-li': route.path === `/friendlinks` }"
+      >
+        友情链接
+      </li>
+      <li
+        class="nav-li"
+        data-router="/about"
+        :class="{ 'active-li': route.path === `/about` }"
+      >
+        关于我
+      </li>
     </ul>
   </div>
 </template>
 
 <script setup>
-import { watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
 const route = useRoute();
 
-watch(
-  () => route.path,
-  () => {
-    activeNav();
-  }
-);
-
-onMounted(() => {
-  activeNav();
-});
-
 const toPage = (e) => {
   const path = e.target.getAttribute("data-router");
   path && router.push(path);
-};
-
-const activeNav = () => {
-  const lis = document.querySelectorAll(".nav-li");
-  lis.forEach((ele) => {
-    if (route.path === ele.getAttribute("data-router")) {
-      ele.classList.add("active-li");
-    } else {
-      ele.classList.remove("active-li");
-    }
-  });
 };
 
 const handleCommandToPage = (val) => {

@@ -10,7 +10,11 @@
       <Footer />
     </footer>
 
-    <div class="banner-bar" :class="{ 'container-blur': mainStore.shouldBlur }"></div>
+    <div
+      class="banner-bar"
+      :class="{ 'container-blur': mainStore.shouldBlur }"
+      :style="{ backgroundImage: mainStore.backgroundImage }"
+    ></div>
 
     <float-tool-bar></float-tool-bar>
   </div>
@@ -23,7 +27,6 @@ import Footer from "./Footer/Index.vue";
 import { useRoute } from "vue-router";
 import { ElNotification } from "element-plus";
 import FloatToolBar from "../components/FloatToolBar/Index.vue";
-import { getStore } from "@/utils/storage.js";
 import { useMainStore } from "@/stores/mainStore";
 
 const mainStore = useMainStore();
@@ -33,11 +36,6 @@ const route = useRoute();
 onMounted(() => {
   window.addEventListener("keydown", keydownEvent);
   window.addEventListener("scroll", scrollWindow, { passive: true });
-  const image = getStore("WALLPAPER_URL");
-  if (image) {
-    const bannerBar = document.querySelector(".layout .banner-bar");
-    bannerBar.style.backgroundImage = `url(${image})`;
-  }
 });
 
 onUnmounted(() => {

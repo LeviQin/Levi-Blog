@@ -15,7 +15,9 @@ import "./permission";
 
 import "./assets/fonts/iconfont";
 
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate)
 
 import {
     createHead

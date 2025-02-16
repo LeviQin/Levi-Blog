@@ -23,7 +23,6 @@
 
 <script setup>
 import { ref, reactive, defineExpose, onMounted, onUnmounted } from "vue";
-import { setStore } from "@/utils/storage.js";
 import mingrenImag from "../../assets/images/banner/mingren.jpeg";
 import fentoufanvImag from "../../assets/images/banner/fentoufanv.jpeg";
 import gufengnvImag from "../../assets/images/banner/gufengnv.jpg";
@@ -49,6 +48,9 @@ import dongmannvImag from "../../assets/images/banner/dongmannv.webp";
 import dongmannv02Imag from "../../assets/images/banner/dongmannv02.webp";
 import dongmannv03Imag from "../../assets/images/banner/dongmannv03.webp";
 import dongmannv04Imag from "../../assets/images/banner/dongmannv04.jpg";
+import { useMainStore } from "@/stores/mainStore";
+
+const mainStore = useMainStore();
 
 onMounted(() => {
   setModelWidth();
@@ -197,9 +199,7 @@ const show = () => {
 };
 
 const setWallpaper = (image) => {
-  const bannerBar = document.querySelector(".layout .banner-bar");
-  bannerBar.style.backgroundImage = `url(${image})`;
-  setStore("WALLPAPER_URL", image);
+  mainStore.setBackgroundImage(`url(${image})`);
 };
 
 const setModelWidth = () => {

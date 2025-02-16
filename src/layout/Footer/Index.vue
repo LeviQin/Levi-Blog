@@ -3,7 +3,7 @@
     <div class="footer-container">
       <div class="info-box">
         <div class="info-item">
-          <span>© 2024 By Levi</span>
+          <span>© 2025 By Levi</span>
         </div>
         <div class="info-item">
           <a href="https://beian.miit.gov.cn" target="_blank">粤ICP备2022120914号</a>

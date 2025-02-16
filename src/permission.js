@@ -23,7 +23,7 @@ router.beforeEach(async (to, from, next) => {
 router.afterEach(() => {
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     const previousRouteName = getStore("LEVI_PREVIONS_ROUTE_NAME");
-    const pageStatus = getStore("LEVI_PAGE_STATUS");
+    const pageStatus = getStore("LEVI_HOME_PAGE_STATUS");
     if (previousRouteName === `Topic Detail`) {
         scrollAnimation(pageStatus.scrollHeight, "bottom", 0);
     } else {

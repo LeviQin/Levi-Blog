@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="nav-card w">
+    <div class="nav-card w" :style="{ height: navheight, transition: navTransition }">
       <div class="menu-icon-card">
         <i class="bi bi-text-right collapse-icon" @click="clickCollapse"></i>
       </div>
@@ -32,8 +32,6 @@ import NavDrawer from "./components/NavDrawer/Index.vue";
 const router = useRouter();
 
 onMounted(() => {
-  header.value = document.querySelector(".header");
-  nav.value = document.querySelector(".nav-card");
   window.addEventListener("scroll", scrollWindow, true);
 });
 
@@ -43,8 +41,8 @@ onUnmounted(() => {
 
 const navDrawerRef = ref(null);
 const searchModelRef = ref(null);
-const header = ref(null);
-const nav = ref(null);
+const navTransition = ref("");
+const navheight = ref("");
 const maxHeaderHeight = "80px";
 const minHeaderHeight = "60px";
 
@@ -54,8 +52,8 @@ const clickCollapse = () => {
 
 const scrollWindow = () => {
   const top = document.documentElement.scrollTop;
-  nav.value.style.transition = "0.3s linear";
-  nav.value.style.height = top === 0 ? maxHeaderHeight : minHeaderHeight;
+  navTransition.value = "0.3s linear";
+  navheight.value = top === 0 ? maxHeaderHeight : minHeaderHeight;
   const opacity = Math.min(top / 400, 1); // 确保透明度在 0 到 1 之间
   document.documentElement.style.setProperty("--header-bar-color-opacity", opacity);
 };
@@ -77,6 +75,7 @@ const showSearchModel = () => {
   top: 0;
   width: 100%;
   z-index: 9998;
+  transition: all 0.3s;
 }
 
 .nav-card {

@@ -1,10 +1,10 @@
-// src/stores/mainStore.js
 import { defineStore } from 'pinia';
 
 export const useMainStore = defineStore('main', {
     state: () => ({
         shouldBlur: false,
-        tagMap: []
+        tagMap: [],
+        backgroundImage: ""
     }),
     actions: {
         setBlur(status) {
@@ -13,5 +13,11 @@ export const useMainStore = defineStore('main', {
         setTagMap(tagMap) {
             this.tagMap = tagMap;
         },
+        setBackgroundImage(image) {
+            this.backgroundImage = image;
+        }
     },
+    persist: {
+        enabled: true, // 开启持久化
+    }
 });

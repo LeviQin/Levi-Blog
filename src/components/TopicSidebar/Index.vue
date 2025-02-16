@@ -13,7 +13,11 @@
     </div>
     <div class="sidebar-category-content">
       <ul class="sidebar-category-ul" @click="selectCategory">
-        <li :class="`sidebar-category-li`" data-router="/">
+        <li
+          class="sidebar-category-li"
+          data-router="/"
+          :class="{ 'active-category': route.path === '/' }"
+        >
           <span
             ><svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-zonghelei"></use></svg
@@ -21,7 +25,11 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/category/daily">
+        <li
+          class="sidebar-category-li"
+          data-router="/category/daily"
+          :class="{ 'active-category': route.path === '/category/daily' }"
+        >
           <span
             ><svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-woderichang"></use></svg
@@ -29,7 +37,11 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/category/technology">
+        <li
+          class="sidebar-category-li"
+          data-router="/category/technology"
+          :class="{ 'active-category': route.path === '/category/technology' }"
+        >
           <span
             ><svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-jishurenyuan"></use></svg
@@ -37,7 +49,11 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/category/cute-pet">
+        <li
+          class="sidebar-category-li"
+          data-router="/category/cute-pet"
+          :class="{ 'active-category': route.path === '/category/cute-pet' }"
+        >
           <span
             ><svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-aichong03"></use></svg
@@ -45,7 +61,11 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/category/notes">
+        <li
+          class="sidebar-category-li"
+          data-router="/category/notes"
+          :class="{ 'active-category': route.path === '/category/notes' }"
+        >
           <span>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-biji"></use></svg
@@ -53,7 +73,11 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/category/landscape">
+        <li
+          class="sidebar-category-li"
+          data-router="/category/landscape"
+          :class="{ 'active-category': route.path === '/category/landscape' }"
+        >
           <span>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-fengjing"></use></svg
@@ -61,7 +85,11 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/category/figure">
+        <li
+          class="sidebar-category-li"
+          data-router="/category/figure"
+          :class="{ 'active-category': route.path === '/category/figure' }"
+        >
           <span>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-168-boy-2"></use></svg
@@ -69,7 +97,11 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li class="sidebar-category-li" data-router="/category/games">
+        <li
+          class="sidebar-category-li"
+          data-router="/category/games"
+          :class="{ 'active-category': route.path === '/category/games' }"
+        >
           <span>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-youxiji"></use></svg
@@ -77,7 +109,7 @@
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <!-- <li class="sidebar-category-li" data-router="/category/embarrassing">
+        <!-- <li class="sidebar-category-li" data-router="/category/embarrassing" :class="{ 'active-category': route.path === '/category/embarrassing' }">
           <span><svg class="icon" aria-hidden="true">
                     <use xlink:href="#levi-meirijiongtu"></use></svg
                   ><span>趣事囧闻</span></span>
@@ -106,7 +138,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import SidebarUser from "../SidebarUser/Index.vue";
 import { getRandomHexColor } from "@/utils/utils.js";
@@ -125,34 +157,15 @@ const mainStore = useMainStore();
 const route = useRoute();
 const router = useRouter();
 
-watch(
-  () => route.path,
-  () => {
-    activeCategory();
-  }
-);
-
 onMounted(() => {
-  activeCategory();
   isSidebarVisible.value = true;
 });
 
 const isSidebarVisible = ref(false);
 
-const activeCategory = () => {
-  const lis = document.querySelectorAll(".sidebar-category-li");
-  lis.forEach((ele) => {
-    if (route.path === ele.getAttribute("data-router")) {
-      ele.classList.add("active-category");
-    } else {
-      ele.classList.remove("active-category");
-    }
-  });
-};
-
 const selectCategory = (e) => {
   const path = e.target.getAttribute("data-router");
-  router.push(path);
+  path && router.push(path);
 };
 </script>
 

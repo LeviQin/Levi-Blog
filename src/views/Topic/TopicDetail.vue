@@ -86,7 +86,9 @@
               <span class="like-num" v-if="dataMap.articleInfo.likes > 0">{{
                 dataMap.articleInfo.likes
               }}</span>
-              <span class="plus-one"><i class="bi bi-suit-heart-fill"></i></span>
+              <span class="plus-one" :class="{ show: showPlusOne }"
+                ><i class="bi bi-suit-heart-fill"></i
+              ></span>
             </div>
             <!-- <div class="tool-message-btn tool-itme">
               <i class="bi bi-chat"></i>
@@ -165,6 +167,7 @@ const dataMap = reactive({
 
 const markdownRendererRef = ref(null);
 const loading = ref(false);
+const showPlusOne = ref(false);
 
 const bannerConfig = {
   height: "30vh",
@@ -203,11 +206,10 @@ const clickLikes = () => {
     });
     return;
   }
-  const plusOne = document.querySelector(".plus-one");
   dataMap.articleInfo.likes += 1;
-  plusOne.classList.add("show");
+  showPlusOne.value = true;
   setTimeout(() => {
-    plusOne.classList.remove("show");
+    showPlusOne.value = false;
   }, 1000);
   requsetLikes();
 };
