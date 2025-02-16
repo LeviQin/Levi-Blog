@@ -44,3 +44,10 @@ export const ArticleLikes = (data) => {
         data
     });
 };
+
+export const getTagList = () => {
+    return request({
+        method: 'get',
+        url: `/api/articles/tags`,
+    });
+};

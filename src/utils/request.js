@@ -45,16 +45,6 @@ service.interceptors.response.use(
                 ElNotification.error({ title: '系统提示', message: error || "未知错误" });
                 break;
             case 11003:
-                // MessageBox.alert(error, '系统提示', {
-                //     confirmButtonText: '重新登录',
-                //     type: "error"
-                // }).then(() => {
-                //     store.dispatch('handleLogOut').then(() => {
-                //         location.reload()
-                //     }).catch(() => {
-                //         location.reload()
-                //     })
-                // })
                 break
             case 10021:
                 ElNotification.error({ title: '系统提示', message: error || "未知错误" });
@@ -81,9 +71,6 @@ service.interceptors.response.use(
                 break;
             case 504:
                 ElNotification.error({ title: '系统提示', message: '网络超时' });
-                break;
-            case 401:
-                ElNotification.error({ title: '系统提示', message: '未授权，请重新登录' });
                 break;
             default:
                 console.log(err)

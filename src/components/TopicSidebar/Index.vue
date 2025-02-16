@@ -98,20 +98,29 @@
       <span>所有标签</span>
     </div>
     <div class="sidebar-tags-content">
-      <div class="tags-item" v-for="item in dataMap.tags" :style="`color: ${item.color}`">
-        {{ item.label }}
+      <div class="tags-item" v-for="item in tags" :style="`color: ${item.color}`">
+        {{ item.tag_name }}
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch, reactive } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import SidebarUser from "../SidebarUser/Index.vue";
-import { tagMap } from "@/utils/tagMap.js";
 import { getRandomHexColor } from "@/utils/utils.js";
 import { vSlidIn } from "@/utils/vSlidIn.js";
+import { useMainStore } from "@/stores/mainStore";
+
+const tags = computed(() => {
+  return mainStore.tagMap.map((item) => {
+    item.color = getRandomHexColor();
+    return item;
+  });
+});
+
+const mainStore = useMainStore();
 
 const route = useRoute();
 const router = useRouter();
@@ -124,19 +133,11 @@ watch(
 );
 
 onMounted(() => {
-  dataMap.tags = tagMap.map((item) => {
-    item.color = getRandomHexColor();
-    return item;
-  });
   activeCategory();
   isSidebarVisible.value = true;
 });
 
-const dataMap = reactive({
-  tags: [],
-});
-
-let isSidebarVisible = ref(false);
+const isSidebarVisible = ref(false);
 
 const activeCategory = () => {
   const lis = document.querySelectorAll(".sidebar-category-li");

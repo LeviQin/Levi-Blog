@@ -108,17 +108,23 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref, watch } from "vue";
+import { onMounted, reactive, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { articleDetail, ArticleLikes } from "@/api/articles.js";
 import MarkdownRenderer from "@/components/MarkdownRenderer/Index.vue";
 import SidebarUser from "@/components/SidebarUser/Index.vue";
-import { tagMap } from "@/utils/tagMap.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { dateToString } from "@/utils/utils.js";
 import { Head } from "@vueuse/head";
 import { getStore, setStore } from "@/utils/storage.js";
 import Comments from "./components/Comments.vue";
+import { useMainStore } from "@/stores/mainStore";
+
+const tagsList = computed(() => {
+  return mainStore.tagMap.map((item) => item.tag_name);
+});
+
+const mainStore = useMainStore();
 
 const route = useRoute();
 
@@ -126,14 +132,12 @@ watch(
   () => route.params.id,
   () => {
     if (route.params.id) {
-      tagsList.value = tagMap.map((item) => item.label);
       getArticleDetail();
     }
   }
 );
 
 onMounted(() => {
-  tagsList.value = tagMap.map((item) => item.label);
   getArticleDetail();
   // var qrcode = new QRCode(document.getElementById("qrcode"), {
   //   text: "https://leviqin.top", // 替换成你的网站链接
@@ -160,7 +164,6 @@ const dataMap = reactive({
 });
 
 const markdownRendererRef = ref(null);
-const tagsList = ref([]);
 const loading = ref(false);
 
 const bannerConfig = {

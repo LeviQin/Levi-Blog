@@ -102,12 +102,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import { getArticleList } from "@/api/articles.js";
 import { dateToString } from "@/utils/utils.js";
 import { useRouter, useRoute } from "vue-router";
-import { tagMap } from "@/utils/tagMap.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { scrollAnimation } from "@/utils/scrollAnimation.js";
 import { vSlidIn } from "@/utils/vSlidIn.js";
@@ -115,6 +114,10 @@ import { Head } from "@vueuse/head";
 import { getStore, setStore } from "@/utils/storage.js";
 import ArticleSkeleton from "@/components/ArticleSkeleton/Index.vue";
 import { useMainStore } from "@/stores/mainStore";
+
+const tagsList = computed(() => {
+  return mainStore.tagMap.map((item) => item.tag_name);
+});
 
 const mainStore = useMainStore();
 
@@ -124,7 +127,6 @@ const route = useRoute();
 onMounted(async () => {
   banner.value = document.querySelector(".banner-bar");
   scrollWindow();
-  tagsList.value = tagMap.map((item) => item.label);
   getData();
   window.addEventListener("scroll", scrollWindow, { passive: true });
   const previousRouteName = getStore("LEVI_PREVIONS_ROUTE_NAME");
@@ -148,7 +150,6 @@ const dataMap = reactive({
 });
 
 const banner = ref(null);
-const tagsList = ref([]);
 const page = ref(1);
 const pageSize = ref(10);
 const loading = ref(false);

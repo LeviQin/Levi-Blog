@@ -54,7 +54,7 @@
             <span>标签</span>
           </div>
           <div class="sidebar-info-data-num">
-            <span>{{ tagMap.length }}</span>
+            <span>{{ mainStore.tagMap.length }}</span>
           </div>
         </div>
       </div>
@@ -86,10 +86,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { tagMap } from "@/utils/tagMap.js";
 import { getStatistics } from "@/api/articles.js";
 import WXModel from "../WXModel/Index.vue";
 import { ElNotification } from "element-plus";
+import { useMainStore } from "@/stores/mainStore";
+
+const mainStore = useMainStore();
 
 const router = useRouter();
 
@@ -98,9 +100,9 @@ onMounted(() => {
   isSidebarVisible.value = true;
 });
 
-let totalArticles = ref(0);
-let wxModelRef = ref(null);
-let isSidebarVisible = ref(false);
+const totalArticles = ref(0);
+const wxModelRef = ref(null);
+const isSidebarVisible = ref(false);
 
 const showWXModel = () => {
   wxModelRef.value.show();
@@ -137,11 +139,22 @@ const getData = async () => {
 }
 
 .sidebar-info-avatar {
+  position: relative;
   display: flex;
   justify-content: center;
-  background-image: url("../../assets/images/banner/fengjing2.jpg");
+}
+
+.sidebar-info-avatar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../assets/images/banner/xiaomao.png");
   background-size: cover;
-  position: relative;
+  filter: blur(2px);
+  z-index: -1;
 }
 
 .avatar-block {
@@ -162,7 +175,7 @@ const getData = async () => {
 
 .sidebar-info-introduce-wrap {
   padding: 20px;
-  margin-top: 30px;
+  margin-top: 22px;
 }
 
 .sidebar-info-introduce-item {

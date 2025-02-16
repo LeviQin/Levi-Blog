@@ -94,21 +94,26 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, nextTick } from "vue";
+import { ref, reactive, onMounted, nextTick, computed } from "vue";
 import { useRouter } from "vue-router";
 import { getCategoryArticles } from "@/api/articles.js";
 import { dateToString } from "@/utils/utils.js";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
-import { tagMap } from "@/utils/tagMap.js";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { vSlidIn } from "@/utils/vSlidIn.js";
 import { Head } from "@vueuse/head";
 import { getStore, setStore } from "@/utils/storage.js";
+import { useMainStore } from "@/stores/mainStore";
+
+const tagsList = computed(() => {
+  return mainStore.tagMap.map((item) => item.tag_name);
+});
+
+const mainStore = useMainStore();
 
 const router = useRouter();
 
 onMounted(() => {
-  tagsList.value = tagMap.map((item) => item.label);
   getData();
   const previousRouteName = getStore("LEVI_PREVIONS_ROUTE_NAME");
   const pageStatus = getStore("LEVI_TECHNOLOGY_PAGE_STATUS");
@@ -131,7 +136,6 @@ const dataMap = reactive({
 });
 
 const technologyRef = ref(null);
-const tagsList = ref([]);
 const page = ref(1);
 const pageSize = ref(10);
 const isSidebarVisible = ref(false);

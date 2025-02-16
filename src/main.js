@@ -25,7 +25,9 @@ const head = createHead();
 import loadimage from "@/assets/images/defualt-image.svg";
 import errorimage from "@/assets/images/defualt-image.svg";
 
-createApp(App).use(VueLazyload, {
+const app = createApp(App);
+
+app.use(VueLazyload, {
     preLoad: 1.3, // 预加载的高度比例
     loading: loadimage,
     error: errorimage,
