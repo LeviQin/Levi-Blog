@@ -43,11 +43,6 @@
                 <use xlink:href="#levi-youxiji"></use></svg
               ><span>游戏时光</span></el-dropdown-item
             >
-            <!-- <el-dropdown-item command="category/embarrassing"
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-meirijiongtu"></use></svg
-              ><span>趣事囧闻</span></el-dropdown-item
-            > -->
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -159,6 +154,7 @@ const handleCommandToPage = (val) => {
   font-size: 16px;
   transition: all 0.5s;
   border-bottom: 2px solid transparent;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 
   &:hover {
     color: var(--theme-btn-hover-color);

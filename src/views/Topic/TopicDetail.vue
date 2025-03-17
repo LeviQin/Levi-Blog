@@ -21,7 +21,8 @@
           <div class="sidebar-content">
             <li
               class="sidebar-li nav-item"
-              v-for="anchor in dataMap.titles"
+              v-for="(anchor, index) in dataMap.titles"
+              :key="index"
               :style="{
                 padding: `8px 0 8px ${anchor.level ? anchor.level * 8 : 10}px`,
                 fontSize: `${18 - anchor.level}px`,
@@ -97,7 +98,7 @@
           </div>
           <div class="topic-detail-tags">
             <i class="bi bi-tags-fill"></i>
-            <span class="tags-item" v-for="item in dataMap.articleInfo.article_tags">{{
+            <span class="tags-item" v-for="item in dataMap.articleInfo.article_tags" :key="item">{{
               tagsList[item - 1]
             }}</span>
           </div>
@@ -188,7 +189,9 @@ const categoryList = [
 ];
 
 const sendMdTitle = (titles) => {
-  dataMap.titles = titles;
+  if (JSON.stringify(dataMap.titles) !== JSON.stringify(titles)) {
+    dataMap.titles = titles;
+  }
 };
 
 const handleAnchorClick = (title) => {

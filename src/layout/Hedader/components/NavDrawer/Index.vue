@@ -62,11 +62,6 @@
                   <use xlink:href="#levi-youxiji"></use></svg
                 ><span>游戏时光</span>
               </li>
-              <!-- <li data-router="/category/embarrassing">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-meirijiongtu"></use></svg
-                  ><span>趣事囧闻</span>
-                </li> -->
             </ul>
           </div>
         </div>

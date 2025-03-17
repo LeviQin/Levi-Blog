@@ -30,14 +30,17 @@ const imagePreviewRef = ref(null);
 
 const onHtmlChanged = () => {
   const imageDoms = document.querySelectorAll(".md-editor img");
-  dataMap.images = Array.from(imageDoms).map((img) => img.src);
-  imageDoms.forEach((img) => {
+  if (!imageDoms.length) return;
+  dataMap.images = Array.from(imageDoms, img => img.src);
+  const handleImageClick = (event) => {
+    const img = event.target;
+    const currentIndex = dataMap.images.indexOf(img.src);
+    imagePreviewRef.value.show(dataMap.images, currentIndex);
+  };
+  imageDoms.forEach(img => {
     img.removeEventListener("click", img.clickHandler);
-    img.clickHandler = () => {
-      const currentIndex = Array.from(imageDoms).indexOf(img);
-      imagePreviewRef.value.show(dataMap.images, currentIndex);
-    };
-    img.addEventListener("click", img.clickHandler);
+    img.clickHandler = handleImageClick;
+    img.addEventListener("click", handleImageClick, { passive: true });
   });
 };
 

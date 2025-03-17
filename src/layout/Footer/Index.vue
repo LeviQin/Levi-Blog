@@ -12,15 +12,48 @@
       <div class="support-box">
         <div class="support-item">
           <a
-            class="github-badge"
+            class="vue-badge"
+            target="_blank"
+            href="https://vuejs.org/"
+            style="margin-inline: 5px"
+            title="本站前端界面由Vue3构建"
+            rel="external nofollow noreferrer"
+            ><img
+              src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=vuedotjs&logoColor=white&labelColor=%23343536"
+              data-lazy-src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=vuedotjs&logoColor=white&labelColor=%23343536"
+              alt="Vue.js Badge"
+              data-ll-status="loaded"
+              class="entered loaded"
+          /></a>
+        </div>
+        <div class="support-item">
+          <a
+            class="node-badge"
+            target="_blank"
+            href="https://nodejs.org/"
+            style="margin-inline: 5px"
+            title="本站后端由Node.js构建"
+            rel="external nofollow noreferrer"
+            ><img
+              src="https://img.shields.io/badge/-Node.js-%23579050?style=flat&logo=nodedotjs&logoColor=ffffff"
+              data-lazy-src="https://img.shields.io/badge/-Node.js-%23579050?style=flat&logo=nodedotjs&logoColor=ffffff"
+              alt="Node.js Badge"
+              data-ll-status="loaded"
+              class="entered loaded"
+          /></a>
+        </div>
+        <div class="support-item">
+          <a
+            class="51la-badge"
             target="_blank"
             href="https://user.51.la/"
             style="margin-inline: 5px"
             title="本站数据分析得益于51la技术支持"
+            rel="external nofollow noreferrer"
             ><img
               src="https://sourcebucket.s3.bitiful.net/badge/Analytics-51la-3db1eb.svg"
               data-lazy-src="https://sourcebucket.s3.bitiful.net/badge/Analytics-51la-3db1eb.svg"
-              alt=""
+              alt="51la Badge"
               data-ll-status="loaded"
               class="entered loaded"
           /></a>
@@ -30,9 +63,9 @@
             class="github-badge"
             target="_blank"
             href="https://github.com/"
-            rel="external nofollow noreferrer"
             style="margin-inline: 5px"
             title="本网站源码由Github提供存储仓库托管"
+            rel="external nofollow noreferrer"
             ><img
               class="no-lazyload entered loading"
               src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub"

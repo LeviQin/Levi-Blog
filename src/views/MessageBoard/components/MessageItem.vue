@@ -40,7 +40,7 @@
           </div>
         </div>
         <div class="message-item-main-content">
-          <span>{{ message.content }}</span>
+          <span v-html="messageContent"></span>
         </div>
       </div>
     </div>
@@ -59,7 +59,11 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, computed } from "vue";
+
+const messageContent = computed(() => {
+  return props.message.content ? props.message.content.replace(/\n/g, "<br/>") : "";
+});
 
 const props = defineProps({
   message: {
@@ -145,14 +149,15 @@ const systemMap = {
   }
 
   .item-time {
-    width: 85px;
+    width: 105px;
     font-size: 14px;
     color: #4e4c4c;
     position: relative;
+    text-align: right;
     .item-time-detail {
       position: absolute;
       top: -10px;
-      left: -94px;
+      right: 0;
       background-color: var(--black-text-color);
       padding: 5px 0;
       opacity: 0;

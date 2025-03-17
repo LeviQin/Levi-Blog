@@ -21,25 +21,6 @@
           <sidebar-user></sidebar-user>
         </div>
         <div class="comments-box">
-          <div class="board-box theme-bg-color">
-            <div class="box-title">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-liuyanban"></use>
-              </svg>
-              <h2>留言板</h2>
-            </div>
-            <div class="board-content">
-              <template v-if="dataMap.msgList.length">
-                <!-- 渲染树形结构的留言 -->
-                <template v-for="msg in dataMap.msgList" :key="msg.id">
-                  <MessageItem :message="msg" :level="0" />
-                </template>
-              </template>
-              <template v-else>
-                <p>留言板上暂时还没有留言呢~</p>
-              </template>
-            </div>
-          </div>
           <div class="message-box theme-bg-color">
             <div class="box-title">
               <svg class="icon" aria-hidden="true">
@@ -111,6 +92,25 @@
               </div>
             </div>
           </div>
+          <div class="board-box theme-bg-color">
+            <div class="box-title">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#levi-liuyanban"></use>
+              </svg>
+              <h2>留言板</h2>
+            </div>
+            <div class="board-content">
+              <template v-if="dataMap.msgList.length">
+                <!-- 渲染树形结构的留言 -->
+                <template v-for="msg in dataMap.msgList" :key="msg.id">
+                  <MessageItem :message="msg" :level="0" />
+                </template>
+              </template>
+              <template v-else>
+                <p>留言板上暂时还没有留言呢~</p>
+              </template>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -154,7 +154,7 @@ const codeNum = ref(0);
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const bannerConfig = {
-  height: "35vh",
+  height: "30vh",
   showArrow: false,
   title: "Levi",
   text: "欢迎来到我们的留言板！期待您的留言和反馈！",
@@ -379,11 +379,11 @@ const getSystemInfo = () => {
 }
 
 .message-box {
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .board-box .box-title {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .box-title {

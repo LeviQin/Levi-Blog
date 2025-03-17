@@ -13,7 +13,7 @@ import {
 import DynamicImport from 'vite-plugin-dynamic-import';
 import viteImagemin from 'vite-plugin-imagemin';
 
-const pathSrc = path.resolve(__dirname, 'src')
+const pathSrc = path.resolve(__dirname, 'src');
 
 // https://vitejs.dev/config/
 export default defineConfig({

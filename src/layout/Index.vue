@@ -12,7 +12,6 @@
 
     <div
       class="banner-bar"
-      :class="{ 'container-blur': mainStore.shouldBlur }"
       :style="{ backgroundImage: mainStore.backgroundImage }"
     ></div>
 
@@ -35,12 +34,10 @@ const route = useRoute();
 
 onMounted(() => {
   window.addEventListener("keydown", keydownEvent);
-  window.addEventListener("scroll", scrollWindow, { passive: true });
 });
 
 onUnmounted(() => {
   window.removeEventListener("keydown", keydownEvent);
-  window.removeEventListener("scroll", scrollWindow);
 });
 
 const isF12 = ref(false);
@@ -76,18 +73,6 @@ const keydownEvent = (event) => {
       isF12.value = true;
     }
   }
-};
-
-const scrollWindow = () => {
-  const now = Date.now();
-  if (now - lastCall < debounceTime) return;
-  lastCall = now;
-  requestAnimationFrame(() => {
-    const top = window.scrollY || document.documentElement.scrollTop;
-    const threshold = route.path === "/" ? 500 : 100;
-    const shouldBlur = top > threshold;
-    mainStore.setBlur(shouldBlur);
-  });
 };
 </script>
 

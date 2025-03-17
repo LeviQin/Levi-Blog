@@ -70,14 +70,6 @@ export default [{
                 }
             },
             {
-                path: "/category/embarrassing",
-                component: () => import("@/views/Topic/Embarrassing.vue"),
-                name: "Embarrassing",
-                meta: {
-                    title: "文章分类 - 趣事囧闻",
-                }
-            },
-            {
                 path: "/topic-detail/:id",
                 component: () => import("@/views/Topic/TopicDetail.vue"),
                 name: "Topic Detail",
