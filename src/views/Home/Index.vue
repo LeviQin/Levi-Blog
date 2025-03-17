@@ -106,7 +106,7 @@ import { ref, onMounted, computed } from "vue";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import { getArticleList } from "@/api/articles.js";
 import { dateToString } from "@/utils/utils.js";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { scrollAnimation } from "@/utils/scrollAnimation.js";
 import { vSlidIn } from "@/utils/vSlidIn.js";
@@ -122,13 +122,10 @@ const tagsList = computed(() => {
 const mainStore = useMainStore();
 
 const router = useRouter();
-const route = useRoute();
 
 onMounted(async () => {
   banner.value = document.querySelector(".banner-bar");
-  scrollWindow();
   getData();
-  window.addEventListener("scroll", scrollWindow, { passive: true });
   const previousRouteName = getStore("LEVI_PREVIONS_ROUTE_NAME");
   const pageStatus = getStore("LEVI_HOME_PAGE_STATUS");
   if (previousRouteName === `Topic Detail`) {
@@ -153,8 +150,6 @@ const banner = ref(null);
 const page = ref(1);
 const pageSize = ref(10);
 const loading = ref(false);
-const debounceTime = 100;
-let lastCall = 0;
 
 const bannerConfig = {
   height: "100vh",
@@ -173,18 +168,6 @@ const categoryList = [
   "游戏时光",
   "趣事囧闻",
 ];
-
-const scrollWindow = () => {
-  const now = Date.now();
-  if (now - lastCall < debounceTime) return;
-  lastCall = now;
-  requestAnimationFrame(() => {
-    const top = window.scrollY || document.documentElement.scrollTop;
-    const threshold = route.path === "/" ? 500 : 100;
-    const shouldBlur = top > threshold;
-    mainStore.setBlur(shouldBlur);
-  });
-};
 
 const nextPosition = () => {
   scrollAnimation(banner.value.scrollHeight, "bottom");
