@@ -97,7 +97,6 @@ const systemMap = {
 <style lang="scss" scoped>
 .message-item-content {
   display: flex;
-  align-items: center;
   padding: 12px 0;
   .message-item-avatar {
     width: 40px;
