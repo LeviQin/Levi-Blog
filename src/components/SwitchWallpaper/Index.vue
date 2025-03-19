@@ -29,25 +29,23 @@ import gufengnvImag from "../../assets/images/banner/gufengnv.jpg";
 import leidianjiangjunImag from "../../assets/images/banner/leidianjiangjun.jpg";
 import dongmannv4Imag from "../../assets/images/banner/dongmannv4.png";
 import nuoaierImag from "../../assets/images/banner/nuoaier.jpeg";
-import qianxun2Imag from "../../assets/images/banner/qianxun2.jpg";
-import qianyuqianxunImag from "../../assets/images/banner/qianyuqianxun.jpg";
-import shenziImag from "../../assets/images/banner/shenzi.jpg";
 import xiaomaoImag from "../../assets/images/banner/xiaomao.png";
 import dipingxianImag from "../../assets/images/banner/dipingxian.jpg";
-import fengjing1Imag from "../../assets/images/banner/fengjing1.jpg";
 import fengjing2Imag from "../../assets/images/banner/fengjing2.jpg";
-import fengjing3Imag from "../../assets/images/banner/fengjing3.jpg";
-import fengjing4Imag from "../../assets/images/banner/fengjing4.jpg";
 import fengjing5Imag from "../../assets/images/banner/fengjing5.webp";
 import fengjing6Imag from "../../assets/images/banner/fengjing6.webp";
 import fengjing7Imag from "../../assets/images/banner/fengjing7.jpg";
-import fengjing8Imag from "../../assets/images/banner/fengjing8.webp";
 import fengjing9Imag from "../../assets/images/banner/fengjing9.jpg";
 import fengjing10Imag from "../../assets/images/banner/fengjing10.webp";
 import dongmannvImag from "../../assets/images/banner/dongmannv.webp";
 import dongmannv02Imag from "../../assets/images/banner/dongmannv02.webp";
 import dongmannv03Imag from "../../assets/images/banner/dongmannv03.webp";
 import dongmannv04Imag from "../../assets/images/banner/dongmannv04.jpg";
+import huanqiuImag from "../../assets/images/banner/huanqiu.webp";
+import jinglingzhuiya1Imag from "../../assets/images/banner/jinglingzhuiya1.webp";
+import jinglingzhuiya2Imag from "../../assets/images/banner/jinglingzhuiya2.webp";
+import jinglingzhuiya3Imag from "../../assets/images/banner/jinglingzhuiya3.webp";
+import tiankongImag from "../../assets/images/banner/tiankong.webp";
 import { useMainStore } from "@/stores/mainStore";
 
 const mainStore = useMainStore();
@@ -64,19 +62,44 @@ onUnmounted(() => {
 const dataMap = reactive({
   images: [
     {
-      url: mingrenImag,
-      name: "mingren",
-      id: 1,
+      url: gufengnvImag,
+      name: "gufengnv",
+      id: 3,
+    },
+    {
+      url: dongmannv04Imag,
+      name: "dongmannv04",
+      id: 33,
+    },
+    {
+      url: huanqiuImag,
+      name: "huanqiu",
+      id: 111,
+    },
+    {
+      url: jinglingzhuiya1Imag,
+      name: "jinglingzhuiya1",
+      id: 112,
+    },
+    {
+      url: jinglingzhuiya2Imag,
+      name: "jinglingzhuiya2",
+      id: 113,
+    },
+    {
+      url: jinglingzhuiya3Imag,
+      name: "jinglingzhuiya3",
+      id: 114,
+    },
+    {
+      url: tiankongImag,
+      name: "tiankong",
+      id: 115,
     },
     {
       url: fentoufanvImag,
       name: "fentoufanv",
       id: 2,
-    },
-    {
-      url: gufengnvImag,
-      name: "gufengnv",
-      id: 3,
     },
     {
       url: dongmannvImag,
@@ -94,11 +117,6 @@ const dataMap = reactive({
       id: 32,
     },
     {
-      url: dongmannv04Imag,
-      name: "dongmannv04",
-      id: 33,
-    },
-    {
       url: leidianjiangjunImag,
       name: "leidianjiangjun",
       id: 4,
@@ -114,19 +132,9 @@ const dataMap = reactive({
       id: 7,
     },
     {
-      url: qianxun2Imag,
-      name: "qianxun2",
-      id: 8,
-    },
-    {
-      url: qianyuqianxunImag,
-      name: "qianyuqianxun",
-      id: 9,
-    },
-    {
-      url: shenziImag,
-      name: "shenzi",
-      id: 10,
+      url: mingrenImag,
+      name: "mingren",
+      id: 1,
     },
     {
       url: xiaomaoImag,
@@ -139,24 +147,9 @@ const dataMap = reactive({
       id: 12,
     },
     {
-      url: fengjing1Imag,
-      name: "fengjing1",
-      id: 13,
-    },
-    {
       url: fengjing2Imag,
       name: "fengjing2",
       id: 14,
-    },
-    {
-      url: fengjing3Imag,
-      name: "fengjing3",
-      id: 15,
-    },
-    {
-      url: fengjing4Imag,
-      name: "fengjing4",
-      id: 16,
     },
     {
       url: fengjing5Imag,
@@ -172,11 +165,6 @@ const dataMap = reactive({
       url: fengjing7Imag,
       name: "fengjing7",
       id: 19,
-    },
-    {
-      url: fengjing8Imag,
-      name: "fengjing8",
-      id: 20,
     },
     {
       url: fengjing9Imag,

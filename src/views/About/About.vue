@@ -71,7 +71,7 @@ const emit = defineEmits(["toNextPage"]);
 <style lang="scss" scoped>
 .container {
   height: 100%;
-  background: #eee url(../../assets/images/banner/dongmannv04.jpg);
+  background: #eee url(../../assets/images/banner/jinglingzhuiya1.webp);
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
@@ -160,6 +160,7 @@ const emit = defineEmits(["toNextPage"]);
 
 .info-item {
   display: flex;
+  gap: 20px;
 }
 
 .button-arrow {
@@ -192,7 +193,6 @@ const emit = defineEmits(["toNextPage"]);
 .icon {
   width: 3.2em;
   height: 4.2em;
-  margin-right: 15px;
   opacity: 0;
   animation: bioIconIn 0.3s ease-out 0.7s 1 forwards;
 }
@@ -213,27 +213,23 @@ const emit = defineEmits(["toNextPage"]);
 
 @keyframes bioTextIn {
   0% {
-    margin-left: 500px;
+    transform: translateX(500px);
     opacity: 0;
   }
-
   100% {
-    margin-left: 0;
+    transform: translateX(0);
     opacity: 1;
   }
 }
 
 @keyframes bioIconIn {
   0% {
-    margin-left: 0;
+    transform: translateX(0) rotate(-90deg);
     opacity: 0;
-    transform: rotate(-90deg);
   }
-
   100% {
-    margin-left: 10px;
+    transform: translateX(10px) rotate(0deg);
     opacity: 1;
-    transform: rotate(0deg);
   }
 }
 

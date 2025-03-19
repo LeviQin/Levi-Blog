@@ -148,13 +148,6 @@ const backToTop = () => {
   margin-bottom: 10px;
   transition: all 0.2s;
   position: relative;
-
-  &:hover {
-    transition: all 0.2s;
-    background: var(--theme-btn-hover-color);
-    transform: translateY(-1px);
-  }
-
   .bi {
     transition: all 0.2s;
     color: #fff;
@@ -178,10 +171,6 @@ const backToTop = () => {
 .close-btn::after,
 .open-btn::after {
   left: -80px;
-}
-
-.btn-item:hover::after {
-  display: block !important;
 }
 
 .switch-wallpaper-btn::after {
@@ -208,9 +197,15 @@ const backToTop = () => {
   content: "移至左侧";
 }
 
-@media (hover: none) {
+@media (hover: hover) {
+  .btn-item:hover::after {
+    display: block !important;
+  }
+
   .btn-item:hover {
-    background-color: var(--btn-tag-bg-color);
+    transition: all 0.2s;
+    background: var(--theme-btn-hover-color);
+    transform: translateY(-1px);
   }
 }
 </style>

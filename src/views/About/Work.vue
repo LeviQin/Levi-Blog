@@ -134,7 +134,7 @@ const emit = defineEmits(["toNextPage"]);
 
 .container {
   height: 100%;
-  background: #eee url(../../assets/images/banner/dongmannv02.webp);
+  background: #eee url(../../assets/images/banner/tiankong.webp);
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
