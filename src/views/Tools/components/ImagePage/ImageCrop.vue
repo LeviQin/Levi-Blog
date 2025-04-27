@@ -17,7 +17,7 @@
       content="按照你的需求裁剪JPG、PNG或GIF文件。在线裁剪图像文件，轻松便捷，完全免费"
     />
   </Head>
-  <div class="image-crop w theme-bg-color tools-container">
+  <div class="image-crop w theme-bg-color image-tool-container all-tool-container">
     <div class="image-crop-container" ref="unitConversionContainerRef">
       <div class="image-crop-title">
         <svg class="icon" aria-hidden="true">

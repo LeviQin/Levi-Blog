@@ -2,8 +2,8 @@ import request from "@/utils/request";
 
 export const getMessageList = () => {
     return request({
-        method: 'get',
-        url: '/api/message/messages',
+        method: "get",
+        url: "/api/message/messages",
     });
 };
 

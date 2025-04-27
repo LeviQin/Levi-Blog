@@ -14,7 +14,7 @@
       content="✓安全 ✓随机 ✓强大 —— 使用我们的随机密码生成器生成强密码。"
     />
   </Head>
-  <div class="password w theme-bg-color tools-container">
+  <div class="password w theme-bg-color all-tool-container">
     <div class="content">
       <div class="tool-title">
         <svg class="icon" aria-hidden="true">

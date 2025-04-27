@@ -17,15 +17,18 @@
       content="免费在线图像压缩器！使用智能有损压缩引擎减小 WEBP、JPG 和 PNG 图像的文件大小。"
     />
   </Head>
-  <div class="image-compression w theme-bg-color tools-container">
-    <div class="image-compression-container" ref="unitConversionContainerRef">
-      <div class="image-compression-title">
+  <div class="image-compression w theme-bg-color image-tool-container all-tool-container">
+    <div
+      class="image-compression-container image-tool-block"
+      ref="unitConversionContainerRef"
+    >
+      <div class="image-compression-title image-tool-title">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#levi-tupianyasuo"></use>
         </svg>
         <h1>图片压缩</h1>
       </div>
-      <div class="image-compression-content">
+      <div class="image-compression-content image-tool-content">
         <div class="image-compression-preview" v-if="originalImage">
           <div class="title">原始图像</div>
           <div class="image-compression-preview-container">
@@ -106,7 +109,7 @@
           </div>
         </div>
       </div>
-      <div class="image-compression-desc">
+      <div class="image-compression-desc image-tool-desc">
         <span class="title"
           ><svg class="icon" aria-hidden="true">
             <use xlink:href="#levi-guanyu-"></use></svg
@@ -227,38 +230,6 @@ const downloadCompressorImage = () => {
 </script>
 
 <style lang="scss" scoped>
-.image-compression {
-  padding: 20px;
-  border-radius: var(--theme-radius);
-  max-width: 800px;
-}
-
-.image-compression-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.image-compression-title {
-  display: flex;
-  align-items: center;
-}
-
-.image-compression-title .icon {
-  width: 1.8em;
-  height: 1.8em;
-  margin-right: 10px;
-}
-
-.image-compression-title h1 {
-  font-size: 24px;
-}
-
-.upload-icon {
-  width: 5em;
-  height: 5em;
-}
-
 .image-compression-preview .title {
   margin-bottom: 10px;
 }
@@ -319,23 +290,6 @@ const downloadCompressorImage = () => {
       opacity: 0.7;
     }
   }
-}
-
-.image-compression-desc .title {
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-}
-
-.image-compression-desc .title .icon {
-  width: 1.2em;
-  height: 1.2em;
-  margin-right: 10px;
-}
-
-.image-compression-desc .desc-text {
-  margin: 10px 0;
-  display: flex;
 }
 
 .image-compression-success .title {

@@ -188,12 +188,61 @@ svg.icon {
   overflow: hidden;
 }
 
-.tools-container {
+.all-tool-container {
   margin-top: 50px;
 }
 
+.image-tool-container {
+  padding: 20px;
+  border-radius: var(--theme-radius);
+  position: relative;
+}
+
+.image-tool-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.image-tool-title {
+  display: flex;
+  align-items: center;
+}
+
+.image-tool-title .icon {
+  width: 1.8em;
+  height: 1.8em;
+  margin-right: 10px;
+}
+
+.image-tool-title h1 {
+  font-size: 24px;
+}
+
+.image-tool-desc .title {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.image-tool-desc .title .icon {
+  width: 1.2em;
+  height: 1.2em;
+  margin-right: 10px;
+}
+
+.image-tool-desc .desc-text {
+  margin: 10px 0;
+  display: flex;
+}
+
+.upload-icon {
+  width: 5em;
+  height: 5em;
+}
+
 @media (max-width: 860px) {
-  .tools-container {
+  .image-tool-container {
     margin-top: 20px;
   }
 

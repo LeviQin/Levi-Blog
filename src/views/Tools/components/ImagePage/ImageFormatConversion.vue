@@ -17,7 +17,7 @@
       content="免费的在线图片格式转换器，可以把你的图片文件类型(后缀)更改为.jpg(.jpeg) .gif .png .webp .heic .bmp等；你只需上传要转换的图片原图，再下载需要的图片格式即可。"
     />
   </Head>
-  <div class="image-compression w theme-bg-color tools-container">
+  <div class="image-compression w theme-bg-color image-tool-container all-tool-container">
     <div class="image-compression-container" ref="unitConversionContainerRef">
       <div class="image-compression-title">
         <svg class="icon" aria-hidden="true">

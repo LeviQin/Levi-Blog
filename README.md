@@ -52,6 +52,7 @@
 + 友情链接：[传送门](https://leviqin.top/friendlinks)
 + 关于我：[传送门](https://leviqin.top/about)
 
+## 喜欢的话给个⭐️吧
 
 ## 🛠️ 开发指南
 

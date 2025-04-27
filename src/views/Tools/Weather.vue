@@ -1,5 +1,5 @@
 <template>
-  <div class="weather w theme-bg-color tools-container">
+  <div class="weather w theme-bg-color all-tool-container">
     <div class="content">
       <div class="tool-title">
         <svg class="icon" aria-hidden="true">

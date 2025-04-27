@@ -9,7 +9,7 @@
       content="支持多种对称&amp;非对称在线加密解密，AES、DES、MD5、RC4、Rabbit、TripleDes在线加密解密，并且支持密钥方式。"
     />
   </Head>
-  <div class="encryption-decryption w tools-container">
+  <div class="encryption-decryption w all-tool-container">
     <div class="encryption-decryption-content">
       <div
         class="sidebar-block"
@@ -112,7 +112,7 @@ onMounted(() => {
 
 .active-category {
   background: var(--btn-tag-bg-color) !important;
-  color: #fff;
+  color: #fff !important;
 }
 
 .tabs-block {

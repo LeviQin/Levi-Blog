@@ -1255,6 +1255,11 @@
   dependencies:
     vue-demi "*"
 
+"@xmldom/xmldom@^0.9.4":
+  version "0.9.8"
+  resolved "https://registry.npmjs.org/@xmldom/xmldom/-/xmldom-0.9.8.tgz#1471e82bdff9e8f20ee8bbe60d4ffa8a516e78d8"
+  integrity sha512-p96FSY54r+WJ50FIOsCOjyj/wavs8921hG5+kVMmZgKcvIKxMXHTrjNJvRgWa/zuX3B6t2lijLNFaOyuxUH+2A==
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -2577,6 +2582,13 @@ executable@^4.1.0:
   integrity sha512-8iA79xD3uAch729dUG8xaaBBFGaEa0wdD2VkYLFHwlqosEj/jT66AzcreRDSgV7ehnNLBW2WR5jIXwGKjVdTLg==
   dependencies:
     pify "^2.2.0"
+
+exifreader@^4.29.0:
+  version "4.29.0"
+  resolved "https://registry.npmjs.org/exifreader/-/exifreader-4.29.0.tgz#4f3cd767772b7c9ebca0ac8b58c1b6055c86b50e"
+  integrity sha512-Z3TxsktblnC8Hpp9ChvPliSMwM6zl4keO656x7sioxvsAmr5GBo0+602eWHGAV5szDsdDP2u8CErx4QmJ0qIsA==
+  optionalDependencies:
+    "@xmldom/xmldom" "^0.9.4"
 
 ext-list@^2.0.0:
   version "2.2.2"

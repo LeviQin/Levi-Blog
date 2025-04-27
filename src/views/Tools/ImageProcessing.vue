@@ -17,16 +17,19 @@
       content="在线图片格式转换， 智能压缩， 图片加水印， 图片裁切， 图片转文字。"
     />
   </Head>
-  <div class="image-processing w tools-container">
+  <div class="image-processing w">
     <div></div>
-    <div class="image-tool-block" @click="toPage">
+    <div class="image-tool-list" @click="toPage">
       <div class="image-tool-item theme-bg-color" data-router="image-compression">
         图片压缩
       </div>
+      <div class="image-tool-item theme-bg-color" data-router="image-exif-view">
+        图片EXIF查看
+      </div>
       <!-- <div class="image-tool-item theme-bg-color" data-router="image-format-conversion">
         图片格式转换
-      </div>
-      <div class="image-tool-item theme-bg-color" data-router="image-shuiyin">
+      </div> -->
+      <!-- <div class="image-tool-item theme-bg-color" data-router="image-shuiyin">
         图片加水印
       </div>
       <div class="image-tool-item theme-bg-color" data-router="image-crop">图片裁切</div>
@@ -46,16 +49,17 @@ const router = useRouter();
 
 const toPage = (e) => {
   const path = e.target.getAttribute("data-router");
-  if (path && path === `image-compression`) {
-    router.push(path);
-  } else {
-    ElNotification({
-      title: "提醒",
-      message: "该功能暂未上线哦~",
-      type: "warning",
-      zIndex: 99999,
-    });
-  }
+  router.push(path);
+  // if (path && path === `image-compression`) {
+  //   router.push(path);
+  // } else {
+  //   ElNotification({
+  //     title: "提醒",
+  //     message: "该功能暂未上线哦~",
+  //     type: "warning",
+  //     zIndex: 99999,
+  //   });
+  // }
 };
 </script>
 
@@ -64,7 +68,7 @@ const toPage = (e) => {
   padding: 20px;
 }
 
-.image-tool-block {
+.image-tool-list {
   display: flex;
   gap: 20px;
 }
@@ -81,7 +85,7 @@ const toPage = (e) => {
 }
 
 @media (max-width: 860px) {
-  .image-tool-block {
+  .image-tool-list {
     flex-direction: column;
   }
 }

@@ -166,6 +166,14 @@ export default [{
                 }
             },
             {
+                path: "/image-exif-view",
+                component: () => import("@/views/Tools/components/ImagePage/ImageExifView.vue"),
+                name: "Image Exif View",
+                meta: {
+                    title: "图片EXIF查看 - 查看图像EXIF信息， 提取照片元数据，图片元数据分析工具，在线查看图像EXIF数据 - Levi",
+                }
+            },
+            {
                 path: "/image-format-conversion",
                 component: () => import("@/views/Tools/components/ImagePage/ImageFormatConversion.vue"),
                 name: "Image Format Conversion",
