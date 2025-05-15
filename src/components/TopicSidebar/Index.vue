@@ -134,8 +134,13 @@ onMounted(() => {
 const isSidebarVisible = ref(false);
 
 const selectCategory = (e) => {
-  const path = e.target.getAttribute("data-router");
-  path && router.push(path);
+  const target = e.target.closest("li");
+  if (target) {
+    const path = target.getAttribute("data-router");
+    if (path) {
+      router.push(path);
+    }
+  }
 };
 </script>
 
