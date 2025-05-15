@@ -81,40 +81,10 @@
           <span>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-fengjing"></use></svg
-            ><span>自然风光</span></span
+            ><span>光影故事</span></span
           >
           <i class="bi bi-chevron-right"></i>
         </li>
-        <li
-          class="sidebar-category-li"
-          data-router="/category/figure"
-          :class="{ 'active-category': route.path === '/category/figure' }"
-        >
-          <span>
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-168-boy-2"></use></svg
-            ><span>人物故事</span></span
-          >
-          <i class="bi bi-chevron-right"></i>
-        </li>
-        <li
-          class="sidebar-category-li"
-          data-router="/category/games"
-          :class="{ 'active-category': route.path === '/category/games' }"
-        >
-          <span>
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-youxiji"></use></svg
-            ><span>游戏时光</span></span
-          >
-          <i class="bi bi-chevron-right"></i>
-        </li>
-        <!-- <li class="sidebar-category-li" data-router="/category/embarrassing" :class="{ 'active-category': route.path === '/category/embarrassing' }">
-          <span><svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-meirijiongtu"></use></svg
-                  ><span>趣事囧闻</span></span>
-          <i class="bi bi-chevron-right"></i>
-        </li> -->
       </ul>
     </div>
   </div>

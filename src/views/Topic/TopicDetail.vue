@@ -98,9 +98,12 @@
           </div>
           <div class="topic-detail-tags">
             <i class="bi bi-tags-fill"></i>
-            <span class="tags-item" v-for="item in dataMap.articleInfo.article_tags" :key="item">{{
-              tagsList[item - 1]
-            }}</span>
+            <span
+              class="tags-item"
+              v-for="item in dataMap.articleInfo.article_tags"
+              :key="item"
+              >{{ tagsList[item - 1] }}</span
+            >
           </div>
         </div>
         <!-- <div id="qrcode"></div> -->
@@ -177,16 +180,7 @@ const bannerConfig = {
   text: "莫道桑榆晚，为霞尚满天",
 };
 
-const categoryList = [
-  "日常随记",
-  "开发心得",
-  "萌宠日记",
-  "学习笔记",
-  "自然风光",
-  "人物故事",
-  "游戏时光",
-  "趣事囧闻",
-];
+const categoryList = ["日常随记", "开发心得", "萌宠日记", "学习笔记", "光影故事"];
 
 const sendMdTitle = (titles) => {
   if (JSON.stringify(dataMap.titles) !== JSON.stringify(titles)) {

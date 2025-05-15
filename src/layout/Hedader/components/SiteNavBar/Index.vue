@@ -31,17 +31,7 @@
             <el-dropdown-item command="category/landscape"
               ><svg class="icon" aria-hidden="true">
                 <use xlink:href="#levi-fengjing"></use></svg
-              ><span>自然风光</span></el-dropdown-item
-            >
-            <el-dropdown-item command="category/figure"
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-168-boy-2"></use></svg
-              ><span>人物故事</span></el-dropdown-item
-            >
-            <el-dropdown-item command="category/games"
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-youxiji"></use></svg
-              ><span>游戏时光</span></el-dropdown-item
+              ><span>光影故事</span></el-dropdown-item
             >
           </el-dropdown-menu>
         </template>

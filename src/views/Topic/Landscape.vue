@@ -105,14 +105,14 @@ const dataMap = reactive({
 const cols = ref(4);
 const landscapeRef = ref(null);
 const page = ref(1);
-const pageSize = ref(12);
+const pageSize = ref(16);
 const isSidebarVisible = ref(false);
 
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
-  title: "自然风光",
-  text: "水澈而山青,云洁而心境。",
+  title: "光影故事",
+  text: "在光与影的交汇中，记录自然的壮美与人文的温度，每一帧都是一段未完的故事。",
 };
 
 const setWaterfallCol = () => {

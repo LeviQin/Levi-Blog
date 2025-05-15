@@ -158,16 +158,7 @@ const bannerConfig = {
   text: "浮世景色百千年依旧，人之在世却如白露与泡影",
 };
 
-const categoryList = [
-  "日常随记",
-  "开发心得",
-  "萌宠日记",
-  "学习笔记",
-  "自然风光",
-  "人物故事",
-  "游戏时光",
-  "趣事囧闻",
-];
+const categoryList = ["日常随记", "开发心得", "萌宠日记", "学习笔记", "光影故事"];
 
 const nextPosition = () => {
   scrollAnimation(banner.value.scrollHeight, "bottom");

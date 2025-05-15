@@ -42,7 +42,7 @@ export default [{
                 component: () => import("@/views/Topic/Landscape.vue"),
                 name: "Landscape",
                 meta: {
-                    title: "文章分类 - 自然风光",
+                    title: "文章分类 - 光影故事",
                 }
             },
             {
@@ -51,22 +51,6 @@ export default [{
                 name: "Notes",
                 meta: {
                     title: "文章分类 - 学习笔记",
-                }
-            },
-            {
-                path: "/category/figure",
-                component: () => import("@/views/Topic/Figure.vue"),
-                name: "Figure",
-                meta: {
-                    title: "文章分类 - 人物故事",
-                }
-            },
-            {
-                path: "/category/games",
-                component: () => import("@/views/Topic/Games.vue"),
-                name: "Games",
-                meta: {
-                    title: "文章分类 - 游戏时光",
                 }
             },
             {
