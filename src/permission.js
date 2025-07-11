@@ -15,7 +15,7 @@ NProgress.configure({
 
 router.beforeEach(async (to, from, next) => {
     setStore("LEVI_PREVIONS_ROUTE_NAME", from.name);
-    document.title = `${to.meta.title}` || "免费开源博客，各种文章，组件，简历，小工具应有尽有。";
+    document.title = `${to.meta.title}` || "一个有意思的博客，工作记录，日常分享，欢迎访问";
     NProgress.start();
     next();
 });

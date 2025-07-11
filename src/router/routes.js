@@ -10,7 +10,7 @@ export default [{
                 component: Home,
                 name: "Home",
                 meta: {
-                    title: "Levi 博客分享 - 免费开源博客，各种文章，组件，简历，小工具应有尽有。",
+                    title: "Levi 博客分享 - 一个有意思的博客，工作记录，日常分享，欢迎访问",
                 }
             },
             {

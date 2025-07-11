@@ -45,17 +45,22 @@ const navTransition = ref("");
 const navheight = ref("");
 const maxHeaderHeight = "80px";
 const minHeaderHeight = "60px";
+const scrollTimer = ref(null);
 
 const clickCollapse = () => {
   navDrawerRef.value.show();
 };
 
 const scrollWindow = () => {
-  const top = document.documentElement.scrollTop;
-  navTransition.value = "0.3s linear";
-  navheight.value = top === 0 ? maxHeaderHeight : minHeaderHeight;
-  const opacity = Math.min(top / 400, 1); // 确保透明度在 0 到 1 之间
-  document.documentElement.style.setProperty("--header-bar-color-opacity", opacity);
+  if (scrollTimer.value) return;
+  scrollTimer.value = setTimeout(() => {
+    const top = document.documentElement.scrollTop;
+    navTransition.value = "0.3s linear";
+    navheight.value = top === 0 ? maxHeaderHeight : minHeaderHeight;
+    const opacity = Math.min(top / 400, 1);
+    document.documentElement.style.setProperty("--header-bar-color-opacity", opacity);
+    scrollTimer.value = null;
+  }, 50);
 };
 
 const showSearchModel = () => {

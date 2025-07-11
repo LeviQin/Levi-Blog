@@ -179,8 +179,8 @@ const dataMap = reactive({
   ],
 });
 
-let dialogVisible = ref(false);
-let modelWidth = ref("780px");
+const dialogVisible = ref(false);
+const modelWidth = ref("780px");
 
 const show = () => {
   dialogVisible.value = true;

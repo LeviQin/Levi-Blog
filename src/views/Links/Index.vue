@@ -58,7 +58,7 @@
               头像： https://leviqin.top/static/jpg/levi2.a8ebab86.jpg
             </div>
             <div class="site-info-item">
-              描述： 免费开源博客，各种文章，组件，简历，小工具应有尽有。
+              描述： 一个有意思的博客，工作记录，日常分享，欢迎访问
             </div>
           </div>
         </div>
