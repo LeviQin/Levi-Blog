@@ -244,7 +244,7 @@ const getArticleDetail = async () => {
         item.published_at = dateToString(item.published_at);
         return item;
       })[0];
-      document.title = `${dataMap.articleInfo.title} - Levi 博客分享`;
+      document.title = `${dataMap.articleInfo.title} - Leviの空间`;
     } else {
       console.log(message, "------------------------");
     }

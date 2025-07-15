@@ -144,7 +144,7 @@ const messageText = ref("");
 const user_nickname = ref("");
 const email = ref("");
 const user_avatar_url = ref(
-  "https://levi-oss-1301066479.cos.ap-guangzhou.myqcloud.com/avatarImages/Snipaste_2024-04-24_16-53-27.png"
+  "https://levi-oss-1301066479.cos.ap-guangzhou.myqcloud.com/avatarImages/Snipaste_2024-04-24_16-53-36.png"
 );
 const parent_id = ref("");
 const verCode = ref("");

@@ -9,25 +9,33 @@
         <div class="image-box" v-if="selectVal === `通用`">
           <ul>
             <li
-              v-for="item in universalList"
+              v-for="item in dataMap.universalList"
               :key="item.id"
-              @click="selectavatar(item.url)"
+              @click="selectavatar(item.image)"
             >
-              <img v-lazy="item.url" alt="" />
+              <img v-lazy="item.image" alt="" />
             </li>
           </ul>
         </div>
         <div class="image-box" v-else-if="selectVal === `男头`">
           <ul>
-            <li v-for="item in maleList" :key="item.id" @click="selectavatar(item.url)">
-              <img v-lazy="item.url" alt="" />
+            <li
+              v-for="item in dataMap.maleList"
+              :key="item.id"
+              @click="selectavatar(item.image)"
+            >
+              <img v-lazy="item.image" alt="" />
             </li>
           </ul>
         </div>
         <div class="image-box" v-else-if="selectVal === `女头`">
           <ul>
-            <li v-for="item in femaleList" :key="item.id" @click="selectavatar(item.url)">
-              <img v-lazy="item.url" alt="" />
+            <li
+              v-for="item in dataMap.femaleList"
+              :key="item.id"
+              @click="selectavatar(item.image)"
+            >
+              <img v-lazy="item.image" alt="" />
             </li>
           </ul>
         </div>
@@ -49,8 +57,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, defineEmits, defineProps } from "vue";
-import { universalList, maleList, femaleList } from "@/utils/avatars.js";
+import { ref, reactive, onMounted, onBeforeUnmount, defineEmits, defineProps } from "vue";
+import { getAvatars } from "@/api/avatar.js";
 
 const props = defineProps({
   avatarImg: {
@@ -59,11 +67,18 @@ const props = defineProps({
   },
 });
 
-let showAvatarList = ref(false);
-let selectVal = ref("通用");
+const dataMap = reactive({
+  universalList: [],
+  maleList: [],
+  femaleList: [],
+});
+
+const showAvatarList = ref(false);
+const selectVal = ref("通用");
 
 onMounted(() => {
   document.addEventListener("click", closeAvatarList);
+  getAvatarList();
 });
 
 onBeforeUnmount(() => {
@@ -87,6 +102,20 @@ const selectLi = (val, e) => {
 
 const selectavatar = (url) => {
   emit("ok", url);
+};
+
+const getAvatarList = async () => {
+  try {
+    const res = await getAvatars();
+    const { code, data } = res.data;
+    if (code === 200) {
+      dataMap.universalList = data.filter((item) => item.type === 1);
+      dataMap.maleList = data.filter((item) => item.type === 2);
+      dataMap.femaleList = data.filter((item) => item.type === 3);
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const emit = defineEmits(["ok"]);

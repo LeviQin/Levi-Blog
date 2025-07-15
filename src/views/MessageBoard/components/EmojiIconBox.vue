@@ -81,7 +81,7 @@ const emit = defineEmits(["ok"]);
   background-color: var(--white-color);
   transform: translateY(100%) scale(0.9);
   transform-origin: top;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease;
   opacity: 0;
   pointer-events: none;
   box-shadow: 0 0 0 1px var(--el-input-border-color, var(--el-border-color)) inset;

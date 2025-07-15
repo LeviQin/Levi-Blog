@@ -10,10 +10,7 @@
       <Footer />
     </footer>
 
-    <div
-      class="banner-bar"
-      :style="{ backgroundImage: mainStore.backgroundImage }"
-    ></div>
+    <div class="banner-bar" :style="{ backgroundImage: mainStore.backgroundImage }"></div>
 
     <float-tool-bar></float-tool-bar>
   </div>
@@ -55,7 +52,7 @@ const keydownEvent = (event) => {
         zIndex: 99999,
       });
       console.log(
-        "%c" + "🎉 欢迎来到 Levi-Blog! 🚀",
+        "%c" + "🎉 欢迎来到 Leviの空间! 🚀",
         "font-size: 20px; color: #ff6347; text-shadow: 1px 1px 2px #555;"
       );
       console.log(
