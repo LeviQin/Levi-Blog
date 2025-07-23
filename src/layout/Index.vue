@@ -10,14 +10,14 @@
       <Footer />
     </footer>
 
-    <div class="banner-bar" :style="{ backgroundImage: mainStore.backgroundImage }"></div>
+    <div class="banner-bar" :style="{ backgroundImage: backgroundImage }"></div>
 
     <float-tool-bar></float-tool-bar>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import Hedader from "./Hedader/Index.vue";
 import Footer from "./Footer/Index.vue";
 import { useRoute } from "vue-router";
@@ -26,6 +26,10 @@ import FloatToolBar from "../components/FloatToolBar/Index.vue";
 import { useMainStore } from "@/stores/mainStore";
 
 const mainStore = useMainStore();
+
+const backgroundImage = computed(() => {
+  return mainStore.backgroundImage;
+});
 
 const route = useRoute();
 
@@ -52,7 +56,7 @@ const keydownEvent = (event) => {
         zIndex: 99999,
       });
       console.log(
-        "%c" + "🎉 欢迎来到 Leviの空间! 🚀",
+        "%c" + "🎉 欢迎来到 Levi's space! 🚀",
         "font-size: 20px; color: #ff6347; text-shadow: 1px 1px 2px #555;"
       );
       console.log(
@@ -97,7 +101,8 @@ const keydownEvent = (event) => {
   bottom: 0;
   left: 0;
   right: 0;
-  background-image: url(../assets/images/banner/gufengnv.jpg);
+  background-color: var(--theme-color);
+  background-image: url(@/assets/images/banner/gufengnv.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

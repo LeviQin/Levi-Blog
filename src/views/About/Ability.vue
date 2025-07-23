@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div
+    class="container"
+    :style="{ backgroundImage: `url(${props.blogSettingMap.blog_ability_bg_img})` }"
+  >
     <div class="info card">
       <div class="tools">
         <div class="circle">
@@ -13,17 +16,11 @@
         </div>
       </div>
       <div class="card-content">
-        <h1 class="info-title">相关技能</h1>
-        <div class="info-content">
-          <p>熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术</p>
-          <p>熟练掌握Vue全家桶，能快速独立开发各种PC端和移动端项目</p>
-          <p>熟悉前端性能优化，网页SEO优化，Git和SVN代码管理工具的基本使用</p>
-          <p>熟悉Webpack,vite和Rollup的基本配置和使用</p>
-          <p>曾独立完成JS IM SDK开发</p>
-          <p>熟悉Node.js和小程序的开发</p>
-          <p>有Flutter跨平台开发经验，独立开发过Fultter版IM聊天软件(可访)</p>
-          <p>有丰富的WordPress二次开发经验和使用React开发WordPress插件的经验</p>
-        </div>
+        <h1 class="info-title">{{ props.blogSettingMap.blog_ability_title }}</h1>
+        <div
+          class="info-content"
+          v-html="props.blogSettingMap.blog_ability_description"
+        ></div>
       </div>
     </div>
     <div class="button-arrow" @click="toNextPage"></div>
@@ -31,10 +28,14 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { defineEmits, defineProps } from "vue";
 
-import { defineEmits } from "vue";
-
+const props = defineProps({
+  blogSettingMap: {
+    type: Object,
+    default: () => {},
+  },
+});
 const toNextPage = () => {
   emit("toNextPage");
 };
@@ -45,7 +46,8 @@ const emit = defineEmits(["toNextPage"]);
 <style lang="scss" scoped>
 .container {
   height: 100%;
-  background: #eee url(../../assets/images/banner/dongmannv03.webp);
+  background: linear-gradient(-60deg, #792a31, #a94449, #d98880, #792a31);
+  background-size: 400% 400%;
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
@@ -126,14 +128,14 @@ const emit = defineEmits(["toNextPage"]);
   left: 50%;
   margin-left: -30px;
   opacity: 0.75;
-  background: url(../../assets/images/arrow.png);
-  transition: all 0.2s ease-in 0s;
+  background: url(@/assets/images/arrow.png);
+  transition: transform 0.2s ease-in 0s;
   z-index: 1;
   transform: scale(0.8);
   cursor: pointer;
   &:hover {
     transform: scale(1);
-    transition: all 0.2s ease-in 0s;
+    transition: transform 0.2s ease-in 0s;
   }
 }
 

@@ -17,9 +17,6 @@
   <div class="technology w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="technology-container page-container" ref="technologyRef">
-      <div class="topic-sidebar">
-        <topic-sidebar></topic-sidebar>
-      </div>
       <article class="technology-content">
         <div
           class="article-item"
@@ -98,7 +95,6 @@ import { ref, reactive, onMounted, nextTick, computed } from "vue";
 import { useRouter } from "vue-router";
 import { getCategoryArticles } from "@/api/articles.js";
 import { dateToString } from "@/utils/utils.js";
-import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { vSlidIn } from "@/utils/vSlidIn.js";
 import { Head } from "@vueuse/head";

@@ -113,7 +113,7 @@ const isSidebarVisible = ref(false);
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
-  title: "Levi",
+  title: "友情链接",
   text: "连接世界，友谊永恒",
 };
 

@@ -4,7 +4,10 @@
       <li class="nav-li" data-router="/" :class="{ 'active-li': route.path === `/` }">
         首页
       </li>
-      <el-dropdown @command="handleCommandToPage">
+      <el-dropdown
+        @command="handleCommandToPage"
+        v-if="blogSettingMap.show_category_module"
+      >
         <li class="nav-li">文章分类</li>
         <template #dropdown>
           <el-dropdown-menu>
@@ -37,7 +40,10 @@
         </template>
       </el-dropdown>
       <!-- <li class="nav-li" data-router="/material">前端资料</li> -->
-      <el-dropdown @command="handleCommandToPage">
+      <el-dropdown
+        @command="handleCommandToPage"
+        v-if="blogSettingMap.show_widget_module"
+      >
         <li class="nav-li">小工具</li>
         <template #dropdown>
           <el-dropdown-menu>
@@ -83,6 +89,7 @@
         class="nav-li"
         data-router="/nav"
         :class="{ 'active-li': route.path === `/nav` }"
+        v-if="blogSettingMap.show_sites_module"
       >
         常用网站
       </li>
@@ -90,6 +97,7 @@
         class="nav-li"
         data-router="/comments"
         :class="{ 'active-li': route.path === `/comments` }"
+        v-if="blogSettingMap.show_guestbook_module"
       >
         留言板
       </li>
@@ -97,6 +105,7 @@
         class="nav-li"
         data-router="/friendlinks"
         :class="{ 'active-li': route.path === `/friendlinks` }"
+        v-if="blogSettingMap.show_friend_link_module"
       >
         友情链接
       </li>
@@ -104,6 +113,7 @@
         class="nav-li"
         data-router="/about"
         :class="{ 'active-li': route.path === `/about` }"
+        v-if="blogSettingMap.show_about_module"
       >
         关于我
       </li>
@@ -112,7 +122,15 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { useMainStore } from "@/stores/mainStore";
+
+const mainStore = useMainStore();
+
+const blogSettingMap = computed(() => {
+  return mainStore.blogSettingMap;
+});
 
 const router = useRouter();
 const route = useRoute();

@@ -8,32 +8,6 @@
   <div class="topic-detail w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <article class="topic-detail-container page-container" ref="topicDetailRef">
-      <div class="topic-detail-sidebar">
-        <sidebar-user></sidebar-user>
-        <ul class="sidebar-ul nav" v-if="dataMap.titles.length">
-          <div class="sidebar-name">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-a-shuqianshumulu"></use>
-            </svg>
-            <span>目录</span>
-          </div>
-          <el-divider />
-          <div class="sidebar-content">
-            <li
-              class="sidebar-li nav-item"
-              v-for="(anchor, index) in dataMap.titles"
-              :key="index"
-              :style="{
-                padding: `8px 0 8px ${anchor.level ? anchor.level * 8 : 10}px`,
-                fontSize: `${18 - anchor.level}px`,
-              }"
-              @click="handleAnchorClick(anchor.text)"
-            >
-              <a class="sidebar-a nav-title">{{ anchor.text }}</a>
-            </li>
-          </div>
-        </ul>
-      </div>
       <div
         class="topic-detail-content"
         v-loading="loading"
@@ -108,6 +82,32 @@
         </div>
         <!-- <div id="qrcode"></div> -->
         <!-- <Comments /> -->
+      </div>
+      <div class="topic-detail-sidebar">
+        <sidebar-user></sidebar-user>
+        <ul class="sidebar-ul nav" v-if="dataMap.titles.length">
+          <div class="sidebar-name">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-a-shuqianshumulu"></use>
+            </svg>
+            <span>目录</span>
+          </div>
+          <el-divider />
+          <div class="sidebar-content">
+            <li
+              class="sidebar-li nav-item"
+              v-for="(anchor, index) in dataMap.titles"
+              :key="index"
+              :style="{
+                padding: `8px 0 8px ${anchor.level ? anchor.level * 8 : 10}px`,
+                fontSize: `${18 - anchor.level}px`,
+              }"
+              @click="handleAnchorClick(anchor.text)"
+            >
+              <a class="sidebar-a nav-title">{{ anchor.text }}</a>
+            </li>
+          </div>
+        </ul>
       </div>
     </article>
   </div>
@@ -244,7 +244,7 @@ const getArticleDetail = async () => {
         item.published_at = dateToString(item.published_at);
         return item;
       })[0];
-      document.title = `${dataMap.articleInfo.title} - Leviの空间`;
+      document.title = `${dataMap.articleInfo.title} - Levi's space`;
     } else {
       console.log(message, "------------------------");
     }
@@ -342,7 +342,6 @@ const getArticleDetail = async () => {
   padding: 20px;
   border-radius: var(--theme-radius);
   min-height: 400px;
-  max-width: 1000px;
 }
 
 .markdown-renderer-card {

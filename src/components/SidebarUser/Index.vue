@@ -7,7 +7,7 @@
       <div class="avatar-block">
         <img
           class="avatar"
-          src="../../assets/images/levi2.jpg"
+          :src="blogSettingMap.blog_logo"
           fit="scale-dow"
           alt="levi"
           @click="router.push(`/about`)"
@@ -17,7 +17,7 @@
     <div class="sidebar-info-introduce-wrap">
       <div class="sidebar-info-introduce">
         <div class="sidebar-info-introduce-item sidebar-info-introduce-name">
-          <p><i class="bi bi-stars"></i>Levi</p>
+          <p>{{ blogSettingMap.blog_name }}</p>
         </div>
         <div class="sidebar-info-introduce-item sidebar-info-introduce-sign">
           <span>莫道桑榆晚，为霞尚满天</span>
@@ -59,21 +59,22 @@
         </div>
       </div>
       <div class="sidebar-info-contact">
-        <a href="https://github.com/LeviQin" target="_blank">
+        <a :href="blogSettingMap.blog_connect_github" target="_blank">
           <div class="contact-item" title="GitHub">
             <i class="bi bi-github"></i>
           </div>
         </a>
-        <a href="mailto:qinbiao_web@163.com">
+        <a :href="`mailto:${blogSettingMap.blog_connect_email}`">
           <div class="contact-item envelope-box" title="邮箱">
             <i class="bi bi-envelope-at"></i>
           </div>
         </a>
-        <div class="contact-item wecht-box" title="微信" @click="showWXModel">
+        <div
+          class="contact-item wecht-box"
+          title="微信"
+          @click="showWXModel(blogSettingMap.blog_connect_wx_image)"
+        >
           <i class="bi bi-wechat"></i>
-        </div>
-        <div class="contact-item" title="QQ" @click="showQQmodel">
-          <i class="bi bi-tencent-qq"></i>
         </div>
       </div>
     </div>
@@ -84,37 +85,37 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { getStatistics } from "@/api/articles.js";
 import WXModel from "../WXModel/Index.vue";
-import { ElNotification } from "element-plus";
 import { useMainStore } from "@/stores/mainStore";
 
 const mainStore = useMainStore();
+
+const blogSettingMap = computed(() => {
+  return mainStore.blogSettingMap;
+});
 
 const router = useRouter();
 
 onMounted(() => {
   getData();
   isSidebarVisible.value = true;
+  setSidebarInfoBgImg();
 });
 
 const totalArticles = ref(0);
 const wxModelRef = ref(null);
 const isSidebarVisible = ref(false);
 
-const showWXModel = () => {
-  wxModelRef.value.show();
+const showWXModel = (image) => {
+  wxModelRef.value.show(image);
 };
 
-const showQQmodel = () => {
-  ElNotification({
-    title: "提醒",
-    message: "该功能暂未上线哦~",
-    type: "warning",
-    zIndex: 99999,
-  });
+const setSidebarInfoBgImg = () => {
+  const avatar = document.querySelector(".sidebar-info-avatar");
+  avatar.style.setProperty("--avatar-bg", `url(${blogSettingMap.value.sidebar_bg_img})`);
 };
 
 const getData = async () => {
@@ -151,9 +152,11 @@ const getData = async () => {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("../../assets/images/banner/xiaomao.png");
+  background-image: var(--avatar-bg, none);
+  background-repeat: no-repeat;
   background-size: cover;
-  filter: blur(2px);
+  background-position: center;
+  filter: blur(1px);
   z-index: -1;
 }
 

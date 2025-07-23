@@ -10,7 +10,7 @@ export default [{
                 component: Home,
                 name: "Home",
                 meta: {
-                    title: "Leviの空间 - 一个有意思的博客，工作记录，日常分享，欢迎访问",
+                    title: "Levi's space - 一个有意思的博客，工作记录，日常分享，欢迎访问",
                 }
             },
             {

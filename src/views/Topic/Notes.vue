@@ -17,9 +17,6 @@
   <div class="notes w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="notes-container page-container" ref="notesContainerRef">
-      <div class="topic-sidebar">
-        <topic-sidebar></topic-sidebar>
-      </div>
       <article class="notes-main">
         <div class="waterfall-container">
           <wc-waterfall :gap="20" :cols="cols">
@@ -89,7 +86,6 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted, nextTick } from "vue";
 import { getCategoryArticles } from "@/api/articles.js";
-import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { useRouter } from "vue-router";
 import dayjs from "dayjs";

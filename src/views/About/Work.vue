@@ -1,15 +1,14 @@
 <template>
-  <div class="container">
+  <div
+    class="container"
+    :style="{ backgroundImage: `url(${props.blogSettingMap.blog_work_bg_img})` }"
+  >
     <div class="info">
-      <h1 class="info-title">我的作品</h1>
+      <h1 class="info-title">{{ props.blogSettingMap.blog_work_title }}</h1>
       <div class="info-content">
         <div class="info-item">
           <a href="https://open.lwim.cn/doc/" target="_blank">
-            <img
-              class="info-img"
-              src="../../assets/images/about/im-sdk.webp"
-              alt="IM SDK"
-            />
+            <img class="info-img" src="@/assets/images/about/im-sdk.webp" alt="IM SDK" />
             <div class="info-text">
               <div class="info-item-title"><span>IM SDK</span></div>
               <div class="info-item-desc m-hide-box"></div>
@@ -20,7 +19,7 @@
           <a href="https://www.kefangapp.com/#/download" target="_blank">
             <img
               class="info-img"
-              src="../../assets/images/about/kefang-flutter.webp"
+              src="@/assets/images/about/kefang-flutter.webp"
               alt="可访APP Flutter版"
             />
             <div class="info-text">
@@ -33,7 +32,7 @@
           <a href="https://web.kefangapp.com/" target="_blank">
             <img
               class="info-img"
-              src="../../assets/images/about/kefang.webp"
+              src="@/assets/images/about/kefang.webp"
               alt="可访Web版"
             />
             <div class="info-text">
@@ -57,7 +56,7 @@
           <a href="https://open.lwim.cn/" target="_blank">
             <img
               class="info-img"
-              src="../../assets/images/about/kaifazhe.webp"
+              src="@/assets/images/about/kaifazhe.webp"
               alt="开发者平台"
             />
             <div class="info-text">
@@ -69,7 +68,7 @@
           <a href="https://www.aiwinn.com/" target="_blank">
             <img
               class="info-img"
-              src="../../assets/images/about/aihuayigtong.webp"
+              src="@/assets/images/about/aihuayigtong.webp"
               alt="爱华盈通官网"
             />
             <div class="info-text">
@@ -88,7 +87,14 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-import { defineEmits } from "vue";
+import { defineEmits, defineProps } from "vue";
+
+const props = defineProps({
+  blogSettingMap: {
+    type: Object,
+    default: () => {},
+  },
+});
 
 const router = useRouter();
 
@@ -123,18 +129,19 @@ const emit = defineEmits(["toNextPage"]);
 
   .button-arrow:hover {
     transform: scale(1);
-    transition: all 0.2s ease-in 0s;
+    transition: transform 0.2s ease-in 0s;
   }
 
   .button-card .button:hover {
     background: rgba(0, 0, 0, 0.849);
-    transition: all 0.2s ease-in 0s;
+    transition: transform 0.2s ease-in 0s;
   }
 }
 
 .container {
   height: 100%;
-  background: #eee url(../../assets/images/banner/tiankong.webp);
+  background: linear-gradient(-60deg, #79bbff, #a0d2ff, #d6eaff, #79bbff);
+  background-size: 400% 400%;
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
@@ -186,7 +193,7 @@ const emit = defineEmits(["toNextPage"]);
   box-sizing: border-box;
   background-color: #fff;
   opacity: 0;
-  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   color: var(--color);
 }
 
@@ -208,8 +215,8 @@ const emit = defineEmits(["toNextPage"]);
   left: 50%;
   margin-left: -30px;
   opacity: 0.75;
-  background: url(../../assets/images/arrow.png);
-  transition: all 0.2s ease-in 0s;
+  background: url(@/assets/images/arrow.png);
+  transition: transform 0.2s ease-in 0s;
   z-index: 9999;
   transform: scale(0.8);
   cursor: pointer;

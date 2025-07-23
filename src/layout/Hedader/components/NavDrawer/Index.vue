@@ -17,7 +17,7 @@
       </div>
       <ul class="nav-drawer-ul" @click="toPage">
         <li class="nav-drawer-li" data-router="/">首页</li>
-        <div class="collapse-card">
+        <div class="collapse-card" v-if="blogSettingMap.show_category_module">
           <li class="nav-drawer-li" id="topic" @click="clickTopic">
             <span>文章分类</span><i class="bi bi-chevron-down bi-topic-icon"></i>
           </li>
@@ -56,7 +56,12 @@
           </div>
         </div>
         <!-- <li class="nav-drawer-li" data-router="/material">前端资料</li> -->
-        <li class="nav-drawer-li" id="tools" @click="clickTools">
+        <li
+          class="nav-drawer-li"
+          id="tools"
+          @click="clickTools"
+          v-if="blogSettingMap.show_widget_module"
+        >
           <span>小工具</span><i class="bi bi-chevron-down bi-tools-icon"></i>
         </li>
         <div class="nav-drawer-li-collapse" id="toolsCollapse" v-show="showToolsCollapse">
@@ -98,19 +103,50 @@
             </li> -->
           </ul>
         </div>
-        <li class="nav-drawer-li" data-router="/nav">常用网站</li>
-        <li class="nav-drawer-li" data-router="/comments">留言板</li>
-        <li class="nav-drawer-li" data-router="/friendlinks">友情链接</li>
-        <li class="nav-drawer-li" data-router="/about">关于我</li>
+        <li
+          class="nav-drawer-li"
+          data-router="/nav"
+          v-if="blogSettingMap.show_sites_module"
+        >
+          常用网站
+        </li>
+        <li
+          class="nav-drawer-li"
+          data-router="/comments"
+          v-if="blogSettingMap.show_guestbook_module"
+        >
+          留言板
+        </li>
+        <li
+          class="nav-drawer-li"
+          data-router="/friendlinks"
+          v-if="blogSettingMap.show_friend_link_module"
+        >
+          友情链接
+        </li>
+        <li
+          class="nav-drawer-li"
+          data-router="/about"
+          v-if="blogSettingMap.show_about_module"
+        >
+          关于我
+        </li>
       </ul>
     </div>
   </el-drawer>
 </template>
 
 <script setup>
-import { ref, defineExpose } from "vue";
+import { ref, defineExpose, computed } from "vue";
 import { useRouter } from "vue-router";
 import SidebarUser from "@/components/SidebarUser/Index.vue";
+import { useMainStore } from "@/stores/mainStore";
+
+const mainStore = useMainStore();
+
+const blogSettingMap = computed(() => {
+  return mainStore.blogSettingMap;
+});
 
 const router = useRouter();
 

@@ -12,7 +12,7 @@
     </template>
     <div class="wx-model-main">
       <div class="wx-box">
-        <img src="@/assets/images/user/my-wx.jpg" alt="levi的微信" />
+        <img :src="wxImage" alt="Levi的微信" />
       </div>
     </div>
   </el-dialog>
@@ -30,8 +30,9 @@ onUnmounted(() => {
   window.removeEventListener("resize", setDialogWidth, true);
 });
 
-let dialogVisible = ref(false);
-let dialogWidth = ref("500px");
+const dialogVisible = ref(false);
+const dialogWidth = ref("500px");
+const wxImage = ref("");
 
 const setDialogWidth = () => {
   if (window.innerWidth <= 480) {
@@ -41,8 +42,9 @@ const setDialogWidth = () => {
   }
 };
 
-const show = () => {
+const show = (image) => {
   dialogVisible.value = true;
+  wxImage.value = image;
 };
 
 defineExpose({

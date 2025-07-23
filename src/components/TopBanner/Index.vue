@@ -2,7 +2,7 @@
   <div class="top-banner" :style="`height: ${props.bannerConfig.height}`">
     <div class="banner-text-box">
       <h2 v-if="props.bannerConfig.title">
-        <i class="bi bi-stars"></i>{{ props.bannerConfig.title }}
+        {{ props.bannerConfig.title }}
       </h2>
       <p>{{ props.bannerConfig.text }}</p>
     </div>

@@ -8,12 +8,10 @@
     :z-index="10002"
   >
     <template #header>
-      <span class="wx-model-title">我的微信</span>
+      <span class="wx-model-title">title</span>
     </template>
     <div class="wx-model-main">
-      <div class="wx-box">
-        <img src="@/assets/images/user/my-wx.jpg" alt="levi的微信" />
-      </div>
+      <div class="wx-box">test</div>
     </div>
   </el-dialog>
 </template>
@@ -30,8 +28,8 @@ onUnmounted(() => {
   window.removeEventListener("resize", setDialogWidth, true);
 });
 
-let dialogVisible = ref(false);
-let dialogWidth = ref("500px");
+const dialogVisible = ref(false);
+const dialogWidth = ref("500px");
 
 const setDialogWidth = () => {
   if (window.innerWidth <= 480) {

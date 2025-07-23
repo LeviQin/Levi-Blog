@@ -6,7 +6,7 @@
       </div>
       <div class="log-crad">
         <div class="log-text" @click="router.push('/')">
-          <h1><i class="bi bi-stars"></i>Levi</h1>
+          <h1>{{ blogSettingMap.blog_name }}</h1>
         </div>
         <site-nav-bar></site-nav-bar>
       </div>
@@ -23,11 +23,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import SiteNavBar from "./components/SiteNavBar/Index.vue";
 import SearchModel from "./components/SearchModel/Index.vue";
 import NavDrawer from "./components/NavDrawer/Index.vue";
+import { useMainStore } from "@/stores/mainStore";
+
+const mainStore = useMainStore();
+
+const blogSettingMap = computed(() => {
+  return mainStore.blogSettingMap;
+});
 
 const router = useRouter();
 
@@ -100,7 +107,7 @@ const showSearchModel = () => {
 }
 
 .log-text h1 {
-  font-size: 25px;
+  font-size: 24px;
   cursor: pointer !important;
   margin-right: 20px;
   color: var(--nav-bar-text-color);

@@ -156,7 +156,7 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
-  title: "Levi",
+  title: "留言板",
   text: "欢迎来到我们的留言板！期待您的留言和反馈！",
 };
 

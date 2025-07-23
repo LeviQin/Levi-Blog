@@ -24,7 +24,11 @@
           <li class="nav-li about active-nav" @click="toPage(0)">关于</li>
           <li class="nav-li work" @click="toPage(1)">作品</li>
           <li @click="router.push(`/`)">
-            <span class="nav-avatar">首页</span>
+            <span
+              class="nav-avatar"
+              :style="{ backgroundImage: `url(${blogSettingMap.blog_logo})` }"
+              >首页</span
+            >
           </li>
           <li class="nav-li ability" @click="toPage(2)">能力</li>
           <li class="nav-li connect" @click="toPage(3)">联系</li>
@@ -42,23 +46,23 @@
       @change="changeCarousel"
     >
       <el-carousel-item name="0">
-        <About @toNextPage="toNextPage" />
+        <About @toNextPage="toNextPage" :blogSettingMap="blogSettingMap" />
       </el-carousel-item>
       <el-carousel-item name="1">
-        <Work @toNextPage="toNextPage" />
+        <Work @toNextPage="toNextPage" :blogSettingMap="blogSettingMap" />
       </el-carousel-item>
       <el-carousel-item name="2">
-        <Ability @toNextPage="toNextPage" />
+        <Ability @toNextPage="toNextPage" :blogSettingMap="blogSettingMap" />
       </el-carousel-item>
       <el-carousel-item name="3">
-        <Connect @toOnePage="toOnePage" />
+        <Connect @toOnePage="toOnePage" :blogSettingMap="blogSettingMap" />
       </el-carousel-item>
     </el-carousel>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import About from "./About.vue";
 import Work from "./Work.vue";
@@ -66,6 +70,13 @@ import Ability from "./Ability.vue";
 import Connect from "./Connect.vue";
 import Hammer from "hammerjs";
 import { Head } from "@vueuse/head";
+import { useMainStore } from "@/stores/mainStore";
+
+const mainStore = useMainStore();
+
+const blogSettingMap = computed(() => {
+  return mainStore.blogSettingMap;
+});
 
 onMounted(() => {
   // 重置非关于我页面的顶部导航栏透明度
@@ -90,8 +101,8 @@ onMounted(() => {
   });
 });
 
-let timeId = ref(null);
-let carouselRef = ref(null);
+const timeId = ref(null);
+const carouselRef = ref(null);
 const router = useRouter();
 
 const rollScroll = (event) => {
@@ -179,7 +190,6 @@ const changeCarousel = (val) => {
       transition: all 0.4s;
 
       .nav-avatar {
-        background: url(../../assets/images/levi2.jpg);
         background-size: 100px 100px;
         position: absolute;
         width: 100px;

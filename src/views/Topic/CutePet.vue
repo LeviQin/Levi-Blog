@@ -14,9 +14,6 @@
   <div class="cute-pet w">
     <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="cute-pet-container page-container" ref="cutePetContainerRef">
-      <div class="topic-sidebar">
-        <topic-sidebar></topic-sidebar>
-      </div>
       <article class="cute-pet-main">
         <div class="waterfall-container">
           <wc-waterfall :gap="20" :cols="cols">
@@ -86,7 +83,6 @@ import "wc-waterfall";
 import { useRouter } from "vue-router";
 import { getCategoryArticles } from "@/api/articles.js";
 import dayjs from "dayjs";
-import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { Head } from "@vueuse/head";
 import { getStore, setStore } from "@/utils/storage.js";

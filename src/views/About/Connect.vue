@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div
+    class="container"
+    :style="{ backgroundImage: `url(${props.blogSettingMap.blog_connect_bg_img})` }"
+  >
     <div class="info card">
       <div class="shine">
         <div class="shine-effect"></div>
@@ -118,26 +121,31 @@
       </div>
 
       <div class="product">
-        <h1 class="info-title">联系我</h1>
+        <h1 class="info-title">{{ props.blogSettingMap.blog_connect_title }}</h1>
         <div class="info-content">
           <div class="info-content-item">
             <span>邮箱:</span>
-            <a class="item-text" href="mailto: qinbiao_web@163.com"
-              >qinbiao_web@163.com</a
+            <a
+              class="item-text"
+              :href="`mailto: ${props.blogSettingMap.blog_connect_email}`"
+              >{{ props.blogSettingMap.blog_connect_email }}</a
             >
           </div>
           <div class="info-content-item">
             <span>微信:</span>
-            <span class="item-text">LeviQin</span>
+            <span class="item-text">{{ props.blogSettingMap.blog_connect_wx }}</span>
           </div>
           <div class="info-content-item">
             <span>QQ:</span>
-            <span class="item-text">1019613129</span>
+            <span class="item-text">{{ props.blogSettingMap.blog_connect_qq }}</span>
           </div>
           <div class="info-content-item">
             <span>GitHub:</span>
-            <a href="https://github.com/LeviQin" target="_blank" class="item-text"
-              >LeviQin</a
+            <a
+              :href="props.blogSettingMap.blog_connect_github"
+              target="_blank"
+              class="item-text"
+              >慕钦</a
             >
           </div>
         </div>
@@ -173,9 +181,14 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { defineEmits, defineProps } from "vue";
 
-import { defineEmits } from "vue";
+const props = defineProps({
+  blogSettingMap: {
+    type: Object,
+    default: () => {},
+  },
+});
 
 const toOnePage = () => {
   emit("toOnePage");
@@ -187,7 +200,8 @@ const emit = defineEmits(["toOnePage"]);
 <style lang="scss" scoped>
 .container {
   height: 100%;
-  background: #eee url(../../assets/images/banner/fengjing6.webp);
+  background: linear-gradient(-60deg, #eebe77, #f5d1a3, #fff2e0, #eebe77);
+  background-size: 400% 400%;
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
@@ -247,7 +261,7 @@ const emit = defineEmits(["toOnePage"]);
   background-color: #ffffff2a;
   box-shadow: 0 0 15px 2px #ffffff42;
   transform: rotate(25deg);
-  transition: all 1s cubic-bezier(0.78, 0.02, 0.5, 0.77);
+  transition: transform 1s cubic-bezier(0.78, 0.02, 0.5, 0.77);
   z-index: 5;
 }
 

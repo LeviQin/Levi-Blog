@@ -3,10 +3,12 @@
     <div class="footer-container">
       <div class="info-box">
         <div class="info-item">
-          <span>© 2025 By Levi</span>
+          <span>{{ blogSettingMap.blog_record_name }}</span>
         </div>
         <div class="info-item">
-          <a href="https://beian.miit.gov.cn" target="_blank">粤ICP备2022120914号</a>
+          <a href="https://beian.miit.gov.cn" target="_blank">{{
+            blogSettingMap.blog_record_number
+          }}</a>
         </div>
       </div>
       <div class="support-box">
@@ -79,7 +81,14 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useMainStore } from "@/stores/mainStore";
+
+const mainStore = useMainStore();
+
+const blogSettingMap = computed(() => {
+  return mainStore.blogSettingMap;
+});
 </script>
 
 <style lang="scss" scoped>

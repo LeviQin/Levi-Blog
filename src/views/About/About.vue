@@ -1,10 +1,13 @@
 <template>
-  <div class="container">
+  <div
+    class="container"
+    :style="{ backgroundImage: `url(${props.blogSettingMap.blog_about_bg_img})` }"
+  >
     <div class="info card">
       <div class="banner">
-        <span class="banner-text">前端开发</span>
+        <span class="banner-text">{{ props.blogSettingMap.blog_about_job }}</span>
       </div>
-      <div class="info-title">我的个人简介</div>
+      <div class="info-title">{{ props.blogSettingMap.blog_about_title }}</div>
       <div class="info-content">
         <div class="info-item">
           <div class="left-icon">
@@ -59,7 +62,14 @@
 </template>
 
 <script setup>
-import { defineEmits } from "vue";
+import { defineEmits, defineProps } from "vue";
+
+const props = defineProps({
+  blogSettingMap: {
+    type: Object,
+    default: () => {},
+  },
+});
 
 const toNextPage = () => {
   emit("toNextPage");
@@ -71,7 +81,8 @@ const emit = defineEmits(["toNextPage"]);
 <style lang="scss" scoped>
 .container {
   height: 100%;
-  background: #eee url(../../assets/images/banner/jinglingzhuiya1.webp);
+  background: linear-gradient(-60deg, #95a5a6, #7f8c8d, #bdc3c7, #95a5a6);
+  background-size: 400% 400%;
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
@@ -91,7 +102,7 @@ const emit = defineEmits(["toNextPage"]);
   border: 8px solid #000;
   box-shadow: 15px 15px 0 #000;
   transform: translate(-50%, -50%) rotate(-2deg);
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
   position: relative;
   overflow: hidden;
   width: 800px;
