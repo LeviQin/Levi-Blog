@@ -35,22 +35,18 @@ const handleClick = () => {
   transition: all 0.3s;
   white-space: nowrap;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-
   &:hover {
     background-color: var(--dropdown-item-hover-bg, rgba(245, 247, 250, 0.7));
     color: var(--theme-btn-hover-color);
   }
-
   &.disabled {
     color: #c0c4cc;
     cursor: not-allowed;
-
     &:hover {
       background-color: transparent;
       transform: none;
     }
   }
-
   svg.icon {
     margin-right: 5px;
     width: 1em;

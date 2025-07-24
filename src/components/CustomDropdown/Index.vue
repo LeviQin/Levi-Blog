@@ -36,7 +36,6 @@ const handleSelect = (value) => {
 };
 
 const handleMenuClick = (event) => {
-  // 检查点击的是否是dropdown-item元素或其子元素
   if (event.target.closest(".dropdown-item")) {
     isOpen.value = false;
   }
@@ -60,7 +59,6 @@ onUnmounted(() => {
   document.removeEventListener("click", handleClickOutside);
 });
 
-// 暴露方法和属性给父组件
 defineExpose({
   isOpen,
   toggleDropdown,
@@ -80,9 +78,8 @@ defineExpose({
 
 .dropdown-menu {
   position: absolute;
-  top: 80%;
+  top: 75%;
   left: 0;
-  min-width: 160px;
   background-color: var(--dropdown-bg-color, rgba(255, 255, 255, 0.9));
   border-radius: 4px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);
@@ -93,7 +90,6 @@ defineExpose({
   transition: all 0.3s;
 }
 
-// 下拉菜单的过渡动画
 .dropdown-fade-enter-active,
 .dropdown-fade-leave-active {
   transition: opacity 0.3s, transform 0.3s;

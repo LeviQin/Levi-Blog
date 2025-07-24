@@ -229,10 +229,8 @@ const toSitePage = (url) => {
 }
 
 .nav-content {
-  display: flex;
-  align-items: center;
-  align-items: stretch;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
 }
 
@@ -242,7 +240,6 @@ const toSitePage = (url) => {
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  width: 21.5%;
   display: flex;
   align-items: center;
   transition: all 0.3s;
@@ -276,40 +273,6 @@ const toSitePage = (url) => {
   object-fit: contain;
 }
 
-@media (max-width: 1000px) {
-  .nav-item {
-    width: 27%;
-  }
-}
-
-@media (max-width: 860px) {
-  .select-category-ul {
-    gap: 5px;
-  }
-
-  .select-category-ul li {
-    margin: 5px;
-    padding: 8px 10px;
-  }
-}
-
-@media (max-width: 840px) {
-  .nav-item {
-    width: 40%;
-  }
-}
-
-@media (max-width: 550px) {
-  .nav-item {
-    width: 100%;
-  }
-
-  .select-category-ul li {
-    padding: 8px 12px;
-    font-size: 14px;
-  }
-}
-
 .category-box {
   margin: 20px 0 10px;
   position: relative;
@@ -331,5 +294,23 @@ const toSitePage = (url) => {
   border-radius: var(--theme-radius);
   color: #999;
   font-size: 16px;
+}
+
+@media (max-width: 860px) {
+  .select-category-ul {
+    gap: 5px;
+  }
+
+  .select-category-ul li {
+    margin: 5px;
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 550px) {
+  .select-category-ul li {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
 }
 </style>
