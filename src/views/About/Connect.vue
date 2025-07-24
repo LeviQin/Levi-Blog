@@ -374,7 +374,7 @@ const emit = defineEmits(["toOnePage"]);
   left: 50%;
   margin-left: -30px;
   opacity: 0.75;
-  background: url(../../assets/images/arrow.png);
+  background: url(@/assets/images/arrow.png);
   transition: all 0.2s ease-in 0s;
   z-index: 1;
   transform: scale(0.8);
@@ -389,30 +389,36 @@ const emit = defineEmits(["toOnePage"]);
 @media (max-width: 860px) {
   .info {
     width: 75%;
-    height: 400px;
+    height: 330px;
   }
 
   .product {
     width: 250px;
-    height: 250px;
+    height: 220px;
   }
 
   .pattern-1 {
-    width: 145px;
+    width: 140px;
   }
 
   .pattern-2 {
-    width: 170px;
+    width: 150px;
     top: -10px;
   }
 
   .info-title {
     font-size: 1.6rem;
     padding-bottom: 0 !important;
+    margin-top: 40px;
   }
 
   .info-content {
     font-size: 16px;
+  }
+
+  .info-content .info-content-item {
+    text-indent: 1rem;
+    padding-bottom: 0.7rem;
   }
 }
 </style>

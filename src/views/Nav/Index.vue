@@ -15,6 +15,7 @@
   </Head>
 
   <div class="container">
+    <top-banner :bannerConfig="bannerConfig"></top-banner>
     <div class="website-card w">
       <div class="select-category-box">
         <ul class="select-category-ul">
@@ -22,29 +23,44 @@
             v-for="category in categories"
             :key="category.value"
             @click="selectCategory(category)"
-            :class="{ 'active-category': selectedCategory === category.label }"
+            :class="{ 'active-category': activeCategory === category.value }"
           >
             {{ category.label }}
           </li>
         </ul>
       </div>
-      <div
-        class="nav-content"
-        :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
-      >
-        <div class="nav-item" v-for="item in dataMap.data" @click="toSitePage(item.url)">
-          <div class="nav-img">
-            <img v-lazy="item.image" :alt="item.title" />
+      <div class="nav-container">
+        <template v-for="category in categories" :key="category.value">
+          <div class="category-box">
+            <h2 class="category-title" :id="category.label">{{ category.label }}</h2>
           </div>
-          <div class="nav-item-content">
-            <div class="nav-title">
-              <h4>{{ item.title }}</h4>
+          <div
+            class="nav-content"
+            :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
+          >
+            <div
+              class="nav-item"
+              v-for="item in filteredItems(category.value)"
+              :key="item.id"
+              @click="toSitePage(item.url)"
+            >
+              <div class="nav-img">
+                <img v-lazy="item.image" :alt="item.title" />
+              </div>
+              <div class="nav-item-content">
+                <div class="nav-title">
+                  <h4>{{ item.title }}</h4>
+                </div>
+                <div class="nav-description">
+                  <p>{{ item.description }}</p>
+                </div>
+              </div>
             </div>
-            <div class="nav-description">
-              <p>{{ item.description }}</p>
+            <div class="empty-category" v-if="filteredItems(category.value).length === 0">
+              暂无数据
             </div>
           </div>
-        </div>
+        </template>
       </div>
     </div>
   </div>
@@ -54,17 +70,18 @@
 import { ref, reactive, onMounted } from "vue";
 import { getSiteList } from "@/api/webdev";
 import { Head } from "@vueuse/head";
+import TopBanner from "@/components/TopBanner/Index.vue";
 
 onMounted(() => {
-  selectedCategory.value = "开发资源";
   getSiteNavList();
   isSidebarVisible.value = true;
 });
 
 const dataMap = reactive({
   tableData: [],
-  data: [],
 });
+
+const activeCategory = ref(1);
 
 const categories = [
   {
@@ -120,12 +137,31 @@ const categories = [
     label: "云服务器",
   },
 ];
-const selectedCategory = ref("");
+
 const isSidebarVisible = ref(false);
 
+const bannerConfig = {
+  height: "25vh",
+  showArrow: false,
+  title: "常用网站",
+  text: "整理我常用的网站入口，方便随时快速访问。",
+};
+
+const filteredItems = (categoryId) => {
+  return dataMap.tableData.filter((item) => item.type === categoryId);
+};
+
 const selectCategory = (category) => {
-  selectedCategory.value = category.label;
-  dataMap.data = dataMap.tableData.filter((item) => item.type === category.value);
+  activeCategory.value = category.value;
+  const el = document.getElementById(category.label);
+  if (el) {
+    const topOffset = el.getBoundingClientRect().top + window.scrollY;
+    const finalScrollTop = topOffset - 160;
+    window.scrollTo({
+      top: finalScrollTop,
+      behavior: "smooth",
+    });
+  }
 };
 
 const getSiteNavList = async () => {
@@ -133,8 +169,6 @@ const getSiteNavList = async () => {
   const { code, data } = res.data;
   if (code === 200) {
     dataMap.tableData = data;
-    selectedCategory.value = "开发资源";
-    dataMap.data = dataMap.tableData.filter((item) => item.type === 1);
   }
 };
 
@@ -144,36 +178,59 @@ const toSitePage = (url) => {
 </script>
 
 <style lang="scss" scoped>
-.website-card {
-  padding-top: 20px;
-  color: var(--black-text-color);
+.select-category-box {
+  position: sticky;
+  top: 70px;
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 10px 0;
+  margin-bottom: 15px;
+  border-radius: var(--theme-radius);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .select-category-ul {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 12px;
+  padding: 8px 10px;
 }
 
 .select-category-ul li {
-  padding: 12px 18px;
+  padding: 10px 16px;
   border-radius: var(--theme-radius);
   background: #fff;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  &:hover {
+    background: var(--btn-tag-bg-color);
+    color: #fff;
+    transform: translateY(-2px);
+  }
 }
 
 .active-category {
   background: var(--btn-tag-bg-color) !important;
-  color: #fff;
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.nav-container {
+  background-color: var(--theme-color);
+  border-radius: var(--theme-radius);
+  padding: 20px;
 }
 
 .nav-content {
   display: flex;
   align-items: center;
-  padding-top: 40px;
   align-items: stretch;
   flex-wrap: wrap;
   gap: 20px;
@@ -185,7 +242,7 @@ const toSitePage = (url) => {
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  width: 20%;
+  width: 21.5%;
   display: flex;
   align-items: center;
   transition: all 0.3s;
@@ -226,12 +283,8 @@ const toSitePage = (url) => {
 }
 
 @media (max-width: 860px) {
-  .website-card {
-    padding-top: 0;
-  }
-
   .select-category-ul {
-    gap: 10px;
+    gap: 5px;
   }
 
   .select-category-ul li {
@@ -250,5 +303,33 @@ const toSitePage = (url) => {
   .nav-item {
     width: 100%;
   }
+
+  .select-category-ul li {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
+
+.category-box {
+  margin: 20px 0 10px;
+  position: relative;
+}
+
+.category-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  padding-left: 12px;
+  border-left: 4px solid var(--btn-tag-bg-color);
+}
+
+.empty-category {
+  width: 100%;
+  padding: 30px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: var(--theme-radius);
+  color: #999;
+  font-size: 16px;
 }
 </style>

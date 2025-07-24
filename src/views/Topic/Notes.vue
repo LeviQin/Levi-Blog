@@ -102,7 +102,7 @@ onMounted(() => {
   const previousRouteName = getStore("LEVI_PREVIONS_ROUTE_NAME");
   const pageStatus = getStore("LEVI_NOTES_PAGE_STATUS");
   if (previousRouteName === `Topic Detail`) {
-    page.value = pageStatus.page;
+    page.value = pageStatus?.page || 1;
   }
 });
 

@@ -293,8 +293,7 @@ const clearData = () => {
 </script>
 
 <style lang="scss" scoped>
-.tools-container {
-  max-width: 670px;
+.all-tool-container {
   border-radius: var(--theme-radius);
 }
 

@@ -98,7 +98,7 @@ const emit = defineEmits(["toNextPage"]);
   font-size: 20px;
   border-radius: 10px;
   padding: 30px;
-  background: #fff;
+  background: #edc;
   border: 8px solid #000;
   box-shadow: 15px 15px 0 #000;
   transform: translate(-50%, -50%) rotate(-2deg);
@@ -245,6 +245,11 @@ const emit = defineEmits(["toNextPage"]);
 }
 
 @media (max-width: 860px) {
+  .banner-text {
+    font-size: 15px;
+    top: 3px;
+  }
+
   .info {
     width: 80% !important;
     padding: 10px;
@@ -266,8 +271,8 @@ const emit = defineEmits(["toNextPage"]);
   }
 
   .left-icon {
-    width: 4rem !important;
-    height: 4rem !important;
+    width: 2rem !important;
+    height: 2rem !important;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -288,7 +293,7 @@ const emit = defineEmits(["toNextPage"]);
     margin-left: 0 !important;
     animation: none !important;
     opacity: 1 !important;
-    font-size: 1rem !important;
+    font-size: 0.7rem !important;
   }
 }
 </style>

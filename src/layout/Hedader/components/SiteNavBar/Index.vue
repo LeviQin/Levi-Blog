@@ -4,87 +4,105 @@
       <li class="nav-li" data-router="/" :class="{ 'active-li': route.path === `/` }">
         首页
       </li>
-      <el-dropdown
-        @command="handleCommandToPage"
+      <custom-dropdown
         v-if="blogSettingMap.show_category_module"
+        @select="handleCommandToPage"
+        ref="categoryDropdown"
       >
-        <li class="nav-li">文章分类</li>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item command="category/daily"
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-woderichang"></use></svg
-              ><span>日常随记</span></el-dropdown-item
-            >
-            <el-dropdown-item command="category/technology"
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-jishurenyuan"></use></svg
-              ><span>开发心得</span></el-dropdown-item
-            >
-            <el-dropdown-item command="category/cute-pet"
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-aichong03"></use></svg
-              ><span>萌宠日记</span></el-dropdown-item
-            >
-            <el-dropdown-item command="category/notes"
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-biji"></use></svg
-              ><span>学习笔记</span></el-dropdown-item
-            >
-            <el-dropdown-item command="category/landscape"
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-fengjing"></use></svg
-              ><span>光影故事</span></el-dropdown-item
-            >
-          </el-dropdown-menu>
+        <template #trigger>
+          <li class="nav-li">文章分类</li>
         </template>
-      </el-dropdown>
+        <template #menu>
+          <dropdown-item @click="handleCommandToPage('category/daily')">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-woderichang"></use>
+            </svg>
+            <span>日常随记</span>
+          </dropdown-item>
+          <dropdown-item @click="handleCommandToPage('category/technology')">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-jishurenyuan"></use>
+            </svg>
+            <span>开发心得</span>
+          </dropdown-item>
+          <dropdown-item @click="handleCommandToPage('category/cute-pet')">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-aichong03"></use>
+            </svg>
+            <span>萌宠日记</span>
+          </dropdown-item>
+          <dropdown-item @click="handleCommandToPage('category/notes')">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-biji"></use>
+            </svg>
+            <span>学习笔记</span>
+          </dropdown-item>
+          <dropdown-item @click="handleCommandToPage('category/landscape')">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-fengjing"></use>
+            </svg>
+            <span>光影故事</span>
+          </dropdown-item>
+        </template>
+      </custom-dropdown>
       <!-- <li class="nav-li" data-router="/material">前端资料</li> -->
-      <el-dropdown
-        @command="handleCommandToPage"
+      <custom-dropdown
         v-if="blogSettingMap.show_widget_module"
+        @select="handleCommandToPage"
+        ref="widgetDropdown"
       >
-        <li class="nav-li">小工具</li>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item command="encryption"
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-jiami"></use></svg
-              ><span>加密/解密</span></el-dropdown-item
-            >
-            <!-- <el-dropdown-item command="weather"
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-tianqi"></use></svg
-              ><span>天气查询</span></el-dropdown-item
-            >
-            <el-dropdown-item command="ip"
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-IPdizhi"></use></svg
-              ><span>IP地址查询</span></el-dropdown-item
-            > -->
-            <el-dropdown-item command="unit"
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-danweihuansuanx"></use></svg
-              ><span>单位换算</span></el-dropdown-item
-            >
-            <el-dropdown-item command="password"
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-mima"></use></svg
-              ><span>密码生成器</span></el-dropdown-item
-            >
-            <el-dropdown-item command="image-processing"
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-tupianchuli"></use></svg
-              ><span>图片处理</span></el-dropdown-item
-            >
-            <!-- <el-dropdown-item command="qr"
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-erweimashengchenggongju"></use></svg
-              ><span>二维码生成</span></el-dropdown-item
-            > -->
-          </el-dropdown-menu>
+        <template #trigger>
+          <li class="nav-li">小工具</li>
         </template>
-      </el-dropdown>
+        <template #menu>
+          <dropdown-item @click="handleCommandToPage('encryption')">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-jiami"></use>
+            </svg>
+            <span>加密/解密</span>
+          </dropdown-item>
+          <!-- 注释掉的菜单项
+          <dropdown-item @click="handleCommandToPage('weather')">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-tianqi"></use>
+            </svg>
+            <span>天气查询</span>
+          </dropdown-item>
+          <dropdown-item @click="handleCommandToPage('ip')">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-IPdizhi"></use>
+            </svg>
+            <span>IP地址查询</span>
+          </dropdown-item>
+          -->
+          <dropdown-item @click="handleCommandToPage('unit')">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-danweihuansuanx"></use>
+            </svg>
+            <span>单位换算</span>
+          </dropdown-item>
+          <dropdown-item @click="handleCommandToPage('password')">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-mima"></use>
+            </svg>
+            <span>密码生成器</span>
+          </dropdown-item>
+          <dropdown-item @click="handleCommandToPage('image-processing')">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-tupianchuli"></use>
+            </svg>
+            <span>图片处理</span>
+          </dropdown-item>
+          <!-- 注释掉的菜单项
+          <dropdown-item @click="handleCommandToPage('qr')">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-erweimashengchenggongju"></use>
+            </svg>
+            <span>二维码生成</span>
+          </dropdown-item>
+          -->
+        </template>
+      </custom-dropdown>
       <li
         class="nav-li"
         data-router="/nav"
@@ -122,9 +140,11 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useMainStore } from "@/stores/mainStore";
+import CustomDropdown from "@/components/CustomDropdown/Index.vue";
+import DropdownItem from "@/components/CustomDropdown/DropdownItem.vue";
 
 const mainStore = useMainStore();
 
@@ -134,6 +154,9 @@ const blogSettingMap = computed(() => {
 
 const router = useRouter();
 const route = useRoute();
+
+const categoryDropdown = ref(null);
+const widgetDropdown = ref(null);
 
 const toPage = (e) => {
   const path = e.target.getAttribute("data-router");

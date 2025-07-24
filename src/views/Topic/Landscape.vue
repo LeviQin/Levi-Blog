@@ -77,7 +77,7 @@ onMounted(() => {
   const previousRouteName = getStore("LEVI_PREVIONS_ROUTE_NAME");
   const pageStatus = getStore("LEVI_LANDSCAPE_PAGE_STATUS");
   if (previousRouteName === `Topic Detail`) {
-    page.value = pageStatus.page;
+    page.value = pageStatus?.page || 1;
   }
 });
 
@@ -108,7 +108,7 @@ const bannerConfig = {
   height: "30vh",
   showArrow: false,
   title: "光影故事",
-  text: "在光与影的交汇中，记录自然的壮美与人文的温度，每一帧都是一段未完的故事。",
+  text: "光影交汇间，定格自然壮美与人文温度，每一帧皆是未完的故事。",
 };
 
 const setWaterfallCol = () => {

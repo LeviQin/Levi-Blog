@@ -491,6 +491,10 @@ const getSystemInfo = () => {
 }
 
 @media (max-width: 860px) {
+  .comments-box {
+    width: 100%;
+  }
+
   .input-box {
     display: block;
 

@@ -310,6 +310,9 @@ const getData = async () => {
 
   .links-category-describe {
     font-size: 13px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
   }
 }
 </style>
