@@ -1,564 +1,114 @@
-/**
- * emoji表
- */
 export const emojiList = [
-    {
-        id: 1,
-        value: '😀',
-        name: 'grinning face'
-    },
-    {
-        id: 3,
-        value: '😄',
-        name: 'grinning face with smiling eyes'
-    },
-    {
-        id: 4,
-        value: '😁',
-        name: 'beaming face with smiling eyes'
-    },
-    {
-        id: 5,
-        value: '😆',
-        name: 'grinning squinting face'
-    },
-    {
-        id: 6,
-        value: '😅',
-        name: 'grinning face with sweat'
-    },
-    {
-        id: 7,
-        value: '🤣',
-        name: 'rolling on the floor laughing'
-    },
-    {
-        id: 8,
-        value: '😂',
-        name: 'face with tears of joy'
-    },
-    {
-        id: 9,
-        value: '🙂',
-        name: 'slightly smiling face'
-    },
-    {
-        id: 10,
-        value: '🙃',
-        name: 'upside-down face'
-    },
-    {
-        id: 11,
-        value: '🫠',
-        name: 'melting face'
-    },
-    {
-        id: 12,
-        value: '😉',
-        name: 'winking face'
-    },
-    {
-        id: 13,
-        value: '😊',
-        name: 'smiling face with smiling eyes'
-    },
-    {
-        id: 14,
-        value: '😇',
-        name: 'smiling face with halo'
-    },
-    {
-        id: 15,
-        value: '🥰',
-        name: 'smiling face with hearts'
-    },
-    {
-        id: 16,
-        value: '😍',
-        name: 'smiling face with heart-eyes'
-    },
-    {
-        id: 17,
-        value: '🤩',
-        name: 'star-struck'
-    },
-    {
-        id: 18,
-        value: '😘',
-        name: 'face blowing a kiss'
-    },
-    {
-        id: 19,
-        value: '😗',
-        name: 'kissing face'
-    },
-    {
-        id: 20,
-        value: '😁', name: 'smiling face'
-    },
-    {
-        id: 21,
-        value: '😚',
-        name: 'kissing face with closed eyes'
-    },
-    {
-        id: 22,
-        value: '😙',
-        name: 'kissing face with smiling eyes'
-    },
-    {
-        id: 23,
-        value: '🥲',
-        name: 'smiling face with tear'
-    },
-    {
-        id: 24,
-        value: '😋',
-        name: 'face savoring food'
-    },
-    {
-        id: 25,
-        value: '😛',
-        name: 'face with tongue'
-    },
-    {
-        id: 26,
-        value: '😜',
-        name: 'winking face with tongue'
-    },
-    {
-        id: 27,
-        value: '🤪',
-        name: 'zany face'
-    },
-    {
-        id: 28,
-        value: '😝',
-        name: 'squinting face with tongue'
-    },
-    {
-        id: 29,
-        value: '🤑',
-        name: 'money-mouth face'
-    },
-    {
-        id: 30,
-        value: '🤗',
-        name: 'smiling face with open hands'
-    },
-    {
-        id: 31,
-        value: '🤭',
-        name: 'face with hand over mouth'
-    },
-    {
-        id: 32,
-        value: '🫢',
-        name: 'face with open eyes and hand over mouth'
-    },
-    {
-        id: 33,
-        value: '🫣',
-        name: 'face with peeking eye'
-    },
-    {
-        id: 34,
-        value: '🤫',
-        name: '	shushing face'
-    },
-    {
-        id: 35,
-        value: '🤔',
-        name: 'thinking face'
-    },
-    {
-        id: 36,
-        value: '🫡',
-        name: 'saluting face'
-    },
-    {
-        id: 37,
-        value: '🤐',
-        name: 'zipper-mouth face'
-    },
-    {
-        id: 38,
-        value: '🤨',
-        name: 'face with raised eyebrow'
-    },
-    {
-        id: 39,
-        value: '😐',
-        name: 'neutral face'
-    },
-    {
-        id: 40,
-        value: '😑',
-        name: 'expressionless face'
-    },
-    {
-        id: 41,
-        value: '😶',
-        name: 'face without mouth'
-    },
-    {
-        id: 42,
-        value: '🫥',
-        name: 'dotted line face'
-    },
-    {
-        id: 43,
-        value: '😶‍🌫️',
-        name: 'face in clouds'
-    },
-    {
-        id: 44,
-        value: '😏',
-        name: 'smirking face'
-    },
-    {
-        id: 45,
-        value: '😒',
-        name: 'unamused face'
-    },
-    {
-        id: 46,
-        value: '🙄',
-        name: 'face with rolling eyes'
-    },
-    {
-        id: 47,
-        value: '😬',
-        name: 'grimacing face'
-    },
-    {
-        id: 48,
-        value: '😮‍💨',
-        name: 'face exhaling'
-    },
-    {
-        id: 49,
-        value: '🤥',
-        name: '	lying face'
-    },
-    {
-        id: 50,
-        value: '🫨',
-        name: 'shaking face'
-    },
-    {
-        id: 53,
-        value: '😌',
-        name: 'relieved face'
-    },
-    {
-        id: 54,
-        value: '😔',
-        name: 'fpensive face'
-    },
-    {
-        id: 55,
-        value: '😪',
-        name: 'sleepy face'
-    },
-    {
-        id: 56,
-        value: '🤤',
-        name: 'drooling face'
-    },
-    {
-        id: 57,
-        value: '😴',
-        name: 'sleeping face'
-    },
-    {
-        id: 58,
-        value: '😷',
-        name: 'face with medical mask'
-    },
-    {
-        id: 59,
-        value: '🤒',
-        name: 'face with thermometer'
-    },
-    {
-        id: 60,
-        value: '🤕',
-        name: 'face with head-bandage'
-    },
-    {
-        id: 62,
-        value: '🤮',
-        name: 'face vomiting'
-    },
-    {
-        id: 63,
-        value: '🤧',
-        name: 'sneezing face'
-    },
-    {
-        id: 64,
-        value: '🥵',
-        name: 'hot face'
-    },
-    {
-        id: 65,
-        value: '🥶',
-        name: 'cold face'
-    },
-    {
-        id: 67,
-        value: '😵',
-        name: 'face with crossed-out eyes'
-    },
-    {
-        id: 68,
-        value: '😵‍💫',
-        name: 'face with spiral eyes'
-    },
-    {
-        id: 71,
-        value: '🥳',
-        name: 'partying face'
-    },
-    {
-        id: 73,
-        value: '😎',
-        name: 'smiling face with sunglasses'
-    },
-    {
-        id: 84,
-        value: '😳',
-        name: 'flushed face'
-    },
-    {
-        id: 85,
-        value: '🥺',
-        name: 'pleading face'
-    },
-    {
-        id: 86,
-        value: '🥹',
-        name: 'face holding back tears'
-    },
-    {
-        id: 89,
-        value: '😨',
-        name: 'fearful face'
-    },
-    {
-        id: 93,
-        value: '😭',
-        name: 'loudly crying face'
-    },
-    {
-        id: 94,
-        value: '😱',
-        name: 'face screaming in fear'
-    },
-    {
-        id: 96,
-        value: '😣',
-        name: 'persevering face'
-    },
-    {
-        id: 101,
-        value: '🥱',
-        name: 'yawning face'
-    },
-    {
-        id: 102,
-        value: '😤',
-        name: 'face with steam from nose'
-    },
-    {
-        id: 103,
-        value: '😡',
-        name: 'enraged face'
-    },
-    {
-        id: 106,
-        value: '😈',
-        name: 'smiling face with horns'
-    },
-    {
-        id: 108,
-        value: '💀',
-        name: '	skull'
-    },
-    {
-        id: 110,
-        value: '💩',
-        name: 'pile of poo'
-    },
-    {
-        id: 111,
-        value: '🤡',
-        name: 'clown face'
-    },
-    {
-        id: 114,
-        value: '👻',
-        name: 'ghost'
-    },
-    {
-        id: 115,
-        value: '👽',
-        name: 'alien'
-    },
-    {
-        id: 116,
-        value: '👾',
-        name: 'alien monster'
-    },
-    {
-        id: 117,
-        value: '🤖',
-        name: 'robot'
-    },
-    {
-        id: 130,
-        value: '💌',
-        name: 'love letter'
-    },
-    {
-        id: 131,
-        value: '💘',
-        name: 'heart with arrow'
-    },
-    {
-        id: 132,
-        value: '💝',
-        name: 'heart with ribbon'
-    },
-    {
-        id: 140,
-        value: '💔',
-        name: 'broken heart'
-    },
-    {
-        id: 143,
-        value: '❤',
-        name: 'red heart'
-    },
-    {
-        id: 155,
-        value: '💋',
-        name: 'kiss mark'
-    },
-    {
-        id: 156,
-        value: '💯',
-        name: 'hundred points'
-    },
-    {
-        id: 157,
-        value: '💢',
-        name: 'anger symbol'
-    },
-    {
-        id: 160,
-        value: '💦',
-        name: 'sweat droplets'
-    },
-    {
-        id: 161,
-        value: '💨',
-        name: 'dashing away'
-    },
-    {
-        id: 168,
-        value: '💤',
-        name: 'ZZZ'
-    },
-    {
-        id: 172,
-        value: '✋',
-        name: 'raised hand'
-    },
-    {
-        id: 178,
-        value: '🫷',
-        name: '	leftwards pushing hand'
-    },
-    {
-        id: 179,
-        value: '🫸',
-        name: 'rightwards pushing hand'
-    },
-    {
-        id: 180,
-        value: '👌',
-        name: 'OK hand'
-    },
-    {
-        id: 182,
-        value: '🤏',
-        name: 'pinching hand'
-    },
-    {
-        id: 183,
-        value: '✌',
-        name: 'victory hand'
-    },
-    {
-        id: 185,
-        value: '🫰',
-        name: 'hand with index finger and thumb crossed'
-    },
-    {
-        id: 186,
-        value: '🤟',
-        name: 'love-you gesture'
-    },
-    {
-        id: 188,
-        value: '🤙',
-        name: 'call me hand'
-    },
-    {
-        id: 195,
-        value: '🫵',
-        name: 'index pointing at the viewer'
-    },
-    {
-        id: 196,
-        value: '👍',
-        name: 'thumbs up'
-    },
-    {
-        id: 197,
-        value: '👎',
-        name: 'thumbs down'
-    },
-    {
-        id: 198,
-        value: '✊',
-        name: 'raised fist'
-    },
-    {
-        id: 202,
-        value: '👏',
-        name: 'clapping hands'
-    },
-    {
-        id: 207,
-        value: '🤝',
-        name: 'handshake'
-    },
-    {
-        id: 209,
-        value: '✍',
-        name: 'writing hand'
-    },
-    {
-        id: 212,
-        value: '💪',
-        name: 'flexed biceps'
-    },
-    {
-        id: 169,
-        value: '👋',
-        name: 'robot'
-    },
-]
+    { "id": 1, "value": "😀", "name": "grinning face", "cn": "笑脸" },
+    { "id": 3, "value": "😄", "name": "grinning face with smiling eyes", "cn": "咧嘴笑眼" },
+    { "id": 4, "value": "😁", "name": "beaming face with smiling eyes", "cn": "露齿微笑" },
+    { "id": 5, "value": "😆", "name": "grinning squinting face", "cn": "眯眼咧嘴笑" },
+    { "id": 6, "value": "😅", "name": "grinning face with sweat", "cn": "带汗的笑脸" },
+    { "id": 7, "value": "🤣", "name": "rolling on the floor laughing", "cn": "笑翻了" },
+    { "id": 8, "value": "😂", "name": "face with tears of joy", "cn": "喜极而泣" },
+    { "id": 9, "value": "🙂", "name": "slightly smiling face", "cn": "微笑" },
+    { "id": 10, "value": "🙃", "name": "upside-down face", "cn": "倒置脸" },
+    { "id": 11, "value": "🫠", "name": "melting face", "cn": "融化的脸" },
+    { "id": 12, "value": "😉", "name": "winking face", "cn": "眨眼" },
+    { "id": 13, "value": "😊", "name": "smiling face with smiling eyes", "cn": "含笑的脸" },
+    { "id": 14, "value": "😇", "name": "smiling face with halo", "cn": "天使脸" },
+    { "id": 15, "value": "🥰", "name": "smiling face with hearts", "cn": "爱心笑脸" },
+    { "id": 16, "value": "😍", "name": "smiling face with heart-eyes", "cn": "爱心眼" },
+    { "id": 17, "value": "🤩", "name": "star-struck", "cn": "星星眼" },
+    { "id": 18, "value": "😘", "name": "face blowing a kiss", "cn": "飞吻" },
+    { "id": 19, "value": "😗", "name": "kissing face", "cn": "亲亲脸" },
+    { "id": 20, "value": "😁", "name": "smiling face", "cn": "笑脸" },
+    { "id": 21, "value": "😚", "name": "kissing face with closed eyes", "cn": "闭眼亲亲" },
+    { "id": 22, "value": "😙", "name": "kissing face with smiling eyes", "cn": "笑眼亲亲" },
+    { "id": 23, "value": "🥲", "name": "smiling face with tear", "cn": "含泪微笑" },
+    { "id": 24, "value": "😋", "name": "face savoring food", "cn": "舔嘴唇" },
+    { "id": 25, "value": "😛", "name": "face with tongue", "cn": "吐舌头" },
+    { "id": 26, "value": "😜", "name": "winking face with tongue", "cn": "眨眼吐舌" },
+    { "id": 27, "value": "🤪", "name": "zany face", "cn": "搞怪脸" },
+    { "id": 28, "value": "😝", "name": "squinting face with tongue", "cn": "眯眼吐舌" },
+    { "id": 29, "value": "🤑", "name": "money-mouth face", "cn": "发财脸" },
+    { "id": 30, "value": "🤗", "name": "smiling face with open hands", "cn": "张手笑脸" },
+    { "id": 31, "value": "🤭", "name": "face with hand over mouth", "cn": "捂嘴笑" },
+    { "id": 32, "value": "🫢", "name": "face with open eyes and hand over mouth", "cn": "张眼捂嘴" },
+    { "id": 33, "value": "🫣", "name": "face with peeking eye", "cn": "偷看" },
+    { "id": 34, "value": "🤫", "name": "shushing face", "cn": "嘘声" },
+    { "id": 35, "value": "🤔", "name": "thinking face", "cn": "思考" },
+    { "id": 36, "value": "🫡", "name": "saluting face", "cn": "敬礼" },
+    { "id": 37, "value": "🤐", "name": "zipper-mouth face", "cn": "拉链嘴" },
+    { "id": 38, "value": "🤨", "name": "face with raised eyebrow", "cn": "挑眉" },
+    { "id": 39, "value": "😐", "name": "neutral face", "cn": "无表情" },
+    { "id": 40, "value": "😑", "name": "expressionless face", "cn": "面无表情" },
+    { "id": 41, "value": "😶", "name": "face without mouth", "cn": "无嘴脸" },
+    { "id": 42, "value": "🫥", "name": "dotted line face", "cn": "虚线脸" },
+    { "id": 43, "value": "😶‍🌫️", "name": "face in clouds", "cn": "云中脸" },
+    { "id": 44, "value": "😏", "name": "smirking face", "cn": "坏笑" },
+    { "id": 45, "value": "😒", "name": "unamused face", "cn": "不悦" },
+    { "id": 46, "value": "🙄", "name": "face with rolling eyes", "cn": "翻白眼" },
+    { "id": 47, "value": "😬", "name": "grimacing face", "cn": "龇牙咧嘴" },
+    { "id": 48, "value": "😮‍💨", "name": "face exhaling", "cn": "叹气" },
+    { "id": 49, "value": "🤥", "name": "lying face", "cn": "说谎脸" },
+    { "id": 50, "value": "🫨", "name": "shaking face", "cn": "震惊脸" },
+    { "id": 53, "value": "😌", "name": "relieved face", "cn": "如释重负" },
+    { "id": 54, "value": "😔", "name": "fpensive face", "cn": "沉思" },
+    { "id": 55, "value": "😪", "name": "sleepy face", "cn": "困" },
+    { "id": 56, "value": "🤤", "name": "drooling face", "cn": "流口水" },
+    { "id": 57, "value": "😴", "name": "sleeping face", "cn": "睡觉" },
+    { "id": 58, "value": "😷", "name": "face with medical mask", "cn": "戴口罩" },
+    { "id": 59, "value": "🤒", "name": "face with thermometer", "cn": "发烧" },
+    { "id": 60, "value": "🤕", "name": "face with head-bandage", "cn": "头受伤" },
+    { "id": 62, "value": "🤮", "name": "face vomiting", "cn": "呕吐" },
+    { "id": 63, "value": "🤧", "name": "sneezing face", "cn": "打喷嚏" },
+    { "id": 64, "value": "🥵", "name": "hot face", "cn": "热" },
+    { "id": 65, "value": "🥶", "name": "cold face", "cn": "冷" },
+    { "id": 67, "value": "😵", "name": "face with crossed-out eyes", "cn": "眼花" },
+    { "id": 68, "value": "😵‍💫", "name": "face with spiral eyes", "cn": "晕" },
+    { "id": 71, "value": "🥳", "name": "partying face", "cn": "派对脸" },
+    { "id": 73, "value": "😎", "name": "smiling face with sunglasses", "cn": "酷" },
+    { "id": 84, "value": "😳", "name": "flushed face", "cn": "脸红" },
+    { "id": 85, "value": "🥺", "name": "pleading face", "cn": "可怜巴巴" },
+    { "id": 86, "name": "face holding back tears", "value": "🥹", "cn": "强忍泪水" },
+    { "id": 89, "value": "😨", "name": "fearful face", "cn": "害怕" },
+    { "id": 93, "value": "😭", "name": "loudly crying face", "cn": "大哭" },
+    { "id": 94, "value": "😱", "name": "face screaming in fear", "cn": "惊恐尖叫" },
+    { "id": 96, "value": "😣", "name": "persevering face", "cn": "坚持" },
+    { "id": 101, "value": "🥱", "name": "yawning face", "cn": "打哈欠" },
+    { "id": 102, "value": "😤", "name": "face with steam from nose", "cn": "生气" },
+    { "id": 103, "value": "😡", "name": "enraged face", "cn": "愤怒" },
+    { "id": 106, "value": "😈", "name": "smiling face with horns", "cn": "恶魔笑脸" },
+    { "id": 108, "value": "💀", "name": "skull", "cn": "骷髅" },
+    { "id": 110, "value": "💩", "name": "pile of poo", "cn": "便便" },
+    { "id": 111, "value": "🤡", "name": "clown face", "cn": "小丑" },
+    { "id": 114, "value": "👻", "name": "ghost", "cn": "鬼魂" },
+    { "id": 115, "value": "👽", "name": "alien", "cn": "外星人" },
+    { "id": 116, "value": "👾", "name": "alien monster", "cn": "外星怪物" },
+    { "id": 117, "value": "🤖", "name": "robot", "cn": "机器人" },
+    { "id": 130, "value": "💌", "name": "love letter", "cn": "情书" },
+    { "id": 131, "value": "💘", "name": "heart with arrow", "cn": "箭穿心" },
+    { "id": 132, "value": "💝", "name": "heart with ribbon", "cn": "缎带心" },
+    { "id": 140, "value": "💔", "name": "broken heart", "cn": "心碎" },
+    { "id": 143, "value": "❤", "name": "red heart", "cn": "红心" },
+    { "id": 155, "value": "💋", "name": "kiss mark", "cn": "吻痕" },
+    { "id": 156, "value": "💯", "name": "hundred points", "cn": "百分百" },
+    { "id": 157, "value": "💢", "name": "anger symbol", "cn": "怒气符号" },
+    { "id": 160, "value": "💦", "name": "sweat droplets", "cn": "汗滴" },
+    { "id": 161, "value": "💨", "name": "dashing away", "cn": "飞奔" },
+    { "id": 168, "value": "💤", "name": "ZZZ", "cn": "睡觉符号" },
+    { "id": 172, "value": "✋", "name": "raised hand", "cn": "举手" },
+    { "id": 178, "value": "🫷", "name": "leftwards pushing hand", "cn": "左推手" },
+    { "id": 179, "value": "🫸", "name": "rightwards pushing hand", "cn": "右推手" },
+    { "id": 180, "value": "👌", "name": "OK hand", "cn": "OK手势" },
+    { "id": 182, "value": "🤏", "name": "pinching hand", "cn": "捏手指" },
+    { "id": 183, "value": "✌", "name": "victory hand", "cn": "胜利" },
+    { "id": 185, "value": "🫰", "name": "hand with index finger and thumb crossed", "cn": "比爱心手势" },
+    { "id": 186, "value": "🤟", "name": "love‑you gesture", "cn": "爱你手势" },
+    { "id": 188, "value": "🤙", "name": "call me hand", "cn": "打电话手势" },
+    { "id": 195, "value": "🫵", "name": "index pointing at the viewer", "cn": "你" },
+    { "id": 196, "value": "👍", "name": "thumbs up", "cn": "点赞" },
+    { "id": 197, "value": "👎", "name": "thumbs down", "cn": "倒赞" },
+    { "id": 198, "value": "✊", "name": "raised fist", "cn": "握拳" },
+    { "id": 202, "value": "👏", "name": "clapping hands", "cn": "鼓掌" },
+    { "id": 207, "value": "🤝", "name": "handshake", "cn": "握手" },
+    { "id": 209, "value": "✍", "name": "writing hand", "cn": "写字" },
+    { "id": 212, "value": "💪", "name": "flexed biceps", "cn": "肌肉" },
+    { "id": 169, "value": "👋", "name": "waving hand", "cn": "挥手" }
+];

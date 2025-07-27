@@ -29,11 +29,15 @@
           <a
             v-for="item in dataMap.friendList"
             :key="item.id"
-            :href="item.link"
+            :href="item.url"
             target="_blank"
             rel="noopener external nofollow noreferrer"
             class="links-category-item"
           >
+            <div
+              class="links-avatar-bg"
+              :style="{ backgroundImage: `url(${item.image})` }"
+            ></div>
             <div class="links-category-icon">
               <img :src="item.image" alt="友链头像" />
             </div>
@@ -232,14 +236,30 @@ const getData = async () => {
   border: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
+  position: relative;
+  backdrop-filter: blur(5px);
+}
+
+.links-avatar-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.2;
+  filter: blur(3px);
+  z-index: 0;
 }
 
 .links-category-icon {
   position: absolute;
-  top: -16px;
-  left: -16px;
-  width: 60px;
-  height: 60px;
+  top: -12px;
+  left: -12px;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
   background: #fff;
   display: flex;
@@ -275,7 +295,7 @@ const getData = async () => {
 }
 
 .links-category-describe {
-  color: #727272;
+  color: #2e2e2e;
   font-size: 13px;
   line-height: 1.4;
   flex: 1;
@@ -628,14 +648,8 @@ const getData = async () => {
 
 @media (hover: hover) {
   .links-category-item:hover {
-    transform: translateY(-15px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
     border-color: var(--btn-tag-bg-color);
-  }
-
-  .info-card:hover {
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-    transform: translateY(-10px);
   }
 }
 </style>

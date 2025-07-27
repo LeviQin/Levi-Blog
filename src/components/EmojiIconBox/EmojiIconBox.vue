@@ -4,7 +4,12 @@
       <div class="emoji-list-content">
         <div class="emoji-box" v-if="selectVal === `emoji`">
           <ul>
-            <li v-for="item in emojiList" :key="item.id" @click="selectEmoji(item)">
+            <li
+              v-for="item in emojiList"
+              :key="item.id"
+              @click="selectEmoji(item)"
+              :title="item.cn"
+            >
               {{ item.value }}
             </li>
           </ul>
@@ -45,8 +50,8 @@ onBeforeUnmount(() => {
   document.removeEventListener("click", closeEmojiList);
 });
 
-let showEmojiList = ref(false);
-let selectVal = ref("emoji");
+const showEmojiList = ref(false);
+const selectVal = ref("emoji");
 
 const closeEmojiList = (e) => {
   if (!e.target.closest(".emoji-list-box")) {

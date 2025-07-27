@@ -16,7 +16,9 @@
         <i class="bi bi-rocket-takeoff-fill"></i>
       </div>
       <ul class="nav-drawer-ul" @click="toPage">
-        <li class="nav-drawer-li" data-router="/">首页</li>
+        <li class="nav-drawer-li" data-router="/">
+          <a href="/">首页</a>
+        </li>
         <div class="collapse-card" v-if="blogSettingMap.show_category_module">
           <li class="nav-drawer-li" id="topic" @click="clickTopic">
             <span>文章分类</span><i class="bi bi-chevron-down bi-topic-icon"></i>

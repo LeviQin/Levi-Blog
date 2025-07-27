@@ -33,6 +33,9 @@
                   {{ item.article_description }}
                 </p>
               </div>
+              <div v-if="item.image" class="article-item-img">
+                <img :src="item.image" alt="" />
+              </div>
               <div class="article-item-footer">
                 <div class="footer-info">
                   <div class="footer-category">
@@ -73,9 +76,6 @@
                   }}</span>
                 </div>
               </div>
-            </div>
-            <div v-if="item.image" class="article-item-img">
-              <img :src="item.image" alt="" />
             </div>
           </div>
           <div class="pagination-box">
@@ -236,17 +236,14 @@ const getData = async () => {
 }
 
 .article-item-img {
-  width: 200px;
-  border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: end;
-  overflow: hidden;
+  margin: 20px 0;
   img {
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    max-height: 400px;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: var(--theme-radius);
   }
 }
 
@@ -284,7 +281,7 @@ const getData = async () => {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   color: #3c3b3b;
 }
 

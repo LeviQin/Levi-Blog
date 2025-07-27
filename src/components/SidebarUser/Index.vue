@@ -172,7 +172,16 @@ const getData = async () => {
   transition: transform 0.6s ease-in-out;
   border: 2px solid #fff;
   &:hover {
-    transform: rotate(720deg);
+    animation: rotate360 1s cubic-bezier(0.33, 1, 0.68, 1);
+  }
+}
+
+@keyframes rotate360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(1080deg);
   }
 }
 

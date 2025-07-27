@@ -1,11 +1,12 @@
 <template>
-  <div class="comments theme-bg-color">
+  <div class="comments theme-bg-color" id="comments">
     <div class="box-title">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#levi-faxiaoxi"></use>
       </svg>
       <h2>发送评论</h2>
     </div>
+    <div class="reply-meessage-box" v-if="props.replyData?.id"></div>
     <div class="box-content">
       <div class="textarea-bpx">
         <el-input
@@ -19,7 +20,7 @@
       </div>
       <div class="input-box">
         <el-input
-          v-model="user_nickname"
+          v-model="userNickname"
           placeholder="昵称"
           class="input-item"
           size="large"
@@ -59,7 +60,7 @@
       </div>
       <div class="btn-box">
         <div class="avatar-box">
-          <AvatarSelect :avatarImg="user_avatar_url" @ok="selectAvatar" />
+          <AvatarSelect :avatarImg="userAvatarUrl" @ok="selectAvatar" />
         </div>
         <div class="emoji-send-box">
           <EmojiIconBox @ok="receiveMessage" />
@@ -73,20 +74,45 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import EmojiIconBox from "../../MessageBoard/components/EmojiIconBox.vue";
-import AvatarSelect from "../../MessageBoard/components/AvatarSelect.vue";
+import { ref, onMounted, computed, defineProps } from "vue";
+import EmojiIconBox from "@/components/EmojiIconBox/EmojiIconBox.vue";
+import AvatarSelect from "@/components/AvatarSelect/AvatarSelect.vue";
+import { setStore, getStore } from "@/utils/storage.js";
+import { sendComment } from "@/api/comments.js";
+import { useMainStore } from "@/stores/mainStore";
+
+const mainStore = useMainStore();
+
+const blogSettingMap = computed(() => {
+  return mainStore.blogSettingMap;
+});
+
+const props = defineProps({
+  postId: {
+    type: [String, Number],
+    default: "",
+  },
+  replyData: {
+    type: Object,
+    default: () => {},
+  },
+});
 
 onMounted(() => {
+  const messageBoardInfo = getStore("COMMENTS_INPUT");
+  if (messageBoardInfo) {
+    userNickname.value = messageBoardInfo.userNickname;
+    email.value = messageBoardInfo.email;
+    userAvatarUrl.value = messageBoardInfo.userAvatarUrl;
+  }
   updateContent();
 });
 
+const parentId = ref("");
 const messageText = ref("");
-const user_nickname = ref("");
+const userNickname = ref("");
 const email = ref("");
-const user_avatar_url = ref(
-  "https://levi-oss-1301066479.cos.ap-guangzhou.myqcloud.com/avatarImages/Snipaste_2024-04-24_16-53-27.png"
-);
+const userAvatarUrl = ref(blogSettingMap.value.blog_message_avatar);
 const verCode = ref("");
 const loading = ref(false);
 const codeNum = ref(0);
@@ -94,7 +120,7 @@ const codeNum = ref(0);
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const selectAvatar = (avatar) => {
-  user_avatar_url.value = avatar;
+  userAvatarUrl.value = avatar;
 };
 
 const receiveMessage = (emoji) => {
@@ -114,16 +140,16 @@ const sendMessage = async () => {
   try {
     if (!messageText.value) {
       ElNotification({
-        title: "留言失败",
-        message: "留言内容未填写",
+        title: "评论失败",
+        message: "评论内容未填写",
         type: "error",
         zIndex: 99999,
       });
       return;
     }
-    if (!user_nickname.value) {
+    if (!userNickname.value) {
       ElNotification({
-        title: "留言失败",
+        title: "评论失败",
         message: "昵称未填写",
         type: "error",
         zIndex: 99999,
@@ -132,7 +158,7 @@ const sendMessage = async () => {
     }
     if (!email.value) {
       ElNotification({
-        title: "留言失败",
+        title: "评论失败",
         message: "邮箱未填写",
         type: "error",
         zIndex: 99999,
@@ -141,7 +167,7 @@ const sendMessage = async () => {
     }
     if (!emailRegex.test(email.value)) {
       ElNotification({
-        title: "留言失败",
+        title: "评论失败",
         message: "邮箱验证失败，请重试",
         type: "error",
         zIndex: 99999,
@@ -150,7 +176,7 @@ const sendMessage = async () => {
     }
     if (verCode.value != codeNum.value) {
       ElNotification({
-        title: "留言失败",
+        title: "评论失败",
         message: "验证码错误",
         type: "error",
         zIndex: 99999,
@@ -159,25 +185,29 @@ const sendMessage = async () => {
     }
     loading.value = true;
     const { operatingSystem, browser } = getSystemInfo();
-    const res = await sendBoardMsg({
+    const res = await sendComment({
+      article_id: props.postId,
       content: messageText.value,
-      user_nickname: user_nickname.value,
+      user_nickname: userNickname.value,
       email: email.value,
-      user_avatar_url: user_avatar_url.value,
-      parent_id: parent_id.value,
+      user_avatar_url: userAvatarUrl.value,
+      parent_id: parentId.value,
       operating_system: operatingSystem,
       browser,
     });
     const { code, message } = res.data;
     if (code === 200) {
+      setStore("COMMENTS_INPUT", {
+        userAvatarUrl: userAvatarUrl.value,
+        userNickname: userNickname.value,
+        email: email.value,
+      });
       messageText.value = "";
-      user_nickname.value = "";
-      email.value = "";
       verCode.value = "";
-      getMessage();
+      updateContent();
       ElNotification({
         title: "成功，等待审核中~",
-        message: `${message}, 审核通过后将显示在留言板中~`,
+        message: `${message}, 审核通过后将显示在评论列表中~`,
         type: "success",
         zIndex: 99999,
         duration: 4500,
@@ -194,7 +224,7 @@ const sendMessage = async () => {
     console.log(e, "----------------------");
     ElNotification({
       title: "失败",
-      message: "留言失败，请重试",
+      message: "评论失败，请重试",
       type: "error",
       zIndex: 99999,
     });
@@ -208,11 +238,8 @@ const updateContent = () => {
   const max = 20;
   const random1 = Math.floor(Math.random() * (max - min + 1)) + min;
   const random2 = Math.floor(Math.random() * (max - min + 1)) + min;
-
   const newValue = `${random1} - ${random2} = `;
-
   codeNum.value = random1 - random2;
-
   document.documentElement.style.setProperty("--content-value", `"${newValue}"`);
 };
 

@@ -65,7 +65,7 @@
                 ><i class="bi bi-suit-heart-fill"></i
               ></span>
             </div>
-            <!-- <div class="tool-message-btn tool-itme">
+            <!-- <div class="tool-message-btn tool-itme" @click="sendComment">
               <i class="bi bi-chat"></i>
               <span>评论</span>
             </div> -->
@@ -81,7 +81,8 @@
           </div>
         </div>
         <!-- <div id="qrcode"></div> -->
-        <!-- <Comments /> -->
+        <!-- <CommentList :postId="route.params.id" @replyMessage="replyMessage" />
+        <Comments :postId="route.params.id" :replyData="dataMap.replyData" /> -->
       </div>
       <div class="topic-detail-sidebar">
         <sidebar-user></sidebar-user>
@@ -124,6 +125,7 @@ import { dateToString } from "@/utils/utils.js";
 import { Head } from "@vueuse/head";
 import { getStore, setStore } from "@/utils/storage.js";
 import Comments from "./components/Comments.vue";
+import CommentList from "./components/CommentList.vue";
 import { useMainStore } from "@/stores/mainStore";
 
 const tagsList = computed(() => {
@@ -167,6 +169,7 @@ const dataMap = reactive({
     id: "",
   },
   titles: [],
+  replyData: {},
 });
 
 const markdownRendererRef = ref(null);
@@ -231,6 +234,24 @@ const requsetLikes = async () => {
     dataMap.articleInfo.likes -= 1;
     console.log(error, "------------------------");
   }
+};
+
+const sendComment = () => {
+  const el = document.getElementById("comments");
+  if (el) {
+    const topOffset = el.getBoundingClientRect().top + window.scrollY;
+    const finalScrollTop = topOffset;
+    window.scrollTo({
+      top: finalScrollTop,
+      behavior: "smooth",
+    });
+  }
+};
+
+const replyMessage = (message) => {
+  console.log(message, 1111111111);
+  dataMap.replyData = message;
+  sendComment();
 };
 
 const getArticleDetail = async () => {

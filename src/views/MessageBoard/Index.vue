@@ -17,9 +17,6 @@
       :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
     >
       <div class="comments-main w">
-        <div class="topic-sidebar">
-          <sidebar-user></sidebar-user>
-        </div>
         <div class="comments-box">
           <div class="message-box theme-bg-color">
             <div class="box-title">
@@ -41,7 +38,7 @@
               </div>
               <div class="input-box">
                 <el-input
-                  v-model="user_nickname"
+                  v-model="userNickname"
                   placeholder="昵称"
                   class="input-item"
                   size="large"
@@ -81,7 +78,7 @@
               </div>
               <div class="btn-box">
                 <div class="avatar-box">
-                  <AvatarSelect :avatarImg="user_avatar_url" @ok="selectAvatar" />
+                  <AvatarSelect :avatarImg="userAvatarUrl" @ok="selectAvatar" />
                 </div>
                 <div class="emoji-send-box">
                   <EmojiIconBox @ok="receiveMessage" />
@@ -112,24 +109,61 @@
             </div>
           </div>
         </div>
+        <div class="topic-sidebar">
+          <sidebar-user></sidebar-user>
+          <div class="announcement-block">
+            <div class="announcement-title">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#levi-liuyanban"></use>
+              </svg>
+              <span>系统提示</span>
+            </div>
+            <el-divider />
+            <div class="announcement-content">
+              <p>你已进入 Levi 的异次元空间</p>
+              <p>在这里你可以：</p>
+              <ul>
+                <li>"发送来自未来的建议"</li>
+                <li>"报告时空裂缝中的 bug"</li>
+                <li>"留下你的足迹与回声"</li>
+              </ul>
+              <p>⛔禁止使用黑魔法发布广告</p>
+              <p>🛸 欢迎异世界旅人留下只言片语！</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { Head } from "@vueuse/head";
 import SidebarUser from "@/components/SidebarUser/Index.vue";
-import EmojiIconBox from "./components/EmojiIconBox.vue";
 import { sendBoardMsg, getMessageList } from "@/api/messages.js";
-import AvatarSelect from "./components/AvatarSelect.vue";
-import MessageItem from "./components/MessageItem.vue";
+import EmojiIconBox from "@/components/EmojiIconBox/EmojiIconBox.vue";
+import AvatarSelect from "@/components/AvatarSelect/AvatarSelect.vue";
+import MessageItem from "@/components/MessageItem/MessageItem.vue";
 import dayjs from "dayjs";
 import { dateToString } from "@/utils/utils.js";
+import { setStore, getStore } from "@/utils/storage.js";
+import { useMainStore } from "@/stores/mainStore";
+
+const mainStore = useMainStore();
+
+const blogSettingMap = computed(() => {
+  return mainStore.blogSettingMap;
+});
 
 onMounted(() => {
+  const commentsInfo = getStore("COMMENTS_INPUT");
+  if (commentsInfo) {
+    userNickname.value = commentsInfo.userNickname;
+    email.value = commentsInfo.email;
+    userAvatarUrl.value = commentsInfo.userAvatarUrl;
+  }
   isSidebarVisible.value = true;
   updateContent();
   getMessage();
@@ -141,12 +175,10 @@ const dataMap = reactive({
 
 const isSidebarVisible = ref(false);
 const messageText = ref("");
-const user_nickname = ref("");
+const userNickname = ref("");
 const email = ref("");
-const user_avatar_url = ref(
-  "https://levi-oss-1301066479.cos.ap-guangzhou.myqcloud.com/avatarImages/Snipaste_2024-04-24_16-53-36.png"
-);
-const parent_id = ref("");
+const userAvatarUrl = ref(blogSettingMap.value.blog_message_avatar);
+const parentId = ref("");
 const verCode = ref("");
 const loading = ref(false);
 const codeNum = ref(0);
@@ -161,7 +193,7 @@ const bannerConfig = {
 };
 
 const selectAvatar = (avatar) => {
-  user_avatar_url.value = avatar;
+  userAvatarUrl.value = avatar;
 };
 
 const receiveMessage = (emoji) => {
@@ -226,7 +258,7 @@ const sendMessage = async () => {
       });
       return;
     }
-    if (!user_nickname.value) {
+    if (!userNickname.value) {
       ElNotification({
         title: "留言失败",
         message: "昵称未填写",
@@ -266,20 +298,24 @@ const sendMessage = async () => {
     const { operatingSystem, browser } = getSystemInfo();
     const res = await sendBoardMsg({
       content: messageText.value,
-      user_nickname: user_nickname.value,
+      user_nickname: userNickname.value,
       email: email.value,
-      user_avatar_url: user_avatar_url.value,
-      parent_id: parent_id.value,
+      user_avatar_url: userAvatarUrl.value,
+      parent_id: parentId.value,
       operating_system: operatingSystem,
       browser,
     });
     const { code, message } = res.data;
     if (code === 200) {
+      setStore("COMMENTS_INPUT", {
+        userAvatarUrl: userAvatarUrl.value,
+        userNickname: userNickname.value,
+        email: email.value,
+      });
       messageText.value = "";
-      user_nickname.value = "";
-      email.value = "";
       verCode.value = "";
       getMessage();
+      updateContent();
       ElNotification({
         title: "成功，等待审核中~",
         message: `${message}, 审核通过后将显示在留言板中~`,
@@ -313,11 +349,8 @@ const updateContent = () => {
   const max = 20;
   const random1 = Math.floor(Math.random() * (max - min + 1)) + min;
   const random2 = Math.floor(Math.random() * (max - min + 1)) + min;
-
   const newValue = `${random1} - ${random2} = `;
-
   codeNum.value = random1 - random2;
-
   document.documentElement.style.setProperty("--content-value", `"${newValue}"`);
 };
 
@@ -485,9 +518,38 @@ const getSystemInfo = () => {
   padding-bottom: 50px;
 }
 
-.sidebar-info {
+.announcement-block {
+  background: var(--theme-color);
+  border-radius: var(--theme-radius);
   position: sticky;
+  left: 0;
   top: 80px;
+  padding: 20px;
+  .announcement-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .icon {
+      width: 2em;
+      height: 2em;
+    }
+  }
+  .announcement-content {
+    font-size: 15px;
+    p {
+      margin: 8px 0;
+    }
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin: 15px 0;
+      li {
+        list-style: disc;
+        margin-left: 30px;
+      }
+    }
+  }
 }
 
 @media (max-width: 860px) {

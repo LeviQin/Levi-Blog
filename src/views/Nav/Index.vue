@@ -23,7 +23,6 @@
             v-for="category in categories"
             :key="category.value"
             @click="selectCategory(category)"
-            :class="{ 'active-category': activeCategory === category.value }"
           >
             {{ category.label }}
           </li>
@@ -213,13 +212,6 @@ const toSitePage = (url) => {
     color: #fff;
     transform: translateY(-2px);
   }
-}
-
-.active-category {
-  background: var(--btn-tag-bg-color) !important;
-  color: #fff !important;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .nav-container {

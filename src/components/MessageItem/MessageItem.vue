@@ -40,7 +40,8 @@
           </div>
         </div>
         <div class="message-item-main-content">
-          <span v-html="messageContent"></span>
+          <p v-html="messageContent"></p>
+          <div class="reply-btn" @click="replyMessage(message)"><span>回复</span></div>
         </div>
       </div>
     </div>
@@ -59,7 +60,7 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from "vue";
+import { defineProps, computed, defineEmits } from "vue";
 
 const messageContent = computed(() => {
   return props.message.content ? props.message.content.replace(/\n/g, "<br/>") : "";
@@ -92,6 +93,12 @@ const systemMap = {
   iOS: "ios",
   Linux: "linux",
 };
+
+const replyMessage = (message) => {
+  emit("replyMessage", message);
+};
+
+const emit = defineEmits(["replyMessage"]);
 </script>
 
 <style lang="scss" scoped>
@@ -177,6 +184,38 @@ const systemMap = {
 
 .message-item-main-content {
   padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  position: relative;
+  &:hover .reply-btn {
+    opacity: 1;
+  }
+  p {
+    margin: 0;
+    padding-right: 60px;
+  }
+  .reply-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 3px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--theme-btn-hover-color);
+    color: var(--theme-btn-hover-color);
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    &:hover {
+      background-color: var(--theme-btn-hover-color);
+      color: #fff;
+    }
+  }
 }
 
 @media (max-width: 860px) {

@@ -15,126 +15,164 @@
   </Head>
   <div class="unit-conversion w theme-bg-color all-tool-container">
     <div class="unit-conversion-container" ref="unitConversionContainerRef">
-      <div class="unit-conversion-title">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#levi-danweihuansuanx"></use>
-        </svg>
-        <h1>单位换算</h1>
-      </div>
-      <div class="select-type-box">
-        <div class="select-type-label">
-          <span>类型</span>
+      <!-- 标题区域 -->
+      <div class="unit-conversion-header">
+        <div class="unit-conversion-title">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#levi-danweihuansuanx"></use>
+          </svg>
+          <h1>单位换算</h1>
         </div>
-        <el-select
-          v-model="typeVal"
-          class="m-2"
-          placeholder="转换的类型"
-          size="large"
-          style="width: 240px"
-          @change="selectType"
-          filterable
-        >
-          <el-option
-            v-for="item in types"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
+        <p class="unit-conversion-subtitle">支持多种单位类型的快速精确换算</p>
       </div>
-      <div class="data-box">
-        <div class="data-input-box">
-          <div class="data-input-label">
-            <span>数据</span>
+
+      <!-- 主要内容区域 -->
+      <div class="conversion-card">
+        <!-- 类型选择 -->
+        <div class="select-type-box">
+          <div class="select-type-label">
+            <el-icon><Operation /></el-icon>
+            <span>类型</span>
           </div>
-          <el-input-number
-            v-model="dataVal"
-            class="m-2"
-            placeholder="转换的数据"
+          <el-select
+            v-model="typeVal"
+            class="type-select"
+            placeholder="选择转换类型"
             size="large"
-            style="width: 240px"
-            controls-position="right"
-            :min="0"
-            @input="changeData"
+            @change="selectType"
+            filterable
           >
-          </el-input-number>
+            <el-option
+              v-for="item in types"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
         </div>
-        <el-select
-          v-model="dataUnit"
-          class="m-2"
-          placeholder="数据单位"
-          style="width: 296px"
-          size="large"
-          filterable
-          @change="changeData"
-        >
-          <el-option
-            v-for="item in dataMap.dataUnits"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-            style="width: 240px"
-          />
-        </el-select>
-      </div>
-      <div class="result-box">
-        <div class="result-input-box">
-          <div class="result-input-label">
-            <span>结果</span>
+
+        <!-- 转换区域 -->
+        <div class="conversion-area">
+          <!-- 输入数据区域 -->
+          <div class="conversion-section">
+            <div class="conversion-label">
+              <el-icon><Edit /></el-icon>
+              <span>输入数据</span>
+            </div>
+            <div class="conversion-inputs">
+              <el-input-number
+                v-model="dataVal"
+                class="data-input"
+                placeholder="输入数值"
+                size="large"
+                controls-position="right"
+                :min="0"
+                @input="changeData"
+              >
+              </el-input-number>
+              <el-select
+                v-model="dataUnit"
+                class="unit-select"
+                placeholder="选择单位"
+                size="large"
+                filterable
+                @change="changeData"
+              >
+                <el-option
+                  v-for="item in dataMap.dataUnits"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </div>
           </div>
-          <el-input
-            v-model="resultVal"
-            class="m-2"
-            size="large"
-            style="width: 240px"
-            disabled
-          >
-          </el-input>
+
+          <!-- 交换按钮 -->
+          <div class="exchange-button-container">
+            <el-button 
+              class="exchange-button" 
+              circle 
+              @click="exchangeData"
+              type="primary"
+            >
+              <el-icon><Sort /></el-icon>
+            </el-button>
+          </div>
+
+          <!-- 结果区域 -->
+          <div class="conversion-section">
+            <div class="conversion-label">
+              <el-icon><DataAnalysis /></el-icon>
+              <span>转换结果</span>
+            </div>
+            <div class="conversion-inputs">
+              <el-input
+                v-model="resultVal"
+                class="result-input"
+                size="large"
+                disabled
+              >
+              </el-input>
+              <el-select
+                v-model="resultUnit"
+                class="unit-select"
+                placeholder="选择单位"
+                size="large"
+                filterable
+                @change="changeData"
+              >
+                <el-option
+                  v-for="item in dataMap.resultUnits"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </div>
+          </div>
         </div>
-        <el-select
-          v-model="resultUnit"
-          class="m-2"
-          placeholder="结果单位"
-          style="width: 296px"
-          size="large"
-          filterable
-          @change="changeData"
-        >
-          <el-option
-            v-for="item in dataMap.resultUnits"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-            style="width: 240px"
-          />
-        </el-select>
+
+        <!-- 操作按钮 -->
+        <div class="action-buttons">
+          <el-button type="success" @click="copyData" icon="DocumentCopy">复制结果</el-button>
+          <el-button @click="clearData" icon="Delete">清空</el-button>
+        </div>
       </div>
-      <div class="btn-box">
-        <el-button type="primary" @click="exchangeData">交换</el-button>
-        <el-button type="success" @click="copyData">复制</el-button>
-        <el-button plain @click="clearData">清空</el-button>
-      </div>
-      <div class="introduction-box">
-        <div class="introduction-title">
-          <h4>工具简介</h4>
+
+      <!-- 信息卡片 -->
+      <div class="info-cards">
+        <!-- 工具简介 -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <el-icon><InfoFilled /></el-icon>
+            <h4>工具简介</h4>
+          </div>
+          <div class="info-card-content">
+            <p>
+              在线单位换算器，支持长度、质量、面积、体积、数据等多种单位的互相转换。
+            </p>
+          </div>
         </div>
-        <div class="introduction-content">
-          <p>
-            在线单位单位换算器，支持长度，质量，面积，体积，数据等多种单位的互相转换。
-          </p>
-        </div>
-      </div>
-      <div class="illustrate-box">
-        <div class="illustrate-title">
-          <h4>使用说明</h4>
-        </div>
-        <div class="illustrate-content">
-          <p>
-            单位换算工具，支持长度、容量、质量、面积、数据、时间、温度、速度、角度、
-            功率、电量、电流、电压、频率、力、密度等多种单位的互相转换。
-          </p>
-          <p>1.数据：输入待转换的数据。</p>
-          <p>2.结果：转换到目标单位以后的结果。</p>
+
+        <!-- 使用说明 -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <el-icon><Guide /></el-icon>
+            <h4>使用说明</h4>
+          </div>
+          <div class="info-card-content">
+            <p>
+              单位换算工具，支持长度、容量、质量、面积、数据、时间、温度、速度、角度、
+              功率、电量、电流、电压、频率、力、密度等多种单位的互相转换。
+            </p>
+            <ul>
+              <li>选择需要转换的单位类型</li>
+              <li>输入待转换的数据和单位</li>
+              <li>选择目标单位，查看转换结果</li>
+              <li>可使用交换按钮快速切换输入和输出单位</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -146,6 +184,8 @@ import { ref, reactive, onMounted } from "vue";
 import { convertUnits, unitInTtype } from "@/utils/unitsTools.js";
 import { debounce } from "@/utils/utils.js";
 import { Head } from "@vueuse/head";
+import { ElNotification } from "element-plus";
+import { Operation, Edit, DataAnalysis, Sort, InfoFilled, Guide, DocumentCopy, Delete } from "@element-plus/icons-vue";
 
 onMounted(() => {
   selectType(typeVal.value);
@@ -274,7 +314,6 @@ const copyData = () => {
         type: "success",
         zIndex: 99999,
       });
-      close();
     })
     .catch(() => {
       ElNotification({
@@ -295,116 +334,211 @@ const clearData = () => {
 <style lang="scss" scoped>
 .all-tool-container {
   border-radius: var(--theme-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .unit-conversion-container {
-  padding: 20px;
+  padding: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* 标题区域样式 */
+.unit-conversion-header {
+  margin-bottom: 24px;
+  text-align: center;
 }
 
 .unit-conversion-title {
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
 }
 
 .unit-conversion-title .icon {
-  width: 1.8em;
-  height: 1.8em;
-  margin-right: 10px;
+  width: 2em;
+  height: 2em;
+  margin-right: 12px;
+  color: var(--el-color-primary);
 }
 
 .unit-conversion-title h1 {
-  font-size: 24px;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
 }
 
-.data-box,
-.result-box,
-.btn-box {
-  margin: 20px 0;
+.unit-conversion-subtitle {
+  color: var(--el-text-color-secondary);
+  font-size: 16px;
+  margin: 0;
+}
+
+/* 转换卡片样式 */
+.conversion-card {
+  background-color: var(--el-bg-color);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  margin-bottom: 24px;
+}
+
+/* 类型选择样式 */
+.select-type-box {
+  margin-bottom: 24px;
   display: flex;
   align-items: center;
 }
 
-.select-type-box,
-.data-input-box,
-.result-input-box {
+.select-type-label {
   display: flex;
   align-items: center;
+  margin-right: 16px;
+  font-weight: 500;
 }
 
-.data-input-box,
-.result-input-box {
-  margin-right: 20px;
+.select-type-label .el-icon {
+  margin-right: 8px;
+  color: var(--el-color-primary);
 }
 
-.select-type-label,
-.data-input-label,
-.result-input-label {
-  height: 40px;
-  box-sizing: border-box;
+.type-select {
+  width: 240px;
+}
+
+/* 转换区域样式 */
+.conversion-area {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.conversion-section {
+  background-color: var(--el-fill-color-light);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.conversion-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.conversion-label .el-icon {
+  margin-right: 8px;
+  color: var(--el-color-primary);
+}
+
+.conversion-inputs {
+  display: flex;
+  gap: 16px;
+}
+
+.data-input, .result-input {
+  flex: 1;
+}
+
+.unit-select {
+  width: 180px;
+}
+
+/* 交换按钮样式 */
+.exchange-button-container {
   display: flex;
   justify-content: center;
+  margin: 8px 0;
+}
+
+.exchange-button {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.exchange-button:hover {
+  transform: rotate(180deg);
+}
+
+/* 操作按钮样式 */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* 信息卡片样式 */
+.info-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.info-card {
+  background-color: var(--el-bg-color);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.info-card-header {
+  display: flex;
   align-items: center;
-  padding: 0 20px;
-  background-color: #fbfbfb;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--el-border-color-light);
+  padding-bottom: 12px;
+}
+
+.info-card-header .el-icon {
+  margin-right: 8px;
+  color: var(--el-color-primary);
+  font-size: 18px;
+}
+
+.info-card-header h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.info-card-content {
+  color: var(--el-text-color-regular);
   font-size: 14px;
-  min-width: 80px;
-  border-right: 1px solid #cccc;
+  line-height: 1.6;
 }
 
-.introduction-box,
-.illustrate-box {
-  padding: 5px 0;
+.info-card-content ul {
+  padding-left: 20px;
+  margin: 12px 0;
 }
 
-.introduction-title h4,
-.illustrate-title h4 {
-  margin: 10px 0;
+.info-card-content li {
+  margin-bottom: 8px;
 }
 
-.introduction-content,
-.illustrate-content {
-  font-size: 14px;
-}
-
-:deep(.el-input__wrapper) {
-  border-radius: 0;
-  box-shadow: none;
-}
-
-:deep(.el-input-number .el-input__inner) {
-  text-align: left;
-}
-
-:deep(.el-input.is-disabled .el-input__inner) {
-  color: var(--color);
-  -webkit-text-fill-color: var(--color);
-}
-
+/* 响应式设计 */
 @media (max-width: 860px) {
-  .unit-conversion-title {
-    padding-bottom: 15px;
+  .unit-conversion-container {
+    padding: 16px;
   }
-
-  .select-type-label,
-  .data-input-label,
-  .result-input-label {
-    padding: 0 10px;
-    min-width: 60px;
+  
+  .conversion-inputs {
+    flex-direction: column;
   }
-
-  .data-box,
-  .result-box {
-    display: block;
+  
+  .info-cards {
+    grid-template-columns: 1fr;
   }
-
-  .data-input-box,
-  .result-input-box {
-    margin-bottom: 10px;
-    margin-right: 0;
+  
+  .unit-select {
+    width: 100%;
   }
-
-  .el-input-number {
-    width: 240px !important;
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 12px;
   }
 }
 </style>

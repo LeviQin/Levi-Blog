@@ -1,7 +1,7 @@
 import {
     createApp
 } from "vue";
-import { createPinia } from 'pinia';
+import { createPinia } from "pinia";
 import "./style.scss";
 import "./styles/element.scss";
 import "./styles/md.scss";
@@ -15,7 +15,7 @@ import "./permission";
 
 import "./assets/fonts/iconfont";
 
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate)
 
