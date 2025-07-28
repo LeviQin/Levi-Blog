@@ -13,9 +13,8 @@
       content="长度重量单位换算工具，为跨境电商卖家提供在线单位转换器、非常用长度单位、重量转换换算、非常用重量单位等换算功能，可以帮助卖家快速准确地进行单位换算，方便处理跨境电商业务中的尺寸和重量问题。"
     />
   </Head>
-  <div class="unit-conversion w theme-bg-color all-tool-container">
+  <div class="unit-conversion theme-bg-color all-tool-container w">
     <div class="unit-conversion-container" ref="unitConversionContainerRef">
-      <!-- 标题区域 -->
       <div class="unit-conversion-header">
         <div class="unit-conversion-title">
           <svg class="icon" aria-hidden="true">
@@ -23,37 +22,30 @@
           </svg>
           <h1>单位换算</h1>
         </div>
-        <p class="unit-conversion-subtitle">支持多种单位类型的快速精确换算</p>
       </div>
-
-      <!-- 主要内容区域 -->
-      <div class="conversion-card">
-        <!-- 类型选择 -->
-        <div class="select-type-box">
-          <div class="select-type-label">
-            <el-icon><Operation /></el-icon>
-            <span>类型</span>
+      <div class="main-content">
+        <div class="conversion-panel">
+          <div class="select-type-box">
+            <div class="select-type-label">
+              <el-icon><Operation /></el-icon>
+              <span>选择类型</span>
+            </div>
+            <el-select
+              v-model="typeVal"
+              class="type-select"
+              placeholder="选择转换类型"
+              size="large"
+              @change="selectType"
+              filterable
+            >
+              <el-option
+                v-for="item in types"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
           </div>
-          <el-select
-            v-model="typeVal"
-            class="type-select"
-            placeholder="选择转换类型"
-            size="large"
-            @change="selectType"
-            filterable
-          >
-            <el-option
-              v-for="item in types"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </div>
-
-        <!-- 转换区域 -->
-        <div class="conversion-area">
-          <!-- 输入数据区域 -->
           <div class="conversion-section">
             <div class="conversion-label">
               <el-icon><Edit /></el-icon>
@@ -87,32 +79,30 @@
               </el-select>
             </div>
           </div>
-
-          <!-- 交换按钮 -->
           <div class="exchange-button-container">
-            <el-button 
-              class="exchange-button" 
-              circle 
+            <div class="exchange-line"></div>
+            <el-button
+              class="exchange-button"
+              circle
               @click="exchangeData"
               type="primary"
             >
               <el-icon><Sort /></el-icon>
             </el-button>
+            <div class="exchange-line"></div>
           </div>
-
-          <!-- 结果区域 -->
           <div class="conversion-section">
             <div class="conversion-label">
               <el-icon><DataAnalysis /></el-icon>
               <span>转换结果</span>
             </div>
             <div class="conversion-inputs">
-              <el-input
-                v-model="resultVal"
-                class="result-input"
-                size="large"
-                disabled
-              >
+              <el-input v-model="resultVal" class="result-input" size="large" disabled>
+                <template #append>
+                  <el-button @click="copyData">
+                    <el-icon><DocumentCopy /></el-icon>
+                  </el-button>
+                </template>
               </el-input>
               <el-select
                 v-model="resultUnit"
@@ -131,49 +121,59 @@
               </el-select>
             </div>
           </div>
+          <div class="action-buttons">
+            <el-button type="primary" @click="changeData">转换</el-button>
+            <el-button @click="clearData">清空</el-button>
+          </div>
         </div>
-
-        <!-- 操作按钮 -->
-        <div class="action-buttons">
-          <el-button type="success" @click="copyData" icon="DocumentCopy">复制结果</el-button>
-          <el-button @click="clearData" icon="Delete">清空</el-button>
+        <div class="info-panel">
+          <div class="unit-type-info">
+            <div class="info-header">
+              <el-icon><InfoFilled /></el-icon>
+              <h4>{{ typeVal }}单位</h4>
+            </div>
+            <div class="unit-list">
+              <div
+                v-for="(item, index) in dataMap.dataUnits"
+                :key="index"
+                class="unit-item"
+              >
+                <span class="unit-name">{{ item.label }}</span>
+                <span class="unit-value">{{ item.value }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="usage-guide">
+            <div class="info-header">
+              <el-icon><Guide /></el-icon>
+              <h4>使用说明</h4>
+            </div>
+            <div class="guide-steps">
+              <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-text">选择需要转换的单位类型</div>
+              </div>
+              <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-text">输入待转换的数据和单位</div>
+              </div>
+              <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-text">选择目标单位，查看转换结果</div>
+              </div>
+              <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-text">点击复制按钮可复制结果</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <!-- 信息卡片 -->
-      <div class="info-cards">
-        <!-- 工具简介 -->
-        <div class="info-card">
-          <div class="info-card-header">
-            <el-icon><InfoFilled /></el-icon>
-            <h4>工具简介</h4>
-          </div>
-          <div class="info-card-content">
-            <p>
-              在线单位换算器，支持长度、质量、面积、体积、数据等多种单位的互相转换。
-            </p>
-          </div>
-        </div>
-
-        <!-- 使用说明 -->
-        <div class="info-card">
-          <div class="info-card-header">
-            <el-icon><Guide /></el-icon>
-            <h4>使用说明</h4>
-          </div>
-          <div class="info-card-content">
-            <p>
-              单位换算工具，支持长度、容量、质量、面积、数据、时间、温度、速度、角度、
-              功率、电量、电流、电压、频率、力、密度等多种单位的互相转换。
-            </p>
-            <ul>
-              <li>选择需要转换的单位类型</li>
-              <li>输入待转换的数据和单位</li>
-              <li>选择目标单位，查看转换结果</li>
-              <li>可使用交换按钮快速切换输入和输出单位</li>
-            </ul>
-          </div>
-        </div>
+      <div class="tool-description">
+        <p>
+          单位换算工具，支持长度、容量、质量、面积、数据、时间、温度、速度、角度、
+          功率、电量、电流、电压、频率、力、密度等多种单位的互相转换。
+        </p>
       </div>
     </div>
   </div>
@@ -185,7 +185,15 @@ import { convertUnits, unitInTtype } from "@/utils/unitsTools.js";
 import { debounce } from "@/utils/utils.js";
 import { Head } from "@vueuse/head";
 import { ElNotification } from "element-plus";
-import { Operation, Edit, DataAnalysis, Sort, InfoFilled, Guide, DocumentCopy, Delete } from "@element-plus/icons-vue";
+import {
+  Operation,
+  Edit,
+  DataAnalysis,
+  Sort,
+  InfoFilled,
+  Guide,
+  DocumentCopy,
+} from "@element-plus/icons-vue";
 
 onMounted(() => {
   selectType(typeVal.value);
@@ -196,11 +204,11 @@ const dataMap = reactive({
   resultUnits: [],
 });
 
-let typeVal = ref("长度");
-let dataVal = ref(0);
-let dataUnit = ref("");
-let resultVal = ref(0);
-let resultUnit = ref("");
+const typeVal = ref("长度");
+const dataVal = ref(0);
+const dataUnit = ref("");
+const resultVal = ref(0);
+const resultUnit = ref("");
 
 const types = [
   {
@@ -335,126 +343,127 @@ const clearData = () => {
 .all-tool-container {
   border-radius: var(--theme-radius);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 0;
 }
 
 .unit-conversion-container {
-  padding: 24px;
-  max-width: 1000px;
+  padding: 16px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
-/* 标题区域样式 */
 .unit-conversion-header {
-  margin-bottom: 24px;
-  text-align: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
 }
 
 .unit-conversion-title {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 8px;
 }
 
 .unit-conversion-title .icon {
-  width: 2em;
-  height: 2em;
-  margin-right: 12px;
+  width: 1.8em;
+  height: 1.8em;
+  margin-right: 10px;
   color: var(--el-color-primary);
 }
 
 .unit-conversion-title h1 {
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 600;
   margin: 0;
 }
 
-.unit-conversion-subtitle {
-  color: var(--el-text-color-secondary);
-  font-size: 16px;
-  margin: 0;
-}
-
-/* 转换卡片样式 */
-.conversion-card {
-  background-color: var(--el-bg-color);
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-  margin-bottom: 24px;
-}
-
-/* 类型选择样式 */
-.select-type-box {
-  margin-bottom: 24px;
+.main-content {
   display: flex;
-  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.conversion-panel {
+  flex: 1;
+  background-color: var(--el-bg-color);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.select-type-box {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .select-type-label {
   display: flex;
   align-items: center;
-  margin-right: 16px;
+  margin-right: 12px;
   font-weight: 500;
 }
 
 .select-type-label .el-icon {
-  margin-right: 8px;
+  margin-right: 6px;
   color: var(--el-color-primary);
 }
 
 .type-select {
-  width: 240px;
-}
-
-/* 转换区域样式 */
-.conversion-area {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 24px;
+  width: 100%;
 }
 
 .conversion-section {
   background-color: var(--el-fill-color-light);
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
 }
 
 .conversion-label {
   display: flex;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   font-weight: 500;
 }
 
 .conversion-label .el-icon {
-  margin-right: 8px;
+  margin-right: 6px;
   color: var(--el-color-primary);
 }
 
 .conversion-inputs {
   display: flex;
-  gap: 16px;
+  gap: 12px;
 }
 
-.data-input, .result-input {
+.data-input,
+.result-input {
   flex: 1;
 }
 
 .unit-select {
-  width: 180px;
+  width: 40%;
 }
 
-/* 交换按钮样式 */
 .exchange-button-container {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin: 8px 0;
+  margin: 12px 0;
+  .el-icon {
+    color: #fff !important;
+  }
+}
+
+.exchange-line {
+  height: 1px;
+  background-color: var(--el-border-color);
+  flex: 1;
 }
 
 .exchange-button {
-  font-size: 20px;
+  margin: 0 12px;
+  font-size: 16px;
   transition: transform 0.3s ease;
 }
 
@@ -466,79 +475,149 @@ const clearData = () => {
 .action-buttons {
   display: flex;
   justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* 右侧信息面板 */
+.info-panel {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
 }
 
-/* 信息卡片样式 */
-.info-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-
-.info-card {
+.unit-type-info,
+.usage-guide {
   background-color: var(--el-bg-color);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
-.info-card-header {
+.info-header {
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   border-bottom: 1px solid var(--el-border-color-light);
-  padding-bottom: 12px;
+  padding-bottom: 8px;
 }
 
-.info-card-header .el-icon {
-  margin-right: 8px;
+.info-header .el-icon {
+  margin-right: 6px;
   color: var(--el-color-primary);
-  font-size: 18px;
+  font-size: 16px;
 }
 
-.info-card-header h4 {
+.info-header h4 {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
 }
 
-.info-card-content {
-  color: var(--el-text-color-regular);
+/* 单位列表 */
+.unit-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.unit-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: var(--el-fill-color-lighter);
+  font-size: 12px;
+}
+
+.unit-name {
+  color: var(--el-text-color-primary);
+}
+
+.unit-value {
+  color: var(--el-text-color-secondary);
+}
+
+/* 使用步骤 */
+.guide-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.step-number {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--el-color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.step-text {
   font-size: 14px;
-  line-height: 1.6;
+  color: var(--el-text-color-regular);
 }
 
-.info-card-content ul {
-  padding-left: 20px;
-  margin: 12px 0;
-}
-
-.info-card-content li {
-  margin-bottom: 8px;
+/* 底部描述 */
+.tool-description {
+  margin-top: 16px;
+  padding: 12px;
+  background-color: var(--el-bg-color);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--el-text-color-secondary);
+  line-height: 1.5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 /* 响应式设计 */
-@media (max-width: 860px) {
-  .unit-conversion-container {
-    padding: 16px;
+@media (max-width: 960px) {
+  .main-content {
+    flex-direction: column;
   }
-  
+
+  .info-panel {
+    width: 100%;
+  }
+
+  .unit-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
   .conversion-inputs {
     flex-direction: column;
   }
-  
-  .info-cards {
-    grid-template-columns: 1fr;
-  }
-  
+
   .unit-select {
     width: 100%;
   }
-  
+
+  .unit-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .action-buttons {
     flex-direction: column;
-    gap: 12px;
+  }
+
+  .action-buttons .el-button {
+    width: 100%;
   }
 }
 </style>

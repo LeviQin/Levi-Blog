@@ -41,7 +41,7 @@
         </div>
         <div class="message-item-main-content">
           <p v-html="messageContent"></p>
-          <div class="reply-btn" @click="replyMessage(message)"><span>回复</span></div>
+          <!-- <div class="reply-btn" @click="replyMessage(message)"><span>回复</span></div> -->
         </div>
       </div>
     </div>
