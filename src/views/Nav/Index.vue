@@ -37,11 +37,12 @@
             class="nav-content"
             :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
           >
-            <div
+            <a
               class="nav-item"
               v-for="item in filteredItems(category.value)"
               :key="item.id"
-              @click="toSitePage(item.url)"
+              :href="item.url"
+              target="_blank"
             >
               <div class="nav-img">
                 <img v-lazy="item.image" :alt="item.title" />
@@ -54,7 +55,7 @@
                   <p>{{ item.description }}</p>
                 </div>
               </div>
-            </div>
+            </a>
             <div class="empty-category" v-if="filteredItems(category.value).length === 0">
               暂无数据
             </div>
@@ -170,10 +171,6 @@ const getSiteNavList = async () => {
     dataMap.tableData = data;
   }
 };
-
-const toSitePage = (url) => {
-  window.open(url);
-};
 </script>
 
 <style lang="scss" scoped>
@@ -229,6 +226,7 @@ const toSitePage = (url) => {
 .nav-item {
   padding: 15px;
   border-radius: var(--theme-radius);
+  color: var(--color);
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
