@@ -24,7 +24,6 @@
     "js-cookie": "^3.0.1",
     "md-editor-v3": "^4.20.2",
     "md5": "^2.3.0",
-    "node-sass": "^7.0.1",
     "nprogress": "^0.2.0",
     "pinia": "^3.0.1",
     "pinia-plugin-persistedstate": "3.0",
