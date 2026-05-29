@@ -1,134 +1,138 @@
 <template>
-  <Head>
-    <meta name="keywords" content="留言板，交流，留言，问答，意见，建议，反馈" />
-    <meta
-      name="description"
-      content="欢迎来到留言板！在这里，您可以畅所欲言，分享您的想法、感受和建议。无论是对我们网站的赞美，还是对改进的建议，我们都非常乐意听取并与您交流。请尊重他人，文明用语，让我们共同营造一个友爱、和谐的留言环境。"
-    />
-    <meta
-      property="og:description"
-      content="欢迎来到留言板！在这里，您可以畅所欲言，分享您的想法、感受和建议。无论是对我们网站的赞美，还是对改进的建议，我们都非常乐意听取并与您交流。请尊重他人，文明用语，让我们共同营造一个友爱、和谐的留言环境。"
-    />
-  </Head>
-  <div class="comments">
-    <top-banner :bannerConfig="bannerConfig"></top-banner>
-    <div
-      class="comments-container"
-      :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
-    >
-      <div class="comments-main w">
-        <div class="comments-box">
-          <div class="message-box theme-bg-color">
-            <div class="box-title">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-faxiaoxi"></use>
-              </svg>
-              <h2>发送留言</h2>
-            </div>
-            <div class="box-content">
-              <div class="textarea-bpx">
-                <el-input
-                  id="msg-content"
-                  v-model="messageText"
-                  placeholder="留下你的一笔吧~"
-                  :autosize="{ minRows: 3, maxRows: 45 }"
-                  type="textarea"
-                  :disabled="loading"
-                ></el-input>
+  <div>
+    <Head>
+      <meta name="keywords" content="留言板，交流，留言，问答，意见，建议，反馈" />
+      <meta
+        name="description"
+        content="欢迎来到留言板！在这里，您可以畅所欲言，分享您的想法、感受和建议。无论是对我们网站的赞美，还是对改进的建议，我们都非常乐意听取并与您交流。请尊重他人，文明用语，让我们共同营造一个友爱、和谐的留言环境。"
+      />
+      <meta
+        property="og:description"
+        content="欢迎来到留言板！在这里，您可以畅所欲言，分享您的想法、感受和建议。无论是对我们网站的赞美，还是对改进的建议，我们都非常乐意听取并与您交流。请尊重他人，文明用语，让我们共同营造一个友爱、和谐的留言环境。"
+      />
+    </Head>
+    <div class="comments">
+      <top-banner :bannerConfig="bannerConfig"></top-banner>
+      <div
+        class="comments-container"
+        :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
+      >
+        <div class="comments-main w">
+          <div class="comments-box">
+            <div class="message-box theme-bg-color">
+              <div class="box-title">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#levi-faxiaoxi"></use>
+                </svg>
+                <h2>发送留言</h2>
               </div>
-              <div class="input-box">
-                <el-input
-                  v-model="userNickname"
-                  placeholder="昵称"
-                  class="input-item"
-                  size="large"
-                  :disabled="loading"
-                >
-                  <template #prefix>
-                    <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#levi-nicheng"></use>
-                    </svg>
-                  </template>
-                </el-input>
-                <el-input
-                  v-model="email"
-                  placeholder="邮箱"
-                  class="input-item"
-                  size="large"
-                  :disabled="loading"
-                >
-                  <template #prefix>
-                    <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#levi-MAILBOX"></use>
-                    </svg>
-                  </template>
-                </el-input>
-                <el-input
-                  v-model="verCode"
-                  placeholder="验证码"
-                  class="input-item code-input"
-                  size="large"
-                  :disabled="loading"
-                >
-                  <template #prefix>
-                    <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#levi-yanzhengma"></use>
-                    </svg> </template
-                ></el-input>
-              </div>
-              <div class="btn-box">
-                <div class="avatar-box">
-                  <AvatarSelect :avatarImg="userAvatarUrl" @ok="selectAvatar" />
+              <div class="box-content">
+                <div class="textarea-bpx">
+                  <el-input
+                    id="msg-content"
+                    v-model="messageText"
+                    placeholder="留下你的一笔吧~"
+                    :autosize="{ minRows: 3, maxRows: 45 }"
+                    type="textarea"
+                    :disabled="loading"
+                  ></el-input>
                 </div>
-                <div class="emoji-send-box">
-                  <EmojiIconBox @ok="receiveMessage" />
-                  <div class="send-btn" @click="sendMessage">
-                    <span>{{ loading ? "发送中" : "发送" }}</span>
+                <div class="input-box">
+                  <el-input
+                    v-model="userNickname"
+                    placeholder="昵称"
+                    class="input-item"
+                    size="large"
+                    :disabled="loading"
+                  >
+                    <template #prefix>
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#levi-nicheng"></use>
+                      </svg>
+                    </template>
+                  </el-input>
+                  <el-input
+                    v-model="email"
+                    placeholder="邮箱"
+                    class="input-item"
+                    size="large"
+                    :disabled="loading"
+                  >
+                    <template #prefix>
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#levi-MAILBOX"></use>
+                      </svg>
+                    </template>
+                  </el-input>
+                  <el-input
+                    v-model="verCode"
+                    placeholder="验证码"
+                    class="input-item code-input"
+                    size="large"
+                    :disabled="loading"
+                  >
+                    <template #prefix>
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#levi-yanzhengma"></use>
+                      </svg> </template
+                  ></el-input>
+                </div>
+                <div class="btn-box">
+                  <div class="avatar-box">
+                    <AvatarSelect :avatarImg="userAvatarUrl" @ok="selectAvatar" />
+                  </div>
+                  <div class="emoji-send-box">
+                    <EmojiIconBox @ok="receiveMessage" />
+                    <div class="send-btn" @click="sendMessage">
+                      <span>{{ loading ? "发送中" : "发送" }}</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="board-box theme-bg-color">
-            <div class="box-title">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-liuyanban"></use>
-              </svg>
-              <h2>留言板</h2>
-            </div>
-            <div class="board-content">
-              <template v-if="dataMap.msgList.length">
-                <!-- 渲染树形结构的留言 -->
-                <template v-for="msg in dataMap.msgList" :key="msg.id">
-                  <MessageItem :message="msg" :level="0" />
+            <div class="board-box theme-bg-color">
+              <div class="box-title">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#levi-liuyanban"></use>
+                </svg>
+                <h2>留言板</h2>
+              </div>
+              <div class="board-content">
+                <template v-if="dataMap.msgList.length">
+                  <MessageItem
+                    v-for="msg in dataMap.msgList"
+                    :key="msg.id"
+                    :message="msg"
+                    :level="0"
+                  />
                 </template>
-              </template>
-              <template v-else>
-                <p>留言板上暂时还没有留言呢~</p>
-              </template>
+
+                <template v-else>
+                  <p>留言板上暂时还没有留言呢~</p>
+                </template>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="topic-sidebar">
-          <sidebar-user></sidebar-user>
-          <div class="announcement-block">
-            <div class="announcement-title">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-liuyanban"></use>
-              </svg>
-              <span>系统提示</span>
-            </div>
-            <el-divider />
-            <div class="announcement-content">
-              <p>你已进入 Levi 的异次元空间</p>
-              <p>在这里你可以：</p>
-              <ul>
-                <li>"发送来自未来的建议"</li>
-                <li>"报告时空裂缝中的 bug"</li>
-                <li>"留下你的足迹与回声"</li>
-              </ul>
-              <p>⛔禁止使用黑魔法发布广告</p>
-              <p>🛸 欢迎异世界旅人留下只言片语！</p>
+          <div class="topic-sidebar">
+            <div class="announcement-block">
+              <div class="announcement-title">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#levi-liuyanban"></use>
+                </svg>
+                <span>系统提示</span>
+              </div>
+              <el-divider />
+              <div class="announcement-content">
+                <p>你已进入 Levi 的异次元空间</p>
+                <p>在这里你可以：</p>
+                <ul>
+                  <li>"发送来自未来的建议"</li>
+                  <li>"报告时空裂缝中的 bug"</li>
+                  <li>"留下你的足迹与回声"</li>
+                </ul>
+                <p>⛔禁止使用黑魔法发布广告</p>
+                <p>🛸 欢迎异世界旅人留下只言片语！</p>
+              </div>
             </div>
           </div>
         </div>
@@ -237,10 +241,10 @@ const getMessage = async () => {
       });
     }
   } catch (error) {
-    console.log(e, "----------------------");
+    console.log(error, "----------------------");
     ElNotification({
       title: "留言板加载失败",
-      message: e,
+      message: String(error),
       type: "error",
       zIndex: 99999,
     });

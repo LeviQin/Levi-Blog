@@ -169,31 +169,48 @@ const handleCommandToPage = (val) => {
 </script>
 
 <style lang="scss" scoped>
+.nav-bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
 .nav-ul {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  height: 100%;
   gap: 25px;
 }
 
 .nav-li {
   display: flex;
   align-items: center;
-  height: var(--header-bar-height);
+  height: 100%;
   color: var(--nav-bar-text-color);
   cursor: pointer;
   font-size: 16px;
+  font-weight: 500;
   transition: all 0.5s;
   border-bottom: 2px solid transparent;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.5),
+    0 0 6px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.15);
 
   &:hover {
-    color: var(--theme-btn-hover-color);
+    color: var(--btn-tag-bg-color);
+    text-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.6),
+      0 0 10px rgba(255, 139, 38, 0.35);
   }
 }
 
 .active-li {
-  color: var(--theme-btn-hover-color);
+  color: var(--btn-tag-bg-color);
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.5),
+    0 0 8px rgba(255, 139, 38, 0.35);
 }
 
 svg.icon {

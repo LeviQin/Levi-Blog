@@ -1,68 +1,70 @@
 <template>
-  <Head>
-    <meta
-      name="keywords"
-      content="前端开发，HTML5、CSS3、ES6、JavaScript，Vue2、Vue3，Flutter，跨平台开发，小程序，Node.js"
-    />
-    <meta
-      name="description"
-      content="我是一名Web前端开发，目前就职于深圳市笨鸟软件有限公司，有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术，擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js"
-    />
-    <meta
-      property="og:description"
-      content="我是一名Web前端开发，目前就职于深圳市笨鸟软件有限公司，有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术，擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js"
-    />
-    <meta
-      name="twitter:description"
-      content="我是一名Web前端开发，目前就职于深圳市笨鸟软件有限公司，有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术, 擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js"
-    />
-  </Head>
-  <div class="about">
-    <div class="about-header">
-      <div class="about-header-nav w">
-        <ul>
-          <li class="nav-li about active-nav" @click="toPage(0)">关于</li>
-          <li class="nav-li work" @click="toPage(1)">作品</li>
-          <li @click="router.push(`/`)">
-            <span
-              class="nav-avatar"
-              :style="{ backgroundImage: `url(${blogSettingMap.blog_logo})` }"
-              >首页</span
-            >
-          </li>
-          <li class="nav-li ability" @click="toPage(2)">能力</li>
-          <li class="nav-li connect" @click="toPage(3)">联系</li>
-        </ul>
+  <div>
+    <Head>
+      <meta
+        name="keywords"
+        content="前端开发，HTML5、CSS3、ES6、JavaScript，Vue2、Vue3，Flutter，跨平台开发，小程序，Node.js"
+      />
+      <meta
+        name="description"
+        content="我是一名Web前端开发，目前就职于深圳市笨鸟软件有限公司，有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术，擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js"
+      />
+      <meta
+        property="og:description"
+        content="我是一名Web前端开发，目前就职于深圳市笨鸟软件有限公司，有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术，擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js"
+      />
+      <meta
+        name="twitter:description"
+        content="我是一名Web前端开发，目前就职于深圳市笨鸟软件有限公司，有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术, 擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js"
+      />
+    </Head>
+    <div class="about">
+      <div class="about-header">
+        <div class="about-header-nav w">
+          <ul>
+            <li class="nav-li about-li active-nav" @click="toPage(0)">关于</li>
+            <li class="nav-li work-li" @click="toPage(1)">作品</li>
+            <li @click="router.push(`/`)">
+              <span
+                class="nav-avatar"
+                :style="{ backgroundImage: `url(${blogSettingMap.blog_logo})` }"
+                >首页</span
+              >
+            </li>
+            <li class="nav-li ability-li" @click="toPage(2)">能力</li>
+            <li class="nav-li connect-li" @click="toPage(3)">联系</li>
+          </ul>
+        </div>
       </div>
+      <el-carousel
+        class="carousel"
+        direction="vertical"
+        :autoplay="false"
+        trigger="click"
+        ref="carouselRef"
+        :loop="false"
+        @wheel.prevent.stop="rollScroll"
+        @change="changeCarousel"
+      >
+        <el-carousel-item name="0">
+          <About @toNextPage="toNextPage" :blogSettingMap="blogSettingMap" />
+        </el-carousel-item>
+        <el-carousel-item name="1">
+          <Work @toNextPage="toNextPage" :blogSettingMap="blogSettingMap" />
+        </el-carousel-item>
+        <el-carousel-item name="2">
+          <Ability @toNextPage="toNextPage" :blogSettingMap="blogSettingMap" />
+        </el-carousel-item>
+        <el-carousel-item name="3">
+          <Connect @toOnePage="toOnePage" :blogSettingMap="blogSettingMap" />
+        </el-carousel-item>
+      </el-carousel>
     </div>
-    <el-carousel
-      class="carousel"
-      direction="vertical"
-      :autoplay="false"
-      trigger="click"
-      ref="carouselRef"
-      :loop="false"
-      @mousewheel="rollScroll($event)"
-      @change="changeCarousel"
-    >
-      <el-carousel-item name="0">
-        <About @toNextPage="toNextPage" :blogSettingMap="blogSettingMap" />
-      </el-carousel-item>
-      <el-carousel-item name="1">
-        <Work @toNextPage="toNextPage" :blogSettingMap="blogSettingMap" />
-      </el-carousel-item>
-      <el-carousel-item name="2">
-        <Ability @toNextPage="toNextPage" :blogSettingMap="blogSettingMap" />
-      </el-carousel-item>
-      <el-carousel-item name="3">
-        <Connect @toOnePage="toOnePage" :blogSettingMap="blogSettingMap" />
-      </el-carousel-item>
-    </el-carousel>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, onBeforeUnmount, computed, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import About from "./About.vue";
 import Work from "./Work.vue";
@@ -73,61 +75,105 @@ import { Head } from "@vueuse/head";
 import { useMainStore } from "@/stores/mainStore";
 
 const mainStore = useMainStore();
+const rootStyle = document.documentElement.style;
+const bodyStyle = document.body.style;
+const previousHtmlOverflow = ref("");
+const previousBodyOverflow = ref("");
+const previousBodyOverscroll = ref("");
 
 const blogSettingMap = computed(() => {
   return mainStore.blogSettingMap;
 });
 
 onMounted(() => {
+  lockPageScroll();
+  initCarouselGesture();
+});
+
+onBeforeUnmount(() => {
+  if (timeId.value) {
+    clearTimeout(timeId.value);
+    timeId.value = null;
+  }
+
+  if (hammerInstance) {
+    hammerInstance.destroy();
+    hammerInstance = null;
+  }
+
+  unlockPageScroll();
+});
+
+const timeId = ref(null);
+const carouselRef = ref(null);
+const router = useRouter();
+let hammerInstance = null;
+
+const lockPageScroll = () => {
+  previousHtmlOverflow.value = rootStyle.overflow;
+  previousBodyOverflow.value = bodyStyle.overflow;
+  previousBodyOverscroll.value = bodyStyle.overscrollBehavior;
+  rootStyle.overflow = "hidden";
+  bodyStyle.overflow = "hidden";
+  bodyStyle.overscrollBehavior = "none";
+};
+
+const unlockPageScroll = () => {
+  rootStyle.overflow = previousHtmlOverflow.value;
+  bodyStyle.overflow = previousBodyOverflow.value;
+  bodyStyle.overscrollBehavior = previousBodyOverscroll.value;
+};
+
+const initCarouselGesture = async () => {
   // 重置非关于我页面的顶部导航栏透明度
   document.documentElement.style.setProperty("--header-bar-color-opacity", 0);
-  const mc = new Hammer(carouselRef.value.$el);
-  mc.get("pan").set({ direction: Hammer.DIRECTION_ALL });
-  mc.get("swipe").set({ direction: Hammer.DIRECTION_VERTICAL });
+  await nextTick();
 
-  mc.on("panend", (e) => {
+  const carouselEl = carouselRef.value?.$el ?? carouselRef.value?.$?.vnode?.el;
+  if (!carouselEl) return;
+
+  hammerInstance = new Hammer(carouselEl);
+  hammerInstance.get("pan").set({ direction: Hammer.DIRECTION_ALL });
+  hammerInstance.get("swipe").set({ direction: Hammer.DIRECTION_VERTICAL });
+
+  hammerInstance.on("panend", (e) => {
     e.preventDefault();
     // 检查是否是垂直方向的移动
     if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
       // 检查移动方向
       if (e.deltaY > 0) {
         // 向下滑动
-        carouselRef.value.prev();
+        carouselRef.value?.prev();
       } else {
         // 向上滑动
-        carouselRef.value.next();
+        carouselRef.value?.next();
       }
     }
   });
-});
-
-const timeId = ref(null);
-const carouselRef = ref(null);
-const router = useRouter();
+};
 
 const rollScroll = (event) => {
-  // chrome、ie使用的wheelDelta，火狐使用detail
-  let scrollVal = event.wheelDelta || event.detail;
+  const scrollVal = event.wheelDelta || -event.deltaY || event.detail;
   // 节流
   if (!timeId.value) {
     timeId.value = setTimeout(() => {
       timeId.value = null;
-      scrollVal > 0 ? carouselRef.value.prev() : carouselRef.value.next();
+      scrollVal > 0 ? carouselRef.value?.prev() : carouselRef.value?.next();
     }, 300);
   }
 };
 
 const toPage = (val) => {
   changeCarousel(val);
-  carouselRef.value.setActiveItem(val);
+  carouselRef.value?.setActiveItem(val);
 };
 
 const toNextPage = () => {
-  carouselRef.value.next();
+  carouselRef.value?.next();
 };
 
 const toOnePage = () => {
-  carouselRef.value.setActiveItem("0");
+  carouselRef.value?.setActiveItem("0");
 };
 
 const changeCarousel = (val) => {
@@ -162,11 +208,16 @@ const changeCarousel = (val) => {
 .about {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+  overscroll-behavior: none;
 
   .carousel {
-    height: 100%;
     flex: 1;
+    min-height: calc(100vh - 80px);
+    height: calc(100vh - 80px);
+    overflow: hidden;
   }
 }
 
@@ -206,41 +257,41 @@ const changeCarousel = (val) => {
       }
     }
 
-    li.about:hover {
+    li.about-li:hover {
       transition: all 0.4s;
       color: var(--about-color);
     }
 
-    li.work:hover {
+    li.work-li:hover {
       transition: all 0.4s;
       color: var(--work-color);
     }
 
-    li.ability:hover {
+    li.ability-li:hover {
       transition: all 0.4s;
       color: var(--ability-color);
     }
 
-    li.connect:hover {
+    li.connect-li:hover {
       transition: all 0.4s;
       color: var(--connect-color);
     }
   }
 }
 
-.active-nav.about {
+.active-nav.about-li {
   color: var(--about-color) !important;
 }
 
-.active-nav.work {
+.active-nav.work-li {
   color: var(--work-color) !important;
 }
 
-.active-nav.ability {
+.active-nav.ability-li {
   color: var(--ability-color) !important;
 }
 
-.active-nav.connect {
+.active-nav.connect-li {
   color: var(--connect-color) !important;
 }
 </style>

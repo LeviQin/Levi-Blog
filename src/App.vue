@@ -1,20 +1,56 @@
 <template>
-  <router-view />
+  <div>
+    <div class="app-shell">
+      <router-view />
+      <cat-pet />
+    </div>
+
+    <Teleport to="body">
+      <Transition name="door-reveal">
+        <div
+          v-if="showEntranceDoor"
+          class="door-reveal"
+          :class="{ 'is-opening': isDoorOpening }"
+          aria-hidden="true"
+        >
+          <div class="door-panel door-panel-left">
+            <div class="door-panel-inner">
+              <div class="door-glow"></div>
+            </div>
+          </div>
+          <div class="door-center-badge">
+            <span class="door-badge-line"></span>
+            <span class="door-badge-text">Levi Blog</span>
+            <span class="door-badge-line"></span>
+          </div>
+          <div class="door-panel door-panel-right">
+            <div class="door-panel-inner">
+              <div class="door-glow"></div>
+            </div>
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
+  </div>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { getTagList } from "@/api/articles";
 import { getBlogSetting } from "@/api/blogSetting";
 import { getBlogWallpaper } from "@/api/wallpaper.js";
 import { useMainStore } from "@/stores/mainStore";
+import CatPet from "@/components/CatPet/Index.vue";
 
 const mainStore = useMainStore();
+const showEntranceDoor = ref(true);
+const isDoorOpening = ref(false);
 
 onMounted(() => {
   getTags();
   getBlogSettingInfo();
   getWallpaper();
+  playEntranceDoor();
 });
 
 const updateMetaDescription = (description) => {
@@ -55,10 +91,172 @@ const getBlogSettingInfo = async () => {
     updateMetaDescription(data.blog_description);
   }
 };
+
+const playEntranceDoor = () => {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
+    .matches;
+  const openDelay = prefersReducedMotion ? 120 : 520;
+  const finishDelay = prefersReducedMotion ? 320 : 1820;
+
+  window.setTimeout(() => {
+    isDoorOpening.value = true;
+  }, openDelay);
+
+  window.setTimeout(() => {
+    showEntranceDoor.value = false;
+  }, finishDelay);
+};
 </script>
 <style lang="scss" scoped>
 #app {
   position: relative;
   height: 100%;
+}
+
+.app-shell {
+  min-height: 100%;
+}
+
+.door-reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483645;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.door-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.2vw;
+  overflow: hidden;
+  transition: transform 1.15s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.42s ease;
+  background: #dbe6ee;
+}
+
+.door-panel-inner {
+  position: absolute;
+  inset: 0;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.28);
+  }
+
+  &::before {
+    left: 9%;
+  }
+
+  &::after {
+    right: 9%;
+  }
+}
+
+.door-panel-left {
+  left: 0;
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.45);
+
+  .door-panel-inner::after {
+    right: 0;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.door-panel-right {
+  right: 0;
+  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.45);
+
+  .door-panel-inner::before {
+    left: 0;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.door-glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02));
+  opacity: 1;
+}
+
+.door-center-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  color: #5f7280;
+  font-size: 14px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  background: rgba(247, 251, 253, 0.64);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 16px 32px rgba(143, 165, 179, 0.24);
+  transform: translate(-50%, -50%);
+  transition: opacity 0.55s ease, transform 0.9s ease;
+  z-index: 2;
+}
+
+.door-badge-line {
+  width: 26px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(116, 134, 145, 0.75), transparent);
+}
+
+.door-reveal.is-opening {
+  .door-panel-left {
+    transform: translateX(calc(-100% - 24px));
+  }
+
+  .door-panel-right {
+    transform: translateX(calc(100% + 24px));
+  }
+
+  .door-center-badge {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.94);
+  }
+}
+
+.door-reveal-enter-active,
+.door-reveal-leave-active {
+  transition: opacity 0.42s ease;
+}
+
+.door-reveal-enter-from,
+.door-reveal-leave-to {
+  opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .door-panel-inner {
+    &::before,
+    &::after {
+      opacity: 0.8;
+    }
+  }
+
+  .door-center-badge {
+    gap: 8px;
+    padding: 9px 14px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+  }
+
+  .door-badge-line {
+    width: 18px;
+  }
 }
 </style>

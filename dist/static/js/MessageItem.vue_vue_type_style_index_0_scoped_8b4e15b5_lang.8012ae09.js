@@ -1,0 +1,1 @@
+import{_,f as t,h as n,q as s}from"./index.c1700f1d.js";const a={__name:"ElDivider",props:{direction:{type:String,default:"horizontal"}},setup(e){return(o,c)=>(t(),n("div",{class:s(["el-divider","el-divider--"+e.direction])},null,2))}},l=_(a,[["__scopeId","data-v-3ce7a411"]]);export{l as _};

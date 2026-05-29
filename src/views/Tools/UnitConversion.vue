@@ -1,179 +1,181 @@
 <template>
-  <Head>
-    <meta
-      name="keywords"
-      content="长度得换算，重量单位换算，单位换算工具，压力功率换算，面积体积单位换算，温度单位换算，时间单位换算"
-    />
-    <meta
-      name="description"
-      content="长度重量单位换算工具，为跨境电商卖家提供在线单位转换器、非常用长度单位、重量转换换算、非常用重量单位等换算功能，可以帮助卖家快速准确地进行单位换算，方便处理跨境电商业务中的尺寸和重量问题。"
-    />
-    <meta
-      property="og:description"
-      content="长度重量单位换算工具，为跨境电商卖家提供在线单位转换器、非常用长度单位、重量转换换算、非常用重量单位等换算功能，可以帮助卖家快速准确地进行单位换算，方便处理跨境电商业务中的尺寸和重量问题。"
-    />
-  </Head>
-  <div class="unit-conversion theme-bg-color all-tool-container w">
-    <div class="unit-conversion-container" ref="unitConversionContainerRef">
-      <div class="unit-conversion-header">
-        <div class="unit-conversion-title">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#levi-danweihuansuanx"></use>
-          </svg>
-          <h1>单位换算</h1>
-        </div>
-      </div>
-      <div class="main-content">
-        <div class="conversion-panel">
-          <div class="select-type-box">
-            <div class="select-type-label">
-              <el-icon><Operation /></el-icon>
-              <span>选择类型</span>
-            </div>
-            <el-select
-              v-model="typeVal"
-              class="type-select"
-              placeholder="选择转换类型"
-              size="large"
-              @change="selectType"
-              filterable
-            >
-              <el-option
-                v-for="item in types"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
+  <div>
+    <Head>
+      <meta
+        name="keywords"
+        content="长度得换算，重量单位换算，单位换算工具，压力功率换算，面积体积单位换算，温度单位换算，时间单位换算"
+      />
+      <meta
+        name="description"
+        content="长度重量单位换算工具，为跨境电商卖家提供在线单位转换器、非常用长度单位、重量转换换算、非常用重量单位等换算功能，可以帮助卖家快速准确地进行单位换算，方便处理跨境电商业务中的尺寸和重量问题。"
+      />
+      <meta
+        property="og:description"
+        content="长度重量单位换算工具，为跨境电商卖家提供在线单位转换器、非常用长度单位、重量转换换算、非常用重量单位等换算功能，可以帮助卖家快速准确地进行单位换算，方便处理跨境电商业务中的尺寸和重量问题。"
+      />
+    </Head>
+    <div class="unit-conversion theme-bg-color all-tool-container w">
+      <div class="unit-conversion-container" ref="unitConversionContainerRef">
+        <div class="unit-conversion-header">
+          <div class="unit-conversion-title">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-danweihuansuanx"></use>
+            </svg>
+            <h1>单位换算</h1>
           </div>
-          <div class="conversion-section">
-            <div class="conversion-label">
-              <el-icon><Edit /></el-icon>
-              <span>输入数据</span>
-            </div>
-            <div class="conversion-inputs">
-              <el-input-number
-                v-model="dataVal"
-                class="data-input"
-                placeholder="输入数值"
-                size="large"
-                controls-position="right"
-                :min="0"
-                @input="changeData"
-              >
-              </el-input-number>
+        </div>
+        <div class="main-content">
+          <div class="conversion-panel">
+            <div class="select-type-box">
+              <div class="select-type-label">
+                <el-icon><Operation /></el-icon>
+                <span>选择类型</span>
+              </div>
               <el-select
-                v-model="dataUnit"
-                class="unit-select"
-                placeholder="选择单位"
+                v-model="typeVal"
+                class="type-select"
+                placeholder="选择转换类型"
                 size="large"
+                @change="selectType"
                 filterable
-                @change="changeData"
               >
                 <el-option
-                  v-for="item in dataMap.dataUnits"
+                  v-for="item in types"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
                 />
               </el-select>
             </div>
-          </div>
-          <div class="exchange-button-container">
-            <div class="exchange-line"></div>
-            <el-button
-              class="exchange-button"
-              circle
-              @click="exchangeData"
-              type="primary"
-            >
-              <el-icon><Sort /></el-icon>
-            </el-button>
-            <div class="exchange-line"></div>
-          </div>
-          <div class="conversion-section">
-            <div class="conversion-label">
-              <el-icon><DataAnalysis /></el-icon>
-              <span>转换结果</span>
+            <div class="conversion-section">
+              <div class="conversion-label">
+                <el-icon><Edit /></el-icon>
+                <span>输入数据</span>
+              </div>
+              <div class="conversion-inputs">
+                <el-input-number
+                  v-model="dataVal"
+                  class="data-input"
+                  placeholder="输入数值"
+                  size="large"
+                  controls-position="right"
+                  :min="0"
+                  @input="changeData"
+                >
+                </el-input-number>
+                <el-select
+                  v-model="dataUnit"
+                  class="unit-select"
+                  placeholder="选择单位"
+                  size="large"
+                  filterable
+                  @change="changeData"
+                >
+                  <el-option
+                    v-for="item in dataMap.dataUnits"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+              </div>
             </div>
-            <div class="conversion-inputs">
-              <el-input v-model="resultVal" class="result-input" size="large" disabled>
-                <template #append>
-                  <el-button @click="copyData">
-                    <el-icon><DocumentCopy /></el-icon>
-                  </el-button>
-                </template>
-              </el-input>
-              <el-select
-                v-model="resultUnit"
-                class="unit-select"
-                placeholder="选择单位"
-                size="large"
-                filterable
-                @change="changeData"
+            <div class="exchange-button-container">
+              <div class="exchange-line"></div>
+              <el-button
+                class="exchange-button"
+                circle
+                @click="exchangeData"
+                type="primary"
               >
-                <el-option
-                  v-for="item in dataMap.resultUnits"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                />
-              </el-select>
+                <el-icon><Sort /></el-icon>
+              </el-button>
+              <div class="exchange-line"></div>
+            </div>
+            <div class="conversion-section">
+              <div class="conversion-label">
+                <el-icon><DataAnalysis /></el-icon>
+                <span>转换结果</span>
+              </div>
+              <div class="conversion-inputs">
+                <el-input v-model="resultVal" class="result-input" size="large" disabled>
+                  <template #append>
+                    <el-button @click="copyData">
+                      <el-icon><DocumentCopy /></el-icon>
+                    </el-button>
+                  </template>
+                </el-input>
+                <el-select
+                  v-model="resultUnit"
+                  class="unit-select"
+                  placeholder="选择单位"
+                  size="large"
+                  filterable
+                  @change="changeData"
+                >
+                  <el-option
+                    v-for="item in dataMap.resultUnits"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+              </div>
+            </div>
+            <div class="action-buttons">
+              <el-button type="primary" @click="changeData">转换</el-button>
+              <el-button @click="clearData">清空</el-button>
             </div>
           </div>
-          <div class="action-buttons">
-            <el-button type="primary" @click="changeData">转换</el-button>
-            <el-button @click="clearData">清空</el-button>
+          <div class="info-panel">
+            <div class="unit-type-info">
+              <div class="info-header">
+                <el-icon><InfoFilled /></el-icon>
+                <h4>{{ typeVal }}单位</h4>
+              </div>
+              <div class="unit-list">
+                <div
+                  v-for="(item, index) in dataMap.dataUnits"
+                  :key="index"
+                  class="unit-item"
+                >
+                  <span class="unit-name">{{ item.label }}</span>
+                  <span class="unit-value">{{ item.value }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="usage-guide">
+              <div class="info-header">
+                <el-icon><Guide /></el-icon>
+                <h4>使用说明</h4>
+              </div>
+              <div class="guide-steps">
+                <div class="step">
+                  <div class="step-number">1</div>
+                  <div class="step-text">选择需要转换的单位类型</div>
+                </div>
+                <div class="step">
+                  <div class="step-number">2</div>
+                  <div class="step-text">输入待转换的数据和单位</div>
+                </div>
+                <div class="step">
+                  <div class="step-number">3</div>
+                  <div class="step-text">选择目标单位，查看转换结果</div>
+                </div>
+                <div class="step">
+                  <div class="step-number">4</div>
+                  <div class="step-text">点击复制按钮可复制结果</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="info-panel">
-          <div class="unit-type-info">
-            <div class="info-header">
-              <el-icon><InfoFilled /></el-icon>
-              <h4>{{ typeVal }}单位</h4>
-            </div>
-            <div class="unit-list">
-              <div
-                v-for="(item, index) in dataMap.dataUnits"
-                :key="index"
-                class="unit-item"
-              >
-                <span class="unit-name">{{ item.label }}</span>
-                <span class="unit-value">{{ item.value }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="usage-guide">
-            <div class="info-header">
-              <el-icon><Guide /></el-icon>
-              <h4>使用说明</h4>
-            </div>
-            <div class="guide-steps">
-              <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-text">选择需要转换的单位类型</div>
-              </div>
-              <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-text">输入待转换的数据和单位</div>
-              </div>
-              <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-text">选择目标单位，查看转换结果</div>
-              </div>
-              <div class="step">
-                <div class="step-number">4</div>
-                <div class="step-text">点击复制按钮可复制结果</div>
-              </div>
-            </div>
-          </div>
+        <div class="tool-description">
+          <p>
+            单位换算工具，支持长度、容量、质量、面积、数据、时间、温度、速度、角度、
+            功率、电量、电流、电压、频率、力、密度等多种单位的互相转换。
+          </p>
         </div>
-      </div>
-      <div class="tool-description">
-        <p>
-          单位换算工具，支持长度、容量、质量、面积、数据、时间、温度、速度、角度、
-          功率、电量、电流、电压、频率、力、密度等多种单位的互相转换。
-        </p>
       </div>
     </div>
   </div>
@@ -184,16 +186,7 @@ import { ref, reactive, onMounted } from "vue";
 import { convertUnits, unitInTtype } from "@/utils/unitsTools.js";
 import { debounce } from "@/utils/utils.js";
 import { Head } from "@vueuse/head";
-import { ElNotification } from "element-plus";
-import {
-  Operation,
-  Edit,
-  DataAnalysis,
-  Sort,
-  InfoFilled,
-  Guide,
-  DocumentCopy,
-} from "@element-plus/icons-vue";
+import { ElNotification } from "@/utils/element.js";
 
 onMounted(() => {
   selectType(typeVal.value);

@@ -7,9 +7,6 @@ import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import {
-  ElementPlusResolver
-} from 'unplugin-vue-components/resolvers'
 import DynamicImport from 'vite-plugin-dynamic-import';
 import viteImagemin from 'vite-plugin-imagemin';
 
@@ -17,6 +14,11 @@ const pathSrc = path.resolve(__dirname, 'src');
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    __VUE_OPTIONS_API__: true,
+    __VUE_PROD_DEVTOOLS__: false,
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
+  },
   plugins: [vue({
     template: {
       compilerOptions: {
@@ -33,13 +35,14 @@ export default defineConfig({
   AutoImport({
     // Auto import functions from Vue, e.g. ref, reactive, toRef...
     // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
-    imports: ['vue'],
+    imports: [
+      'vue',
+      {
+        '@/utils/element.js': ['ElNotification', 'ElMessage'],
+      },
+    ],
 
-    // Auto import functions from Element Plus, e.g. ElMessage, ElMessageBox... (with style)
-    // 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)
     resolvers: [
-      ElementPlusResolver(),
-
       // Auto import icon components
       // 自动导入图标组件
       IconsResolver({
@@ -57,9 +60,6 @@ export default defineConfig({
       IconsResolver({
         enabledCollections: ['ep'],
       }),
-      // Auto register Element Plus components
-      // 自动导入 Element Plus 组件
-      ElementPlusResolver(),
     ],
 
     dts: path.resolve(pathSrc, 'components.d.ts'),

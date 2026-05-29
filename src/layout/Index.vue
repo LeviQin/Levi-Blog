@@ -21,7 +21,7 @@ import { ref, onMounted, onUnmounted, computed } from "vue";
 import Hedader from "./Hedader/Index.vue";
 import Footer from "./Footer/Index.vue";
 import { useRoute } from "vue-router";
-import { ElNotification } from "element-plus";
+import { ElNotification } from "@/utils/element.js";
 import FloatToolBar from "../components/FloatToolBar/Index.vue";
 import { useMainStore } from "@/stores/mainStore";
 

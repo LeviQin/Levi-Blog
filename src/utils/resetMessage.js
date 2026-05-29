@@ -1,6 +1,6 @@
 import {
     ElMessage
-} from 'element-plus';
+} from '@/utils/element.js';
 
 let messageInstance = null;
 const resetMessage = (options) => {

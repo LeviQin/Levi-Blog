@@ -9,7 +9,7 @@ import App from "./App.vue";
 import router from "./router/index";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import VueLazyload from "vue-lazyload";
-import "element-plus/dist/index.css";
+import { vLoading } from "@/directives/loading.js";
 
 import "./permission";
 
@@ -28,6 +28,8 @@ import loadimage from "@/assets/images/defualt-image.svg";
 import errorimage from "@/assets/images/defualt-image.svg";
 
 const app = createApp(App);
+
+app.directive("loading", vLoading);
 
 app.use(VueLazyload, {
     preLoad: 1.3, // 预加载的高度比例

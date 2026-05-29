@@ -6,116 +6,116 @@
   </Head>
 
   <div class="topic-detail w">
+    <div class="reading-progress-bar" :style="{ width: progressPercent + '%' }"></div>
+
     <top-banner :bannerConfig="bannerConfig"></top-banner>
-    <article class="topic-detail-container page-container" ref="topicDetailRef">
-      <div
-        class="topic-detail-content"
-        v-loading="loading"
-        element-loading-background="rgba(122, 122, 122, 0)"
-      >
-        <div class="topic-detail-md">
-          <div class="page-title">
-            <h1>{{ dataMap.articleInfo.title }}</h1>
-          </div>
-          <div class="page-info">
-            <div class="page-info-category page-info-item">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-fenlei"></use>
-              </svg>
-              <span>{{ categoryList[dataMap.articleInfo.category - 1] }}</span>
-            </div>
-            <div class="page-info-date page-info-item">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-riqi"></use>
-              </svg>
-              <span>{{ dataMap.articleInfo.published_at }}</span>
-            </div>
-            <div class="page-info-update page-info-item">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-gengxinmulu"></use>
-              </svg>
-              <span>{{ dataMap.articleInfo.updated_at }}</span>
-            </div>
-            <div class="page-info-view page-info-item">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-wode_zuijinliulan"></use></svg
-              ><span class="num-text">{{ dataMap.articleInfo.view_count }}</span>
-            </div>
-            <div class="page-info-likes page-info-item">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-yidianzan"></use></svg
-              ><span class="num-text">{{ dataMap.articleInfo.likes }}</span>
-            </div>
-          </div>
-          <div class="markdown-renderer-card">
-            <markdown-renderer
-              ref="markdownRendererRef"
-              :markdownText="dataMap.articleInfo.content"
-              @sendMdTitle="sendMdTitle"
-            ></markdown-renderer>
-          </div>
-          <div class="topic-detail-tool">
-            <div class="tool-likes-btn tool-itme" @click="clickLikes">
-              <i class="bi bi-hand-thumbs-up"></i>
-              <span>点赞</span>
-              <span class="like-num" v-if="dataMap.articleInfo.likes > 0">{{
-                dataMap.articleInfo.likes
-              }}</span>
-              <span class="plus-one" :class="{ show: showPlusOne }"
-                ><i class="bi bi-suit-heart-fill"></i
-              ></span>
-            </div>
-            <!-- <div class="tool-message-btn tool-itme" @click="sendComment">
-              <i class="bi bi-chat"></i>
-              <span>评论</span>
-            </div> -->
-          </div>
-          <div class="topic-detail-tags">
-            <i class="bi bi-tags-fill"></i>
+
+    <article class="topic-detail-container page-container" ref="topicDetailRef" v-loading="loading" element-loading-background="rgba(122, 122, 122, 0)">
+      <div class="topic-detail-content">
+        <div class="article-cover" v-if="dataMap.articleInfo.image">
+          <img :src="dataMap.articleInfo.image" :alt="dataMap.articleInfo.title" />
+        </div>
+
+        <div class="article-header-card">
+          <div class="article-header-top">
             <span
-              class="tags-item"
-              v-for="item in dataMap.articleInfo.article_tags"
-              :key="item"
-              >{{ tagsList[item - 1] }}</span
+              class="category-badge"
+              :style="{ background: categoryColorMap[dataMap.articleInfo.category]?.bg, color: categoryColorMap[dataMap.articleInfo.category]?.color }"
             >
+              <i :class="categoryColorMap[dataMap.articleInfo.category]?.icon"></i>
+              {{ categoryList[dataMap.articleInfo.category - 1] }}
+            </span>
+          </div>
+
+          <h1 class="article-title">{{ dataMap.articleInfo.title }}</h1>
+
+          <div class="article-meta">
+            <span class="meta-item">
+              <i class="bi bi-calendar3"></i>
+              <span>{{ dataMap.articleInfo.published_at }}</span>
+            </span>
+            <span class="meta-divider"></span>
+            <span class="meta-item">
+              <i class="bi bi-arrow-repeat"></i>
+              <span>{{ dataMap.articleInfo.updated_at }}</span>
+            </span>
+            <span class="meta-divider"></span>
+            <span class="meta-item">
+              <i class="bi bi-eye"></i>
+              <span>{{ dataMap.articleInfo.view_count || 0 }} 阅读</span>
+            </span>
+            <span class="meta-divider"></span>
+            <span class="meta-item">
+              <i class="bi bi-clock"></i>
+              <span>{{ readTime }}</span>
+            </span>
           </div>
         </div>
-        <!-- <div id="qrcode"></div> -->
+
+        <div class="article-content-card">
+          <markdown-renderer
+            ref="markdownRendererRef"
+            :markdownText="dataMap.articleInfo.content"
+            @sendMdTitle="sendMdTitle"
+          ></markdown-renderer>
+        </div>
+
+        <div class="article-footer">
+          <div class="article-tags" v-if="dataMap.articleInfo.article_tags && dataMap.articleInfo.article_tags.length">
+            <i class="bi bi-tags-fill"></i>
+            <span
+              class="tag-pill"
+              v-for="item in dataMap.articleInfo.article_tags"
+              :key="item"
+            >{{ tagsList[item - 1] }}</span>
+          </div>
+
+          <div class="article-actions">
+            <div class="action-btn like-btn" :class="{ liked: hasLiked }" @click="clickLikes">
+              <i class="bi" :class="hasLiked ? 'bi-heart-fill' : 'bi-heart'"></i>
+              <span>{{ dataMap.articleInfo.likes || 0 }}</span>
+              <span class="plus-one" :class="{ show: showPlusOne }">+1</span>
+            </div>
+          </div>
+        </div>
+
         <!-- <CommentList :postId="route.params.id" @replyMessage="replyMessage" />
         <Comments :postId="route.params.id" :replyData="dataMap.replyData" /> -->
       </div>
+
       <div class="topic-detail-sidebar">
         <sidebar-user></sidebar-user>
-        <ul class="sidebar-ul nav" v-if="dataMap.titles.length">
-          <div class="sidebar-name">
+        <div class="toc-card" v-if="dataMap.titles.length">
+          <div class="toc-header">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#levi-a-shuqianshumulu"></use>
             </svg>
             <span>目录</span>
           </div>
           <el-divider />
-          <div class="sidebar-content">
-            <li
-              class="sidebar-li nav-item"
+          <div class="toc-content">
+            <div
+              class="toc-item"
+              :class="{ active: activeAnchorIndex === index }"
               v-for="(anchor, index) in dataMap.titles"
               :key="index"
               :style="{
-                padding: `8px 0 8px ${anchor.level ? anchor.level * 8 : 10}px`,
-                fontSize: `${18 - anchor.level}px`,
+                paddingLeft: `${(anchor.level || 1) * 12}px`,
               }"
               @click="handleAnchorClick(anchor.text)"
             >
-              <a class="sidebar-a nav-title">{{ anchor.text }}</a>
-            </li>
+              <span class="toc-dot"></span>
+              <span class="toc-text">{{ anchor.text }}</span>
+            </div>
           </div>
-        </ul>
+        </div>
       </div>
     </article>
   </div>
 </template>
 
 <script setup>
-import { onMounted, reactive, ref, watch, computed } from "vue";
+import { onMounted, onBeforeUnmount, reactive, ref, watch, computed, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import { articleDetail, ArticleLikes } from "@/api/articles.js";
 import MarkdownRenderer from "@/components/MarkdownRenderer/Index.vue";
@@ -128,11 +128,11 @@ import Comments from "./components/Comments.vue";
 import CommentList from "./components/CommentList.vue";
 import { useMainStore } from "@/stores/mainStore";
 
+const mainStore = useMainStore();
+
 const tagsList = computed(() => {
   return mainStore.tagMap.map((item) => item.tag_name);
 });
-
-const mainStore = useMainStore();
 
 const route = useRoute();
 
@@ -147,12 +147,11 @@ watch(
 
 onMounted(() => {
   getArticleDetail();
-  // var qrcode = new QRCode(document.getElementById("qrcode"), {
-  //   text: "https://leviqin.top", // 替换成你的网站链接
-  //   width: 128,
-  //   height: 128,
-  // });
-  // console.log(qrcode, 11111111);
+  window.addEventListener("scroll", handleScroll);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", handleScroll);
 });
 
 const dataMap = reactive({
@@ -164,9 +163,10 @@ const dataMap = reactive({
     published_at: "",
     title: "",
     updated_at: "",
-    view_count: "",
+    view_count: 0,
     likes: 0,
     id: "",
+    article_description: "",
   },
   titles: [],
   replyData: {},
@@ -175,6 +175,9 @@ const dataMap = reactive({
 const markdownRendererRef = ref(null);
 const loading = ref(false);
 const showPlusOne = ref(false);
+const progressPercent = ref(0);
+const activeAnchorIndex = ref(0);
+const hasLiked = ref(false);
 
 const bannerConfig = {
   height: "30vh",
@@ -185,9 +188,27 @@ const bannerConfig = {
 
 const categoryList = ["日常随记", "开发心得", "萌宠日记", "学习笔记", "光影故事"];
 
+const categoryColorMap = {
+  1: { bg: "rgba(76,175,80,0.12)", color: "#388e3c", icon: "bi bi-journal-text" },
+  2: { bg: "rgba(33,150,243,0.12)", color: "#1976d2", icon: "bi bi-code-slash" },
+  3: { bg: "rgba(233,30,99,0.12)", color: "#c2185b", icon: "bi bi-heart" },
+  4: { bg: "rgba(156,39,176,0.12)", color: "#7b1fa2", icon: "bi bi-book" },
+  5: { bg: "rgba(255,152,0,0.12)", color: "#e65100", icon: "bi bi-camera" },
+};
+
+const readTime = computed(() => {
+  const text = dataMap.articleInfo.content || "";
+  const charCount = text.replace(/[\s\n\r]/g, "").length;
+  const minutes = Math.max(1, Math.ceil(charCount / 400));
+  return `${minutes} 分钟阅读`;
+});
+
 const sendMdTitle = (titles) => {
   if (JSON.stringify(dataMap.titles) !== JSON.stringify(titles)) {
     dataMap.titles = titles;
+    nextTick(() => {
+      updateActiveAnchor();
+    });
   }
 };
 
@@ -195,9 +216,34 @@ const handleAnchorClick = (title) => {
   markdownRendererRef.value.handleAnchorClick(title);
 };
 
+const handleScroll = () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  progressPercent.value = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+  updateActiveAnchor();
+};
+
+const updateActiveAnchor = () => {
+  if (!dataMap.titles.length) return;
+  const headings = dataMap.titles
+    .map((t) => document.getElementById(t.text))
+    .filter(Boolean);
+
+  if (!headings.length) return;
+
+  let activeIdx = 0;
+  for (let i = headings.length - 1; i >= 0; i--) {
+    const rect = headings[i].getBoundingClientRect();
+    if (rect.top <= 120) {
+      activeIdx = i;
+      break;
+    }
+  }
+  activeAnchorIndex.value = activeIdx;
+};
+
 const clickLikes = () => {
-  const isLike = getStore(`LEVI_LIKES_${dataMap.articleInfo.id}`);
-  if (isLike) {
+  if (hasLiked.value) {
     ElNotification({
       title: "重复点赞通知",
       message: "你已经点过赞了哦~",
@@ -206,6 +252,7 @@ const clickLikes = () => {
     });
     return;
   }
+  hasLiked.value = true;
   dataMap.articleInfo.likes += 1;
   showPlusOne.value = true;
   setTimeout(() => {
@@ -221,6 +268,7 @@ const requsetLikes = async () => {
     if (code == 200) {
       setStore(`LEVI_LIKES_${dataMap.articleInfo.id}`, "1");
     } else {
+      hasLiked.value = false;
       dataMap.articleInfo.likes -= 1;
       console.log(message, "------------------------");
       ElNotification({
@@ -231,6 +279,7 @@ const requsetLikes = async () => {
       });
     }
   } catch (error) {
+    hasLiked.value = false;
     dataMap.articleInfo.likes -= 1;
     console.log(error, "------------------------");
   }
@@ -240,16 +289,14 @@ const sendComment = () => {
   const el = document.getElementById("comments");
   if (el) {
     const topOffset = el.getBoundingClientRect().top + window.scrollY;
-    const finalScrollTop = topOffset;
     window.scrollTo({
-      top: finalScrollTop,
+      top: topOffset,
       behavior: "smooth",
     });
   }
 };
 
 const replyMessage = (message) => {
-  console.log(message, 1111111111);
   dataMap.replyData = message;
   sendComment();
 };
@@ -266,6 +313,7 @@ const getArticleDetail = async () => {
         return item;
       })[0];
       document.title = `${dataMap.articleInfo.title} - Levi's space`;
+      hasLiked.value = !!getStore(`LEVI_LIKES_${dataMap.articleInfo.id}`);
     } else {
       console.log(message, "------------------------");
     }
@@ -278,68 +326,243 @@ const getArticleDetail = async () => {
 </script>
 
 <style lang="scss" scoped>
-.page-title,
-.page-info {
-  padding: 0 15px;
+.reading-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--theme-btn-hover-color), var(--btn-tag-bg-color));
+  z-index: 9999;
+  transition: width 0.15s linear;
+  border-radius: 0 2px 2px 0;
 }
 
-.page-title h1 {
-  font-size: 36px;
-  margin: 20px 0;
+.topic-detail-content {
+  flex: 1;
+  min-width: 0;
 }
 
-.page-info {
+.article-cover {
+  border-radius: var(--theme-radius) var(--theme-radius) 0 0;
+  overflow: hidden;
+  max-height: 420px;
+
+  img {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.article-header-card {
+  background: var(--theme-color);
+  padding: 36px 40px 28px;
+  border-radius: var(--theme-radius);
+  margin-bottom: 20px;
+
+  .article-cover + & {
+    border-radius: 0 0 var(--theme-radius) var(--theme-radius);
+    padding-top: 32px;
+  }
+}
+
+.article-header-top {
+  margin-bottom: 16px;
+}
+
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.article-title {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.45;
+  margin: 0 0 20px 0;
+  color: var(--black-text-color);
+  letter-spacing: 0.5px;
+}
+
+.article-meta {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  gap: 2px;
 }
 
-.page-info-item {
-  margin: 5px;
-  font-size: 15px;
-  color: var(--color);
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: #888;
+
+  .bi {
+    font-size: 13px;
+  }
+}
+
+.meta-divider {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #d0d0d0;
+  margin: 0 10px;
+}
+
+.article-content-card {
+  background: var(--theme-color);
+  border-radius: var(--theme-radius);
+  padding: 32px 40px;
+  min-height: 400px;
+  margin-bottom: 20px;
+}
+
+.article-footer {
+  background: var(--theme-color);
+  border-radius: var(--theme-radius);
+  padding: 24px 40px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.article-tags {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
 
-  .icon {
-    width: 1.2em;
-    height: 1.2em;
-    margin-right: 5px;
+  .bi {
+    color: var(--btn-tag-bg-color);
+    font-size: 16px;
+  }
+}
+
+.tag-pill {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  color: var(--theme-btn-hover-color);
+  background: rgba(90, 140, 189, 0.1);
+  transition: all 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(90, 140, 189, 0.2);
+  }
+}
+
+.article-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.action-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 28px;
+  border-radius: 25px;
+  font-size: 15px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 139, 38, 0.1);
+  color: var(--btn-tag-bg-color);
+  border: 1px solid transparent;
+
+  .bi {
+    font-size: 16px;
+    transition: transform 0.3s;
+  }
+
+  &:hover {
+    background: var(--btn-tag-bg-color);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(255, 139, 38, 0.3);
+
+    .bi {
+      transform: scale(1.15);
+    }
+  }
+
+  &.liked {
+    background: #ff4757;
+    color: #fff;
+    border-color: #ff4757;
+
+    &:hover {
+      background: #ff6b81;
+      box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+    }
+  }
+}
+
+.plus-one {
+  position: absolute;
+  top: -10px;
+  right: -5px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ff4757;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0);
+
+  &.show {
+    animation: popUp 0.8s ease-out forwards;
+  }
+}
+
+@keyframes popUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-20px) scale(1.3);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.8);
   }
 }
 
 .topic-detail-sidebar {
-  width: 20%;
+  width: 260px;
+  flex-shrink: 0;
   position: relative;
 }
 
-.sidebar-ul {
+.toc-card {
   background: var(--theme-color);
   border-radius: var(--theme-radius);
   position: sticky;
-  left: 0;
-  top: 80px;
+  top: 90px;
   padding: 20px;
 }
 
-.sidebar-li {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  &:hover .nav-title {
-    color: var(--theme-btn-hover-color);
-  }
-}
-
-.sidebar-content {
-  max-height: 300px;
-  overflow: auto;
-  margin: 0 -18px 0 -12px;
-  padding-right: 20px;
-}
-
-.sidebar-name {
-  font-size: 20px;
+.toc-header {
+  font-size: 17px;
+  font-weight: 600;
   display: flex;
   align-items: center;
 
@@ -350,121 +573,63 @@ const getArticleDetail = async () => {
   }
 }
 
-.nav-title {
-  color: var(--color);
+.toc-content {
+  max-height: 380px;
+  overflow-y: auto;
+  margin: 0 -12px;
+  padding-right: 16px;
 }
 
-.topic-detail-content {
-  flex: 1;
-}
-
-.topic-detail-md {
-  background: var(--theme-color);
-  padding: 20px;
-  border-radius: var(--theme-radius);
-  min-height: 400px;
-}
-
-.markdown-renderer-card {
-  min-height: 300px;
-}
-
-.topic-detail-tool {
+.toc-item {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 40px 0 10px 0;
-  gap: 25px;
-
-  .tool-itme {
-    cursor: pointer;
-    background: var(--btn-tag-bg-color);
-    border-radius: 5px;
-    padding: 6px 15px;
-    transition: all 0.5s;
-    text-shadow: 0 5px 15px rgba(0, 0, 0, 1) !important;
-    font-size: 16px;
-    user-select: none;
-    &:hover {
-      will-change: transform;
-      transition: all 0.5s;
-      transform: scale(1.01) translateZ(0);
-      transform-origin: top;
-      box-shadow: 0 8px 20px rgba(10, 5, 61, 0.2);
-    }
-
-    .bi {
-      margin-right: 10px;
-    }
-
-    i,
-    span {
-      font-size: 1em;
-      color: #fff;
-    }
-  }
-}
-
-.like-num {
-  margin-left: 8px;
-}
-
-.topic-detail-tags {
-  padding: 20px;
-
-  .bi {
-    margin-right: 5px;
-  }
-}
-
-.tool-likes-btn {
+  gap: 8px;
+  padding: 7px 0;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
   position: relative;
-  display: inline-block;
-  font-family: "Arial", sans-serif;
+
+  &:hover .toc-text {
+    color: var(--theme-btn-hover-color);
+  }
+
+  &.active {
+    .toc-dot {
+      background: var(--theme-btn-hover-color);
+      transform: scale(1.4);
+    }
+    .toc-text {
+      color: var(--theme-btn-hover-color);
+      font-weight: 500;
+    }
+  }
 }
 
-.plus-one {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  font-size: 24px;
-  font-weight: bold;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  padding: 10px 15px;
+.toc-dot {
+  flex-shrink: 0;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  transform: scale(0) translate(-50%, -50%);
-  transform-origin: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: #ccc;
+  transition: all 0.25s;
 }
 
-.plus-one i {
-  color: red !important;
-}
-
-.plus-one.show {
-  opacity: 1;
-  animation: fireworks 1s forwards;
-}
-
-@keyframes fireworks {
-  0% {
-    transform: scale(0) translate(-50%, -50%);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.3) translate(-50%, -30px);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(2.3) translate(-50%, -80px);
-    opacity: 0;
-  }
+.toc-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.2s;
 }
 
 @media (max-width: 860px) {
+  .reading-progress-bar {
+    height: 2px;
+  }
+
   .page-container {
     display: block;
   }
@@ -473,16 +638,31 @@ const getArticleDetail = async () => {
     display: none;
   }
 
-  .topic-detail-md {
-    padding: 20px 0;
+  .article-header-card {
+    padding: 24px 18px 20px;
+    border-radius: 0;
   }
 
-  .page-title h1 {
-    font-size: 30px;
+  .article-content-card {
+    padding: 20px 16px;
+    border-radius: 0;
   }
 
-  .topic-detail-tool {
-    margin-top: 20px;
+  .article-footer {
+    padding: 20px 16px;
+    border-radius: 0;
+  }
+
+  .article-title {
+    font-size: 24px;
+  }
+
+  .article-cover {
+    border-radius: 0;
+  }
+
+  .article-cover + .article-header-card {
+    border-radius: 0;
   }
 }
 </style>

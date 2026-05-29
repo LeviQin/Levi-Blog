@@ -1,5 +1,6 @@
 <template>
-  <Head>
+<div>
+    <Head>
     <meta
       name="keywords"
       content="前端，CSS，javascript，Vue，node，小工具，萌宠，风景，工作心得，Levi博客"
@@ -16,65 +17,58 @@
         <ArticleSkeleton v-if="loading" />
         <template v-else>
           <div
-            class="article-item"
+            class="article-card"
+            :class="{ 'has-image': item.image, 'is-pinned': item.is_top }"
             v-for="item in dataMap.data"
+            :key="item.id"
             @click="toArticleDetail(item)"
             v-slid-in
           >
-            <div class="is-top-box" v-if="item.is_top">
-              <i class="bi bi-pin-angle-fill"></i>
+            <div class="card-cover" v-if="item.image">
+              <img :src="item.image" :alt="item.title" />
             </div>
-            <div class="article-item-info">
-              <div class="article-item-title">
-                <h2>{{ item.title }}</h2>
+            <div class="card-body">
+              <div class="card-header">
+                <span
+                  class="category-badge"
+                  :style="{ background: categoryColorMap[item.category]?.bg, color: categoryColorMap[item.category]?.color }"
+                >
+                  <i :class="categoryColorMap[item.category]?.icon"></i>
+                  {{ categoryList[item.category - 1] }}
+                </span>
+                <span class="pinned-tag" v-if="item.is_top">
+                  <i class="bi bi-pin-angle-fill"></i>置顶
+                </span>
               </div>
-              <div class="article-item-description">
-                <p>
-                  {{ item.article_description }}
-                </p>
+              <h2 class="card-title">{{ item.title }}</h2>
+              <p class="card-desc">{{ item.article_description }}</p>
+              <div class="card-meta">
+                <span class="meta-item">
+                  <i class="bi bi-calendar3"></i>
+                  {{ item.published_at }}
+                </span>
+                <span class="meta-divider"></span>
+                <span class="meta-item">
+                  <i class="bi bi-eye"></i>
+                  {{ item.view_count || 0 }} 阅读
+                </span>
+                <span class="meta-divider"></span>
+                <span class="meta-item">
+                  <i class="bi bi-heart"></i>
+                  {{ item.likes || 0 }} 喜欢
+                </span>
+                <span class="meta-divider"></span>
+                <span class="meta-item">
+                  <i class="bi bi-clock"></i>
+                  {{ getReadTime(item) }}
+                </span>
               </div>
-              <div v-if="item.image" class="article-item-img">
-                <img :src="item.image" alt="" />
-              </div>
-              <div class="article-item-footer">
-                <div class="footer-info">
-                  <div class="footer-category">
-                    <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#levi-fenlei"></use>
-                    </svg>
-                    <span>{{ categoryList[item.category - 1] }}</span>
-                  </div>
-                  <div class="footer-date">
-                    <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#levi-riqi"></use>
-                    </svg>
-                    <span>{{ item.published_at }}</span>
-                  </div>
-                  <div class="footer-update">
-                    <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#levi-gengxinmulu"></use>
-                    </svg>
-                    <span>{{ item.updated_at }}</span>
-                  </div>
-                  <div class="footer-view">
-                    <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#levi-wode_zuijinliulan"></use></svg
-                    ><span class="num-text">{{ item.view_count }}</span>
-                  </div>
-                  <div class="footer-likes">
-                    <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#levi-yidianzan"></use></svg
-                    ><span class="num-text">{{ item.likes }}</span>
-                  </div>
-                </div>
-                <div class="footer-tags">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-biaoqian_1"></use>
-                  </svg>
-                  <span class="tags-item" v-for="key in item.article_tags">{{
-                    tagsList[key - 1]
-                  }}</span>
-                </div>
+              <div class="card-tags" v-if="item.article_tags && item.article_tags.length">
+                <span
+                  class="tag-pill"
+                  v-for="key in item.article_tags"
+                  :key="key"
+                >{{ tagsList[key - 1] }}</span>
               </div>
             </div>
           </div>
@@ -99,10 +93,11 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
 import TopicSidebar from "@/components/TopicSidebar/Index.vue";
 import { getArticleList } from "@/api/articles.js";
 import { dateToString } from "@/utils/utils.js";
@@ -164,6 +159,21 @@ const bannerConfig = {
 
 const categoryList = ["日常随记", "开发心得", "萌宠日记", "学习笔记", "光影故事"];
 
+const categoryColorMap = {
+  1: { bg: "rgba(76,175,80,0.12)", color: "#388e3c", icon: "bi bi-journal-text" },
+  2: { bg: "rgba(33,150,243,0.12)", color: "#1976d2", icon: "bi bi-code-slash" },
+  3: { bg: "rgba(233,30,99,0.12)", color: "#c2185b", icon: "bi bi-heart" },
+  4: { bg: "rgba(156,39,176,0.12)", color: "#7b1fa2", icon: "bi bi-book" },
+  5: { bg: "rgba(255,152,0,0.12)", color: "#e65100", icon: "bi bi-camera" },
+};
+
+const getReadTime = (item) => {
+  const text = item.content || item.article_description || "";
+  const charCount = text.replace(/[\s\n\r]/g, "").length;
+  const minutes = Math.max(1, Math.ceil(charCount / 400));
+  return `${minutes} 分钟阅读`;
+};
+
 const nextPosition = () => {
   scrollAnimation(banner.value.scrollHeight, "bottom");
 };
@@ -219,259 +229,241 @@ const getData = async () => {
   width: 100%;
 }
 
-.article-item {
+.article-card {
   background: var(--theme-color);
   border-radius: var(--theme-radius);
-  padding: 10px 20px;
   cursor: pointer;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   position: relative;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
-  gap: 30px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-left: 3px solid transparent;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    border-color: rgba(100, 100, 100, 0.08);
+    border-left-color: var(--theme-btn-hover-color);
+  }
+
+  &.has-image {
+    .card-body {
+      padding: 24px 28px;
+    }
+  }
 }
 
-.article-item-info {
+.card-cover {
+  flex-shrink: 0;
+  width: 280px;
+  min-height: 200px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .article-card:hover & img {
+    transform: scale(1.05);
+  }
+}
+
+.card-body {
+  flex: 1;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.pinned-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #ff8b26, #ff6b6b);
+  white-space: nowrap;
+
+  .bi {
+    font-size: 11px;
+  }
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 12px 0;
+  color: var(--black-text-color);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.25s;
+
+  .article-card:hover & {
+    color: var(--theme-btn-hover-color);
+  }
+}
+
+.card-desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #666;
+  margin: 0 0 16px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   flex: 1;
 }
 
-.article-item-img {
-  display: flex;
-  align-items: center;
-  margin: 20px 0;
-  img {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: var(--theme-radius);
-  }
-}
-
-.is-top-box {
-  position: absolute;
-  top: -13px;
-  left: -13px;
-  background: rgb(255, 139, 38);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  padding: 10px;
-
-  .bi {
-    font-size: 26px !important;
-    color: #fff;
-    margin-right: 0;
-  }
-}
-
-.bi {
-  margin-right: 10px;
-  font-style: normal;
-  font-size: 15px;
-}
-
-.num-text {
-  font-size: 14px;
-}
-
-.footer-info {
+.card-meta {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 20px;
-  color: #3c3b3b;
+  gap: 2px;
+  margin-bottom: 14px;
 }
 
-.footer-date {
-  font-size: 14px;
-  margin-right: 20px;
-  position: relative;
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: #888;
+
+  .bi {
+    font-size: 13px;
+  }
+}
+
+.meta-divider {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ccc;
+  margin: 0 10px;
+}
+
+.card-tags {
   display: flex;
   align-items: center;
-
-  .icon {
-    width: 1.2em;
-    height: 1.2em;
-    margin-right: 8px;
-  }
-
-  &::before {
-    content: "";
-    width: 1px;
-    height: 15px;
-    position: absolute;
-    top: 50%;
-    right: -8px;
-    transform: translateY(-50%);
-    background-color: rgba(156, 156, 156, 0.816);
-  }
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.footer-update {
-  font-size: 14px;
-  margin-right: 20px;
-  position: relative;
-  display: flex;
-  align-items: center;
-
-  .icon {
-    width: 1.2em;
-    height: 1.2em;
-    margin-right: 8px;
-  }
-
-  &::before {
-    content: "";
-    width: 1px;
-    height: 15px;
-    position: absolute;
-    top: 50%;
-    right: -8px;
-    transform: translateY(-50%);
-    background-color: rgba(156, 156, 156, 0.816);
-  }
-}
-
-.footer-category {
-  font-size: 14px;
-  margin-right: 20px;
-  position: relative;
-  color: var(--black-text-color);
-  display: flex;
-  align-items: center;
-
-  .icon {
-    width: 1.2em;
-    height: 1.2em;
-    margin-right: 8px;
-  }
-
-  &::before {
-    content: "";
-    width: 1px;
-    height: 15px;
-    position: absolute;
-    top: 50%;
-    right: -8px;
-    transform: translateY(-50%);
-    background-color: rgba(156, 156, 156, 0.816);
-  }
-}
-
-.footer-view {
-  font-size: 14px;
-  margin-right: 20px;
-  position: relative;
-  color: var(--black-text-color);
-  display: flex;
-  align-items: center;
-
-  .icon {
-    width: 1.2em;
-    height: 1.2em;
-    margin-right: 8px;
-  }
-
-  &::before {
-    content: "";
-    width: 1px;
-    height: 15px;
-    position: absolute;
-    top: 50%;
-    right: -8px;
-    transform: translateY(-50%);
-    background-color: rgba(156, 156, 156, 0.816);
-  }
-}
-
-.footer-likes {
-  display: flex;
-  align-items: center;
-
-  .icon {
-    width: 1.2em;
-    height: 1.2em;
-    margin-right: 8px;
-  }
-}
-
-.footer-tags {
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-
-  .icon {
-    width: 1.2em;
-    height: 1.2em;
-  }
-}
-
-.article-item-title h2 {
-  transition: all 0.4s;
+.tag-pill {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: var(--theme-btn-hover-color);
+  background: rgba(90, 140, 189, 0.1);
+  transition: all 0.2s;
+  white-space: nowrap;
 
   &:hover {
-    transition: all 0.4s;
-    transform: translateX(15px);
+    background: rgba(90, 140, 189, 0.2);
   }
 }
 
-.article-item-description {
-  line-height: 28px;
+.pagination-box {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 10px 0 30px;
 }
 
 @media (max-width: 860px) {
-  .article-item {
-    padding: 5px 15px;
-    margin-bottom: 15px;
-  }
+  .article-card {
+    flex-direction: column;
 
-  .is-top-box {
-    top: -10px;
-    left: -10px;
-    width: 20px;
-    height: 20px;
-    padding: 8px;
-
-    .bi {
-      font-size: 22px !important;
+    &.has-image {
+      .card-body {
+        padding: 16px;
+      }
     }
   }
 
-  .article-item-title h2 {
-    font-size: 20px;
+  .card-cover {
+    width: 100%;
+    max-height: 200px;
+    min-height: auto;
   }
 
-  .article-item-description {
-    font-size: 14px;
+  .card-body {
+    padding: 16px;
   }
 
-  .footer-date,
-  .footer-category,
-  .footer-update,
-  .footer-view .num-text {
-    font-size: 12px;
+  .card-title {
+    font-size: 17px;
+    -webkit-line-clamp: 2;
   }
 
-  .footer-tags,
-  .footer-info {
+  .card-desc {
+    font-size: 13px;
+    -webkit-line-clamp: 2;
+  }
+
+  .card-meta {
+    gap: 0;
     margin-bottom: 10px;
   }
 
-  .bi {
-    margin-right: 5px;
-    font-style: normal;
-    font-size: 12px;
+  .meta-item {
+    font-size: 11px;
+    gap: 3px;
+
+    .bi {
+      font-size: 11px;
+    }
   }
 
-  .num-tex {
-    font-size: 12px;
+  .meta-divider {
+    margin: 0 6px;
   }
 
-  .article-item-img {
-    display: none;
+  .category-badge {
+    font-size: 11px;
+    padding: 2px 10px;
+  }
+
+  .pinned-tag {
+    font-size: 10px;
+    padding: 2px 10px;
+  }
+
+  .tag-pill {
+    font-size: 10px;
+    padding: 2px 10px;
   }
 }
 </style>

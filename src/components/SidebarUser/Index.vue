@@ -1,93 +1,106 @@
 <template>
-  <div
+  <section
     class="sidebar-info"
     :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
+    :style="sidebarInfoStyle"
   >
-    <div class="sidebar-info-avatar">
-      <div class="avatar-block">
+    <div class="sidebar-info-hero">
+      <button
+        class="avatar-button"
+        type="button"
+        aria-label="查看关于我"
+        @click="goToAbout"
+      >
+        <span class="avatar-ring"></span>
         <img
           class="avatar"
           :src="blogSettingMap.blog_logo"
-          fit="scale-dow"
-          alt="levi"
-          @click="router.push(`/about`)"
+          :alt="blogSettingMap.blog_name || 'avatar'"
         />
-      </div>
-    </div>
-    <div class="sidebar-info-introduce-wrap">
+      </button>
+
       <div class="sidebar-info-introduce">
-        <div class="sidebar-info-introduce-item sidebar-info-introduce-name">
-          <p>{{ blogSettingMap.blog_name }}</p>
-        </div>
-        <div class="sidebar-info-introduce-item sidebar-info-introduce-sign">
-          <span>莫道桑榆晚，为霞尚满天</span>
-        </div>
-      </div>
-      <div class="sidebar-info-data">
-        <div class="sidebar-info-data-item">
-          <div class="sidebar-info-data-item-title">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-wenzhang"></use>
-            </svg>
-            <span>文章</span>
-          </div>
-          <div class="sidebar-info-data-num">
-            <span>{{ totalArticles }}</span>
-          </div>
-        </div>
-        <div class="sidebar-info-data-item">
-          <div class="sidebar-info-data-item-title">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-fenlei"></use>
-            </svg>
-            <span>分类</span>
-          </div>
-          <div class="sidebar-info-data-num">
-            <span>6</span>
-          </div>
-        </div>
-        <div class="sidebar-info-data-item">
-          <div class="sidebar-info-data-item-title">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-biaoqian_1"></use>
-            </svg>
-            <span>标签</span>
-          </div>
-          <div class="sidebar-info-data-num">
-            <span>{{ mainStore.tagMap.length }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="sidebar-info-contact">
-        <a :href="blogSettingMap.blog_connect_github" target="_blank">
-          <div class="contact-item" title="GitHub">
-            <i class="bi bi-github"></i>
-          </div>
-        </a>
-        <a :href="`mailto:${blogSettingMap.blog_connect_email}`">
-          <div class="contact-item envelope-box" title="邮箱">
-            <i class="bi bi-envelope-at"></i>
-          </div>
-        </a>
-        <div
-          class="contact-item wecht-box"
-          title="微信"
-          @click="showWXModel(blogSettingMap.blog_connect_wx_image)"
-        >
-          <i class="bi bi-wechat"></i>
-        </div>
+        <div class="sidebar-info-status">持续创作中</div>
+        <h3 class="sidebar-info-name">{{ blogSettingMap.blog_name }}</h3>
+        <p class="sidebar-info-sign">莫道桑榆晚，为霞尚满天</p>
+        <button class="profile-entry" type="button" @click="goToAbout">
+          <span>了解博主</span>
+          <i class="bi bi-arrow-right-short"></i>
+        </button>
       </div>
     </div>
 
-    <!-- 微信弹窗 -->
+    <div class="sidebar-info-body">
+      <div class="sidebar-info-data">
+        <div
+          v-for="item in profileStats"
+          :key="item.label"
+          class="sidebar-info-data-item"
+        >
+          <div class="sidebar-info-data-item-title">
+            <svg class="icon" aria-hidden="true">
+              <use :xlink:href="item.icon"></use>
+            </svg>
+            <span>{{ item.label }}</span>
+          </div>
+          <div class="sidebar-info-data-num">
+            <span>{{ item.value }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-info-contact-head">
+        <span class="sidebar-info-contact-title">联系与订阅</span>
+        <span class="sidebar-info-contact-desc">保持连接，获取最新内容</span>
+      </div>
+
+      <div class="sidebar-info-contact">
+        <template v-for="item in contactItems">
+          <a
+            v-if="item.href"
+            class="sidebar-contact"
+            :class="item.className"
+            :href="item.href"
+            :target="item.target"
+            :rel="item.rel"
+            :aria-label="item.label"
+            :key="item.key"
+            :title="item.label"
+          >
+            <span class="sidebar-contact-icon">
+              <i :class="item.icon"></i>
+            </span>
+            <span class="sidebar-contact-text">{{ item.label }}</span>
+          </a>
+
+          <button
+            v-else
+            class="sidebar-contact sidebar-contact-button"
+            :class="item.className"
+            type="button"
+            :aria-label="item.label"
+            :title="item.label"
+            :key="item.key"
+            @click="item.action?.()"
+          >
+            <span class="sidebar-contact-icon">
+              <i :class="item.icon"></i>
+            </span>
+            <span class="sidebar-contact-text">{{ item.label }}</span>
+          </button>
+        </template>
+      </div>
+    </div>
+
     <WXModel ref="wxModelRef" />
-  </div>
+  </section>
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { getStatistics } from "@/api/articles.js";
+import { getBaseURL } from "@/utils/judgmentEnv";
 import WXModel from "../WXModel/Index.vue";
 import { useMainStore } from "@/stores/mainStore";
 
@@ -97,25 +110,88 @@ const blogSettingMap = computed(() => {
   return mainStore.blogSettingMap;
 });
 
+const rssFeedUrl = computed(() => {
+  return `${getBaseURL()}/rss.xml`;
+});
+
 const router = useRouter();
+const totalArticles = ref(0);
+const wxModelRef = ref(null);
+const isSidebarVisible = ref(false);
+const categoryCount = 6;
 
 onMounted(() => {
   getData();
   isSidebarVisible.value = true;
-  setSidebarInfoBgImg();
 });
 
-const totalArticles = ref(0);
-const wxModelRef = ref(null);
-const isSidebarVisible = ref(false);
+const sidebarInfoStyle = computed(() => {
+  return {
+    "--sidebar-hero-bg": blogSettingMap.value?.sidebar_bg_img
+      ? `url(${blogSettingMap.value.sidebar_bg_img})`
+      : "none",
+  };
+});
 
-const showWXModel = (image) => {
-  wxModelRef.value.show(image);
+const profileStats = computed(() => {
+  return [
+    { label: "文章", value: totalArticles.value, icon: "#levi-wenzhang" },
+    { label: "分类", value: categoryCount, icon: "#levi-fenlei" },
+    {
+      label: "标签",
+      value: mainStore.tagMap.length,
+      icon: "#levi-biaoqian_1",
+    },
+  ];
+});
+
+const contactItems = computed(() => {
+  return [
+    {
+      key: "github",
+      label: "GitHub",
+      icon: "bi bi-github",
+      href: blogSettingMap.value?.blog_connect_github,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "github-box",
+    },
+    {
+      key: "email",
+      label: "邮箱",
+      icon: "bi bi-envelope-at",
+      href: blogSettingMap.value?.blog_connect_email
+        ? `mailto:${blogSettingMap.value.blog_connect_email}`
+        : "",
+      className: "envelope-box",
+    },
+    {
+      key: "wechat",
+      label: "微信",
+      icon: "bi bi-wechat",
+      action: () => showWXModel(blogSettingMap.value?.blog_connect_wx_image),
+      className: "wechat-box",
+    },
+    {
+      key: "rss",
+      label: "RSS",
+      icon: "bi bi-rss-fill",
+      href: rssFeedUrl.value,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "rss-box",
+    },
+  ].filter((item) => item.href || item.action);
+});
+
+const goToAbout = () => {
+  router.push("/about");
 };
 
-const setSidebarInfoBgImg = () => {
-  const avatar = document.querySelector(".sidebar-info-avatar");
-  avatar.style.setProperty("--avatar-bg", `url(${blogSettingMap.value.sidebar_bg_img})`);
+const showWXModel = (image) => {
+  if (image && wxModelRef.value) {
+    wxModelRef.value.show(image);
+  }
 };
 
 const getData = async () => {
@@ -133,171 +209,432 @@ const getData = async () => {
 
 <style lang="scss" scoped>
 .sidebar-info {
-  background: var(--theme-color);
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.06)),
+    var(--theme-color);
   border-radius: var(--theme-radius);
   margin-bottom: 20px;
   overflow: hidden;
+  border: 1px solid rgba(90, 140, 189, 0.14);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(10px);
 }
 
-.sidebar-info-avatar {
+.sidebar-info-hero {
   position: relative;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 16px 14px;
+  text-align: left;
+  isolation: isolate;
 }
 
-.sidebar-info-avatar::before {
+.sidebar-info-hero::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: var(--avatar-bg, none);
+  inset: 0;
+  background-image:
+    linear-gradient(180deg, rgba(24, 26, 42, 0.08), rgba(24, 26, 42, 0.56)),
+    var(--sidebar-hero-bg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  filter: blur(1px);
+  z-index: -2;
+}
+
+.sidebar-info-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 62px;
+  background: linear-gradient(180deg, rgba(219, 230, 238, 0), var(--theme-color));
   z-index: -1;
 }
 
-.avatar-block {
-  transform: translateY(50px);
+.avatar-button {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+
+    .avatar {
+      transform: scale(1.03) rotate(4deg);
+    }
+
+    .avatar-ring {
+      transform: scale(1.04);
+      opacity: 1;
+    }
+  }
+}
+
+.avatar-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(90, 140, 189, 0.55));
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.16);
+  opacity: 0.92;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .avatar {
-  width: 100px;
-  height: 100px;
+  position: relative;
+  width: 74px;
+  height: 74px;
   border-radius: 50%;
-  cursor: pointer;
-  transition: transform 0.6s ease-in-out;
-  border: 2px solid #fff;
-  &:hover {
-    animation: rotate360 1s cubic-bezier(0.33, 1, 0.68, 1);
-  }
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.92);
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes rotate360 {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(1080deg);
-  }
+.sidebar-info-introduce {
+  min-width: 0;
+  color: #fff;
+  flex: 1;
 }
 
-.sidebar-info-introduce-wrap {
-  padding: 20px;
-  margin-top: 22px;
-}
-
-.sidebar-info-introduce-item {
-  text-align: center;
-}
-
-.sidebar-info-introduce-name {
-  font-size: 18px;
-  font-weight: 600;
-  margin-left: -15px;
-}
-
-.sidebar-info-data {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-around;
-}
-
-.sidebar-info-data-num {
-  padding: 10px 0;
-  display: flex;
-  justify-content: center;
-  font-weight: 500;
-}
-
-.sidebar-info-data-item .sidebar-info-data-item-title {
-  display: flex;
+.sidebar-info-status {
+  display: inline-flex;
   align-items: center;
-  .icon {
-    width: 1.2em;
-    height: 1.2em;
-    margin-right: 2px;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+
+  &::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #7af0b0;
+    box-shadow: 0 0 0 3px rgba(122, 240, 176, 0.16);
   }
 }
 
-.sidebar-info-contact {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
+.sidebar-info-name {
+  margin: 10px 0 4px;
+  font-size: 22px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 4px 14px rgba(15, 23, 42, 0.24);
 }
 
-.contact-item {
-  padding: 2px;
-  cursor: pointer;
-
-  .bi {
-    font-size: 26px;
-    color: var(--black-text-color);
-  }
-
-  &:hover {
-    animation: eleJitter 2s linear infinite;
-  }
+.sidebar-info-sign {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.86);
+  letter-spacing: 0.5px;
 }
 
-.wecht-box {
-  background: #28c445;
-  border-radius: 50%;
-  width: 26px;
-  height: 26px;
-  display: flex;
+.profile-entry {
+  margin-top: 10px;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 4px;
+  margin-left: 0;
+  margin-right: 0;
+  font-size: 12px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 
   .bi {
     font-size: 16px;
-    color: #fff;
   }
+
+  &:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.14);
+  }
+}
+
+.sidebar-info-body {
+  padding: 14px 14px 16px;
+}
+
+.sidebar-info-data {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.sidebar-info-data-item {
+  padding: 10px 8px 9px;
+  border-radius: calc(var(--theme-radius) + 2px);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid rgba(90, 140, 189, 0.12);
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(90, 140, 189, 0.28);
+    box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
+  }
+}
+
+.sidebar-info-data-item-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #6b7280;
+  font-size: 12px;
+
+  .icon {
+    width: 1em;
+    height: 1em;
+  }
+}
+
+.sidebar-info-data-num {
+  margin-top: 7px;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--black-text-color);
+}
+
+.sidebar-info-contact-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 14px 0 8px;
+  padding: 0 2px;
+}
+
+.sidebar-info-contact-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--black-text-color);
+}
+
+.sidebar-info-contact-desc {
+  font-size: 11px;
+  color: #7a8191;
+}
+
+.sidebar-info-contact {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.sidebar-contact,
+.sidebar-contact-button {
+  width: 100%;
+}
+
+.sidebar-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: calc(var(--theme-radius) + 2px);
+  color: var(--black-text-color);
+  background: rgba(255, 255, 255, 0.46);
+  border: 1px solid rgba(90, 140, 189, 0.12);
+  box-sizing: border-box;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(90, 140, 189, 0.24);
+    box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
+    color: var(--black-text-color);
+  }
+}
+
+.sidebar-contact-button {
+  margin: 0;
+  border: 1px solid rgba(90, 140, 189, 0.12);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.sidebar-contact-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(90, 140, 189, 0.1);
+
+  .bi {
+    font-size: 16px;
+  }
+}
+
+.sidebar-contact-text {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.github-box .sidebar-contact-icon {
+  background: rgba(24, 26, 42, 0.12);
+}
+
+.github-box .bi {
+  color: #181a2a;
+}
+
+.wechat-box .sidebar-contact-icon {
+  background: rgba(40, 196, 69, 0.16);
+}
+
+.wechat-box .bi {
+  color: #28c445;
+}
+
+.envelope-box .sidebar-contact-icon {
+  background: rgba(67, 125, 255, 0.14);
 }
 
 .envelope-box .bi {
   color: #437dff;
 }
 
+.rss-box .sidebar-contact-icon {
+  background: rgba(255, 122, 0, 0.14);
+}
+
+.rss-box .bi {
+  color: #ff7a00;
+}
+
+html[data-theme="dark"] .sidebar-info {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
+    var(--theme-color);
+  border-color: rgba(122, 161, 209, 0.18);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+}
+
+html[data-theme="dark"] .sidebar-info-hero::after {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0), var(--theme-color));
+}
+
+html[data-theme="dark"] .sidebar-info-data-item,
+html[data-theme="dark"] .sidebar-contact {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(122, 161, 209, 0.18);
+}
+
+html[data-theme="dark"] .sidebar-info-data-item-title,
+html[data-theme="dark"] .sidebar-info-contact-desc {
+  color: rgba(255, 255, 255, 0.64);
+}
+
+html[data-theme="dark"] .sidebar-info-data-num,
+html[data-theme="dark"] .sidebar-info-contact-title,
+html[data-theme="dark"] .sidebar-contact {
+  color: var(--color);
+}
+
+html[data-theme="dark"] .github-box .bi {
+  color: #fff;
+}
+
+@media (max-width: 1200px) {
+  .sidebar-info-contact {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 860px) {
-  .avatar {
+  .sidebar-info-hero {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 16px 14px;
+    text-align: center;
+  }
+
+  .avatar-button {
     width: 90px;
     height: 90px;
   }
 
-  .sidebar-info-introduce-wrap {
-    padding: 0;
-    margin-top: 60px;
-  }
-
-  .sidebar-info-avatar {
-    padding: 15px;
+  .avatar {
+    width: 80px;
+    height: 80px;
   }
 
   .sidebar-info-introduce {
-    display: none;
+    flex: initial;
+  }
+
+  .sidebar-info-name {
+    font-size: 22px;
+  }
+
+  .sidebar-info-sign {
+    font-size: 12px;
+  }
+
+  .sidebar-info-body {
+    padding: 14px;
+  }
+
+  .sidebar-info-data {
+    gap: 8px;
   }
 
   .sidebar-info-data-item {
-    font-size: 17px;
+    padding: 10px 8px;
   }
 
-  .sidebar-info-contact {
-    display: none;
+  .sidebar-info-data-num {
+    font-size: 18px;
+  }
+
+  .sidebar-info-contact-head {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 12px;
   }
 }
 
-@keyframes accelerate {
-  0% {
-    transform: rotate(0);
+@media (max-width: 420px) {
+  .sidebar-info-data {
+    grid-template-columns: 1fr;
   }
 
-  100% {
-    transform: rotate(360deg);
+  .sidebar-contact {
+    padding: 8px 10px;
+  }
+
+  .bi {
+    font-size: 16px;
   }
 }
 </style>

@@ -4,7 +4,10 @@
       <h2 v-if="props.bannerConfig.title">
         {{ props.bannerConfig.title }}
       </h2>
-      <p>{{ props.bannerConfig.text }}</p>
+      <p class="typing-text">
+        <span>{{ typedText }}</span>
+        <span class="typing-caret"></span>
+      </p>
     </div>
     <i
       class="bi bi-chevron-double-down button-arrow"
@@ -15,7 +18,7 @@
 </template>
 
 <script setup>
-import { defineEmits, defineProps } from "vue";
+import { defineEmits, defineProps, onBeforeUnmount, onMounted, ref, watch } from "vue";
 
 const props = defineProps({
   bannerConfig: {
@@ -36,6 +39,55 @@ const toNextPage = () => {
 };
 
 const emit = defineEmits(["nextPosition"]);
+
+const typedText = ref("");
+let typingTimer = null;
+let restartTimer = null;
+
+const clearTypingTimers = () => {
+  clearTimeout(typingTimer);
+  clearTimeout(restartTimer);
+};
+
+const startTyping = (text = "") => {
+  clearTypingTimers();
+  typedText.value = "";
+
+  if (!text) return;
+
+  const chars = Array.from(text);
+  let index = 0;
+
+  const typeNext = () => {
+    if (index < chars.length) {
+      typedText.value += chars[index];
+      index += 1;
+      typingTimer = setTimeout(typeNext, 140);
+      return;
+    }
+
+    restartTimer = setTimeout(() => {
+      startTyping(text);
+    }, 1800);
+  };
+
+  typingTimer = setTimeout(typeNext, 240);
+};
+
+onMounted(() => {
+  startTyping(props.bannerConfig.text);
+});
+
+watch(
+  () => props.bannerConfig.text,
+  (value) => {
+    startTyping(value);
+  }
+);
+
+onBeforeUnmount(() => {
+  clearTypingTimers();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -50,6 +102,8 @@ const emit = defineEmits(["nextPosition"]);
   top: 30%;
   left: 50%;
   transform: translate(-50%, 0);
+  width: min(80vw, 720px);
+  text-align: center;
 }
 
 .top-banner h2,
@@ -62,14 +116,31 @@ const emit = defineEmits(["nextPosition"]);
 }
 
 .top-banner p {
-  width: 265px;
+  width: 100%;
+  min-height: 40px;
   line-height: 40px;
-  animation: textAnimation 10s infinite;
-  overflow: hidden;
-  white-space: nowrap;
+  overflow: visible;
+  white-space: normal;
+  word-break: break-all;
   text-shadow: 0 5px 15px rgba(0, 0, 0, 1) !important;
   color: #fff;
   font-size: 24px;
+  margin: 0 auto;
+}
+
+.typing-text {
+  display: inline;
+}
+
+.typing-caret {
+  display: inline-block;
+  width: 2px;
+  height: 28px;
+  margin-left: 4px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+  animation: caretBlink 0.9s steps(1) infinite;
+  vertical-align: -4px;
 }
 
 .button-arrow {
@@ -87,6 +158,7 @@ const emit = defineEmits(["nextPosition"]);
 @media (max-width: 860px) {
   .banner-text-box {
     top: 25%;
+    width: min(86vw, 520px);
   }
 
   .top-banner h2,
@@ -96,6 +168,12 @@ const emit = defineEmits(["nextPosition"]);
 
   .top-banner p {
     font-size: 16px;
+    line-height: 30px;
+    min-height: 30px;
+  }
+
+  .typing-caret {
+    height: 20px;
   }
 
   .button-arrow {
@@ -117,25 +195,13 @@ const emit = defineEmits(["nextPosition"]);
   }
 }
 
-@keyframes textAnimation {
+@keyframes caretBlink {
   0% {
-    width: 0;
-  }
-
-  25% {
-    width: 100%;
+    opacity: 1;
   }
 
   50% {
-    width: 100%;
-  }
-
-  75% {
-    width: 0;
-  }
-
-  100% {
-    width: 0;
+    opacity: 0;
   }
 }
 </style>

@@ -1,85 +1,77 @@
 <template>
-  <Head>
-    <meta name="keywords" content="猫咪，萌宠，小狗，动物，宠物，可爱宠物，动物照片" />
-    <meta
-      name="description"
-      content="记录各种可爱的萌宠和小动物，呈现一个充满快乐和温暖的动物照片墙。"
-    />
-    <meta
-      property="og:description"
-      content="记录各种可爱的萌宠和小动物，呈现一个充满快乐和温暖的动物照片墙。"
-    />
-  </Head>
+  <div>
+    <Head>
+      <meta name="keywords" content="猫咪，萌宠，小狗，动物，宠物，可爱宠物，动物照片" />
+      <meta
+        name="description"
+        content="记录各种可爱的萌宠和小动物，呈现一个充满快乐和温暖的动物照片墙。"
+      />
+      <meta
+        property="og:description"
+        content="记录各种可爱的萌宠和小动物，呈现一个充满快乐和温暖的动物照片墙。"
+      />
+    </Head>
 
-  <div class="cute-pet w">
-    <top-banner :bannerConfig="bannerConfig"></top-banner>
-    <div class="cute-pet-container page-container" ref="cutePetContainerRef">
-      <article class="cute-pet-main">
-        <div class="waterfall-container">
-          <wc-waterfall :gap="20" :cols="cols">
+    <div class="cute-pet w">
+      <top-banner :bannerConfig="bannerConfig"></top-banner>
+      <div class="cute-pet-container page-container" ref="cutePetContainerRef">
+        <article class="cute-pet-main">
+          <div class="photo-wall" ref="wallRef">
             <div
-              class="waterfall-item"
+              v-for="(item, index) in dataMap.data"
+              :key="item.id"
+              class="photo-card"
+              :class="[item._tile, { 'is-top': item.is_top }]"
+              :style="{ '--i': index }"
               @click="toDetail(item)"
-              v-for="item in dataMap.data"
-              :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
             >
-              <div class="is-top-box" v-if="item.is_top">
-                <i class="bi bi-pin-angle-fill"></i>
-              </div>
-              <div class="img-box">
+              <div class="photo-frame" :class="{ 'is-loaded': !!loadedMap[item.id] }">
+                <div class="photo-pin" v-if="item.is_top">
+                  <i class="bi bi-pin-angle-fill"></i>
+                </div>
                 <img
-                  class="cover-img"
+                  class="photo-img"
                   v-lazy="item.image"
-                  fit="scale-down"
                   :alt="item.title"
+                  @load="onImgLoad(item.id)"
                 />
-              </div>
-              <div class="waterfall-title">
-                <h2>{{ item.title }}</h2>
-              </div>
-              <div class="waterfall-footer">
-                <div class="waterfall-footer-date">
-                  <span>{{ item.updated_at }}</span>
-                </div>
-                <div class="waterfall-icon-block">
-                  <div class="waterfall-footer-bar">
-                    <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#levi-wode_zuijinliulan"></use></svg
-                    ><span class="num-text">{{ item.view_count }}</span>
+                <div class="photo-overlay">
+                  <div class="photo-meta">
+                    <div class="photo-title">{{ item.title || "萌宠日记" }}</div>
+                    <div class="photo-sub">{{ item.updated_at }}</div>
                   </div>
-                  <div class="waterfall-footer-bar">
-                    <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#levi-yidianzan"></use></svg
-                    ><span class="num-text">{{ item.likes }}</span>
+                  <div class="photo-action">
+                    <i class="bi bi-arrow-up-right"></i>
                   </div>
                 </div>
+                <div class="photo-shimmer"></div>
               </div>
             </div>
-          </wc-waterfall>
-        </div>
-        <div class="pagination-box">
-          <el-pagination
-            :pager-count="5"
-            :current-page="page"
-            :page-sizes="dataMap.paginationDatas.pageSizes"
-            :default-page-size="pageSize"
-            :small="dataMap.paginationDatas.small"
-            :disabled="dataMap.paginationDatas.disabled"
-            :background="dataMap.paginationDatas.background"
-            :layout="dataMap.paginationDatas.layout"
-            :total="dataMap.paginationDatas.total"
-            @current-change="handleCurrentChange"
-            :hide-on-single-page="true"
-          />
-        </div>
-      </article>
+          </div>
+
+          <div class="pagination-box">
+            <el-pagination
+              :pager-count="5"
+              :current-page="page"
+              :page-sizes="dataMap.paginationDatas.pageSizes"
+              :default-page-size="pageSize"
+              :small="dataMap.paginationDatas.small"
+              :disabled="dataMap.paginationDatas.disabled"
+              :background="dataMap.paginationDatas.background"
+              :layout="dataMap.paginationDatas.layout"
+              :total="dataMap.paginationDatas.total"
+              @current-change="handleCurrentChange"
+              :hide-on-single-page="true"
+            />
+          </div>
+        </article>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted, onUnmounted, nextTick } from "vue";
-import "wc-waterfall";
 import { useRouter } from "vue-router";
 import { getCategoryArticles } from "@/api/articles.js";
 import dayjs from "dayjs";
@@ -89,10 +81,14 @@ import { getStore, setStore } from "@/utils/storage.js";
 
 const router = useRouter();
 
+const cutePetContainerRef = ref(null);
+const wallRef = ref(null);
+
+const loadedMap = reactive({});
+let revealObserver = null;
+
 onMounted(() => {
   getData();
-  setWaterfallCol();
-  window.addEventListener("resize", setWaterfallCol, true);
   const previousRouteName = getStore("LEVI_PREVIONS_ROUTE_NAME");
   const pageStatus = getStore("LEVI_CUTE_PET_PAGE_STATUS");
   if (previousRouteName === `Topic Detail`) {
@@ -101,7 +97,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  window.removeEventListener("resize", setWaterfallCol, true);
+  revealObserver?.disconnect();
 });
 
 const dataMap = reactive({
@@ -117,29 +113,44 @@ const dataMap = reactive({
   },
 });
 
-const cols = ref(4);
 const page = ref(1);
-const pageSize = ref(12);
-const isSidebarVisible = ref(false);
-const cutePetContainerRef = ref(null);
+const pageSize = ref(16);
 
 const bannerConfig = {
   height: "30vh",
   showArrow: false,
   title: "萌宠日记",
-  text: "从此,我拍照,你负责卖萌",
+  text: "定格每一次卖萌瞬间，把毛孩子的可爱与温柔都留在光影里。",
 };
 
-const setWaterfallCol = () => {
-  if (window.innerWidth <= 480) {
-    cols.value = 1;
-  } else if (window.innerWidth <= 960) {
-    cols.value = 2;
-  } else if (window.innerWidth <= 1200) {
-    cols.value = 3;
-  } else {
-    cols.value = 4;
-  }
+const getTileType = (absoluteIndex) => {
+  const i = absoluteIndex % 16;
+  if (i === 0 || i === 9) return "tile-xl";
+  if (i === 3 || i === 7 || i === 12) return "tile-wide";
+  if (i === 5 || i === 14) return "tile-tall";
+  return "tile";
+};
+
+const onImgLoad = (id) => {
+  loadedMap[id] = true;
+};
+
+const bindRevealObserver = () => {
+  revealObserver?.disconnect();
+  revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver?.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.18, rootMargin: "0px 0px -10% 0px" }
+  );
+
+  const nodes = wallRef.value?.querySelectorAll?.(".photo-card") || [];
+  nodes.forEach((el) => revealObserver.observe(el));
 };
 
 const toDetail = (item) => {
@@ -154,14 +165,24 @@ const toDetail = (item) => {
 
 const getTableData = () => {
   dataMap.paginationDatas.total = dataMap.tableData.length;
-  let firstIndex = pageSize.value * page.value - pageSize.value; // 开始查找的数据下标
-  dataMap.data = dataMap.tableData.slice(firstIndex, pageSize.value + firstIndex); // 截取分页数据
+  let firstIndex = pageSize.value * page.value - pageSize.value;
+  dataMap.data = dataMap.tableData
+    .slice(firstIndex, pageSize.value + firstIndex)
+    .map((item, index) => {
+      return {
+        ...item,
+        _tile: getTileType(firstIndex + index),
+      };
+    });
 };
 
 const handleCurrentChange = (val) => {
   page.value = val;
   getTableData();
-  cutePetContainerRef.value.scrollIntoView({ behavior: "smooth" });
+  nextTick(() => {
+    bindRevealObserver();
+    cutePetContainerRef.value?.scrollIntoView({ behavior: "smooth" });
+  });
 };
 
 const getData = async () => {
@@ -175,7 +196,7 @@ const getData = async () => {
       });
       getTableData();
       nextTick(() => {
-        isSidebarVisible.value = true;
+        bindRevealObserver();
       });
     }
   } catch (error) {
@@ -189,59 +210,268 @@ const getData = async () => {
   flex: 1;
 }
 
-.is-top-box {
-  position: absolute;
-  top: -13px;
-  left: -13px;
-  z-index: 10;
-  background: var(--btn-tag-bg-color);
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.cute-pet-container {
+  position: relative;
+}
 
-  .bi {
-    font-size: 26px !important;
-    color: #fff;
-    margin-right: 0;
+.photo-wall {
+  position: relative;
+  padding: 18px 6px 10px;
+  border-radius: 18px;
+  background:
+    radial-gradient(1200px 500px at 30% -10%, rgba(255, 214, 152, 0.22), transparent 60%),
+    radial-gradient(900px 460px at 90% 0%, rgba(120, 170, 255, 0.16), transparent 55%),
+    radial-gradient(900px 460px at 10% 100%, rgba(120, 255, 214, 0.12), transparent 55%),
+    rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 14px 50px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(21, 1fr);
+  grid-auto-flow: dense;
+}
+
+.photo-card {
+  position: relative;
+  grid-column: span 3;
+  grid-row: span 3;
+  cursor: pointer;
+  transform: translateY(12px) scale(0.98);
+  opacity: 0;
+  filter: saturate(0.92) contrast(0.96);
+  transition:
+    transform 0.8s cubic-bezier(0.2, 0.9, 0.2, 1),
+    opacity 0.6s ease,
+    filter 0.6s ease;
+  transition-delay: calc(var(--i) * 26ms);
+  will-change: transform;
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: saturate(1) contrast(1);
+  }
+
+  &:hover {
+    transform: translateY(-6px) scale(1.015);
+  }
+
+  &.tile-wide {
+    grid-column: span 6;
+    grid-row: span 3;
+  }
+
+  &.tile-tall {
+    grid-column: span 3;
+    grid-row: span 6;
+  }
+
+  &.tile-xl {
+    grid-column: span 6;
+    grid-row: span 6;
   }
 }
 
-.waterfall-icon-block {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.photo-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  transform: translateZ(0);
 }
 
-.waterfall-footer-bar {
+.photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.06);
+  transition: transform 0.9s cubic-bezier(0.2, 0.9, 0.2, 1), filter 0.7s ease;
+  filter: brightness(0.95);
+}
+
+.photo-card:hover .photo-img {
+  transform: scale(1.12);
+  filter: brightness(1);
+}
+
+.photo-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 14px 14px 12px;
+  background:
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.62),
+      rgba(0, 0, 0, 0.22) 55%,
+      rgba(0, 0, 0, 0)
+    );
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.5s cubic-bezier(0.2, 0.9, 0.2, 1);
+  pointer-events: none;
+}
+
+.photo-card:hover .photo-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.photo-meta {
+  color: rgba(255, 255, 255, 0.95);
+  max-width: calc(100% - 44px);
+}
+
+.photo-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.photo-sub {
+  margin-top: 4px;
+  font-size: 12px;
+  opacity: 0.86;
+  letter-spacing: 0.2px;
+}
+
+.photo-action {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.2, 1), background 0.3s ease;
 
-  .icon {
-    width: 1em;
-    height: 1em;
-    margin-right: 5px;
+  .bi {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.95);
+    pointer-events: none;
+  }
+}
+
+.photo-card:hover .photo-action {
+  transform: translateY(-2px) scale(1.08);
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.photo-pin {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+
+  .bi {
+    font-size: 18px;
+    color: var(--btn-tag-bg-color);
+    filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.35));
+    pointer-events: none;
+  }
+}
+
+.photo-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.12) 25%,
+    rgba(255, 255, 255, 0.04) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-120%);
+  opacity: 0.9;
+  animation: shimmer 1.2s ease-in-out infinite;
+}
+
+.photo-frame.is-loaded .photo-shimmer {
+  display: none;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-120%);
+  }
+
+  100% {
+    transform: translateX(120%);
   }
 }
 
 @media (max-width: 860px) {
-  .cute-pet-sidebar {
-    display: none;
+  .photo-wall {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    padding: 14px 6px 8px;
   }
 
-  .is-top-box {
-    top: -10px;
-    left: -10px;
-    width: 20px;
-    height: 20px;
-    padding: 8px;
+  .photo-card {
+    grid-column: span 3;
+    grid-row: span 3;
 
-    .bi {
-      font-size: 22px !important;
+    &.tile-wide {
+      grid-column: span 6;
+      grid-row: span 3;
     }
+
+    &.tile-tall {
+      grid-column: span 3;
+      grid-row: span 6;
+    }
+
+    &.tile-xl {
+      grid-column: span 6;
+      grid-row: span 6;
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .photo-wall {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .photo-card,
+  .photo-card.tile-wide,
+  .photo-card.tile-tall,
+  .photo-card.tile-xl {
+    grid-column: span 2;
+    grid-row: span 3;
+  }
+
+  .photo-overlay {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>

@@ -1,11 +1,12 @@
 <template>
-  <div class="header">
-    <div class="nav-card w" :style="{ height: navheight, transition: navTransition }">
+  <div class="header" :class="{ 'is-scrolled': isScrolled, 'is-entrance': showEntrance }">
+    <div class="nav-card w" :style="{ height: navheight }">
       <div class="menu-icon-card">
         <i class="bi bi-text-right collapse-icon" @click="clickCollapse"></i>
       </div>
       <div class="log-crad">
         <div class="log-text" @click="router.push('/')">
+          <span class="logo-dot"></span>
           <h1>{{ blogSettingMap.blog_name }}</h1>
         </div>
         <site-nav-bar></site-nav-bar>
@@ -14,10 +15,7 @@
         <i class="bi bi-search" @click="showSearchModel"></i>
       </div>
     </div>
-    <!-- 移动端导航抽屉 -->
     <nav-drawer ref="navDrawerRef"></nav-drawer>
-
-    <!-- 搜索弹窗 -->
     <search-model ref="searchModelRef"></search-model>
   </div>
 </template>
@@ -38,36 +36,43 @@ const blogSettingMap = computed(() => {
 
 const router = useRouter();
 
-onMounted(() => {
-  window.addEventListener("scroll", scrollWindow, true);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("scroll", scrollWindow, true);
-});
-
 const navDrawerRef = ref(null);
 const searchModelRef = ref(null);
-const navTransition = ref("");
+const isScrolled = ref(false);
+const showEntrance = ref(false);
 const navheight = ref("");
 const maxHeaderHeight = "80px";
 const minHeaderHeight = "60px";
-const scrollTimer = ref(null);
+let rafId = null;
+
+onMounted(() => {
+  window.addEventListener("scroll", scrollWindow, { passive: true });
+  requestAnimationFrame(() => {
+    showEntrance.value = true;
+  });
+  scrollWindow();
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", scrollWindow);
+  if (rafId) cancelAnimationFrame(rafId);
+});
 
 const clickCollapse = () => {
   navDrawerRef.value.show();
 };
 
 const scrollWindow = () => {
-  if (scrollTimer.value) return;
-  scrollTimer.value = setTimeout(() => {
+  if (rafId) return;
+  rafId = requestAnimationFrame(() => {
     const top = document.documentElement.scrollTop;
-    navTransition.value = "0.3s linear";
-    navheight.value = top === 0 ? maxHeaderHeight : minHeaderHeight;
+    const isTop = top === 0;
+    navheight.value = isTop ? maxHeaderHeight : minHeaderHeight;
+    isScrolled.value = !isTop;
     const opacity = Math.min(top / 400, 1);
     document.documentElement.style.setProperty("--header-bar-color-opacity", opacity);
-    scrollTimer.value = null;
-  }, 50);
+    rafId = null;
+  });
 };
 
 const showSearchModel = () => {
@@ -87,17 +92,30 @@ const showSearchModel = () => {
   top: 0;
   width: 100%;
   z-index: 9998;
-  transition: all 0.3s;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+
+  &.is-entrance {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  &.is-scrolled {
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.08);
+  }
 }
 
 .nav-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
   .log-crad {
     display: flex;
     align-items: center;
+    align-self: stretch;
     gap: 20px;
 
     span {
@@ -106,24 +124,78 @@ const showSearchModel = () => {
   }
 }
 
-.log-text h1 {
-  font-size: 24px;
+.log-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   cursor: pointer !important;
-  margin-right: 20px;
-  color: var(--nav-bar-text-color);
-  font-weight: 500;
-  transition: all 0.5s;
+  position: relative;
+
+  .logo-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--btn-tag-bg-color);
+    box-shadow: 0 0 8px rgba(255, 139, 38, 0.6);
+    transition: all 0.4s ease;
+    flex-shrink: 0;
+  }
+
+  &:hover .logo-dot {
+    transform: scale(1.5);
+    box-shadow: 0 0 16px rgba(255, 139, 38, 0.8), 0 0 32px rgba(255, 139, 38, 0.3);
+  }
+
+  h1 {
+    font-size: 24px;
+    margin: 0;
+    margin-right: 20px;
+    color: var(--nav-bar-text-color);
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--nav-bar-text-color) 0%, var(--theme-btn-hover-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &:hover h1 {
+    transform: translateX(3px);
+  }
 }
 
-.search-card i {
-  color: var(--nav-bar-text-color);
-  cursor: pointer;
-  font-size: 22px;
+.search-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--theme-radius);
+  transition: all 0.3s ease;
+
+  i {
+    color: var(--nav-bar-text-color);
+    cursor: pointer;
+    font-size: 20px;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+  }
+
+  &:hover {
+    background: rgba(255, 139, 38, 0.12);
+
+    i {
+      color: var(--btn-tag-bg-color);
+      transform: scale(1.15) rotate(15deg);
+    }
+  }
 }
 
 @media (max-width: 860px) {
   .header {
     height: var(--header-mobile-bar-height);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
   .nav-card {
@@ -139,13 +211,34 @@ const showSearchModel = () => {
 
     .collapse-icon {
       color: var(--nav-text-color);
-      font-size: 1.8rem;
+      font-size: 1.6rem;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: var(--btn-tag-bg-color);
+      }
     }
   }
 
-  .log-text h1 {
-    font-size: 20px;
-    margin-left: -30px;
+  .log-text {
+    .logo-dot {
+      width: 8px;
+      height: 8px;
+    }
+
+    h1 {
+      font-size: 18px;
+      margin-right: 10px;
+    }
+  }
+
+  .search-card {
+    width: 36px;
+    height: 36px;
+
+    i {
+      font-size: 18px;
+    }
   }
 }
 

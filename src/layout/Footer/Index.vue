@@ -46,22 +46,6 @@
         </div>
         <div class="support-item">
           <a
-            class="51la-badge"
-            target="_blank"
-            href="https://user.51.la/"
-            style="margin-inline: 5px"
-            title="本站数据分析得益于51la技术支持"
-            rel="external nofollow noreferrer"
-            ><img
-              src="https://sourcebucket.s3.bitiful.net/badge/Analytics-51la-3db1eb.svg"
-              data-lazy-src="https://sourcebucket.s3.bitiful.net/badge/Analytics-51la-3db1eb.svg"
-              alt="51la Badge"
-              data-ll-status="loaded"
-              class="entered loaded"
-          /></a>
-        </div>
-        <div class="support-item">
-          <a
             class="github-badge"
             target="_blank"
             href="https://github.com/"

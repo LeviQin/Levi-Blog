@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ElNotification } from "element-plus";
+import { ElNotification } from "@/utils/element.js";
 import { getBaseURL } from "@/utils/judgmentEnv";
 
 const service = axios.create({

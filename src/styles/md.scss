@@ -3,131 +3,372 @@
 /** 这里是md渲染器的样式 **/
 
 .md-editor {
-    background: transparent !important;
+  background: transparent !important;
 }
 
 .md-editor-preview-wrapper {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 .md-editor-preview {
-    padding: 0 20px !important;
+  padding: 0 20px !important;
 }
 
-.md-editor img {
-    border-radius: 5px;
+// ===== 段落 =====
+.md-editor p {
+  color: var(--color);
+  overflow-wrap: break-word;
+  line-height: 1.9;
+  margin-bottom: 1.2rem;
+  font-size: 16px;
+  letter-spacing: 0.3px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
-.md-editor h2 {
-    border: 0 !important;
+// ===== 加粗 / 斜体 =====
+.md-editor strong {
+  color: var(--btn-tag-bg-color);
+  font-weight: 600;
 }
 
+.md-editor em {
+  color: var(--theme-btn-hover-color);
+  font-style: italic;
+}
+
+// ===== 标题 =====
 .md-editor h1,
 .md-editor h2,
 .md-editor h3 {
-    color: var(--color) !important;
-    margin-left: 30px !important;
-    position: relative;
+  color: var(--color) !important;
+  margin: 2rem 0 1rem 30px !important;
+  position: relative;
+  transition: all 0.4s;
+  display: table;
+  font-weight: 700;
+  line-height: 1.4;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid rgba(255, 139, 38, 0.2);
+
+  &:hover {
     transition: all 0.4s;
-    display: table;
-
-    &:hover {
-        transition: all 0.4s;
-        transform: translateX(15px);
-        color: var(--btn-tag-bg-color);
-    }
+    transform: translateX(15px);
+    color: var(--btn-tag-bg-color) !important;
+    border-bottom-color: var(--btn-tag-bg-color);
+  }
 }
 
-.md-editor h4 {
-    color: var(--color) !important;
-}
-
-.md-editor a,
-.md-editor p a code {
-    color: var(--theme-btn-hover-color) !important;
-}
-
-
-.md-editor h1::before,
-.md-editor h2::before,
-.md-editor h3::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -35px;
-    width: 30px;
-    height: 30px;
-    background: url(../assets/images/md/fengche.svg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    animation: fengcheMove 3s linear infinite;
-}
-
-.md-editor li {
-    list-style: circle;
-    color: var(--color);
-}
-
-.md-editor p {
-    color: var(--color);
-    overflow-wrap: break-word;
+.md-editor h1 {
+  font-size: 2em;
 }
 
 .md-editor h2 {
-    border-bottom: none;
+  font-size: 1.6em;
+  border: 0 !important;
 }
 
+.md-editor h3 {
+  font-size: 1.3em;
+}
+
+.md-editor h4 {
+  color: var(--color) !important;
+  font-size: 1.15em;
+  font-weight: 600;
+  margin: 1.5rem 0 0.8rem;
+  padding-left: 14px;
+  border-left: 4px solid var(--btn-tag-bg-color);
+  line-height: 1.4;
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-left-color: var(--theme-btn-hover-color);
+  }
+}
+
+// ===== 风车图标 =====
+.md-editor h1::before,
+.md-editor h2::before,
+.md-editor h3::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -35px;
+  width: 26px;
+  height: 26px;
+  margin-top: -13px;
+  background: url(../assets/images/md/fengche.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  animation: fengcheMove 4s linear infinite;
+  opacity: 0.7;
+}
+
+// ===== 链接 =====
+.md-editor a {
+  color: var(--theme-btn-hover-color) !important;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+  font-weight: 500;
+
+  &:hover {
+    color: var(--btn-tag-bg-color) !important;
+    border-bottom-color: var(--btn-tag-bg-color);
+  }
+}
+
+.md-editor p a code {
+  color: var(--theme-btn-hover-color) !important;
+}
+
+// ===== 行内代码 =====
 .md-editor p code {
-    background: #5a8bbd29 !important;
-    color: #164577 !important;
+  background: rgba(90, 139, 189, 0.12) !important;
+  color: #164577 !important;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+}
+
+// ===== 列表 =====
+.md-editor ul,
+.md-editor ol {
+  padding-left: 1.5rem;
+  margin: 0.8rem 0 1.2rem;
+}
+
+.md-editor li {
+  list-style: circle;
+  color: var(--color);
+  line-height: 1.8;
+  margin-bottom: 0.3rem;
+
+  &::marker {
+    color: var(--btn-tag-bg-color);
+  }
+}
+
+.md-editor ol li {
+  list-style: decimal;
+
+  &::marker {
+    color: var(--btn-tag-bg-color);
+    font-weight: 600;
+  }
+}
+
+// ===== 引用块 =====
+.md-editor blockquote {
+  background-color: rgba(255, 139, 38, 0.04);
+  border-left: 4px solid var(--btn-tag-bg-color) !important;
+  margin: 1.2rem 0;
+  padding: 1rem 1.2rem;
+  border-radius: 0 var(--theme-min-radius) var(--theme-min-radius) 0;
+  color: var(--color);
+  opacity: 0.85;
+
+  p {
+    margin-bottom: 0.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// ===== 分割线 =====
+.md-editor hr {
+  border: none;
+  height: 1px;
+  margin: 2rem 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 139, 38, 0.3) 20%,
+    rgba(90, 140, 189, 0.3) 50%,
+    rgba(255, 139, 38, 0.3) 80%,
+    transparent 100%
+  );
+}
+
+// ===== 表格 =====
+.md-editor table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1.2rem 0;
+  border-radius: var(--theme-min-radius);
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.md-editor thead {
+  background: linear-gradient(135deg, var(--btn-tag-bg-color), #e67a15);
+}
+
+.md-editor th {
+  color: #fff !important;
+  font-weight: 600;
+  padding: 10px 16px;
+  text-align: left;
+  border: none !important;
+  font-size: 14px;
+}
+
+.md-editor td {
+  padding: 10px 16px;
+  border: none !important;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.15) !important;
+  color: var(--color);
+  font-size: 14px;
+}
+
+.md-editor tbody tr {
+  transition: background-color 0.2s ease;
+
+  &:nth-child(even) {
+    background: rgba(128, 128, 128, 0.04);
+  }
+
+  &:hover {
+    background: rgba(255, 139, 38, 0.06);
+  }
 }
 
 .md-editor tr:nth-child(2n) {
-    background: none !important;
+  background: rgba(128, 128, 128, 0.04) !important;
 }
 
-.md-editor td,
-.md-editor th {
-    border: 1px solid #282c34 !important;
-}
-
+// ===== 图片 =====
 .md-editor img {
-    max-height: 265px;
-    border-radius: var(--theme-radius) !important;
-    cursor: pointer;
+  max-height: 265px;
+  max-width: 100%;
+  border-radius: var(--theme-radius) !important;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s ease;
+  margin: 0.8rem 0;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .md-editor img[alt="max"] {
-    max-height: 500px !important;
+  max-height: 500px !important;
 }
 
-.md-editor blockquote {
-    background-color: #ececec;
-    border-left: 5px solid #35b378 !important;
-}
-
+// ===== 代码块标签 =====
 .md-editor .md-editor-codetab-label label {
-    color: #fff !important;
+  color: #fff !important;
 }
 
+// ===== 删除线 =====
+.md-editor del {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+// ===== 键盘标签 <kbd> =====
+.md-editor kbd {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 0.85em;
+  font-family: 'Fira Code', 'Consolas', monospace;
+  color: var(--color);
+  background: rgba(128, 128, 128, 0.1);
+  border: 1px solid rgba(128, 128, 128, 0.25);
+  border-radius: 4px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+}
+
+// ===== 任务列表 =====
+.md-editor input[type="checkbox"] {
+  accent-color: var(--btn-tag-bg-color);
+  margin-right: 6px;
+}
+
+// ===== 深色模式 =====
+html[data-theme='dark'] {
+  .md-editor p code {
+    background: rgba(90, 139, 189, 0.2) !important;
+    color: #89c4f4 !important;
+  }
+
+  .md-editor blockquote {
+    background-color: rgba(255, 139, 38, 0.06);
+  }
+
+  .md-editor td {
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .md-editor hr {
+    opacity: 0.4;
+  }
+
+  .md-editor img {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .md-editor kbd {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+// ===== 响应式 =====
 @media (max-width: 860px) {
-    .md-editor img {
-        max-width: 100% !important;
-        max-height: 100% !important;
-    }
+  .md-editor-preview {
+    padding: 0 8px !important;
+  }
 
-    .md-editor-preview .md-editor-code {
-        margin: 20px -1.5rem !important;
-    }
+  .md-editor img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+  }
+
+  .md-editor-preview .md-editor-code {
+    margin: 20px -1.5rem !important;
+  }
+
+  .md-editor h1 {
+    font-size: 1.5em;
+  }
+
+  .md-editor h2 {
+    font-size: 1.3em;
+  }
+
+  .md-editor h3 {
+    font-size: 1.15em;
+  }
+
+  .md-editor table {
+    display: block;
+    overflow-x: auto;
+  }
 }
 
+// ===== 风车动画 =====
 @keyframes fengcheMove {
-    0% {
-        transform: rotate(0deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
 
-    100% {
-        transform: rotate(360deg);
-    }
+  100% {
+    transform: rotate(360deg);
+  }
 }

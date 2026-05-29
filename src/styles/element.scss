@@ -1,6 +1,29 @@
 @import "./base.scss";
 
-/** 这里是element ui的样式 **/
+:root {
+  --el-color-primary: var(--theme-btn-hover-color);
+  --el-text-color-primary: var(--black-text-color);
+  --el-text-color-regular: #606266;
+  --el-text-color-secondary: #909399;
+  --el-border-color: rgba(90, 140, 189, 0.18);
+  --el-border-color-light: rgba(90, 140, 189, 0.12);
+  --el-bg-color: rgba(255, 255, 255, 0.72);
+  --el-fill-color-light: rgba(255, 255, 255, 0.5);
+  --el-fill-color-lighter: rgba(255, 255, 255, 0.36);
+  --el-input-border-color: rgba(90, 140, 189, 0.18);
+}
+
+html[data-theme="dark"] {
+  --el-text-color-primary: var(--color);
+  --el-text-color-regular: rgba(255, 255, 255, 0.86);
+  --el-text-color-secondary: rgba(255, 255, 255, 0.62);
+  --el-border-color: rgba(122, 161, 209, 0.22);
+  --el-border-color-light: rgba(122, 161, 209, 0.14);
+  --el-bg-color: rgba(255, 255, 255, 0.05);
+  --el-fill-color-light: rgba(255, 255, 255, 0.04);
+  --el-fill-color-lighter: rgba(255, 255, 255, 0.06);
+  --el-input-border-color: rgba(122, 161, 209, 0.22);
+}
 
 .el-header,
 .el-main,
@@ -10,6 +33,141 @@
 
 .el-carousel__container {
   height: 100% !important;
+}
+
+.el-message-container,
+.el-notification-container {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.el-message,
+.el-notification {
+  --notice-accent: var(--theme-btn-hover-color);
+  min-width: 260px;
+  max-width: min(420px, calc(100vw - 36px));
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(90, 140, 189, 0.16);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.14);
+  color: var(--black-text-color);
+  transform: translateY(-8px);
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: auto;
+}
+
+.el-message.is-visible,
+.el-notification.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.el-message.is-closing,
+.el-notification.is-closing {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.el-notice__icon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 6px;
+  background: var(--notice-accent);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--notice-accent) 16%, transparent);
+  flex-shrink: 0;
+}
+
+.el-notice__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.el-notification__title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.el-message__content,
+.el-notification__content {
+  font-size: 14px;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.el-notification__closeBtn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(90, 140, 189, 0.08);
+  color: #7a8191;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.el-loading-mask {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 20;
+}
+
+.el-loading-mask.is-visible {
+  opacity: 1;
+}
+
+.el-loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.el-loading-spinner .circular {
+  width: 42px;
+  height: 42px;
+  animation: el-loading-rotate 1s linear infinite;
+}
+
+.el-loading-spinner circle {
+  stroke: var(--theme-btn-hover-color);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 90 150;
+  stroke-dashoffset: 0;
+}
+
+.el-loading-text {
+  margin: 0;
+  font-size: 13px;
+  color: var(--black-text-color);
+}
+
+@keyframes el-loading-rotate {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .el-divider {

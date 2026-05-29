@@ -1,0 +1,1 @@
+import{_ as o,h as t,i as _}from"./index.03a0979b.js";const e={class:"portfolio"},s={__name:"Portfolio",setup(c){return(r,a)=>(t(),_("div",e,"test"))}},n=o(s,[["__scopeId","data-v-40bcd7dd"]]);export{n as default};
