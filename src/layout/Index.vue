@@ -81,16 +81,19 @@ const keydownEvent = (event) => {
 .layout {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100vh;
   .lv-header {
     height: var(--header-bar-height);
     min-height: var(--header-bar-height);
     display: block;
   }
   .lv-main {
-    flex: 1;
     padding: 0 20px;
   }
+}
+
+.footer-card {
+  margin-top: auto;
 }
 
 .banner-bar {

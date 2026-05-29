@@ -221,22 +221,14 @@ yarn preview
 | 🔑 密码生成器 | [/password](https://leviqin.top/password) |
 | 🖼 图片处理 | [/image-processing](https://leviqin.top/image-processing) |
 | 🗜 图片压缩 | [/image-compression](https://leviqin.top/image-compression) |
-| ✂️ 图片裁剪 | [/image-crop](https://leviqin.top/image-crop) |
 | 📋 图片 EXIF | [/image-exif-view](https://leviqin.top/image-exif-view) |
-| 🔄 格式转换 | [/image-format-conversion](https://leviqin.top/image-format-conversion) |
-| 🌐 IP 查询 | [/ip](https://leviqin.top/ip) |
-| 🌤 天气查询 | [/weather](https://leviqin.top/weather) |
-| 📱 二维码 | [/qr](https://leviqin.top/qr) |
-| 🛠 前端工具 | [/front-end](https://leviqin.top/front-end) |
 
 ### 📌 其他
 | 页面 | 地址 |
 |------|------|
 | 🔗 常用网站 | [/nav](https://leviqin.top/nav) |
-| 📚 前端资料 | [/material](https://leviqin.top/material) |
 | 💬 留言板 | [/comments](https://leviqin.top/comments) |
 | 🤝 友情链接 | [/friendlinks](https://leviqin.top/friendlinks) |
-| 🎨 作品集 | [/portfolio](https://leviqin.top/portfolio) |
 | 👤 关于我 | [/about](https://leviqin.top/about) |
 
 ---
