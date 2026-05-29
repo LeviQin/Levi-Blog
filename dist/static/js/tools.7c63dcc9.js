@@ -1,1 +1,0 @@
-import{W as o}from"./index.c1700f1d.js";const r=t=>o({method:"post",url:"/api/tools/identifyIpArea",data:t}),s=t=>o({method:"post",url:"/api/tools/weatherInfo",data:t}),i=t=>o({method:"post",url:"/api/tools/cityCode",data:t});export{i as c,r as i,s as w};
