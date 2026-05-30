@@ -111,7 +111,7 @@ const blogSettingMap = computed(() => {
 });
 
 const rssFeedUrl = computed(() => {
-  return `${getBaseURL()}/rss.xml`;
+  return `${getBaseURL()}/api/articles/rss.xml`;
 });
 
 const router = useRouter();
