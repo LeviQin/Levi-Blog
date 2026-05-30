@@ -1,232 +1,56 @@
 <template>
-  <div class="tabs-item theme-bg-color">
-    <el-form label-position="top">
-      <el-form-item>
-        <el-button type="primary" @click="encrypt">加密</el-button>
-        <el-button type="primary" @click="decrypt">解密</el-button>
-        <el-button type="primary" @click="clear">清除</el-button>
-      </el-form-item>
-      <div class="input-block">
-        <el-form-item label="需要加/解密的内容:">
-          <el-input
-            v-model="textarea"
-            :rows="8"
-            type="textarea"
-            placeholder="在此输入需要加/解密的内容"
-          />
-        </el-form-item>
-        <el-form-item label="结果:">
-          <el-input
-            readonly
-            v-model="result"
-            :rows="8"
-            type="textarea"
-            placeholder="加/解密的结果"
-          />
-          <div class="copy-btn-card">
-            <el-button
-              style="width: 100%"
-              type="success"
-              @click="copyResult"
-              class="clipboardBtn"
-              >一键复制结果</el-button
-            >
-          </div>
-        </el-form-item>
-      </div>
-    </el-form>
-    <div>
-      <div>Base64 编码介绍</div>
-      <div>
-        <p class="introduction-text">
-          Base64是网络上最常见的用于传输8Bit字节代码的编码方式之一，大家可以查看RFC2045～RFC2049，上面有MIME的详细规范。Base64编码可用于在HTTP环境下传递较长的标识信息。
-        </p>
-        <p class="introduction-text">
-          例如，在Java
-          Persistence系统Hibernate中，就采用了Base64来将一个较长的唯一标识符（一般为128-bit的UUID）编码为一个字符串，用作HTTP表单和HTTP
-          GET
-          URL中的参数。在其他应用程序中，也常常需要把二进制数据编码为适合放在URL（包括隐藏表单域）中的形式。此时，采用Base64编码具有不可读性，即所编码的数据不会被人用肉眼所直接看到。
-        </p>
-        <p class="introduction-text">
-          Base64是网络上最常见的用于传输8Bit字节代码的编码方式之一，大家可以查看RFC2045～RFC2049，上面有MIME的详细规范。Base64编码可用于在HTTP环境下传递较长的标识信息。例如，在Java
-        </p>
-        <p class="introduction-text">
-          Persistence系统Hibernate中，就采用了Base64来将一个较长的唯一标识符（一般为128-bit的UUID）编码为一个字符串，用作HTTP表单和HTTP
-          GET
-          URL中的参数。在其他应用程序中，也常常需要把二进制数据编码为适合放在URL（包括隐藏表单域）中的形式。此时，采用Base64编码具有不可读性，即所编码的数据不会被人用肉眼所直接看到。
-        </p>
-        <p class="introduction-text">
-          Base64编码要求把3个8位字节（3*8=24）转化为4个6位的字节（4*6=24），之后在6位的前面补两个0，形成8位一个字节的形式。
-          如果剩下的字符不足3个字节，则用0填充，输出字符使用'='，因此编码后输出的文本末尾可能会出现1或2个'='。
-        </p>
-        <el-form label-width="auto" label-position="left">
-          <el-form-item label="外文名">
-            <span>base64</span>
-          </el-form-item>
-          <el-form-item label="属性">
-            <span>编码方式</span>
-          </el-form-item>
-          <el-form-item label="应用">
-            <span>用于传输8Bit字节代码</span>
-          </el-form-item>
-          <el-form-item label="定义">
-            <span>8Bit字节代码的编码方式之一</span>
-          </el-form-item>
-          <el-form-item label="可用于">
-            <span>在HTTP环境下传递较长的标识信息</span>
-          </el-form-item>
-          <el-form-item label="特性">
-            <span>Base64编码具有不可读性</span>
-          </el-form-item>
-        </el-form>
-      </div>
-      <div>Base64使用注意事项</div>
-      <div>
-        <p>一、Base64和URL传参问题</p>
-        <p class="introduction-text">
-          标准的Base64并不适合直接放在URL里传输，因为URL编码器会把标准Base64中的“/”和“+”字符变为形如“%XX”的形式，而这些“%”号在存入数据库时还需要再进行转换，因为ANSI
-          SQL中已将“%”号用作通配符。
-        </p>
-        <p class="introduction-text">
-          为解决此问题，可采用一种用于URL的改进Base64编码，它在末尾填充'='号，并将标准Base64中的“+”和“/”分别改成了“-”和“_”，这样就免去了在URL编解码和数据库存储时所要作的转换，避免了编码信息长度在此过程中的增加，并统一了数据库、表单等处对象标识符的格式。
-        </p>
-        <p>二、Base64和URL传参问题改善</p>
-        <p class="introduction-text">
-          另有一种用于正则表达式的改进Base64变种，它将“+”和“/”改成了“!”和“-”，因为“+”,“*”以及前面在IRCu中用到的“[”和“]”在正则表达式中都可能具有特殊含义。
-        </p>
-        <p class="introduction-text">
-          此外还有一些变种，它们将“+/”改为“_-”或“._”（用作编程语言中的标识符名称）或“.-”（用于XML中的Nmtoken）甚至“_:”（用于XML中的Name）。
-        </p>
-        <p>三、Base64转换后比原有的字符串长1/3</p>
-        <p class="introduction-text">
-          Base64要求把每三个8Bit的字节转换为四个6Bit的字节（3*8 = 4*6 =
-          24），然后把6Bit再添两位高位0，组成四个8Bit的字节，也就是说，转换后的字符串理论上将要比原来的长1/3。
-        </p>
-        <p>Base64转换总结</p>
-        <p class="introduction-text">
-          Base64转换，最好是不要用在加密上，尤其是参数加密，很容易出问题。
-        </p>
-      </div>
-    </div>
+  <div class="pw-card">
+    <div class="pw-card-head"><div class="pw-algo-badge" style="background:linear-gradient(135deg,#9b59b6,#8e44ad)">B64</div><div><div class="pw-card-title">Base64 编/解码</div><div class="pw-card-sub">最常用的二进制到文本编码方案 &mdash; 无需密钥</div></div></div>
+    <div class="pw-toolbar"><button class="pw-btn pw-btn-encrypt" @click="encrypt"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>编码</button><button class="pw-btn pw-btn-decrypt" @click="decrypt"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 18 2 12 8 6"/><polyline points="16 6 22 12 16 18"/></svg>解码</button><span class="pw-toolbar-spacer"></span><button class="pw-btn pw-btn-clear" @click="clear"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>清除</button></div>
+    <div class="pw-io-grid"><div class="pw-io-block"><label class="pw-io-label">需要编/解码的内容</label><el-input v-model="textarea" type="textarea" :rows="8" placeholder="在此输入需要编/解码的内容" class="pw-textarea" /><div class="pw-char-count">{{ textarea.length }} 字符</div></div><div class="pw-io-arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--el-text-color-placeholder)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div><div class="pw-io-block"><label class="pw-io-label">结果</label><el-input v-model="result" type="textarea" :rows="8" placeholder="编/解码结果将显示在此处" readonly class="pw-textarea pw-textarea-result" /><div class="pw-io-actions"><span class="pw-char-count">{{ result.length }} 字符</span><button class="pw-copy-btn" :class="{ copied: copyDone }" @click="copyResult"><svg v-if="!copyDone" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><svg v-else width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>{{ copyDone ? '已复制' : '复制结果' }}</button></div></div></div>
+    <div class="pw-info-section"><div class="pw-info-head" @click="infoOpen = !infoOpen"><svg class="icon" aria-hidden="true"><use xlink:href="#levi-guanyu-"></use></svg><span>关于 Base64</span><svg class="pw-info-arrow" :class="{ open: infoOpen }" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div><div class="pw-info-body" v-show="infoOpen"><p>Base64是网络上最常见的用于传输8Bit字节代码的编码方式之一。Base64编码可用于在HTTP环境下传递较长的标识信息。</p><p><b>注意事项：</b>Base64不适合直接放在URL里传输，因为URL编码器会把 "+" 和 "/" 转为 "%XX" 形式。可采用URL安全的Base64变种。</p><p><b>转换规则：</b>Base64把每3个8位字节转换为4个6位字节（3×8=4×6=24），转换后文本理论上比原来长约1/3。</p></div></div>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-
-let textarea = ref("");
-let result = ref("");
+const textarea = ref(""), result = ref(""), copyDone = ref(false), infoOpen = ref(false); let copyTimer = null;
 
 const encrypt = () => {
-  if (textarea.value === "") {
-    ElNotification({
-      title: "警告",
-      message: "请输入需要加/解密的内容",
-      type: "warning",
-      zIndex: 99999,
-    });
-    return;
-  }
-  try {
-    const textEncoder = new TextEncoder();
-    const data = textEncoder.encode(textarea.value);
-    result.value = arrayBufferToBase64(data);
-  } catch (e) {
-    console.log(e, "----------------------");
-    ElNotification({
-      title: "失败",
-      message: "加密失败，请检查你输入的内容！",
-      type: "error",
-      zIndex: 99999,
-    });
-  }
+  if (!textarea.value) { ElNotification({ title: "提示", message: "请输入需要编/解码的内容", type: "warning", zIndex: 99999 }); return; }
+  try { const data = new TextEncoder().encode(textarea.value); result.value = arrayBufferToBase64(data); }
+  catch (e) { ElNotification({ title: "失败", message: "编码失败", type: "error", zIndex: 99999 }); }
 };
 const decrypt = () => {
-  try {
-    if (textarea.value === "") {
-      ElNotification({
-        title: "警告",
-        message: "请输入需要加/解密的内容",
-        type: "warning",
-        zIndex: 99999,
-      });
-      return;
-    }
-    const decodedData = base64ToArrayBuffer(textarea.value);
-    const textDecoder = new TextDecoder();
-    result.value = textDecoder.decode(decodedData);
-  } catch (e) {
-    console.log(e, "----------------------");
-    ElNotification({
-      title: "失败",
-      message: "解密失败，请检查你输入的内容！",
-      type: "error",
-      zIndex: 99999,
-    });
-  }
+  if (!textarea.value) { ElNotification({ title: "提示", message: "请输入需要编/解码的内容", type: "warning", zIndex: 99999 }); return; }
+  try { const decoded = base64ToArrayBuffer(textarea.value); result.value = new TextDecoder().decode(decoded); }
+  catch (e) { ElNotification({ title: "失败", message: "解码失败，请检查输入是否为有效的Base64", type: "error", zIndex: 99999 }); }
 };
-const arrayBufferToBase64 = (buffer) => {
-  const binary = [].map.call(new Uint8Array(buffer), (byte) => {
-    return String.fromCharCode(byte);
-  });
-  return btoa(binary.join(""));
-};
-const base64ToArrayBuffer = (base64) => {
-  const binaryString = window.atob(base64);
-  const length = binaryString.length;
-  const bytes = new Uint8Array(length);
-  for (let i = 0; i < length; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
-  }
-  return bytes.buffer;
-};
-const clear = () => {
-  textarea.value = "";
-  result.value = "";
-};
-const copyResult = () => {
-  if (result.value === "") {
-    ElNotification({
-      title: "警告",
-      message: "复制失败！结果为空",
-      type: "warning",
-      zIndex: 99999,
-    });
-    return;
-  }
-  navigator.clipboard
-    .writeText(result.value)
-    .then(() => {
-      ElNotification({
-        title: "成功",
-        message: "结果已复制到剪切板",
-        type: "success",
-        zIndex: 99999,
-      });
-      close();
-    })
-    .catch(() => {
-      ElNotification({
-        title: "失败",
-        message: "复制出错，请重试",
-        type: "error",
-        zIndex: 99999,
-      });
-    });
-};
+const arrayBufferToBase64 = (buffer) => { const b = [].map.call(new Uint8Array(buffer), (v) => String.fromCharCode(v)); return btoa(b.join("")); };
+const base64ToArrayBuffer = (base64) => { const s = atob(base64); const bytes = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) bytes[i] = s.charCodeAt(i); return bytes.buffer; };
+const clear = () => { textarea.value = ""; result.value = ""; };
+const copyResult = () => { if (!result.value) { ElNotification({ title: "提示", message: "结果为空", type: "warning", zIndex: 99999 }); return; } navigator.clipboard.writeText(result.value).then(() => { copyDone.value = true; clearTimeout(copyTimer); copyTimer = setTimeout(() => copyDone.value = false, 2000); ElNotification({ title: "成功", message: "已复制", type: "success", zIndex: 99999 }); }).catch(() => ElNotification({ title: "失败", message: "复制失败", type: "error", zIndex: 99999 })); };
 </script>
 
 <style lang="scss" scoped>
-.key-tips {
-  font-size: 12px;
-  color: #7171718a;
-}
-
-.copy-btn-card {
-  margin-top: 10px;
-}
-
-.introduction-text {
-  font-size: 14px;
-}
+.pw-card { padding: 28px; border-radius: 16px; background: var(--el-bg-color); border: 1px solid var(--el-border-color); box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.pw-card-head { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--el-border-color-light); }
+.pw-algo-badge { display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 14px; background: linear-gradient(135deg, var(--btn-tag-bg-color), #e67a1a); color: #fff; font-size: 14px; font-weight: 700; flex-shrink: 0; letter-spacing: .02em; }
+.pw-card-title { font-size: 18px; font-weight: 700; color: var(--el-text-color-primary); }
+.pw-card-sub { font-size: 13px; color: var(--el-text-color-secondary); margin-top: 4px; }
+.pw-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.pw-toolbar-spacer { flex: 1; }
+.pw-btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 20px; font-size: 13px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: all .2s; outline: none; }
+.pw-btn-encrypt { background: var(--btn-tag-bg-color); color: #fff; &:hover { background: #e67a1a; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,139,38,.3); } }
+.pw-btn-decrypt { background: var(--theme-btn-hover-color); color: #fff; &:hover { background: #4a7ca8; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(90,140,189,.3); } }
+.pw-btn-clear { background: transparent; color: var(--el-text-color-secondary); border: 1.5px solid var(--el-border-color); &:hover { background: var(--el-fill-color-light); color: var(--el-text-color-primary); } }
+.pw-io-grid { display: flex; align-items: flex-start; gap: 16px; }
+.pw-io-block { flex: 1; min-width: 0; }
+.pw-io-label { display: block; font-size: 13px; font-weight: 600; color: var(--el-text-color-regular); margin-bottom: 8px; }
+.pw-io-arrow { display: flex; align-items: center; padding-top: 32px; flex-shrink: 0; }
+.pw-textarea :deep(textarea) { font-family: 'SF Mono','Fira Code','Consolas',monospace; font-size: 13px; line-height: 1.7; }
+.pw-textarea-result :deep(textarea) { background: var(--el-fill-color-lighter); }
+.pw-char-count { margin-top: 6px; font-size: 11px; color: var(--el-text-color-placeholder); font-variant-numeric: tabular-nums; }
+.pw-io-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+.pw-copy-btn { display: inline-flex; align-items: center; gap: 4px; padding: 5px 14px; font-size: 12px; font-weight: 600; border: 1.5px solid var(--el-border-color); border-radius: 6px; background: transparent; color: var(--el-text-color-regular); cursor: pointer; transition: all .2s; outline: none; &:hover { border-color: #67c23a; color: #67c23a; background: rgba(103,194,58,.06); } &.copied { border-color: #67c23a; color: #67c23a; background: rgba(103,194,58,.08); } }
+.pw-info-section { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--el-border-color-light); }
+.pw-info-head { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; font-size: 14px; font-weight: 600; color: var(--el-text-color-primary); .icon { width: 1.1em; height: 1.1em; color: var(--theme-btn-hover-color); } &:hover { color: var(--theme-btn-hover-color); } }
+.pw-info-arrow { margin-left: auto; transition: transform .2s; &.open { transform: rotate(180deg); } }
+.pw-info-body { margin-top: 14px; font-size: 13px; color: var(--el-text-color-secondary); line-height: 1.75; p { margin: 0 0 8px; } b { color: var(--el-text-color-primary); } }
+@media (max-width: 860px) { .pw-card { padding: 20px 16px; } .pw-card-head { flex-direction: column; align-items: flex-start; gap: 12px; } .pw-io-grid { flex-direction: column; gap: 12px; } .pw-io-arrow { display: none; } .pw-toolbar { flex-wrap: wrap; } }
 </style>

@@ -1,262 +1,267 @@
 <template>
-  <Head>
-    <meta
-      name="keywords"
-      content="查看图像EXIF信息， 提取照片元数据，图片元数据分析工具，在线查看图像EXIF数据。"
-    />
-    <meta
-      name="description"
-      content="查看图像EXIF信息， 提取照片元数据，图片元数据分析工具，在线查看图像EXIF数据。"
-    />
-    <meta
-      property="og:description"
-      content="查看图像EXIF信息， 提取照片元数据，图片元数据分析工具，在线查看图像EXIF数据。"
-    />
-    <meta
-      name="twitter:description"
-      content="查看图像EXIF信息， 提取照片元数据，图片元数据分析工具，在线查看图像EXIF数据。"
-    />
-  </Head>
-  <div class="image-exif-view w theme-bg-color image-tool-container all-tool-container">
-    <div class="image-exif-view-container image-tool-block">
-      <div class="image-exif-view-title image-tool-title">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#levi-tupianyasuo"></use>
-        </svg>
-        <h1>图片EXIF查看器</h1>
-      </div>
-      <div class="exif-ads">
-        ✅已成功解析<span class="exif-total-text">{{ exifTotal }}</span
-        >张照片了
-      </div>
-      <div class="image-exif-view-content image-tool-content">
-        <div class="image-exif-view-block">
-          <div class="image-exif-view-upload">
-            <el-upload
-              class="upload-demo"
-              drag
-              action=""
-              :before-upload="handleBeforeUpload"
-              :show-file-list="false"
-            >
-              <svg class="upload-icon" aria-hidden="true">
-                <use xlink:href="#levi-shangchuan-2"></use>
-              </svg>
-              <div class="el-upload__text">将文件拖放到此处或 <em>点击上传</em></div>
-            </el-upload>
-            <div class="progress-block">
-              <el-progress
-                v-if="uploadPercentage > 0"
-                :text-inside="true"
-                :stroke-width="24"
-                :percentage="uploadPercentage"
-                status="success"
-              />
+  <div>
+    <Head>
+      <meta
+        name="keywords"
+        content="查看图像EXIF信息， 提取照片元数据，图片元数据分析工具，在线查看图像EXIF数据。"
+      />
+      <meta
+        name="description"
+        content="查看图像EXIF信息， 提取照片元数据，图片元数据分析工具，在线查看图像EXIF数据。"
+      />
+      <meta
+        property="og:description"
+        content="查看图像EXIF信息， 提取照片元数据，图片元数据分析工具，在线查看图像EXIF数据。"
+      />
+      <meta
+        name="twitter:description"
+        content="查看图像EXIF信息， 提取照片元数据，图片元数据分析工具，在线查看图像EXIF数据。"
+      />
+    </Head>
+    <div class="image-exif-view w theme-bg-color image-tool-container all-tool-container">
+      <div class="image-exif-view-container image-tool-block">
+        <div class="image-exif-view-title image-tool-title">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#levi-tupianyasuo"></use>
+          </svg>
+          <h1>图片EXIF查看器</h1>
+        </div>
+        <div class="exif-ads">
+          ✅已成功解析<span class="exif-total-text">{{ exifTotal }}</span
+          >张照片了
+        </div>
+        <div class="image-exif-view-content image-tool-content">
+          <div class="image-exif-view-block">
+            <div class="image-exif-view-upload">
+              <el-upload
+                class="upload-demo"
+                drag
+                action=""
+                :before-upload="handleBeforeUpload"
+                :show-file-list="false"
+              >
+                <svg class="upload-icon" aria-hidden="true">
+                  <use xlink:href="#levi-shangchuan-2"></use>
+                </svg>
+                <div class="el-upload__text">将文件拖放到此处或 <em>点击上传</em></div>
+              </el-upload>
+              <div class="progress-block">
+                <el-progress
+                  v-if="uploadPercentage > 0"
+                  :text-inside="true"
+                  :stroke-width="24"
+                  :percentage="uploadPercentage"
+                  status="success"
+                />
+              </div>
+            </div>
+            <div class="preview-block" v-if="exifImg">
+              <img :src="exifImg" alt="" />
             </div>
           </div>
-          <div class="preview-block" v-if="exifImg">
-            <img :src="exifImg" alt="" />
+          <div class="image-exif-view-result" v-if="dataMap.result">
+            <h3>🔍查询结果</h3>
+            <div class="image-exif-view-result-list">
+              <div
+                class="image-exif-view-result-item"
+                v-if="dataMap.result.summaryInformation.length"
+              >
+                <h4 class="result-item-title">摘要信息</h4>
+                <table class="exif-table">
+                  <tbody>
+                    <tr
+                      v-for="(item, index) in dataMap.result.summaryInformation"
+                      :key="index"
+                    >
+                      <td class="result-item-label">{{ item.label }}</td>
+                      <td class="result-item-value">{{ item.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class="image-exif-view-result-item"
+                v-if="dataMap.result.basicInformation.length"
+              >
+                <h4 class="result-item-title">图片信息</h4>
+                <table class="exif-table">
+                  <tbody>
+                    <tr
+                      v-for="(item, index) in dataMap.result.basicInformation"
+                      :key="index"
+                    >
+                      <td class="result-item-label">{{ item.label }}</td>
+                      <td class="result-item-value">{{ item.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class="image-exif-view-result-item"
+                v-if="dataMap.result.shootingParameters.length"
+              >
+                <h4 class="result-item-title">拍摄信息</h4>
+                <table class="exif-table">
+                  <tbody>
+                    <tr
+                      v-for="(item, index) in dataMap.result.shootingParameters"
+                      :key="index"
+                    >
+                      <td class="result-item-label">{{ item.label }}</td>
+                      <td class="result-item-value">{{ item.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class="image-exif-view-result-item"
+                v-if="dataMap.result.cameraInformation.length"
+              >
+                <h4 class="result-item-title">相机信息</h4>
+                <table class="exif-table">
+                  <tbody>
+                    <tr
+                      v-for="(item, index) in dataMap.result.cameraInformation"
+                      :key="index"
+                    >
+                      <td class="result-item-label">{{ item.label }}</td>
+                      <td class="result-item-value">{{ item.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class="image-exif-view-result-item"
+                v-if="dataMap.result.shootingTime.length"
+              >
+                <h4 class="result-item-title">拍摄时间</h4>
+                <table class="exif-table">
+                  <tbody>
+                    <tr v-for="(item, index) in dataMap.result.shootingTime" :key="index">
+                      <td class="result-item-label">{{ item.label }}</td>
+                      <td class="result-item-value">{{ item.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class="image-exif-view-result-item"
+                v-if="dataMap.result.GPSInformation.length"
+              >
+                <h4 class="result-item-title">GPS 信息</h4>
+                <table class="exif-table">
+                  <tbody>
+                    <tr
+                      v-for="(item, index) in dataMap.result.GPSInformation"
+                      :key="index"
+                    >
+                      <td class="result-item-label">{{ item.label }}</td>
+                      <td class="result-item-value">{{ item.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class="image-exif-view-result-item"
+                v-if="dataMap.result.imageProcessingParameters.length"
+              >
+                <h4 class="result-item-title">图像处理参数</h4>
+                <table class="exif-table">
+                  <tbody>
+                    <tr
+                      v-for="(item, index) in dataMap.result.imageProcessingParameters"
+                      :key="index"
+                    >
+                      <td class="result-item-label">{{ item.label }}</td>
+                      <td class="result-item-value">{{ item.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class="image-exif-view-result-item"
+                v-if="dataMap.result.imageFormatParameters.length"
+              >
+                <h4 class="result-item-title">图像格式参数</h4>
+                <table class="exif-table">
+                  <tbody>
+                    <tr
+                      v-for="(item, index) in dataMap.result.imageFormatParameters"
+                      :key="index"
+                    >
+                      <td class="result-item-label">{{ item.label }}</td>
+                      <td class="result-item-value">{{ item.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class="image-exif-view-result-item"
+                v-if="dataMap.result.additionalInformation.length"
+              >
+                <h4 class="result-item-title">其他信息</h4>
+                <table class="exif-table">
+                  <tbody>
+                    <tr
+                      v-for="(item, index) in dataMap.result.additionalInformation"
+                      :key="index"
+                    >
+                      <td class="result-item-label">{{ item.label }}</td>
+                      <td class="result-item-value">{{ item.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="image-exif-view-result" v-if="dataMap.result">
-          <h3>🔍查询结果</h3>
-          <div class="image-exif-view-result-list">
-            <div
-              class="image-exif-view-result-item"
-              v-if="dataMap.result.summaryInformation.length"
-            >
-              <h4 class="result-item-title">摘要信息</h4>
-              <table class="exif-table">
-                <tbody>
-                  <tr
-                    v-for="(item, index) in dataMap.result.summaryInformation"
-                    :key="index"
-                  >
-                    <td class="result-item-label">{{ item.label }}</td>
-                    <td class="result-item-value">{{ item.value }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div
-              class="image-exif-view-result-item"
-              v-if="dataMap.result.basicInformation.length"
-            >
-              <h4 class="result-item-title">图片信息</h4>
-              <table class="exif-table">
-                <tbody>
-                  <tr
-                    v-for="(item, index) in dataMap.result.basicInformation"
-                    :key="index"
-                  >
-                    <td class="result-item-label">{{ item.label }}</td>
-                    <td class="result-item-value">{{ item.value }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div
-              class="image-exif-view-result-item"
-              v-if="dataMap.result.shootingParameters.length"
-            >
-              <h4 class="result-item-title">拍摄信息</h4>
-              <table class="exif-table">
-                <tbody>
-                  <tr
-                    v-for="(item, index) in dataMap.result.shootingParameters"
-                    :key="index"
-                  >
-                    <td class="result-item-label">{{ item.label }}</td>
-                    <td class="result-item-value">{{ item.value }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div
-              class="image-exif-view-result-item"
-              v-if="dataMap.result.cameraInformation.length"
-            >
-              <h4 class="result-item-title">相机信息</h4>
-              <table class="exif-table">
-                <tbody>
-                  <tr
-                    v-for="(item, index) in dataMap.result.cameraInformation"
-                    :key="index"
-                  >
-                    <td class="result-item-label">{{ item.label }}</td>
-                    <td class="result-item-value">{{ item.value }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div
-              class="image-exif-view-result-item"
-              v-if="dataMap.result.shootingTime.length"
-            >
-              <h4 class="result-item-title">拍摄时间</h4>
-              <table class="exif-table">
-                <tbody>
-                  <tr v-for="(item, index) in dataMap.result.shootingTime" :key="index">
-                    <td class="result-item-label">{{ item.label }}</td>
-                    <td class="result-item-value">{{ item.value }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div
-              class="image-exif-view-result-item"
-              v-if="dataMap.result.GPSInformation.length"
-            >
-              <h4 class="result-item-title">GPS 信息</h4>
-              <table class="exif-table">
-                <tbody>
-                  <tr v-for="(item, index) in dataMap.result.GPSInformation" :key="index">
-                    <td class="result-item-label">{{ item.label }}</td>
-                    <td class="result-item-value">{{ item.value }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div
-              class="image-exif-view-result-item"
-              v-if="dataMap.result.imageProcessingParameters.length"
-            >
-              <h4 class="result-item-title">图像处理参数</h4>
-              <table class="exif-table">
-                <tbody>
-                  <tr
-                    v-for="(item, index) in dataMap.result.imageProcessingParameters"
-                    :key="index"
-                  >
-                    <td class="result-item-label">{{ item.label }}</td>
-                    <td class="result-item-value">{{ item.value }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div
-              class="image-exif-view-result-item"
-              v-if="dataMap.result.imageFormatParameters.length"
-            >
-              <h4 class="result-item-title">图像格式参数</h4>
-              <table class="exif-table">
-                <tbody>
-                  <tr
-                    v-for="(item, index) in dataMap.result.imageFormatParameters"
-                    :key="index"
-                  >
-                    <td class="result-item-label">{{ item.label }}</td>
-                    <td class="result-item-value">{{ item.value }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div
-              class="image-exif-view-result-item"
-              v-if="dataMap.result.additionalInformation.length"
-            >
-              <h4 class="result-item-title">其他信息</h4>
-              <table class="exif-table">
-                <tbody>
-                  <tr
-                    v-for="(item, index) in dataMap.result.additionalInformation"
-                    :key="index"
-                  >
-                    <td class="result-item-label">{{ item.label }}</td>
-                    <td class="result-item-value">{{ item.value }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+        <div class="image-compression-desc image-tool-desc">
+          <span class="title"
+            ><svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-guanyu-"></use></svg
+            ><span>关于图片EXIF查看器</span></span
+          >
+          <span class="desc-text">📸极速在线查看图片EXIF信息。</span>
+          <span class="desc-text">✅无需下载安装，一键上传立即解析。</span>
+          <span class="desc-text"
+            >📸支持20+相机品牌原厂注释（Canon/Nikon/SONY/Pentax等）。</span
+          >
+          <span class="desc-text"
+            >📊专业数据展示：镜头参数/景深计算/曝光补偿/快门次数。</span
+          >
+          <span class="desc-text"
+            >🖼️主流格式全兼容(JPEG/JPG, TIFF, WEBP, PNG, AVIF, HEIC/HEIF),
+            专业相机RAW格式, 元数据文件(XMP（Adobe标准）, DNG（Adobe数字负片）),
+            注意：实际支持度取决于文件是否嵌入EXIF数据, 部分手机/截图PNG可能无EXIF。</span
+          >
         </div>
-      </div>
-      <div class="image-compression-desc image-tool-desc">
-        <span class="title"
-          ><svg class="icon" aria-hidden="true">
-            <use xlink:href="#levi-guanyu-"></use></svg
-          ><span>关于图片EXIF查看器</span></span
-        >
-        <span class="desc-text">📸极速在线查看图片EXIF信息。</span>
-        <span class="desc-text">✅无需下载安装，一键上传立即解析。</span>
-        <span class="desc-text"
-          >📸支持20+相机品牌原厂注释（Canon/Nikon/SONY/Pentax等）。</span
-        >
-        <span class="desc-text"
-          >📊专业数据展示：镜头参数/景深计算/曝光补偿/快门次数。</span
-        >
-        <span class="desc-text"
-          >🖼️主流格式全兼容(JPEG/JPG, TIFF, WEBP, PNG, AVIF, HEIC/HEIF), 专业相机RAW格式,
-          元数据文件(XMP（Adobe标准）, DNG（Adobe数字负片）),
-          注意：实际支持度取决于文件是否嵌入EXIF数据, 部分手机/截图PNG可能无EXIF。</span
-        >
-      </div>
-      <div class="image-compression-desc image-tool-desc">
-        <span class="title"
-          ><svg class="icon" aria-hidden="true">
-            <use xlink:href="#levi-guanyu-"></use></svg
-          ><span>什么是EXIF？</span></span
-        >
-        <span class="desc-text"
-          >EXIF（Exchangeable Image File
-          Format，可交换图像文件格式）是专为数码照片设计的元数据标准，用于记录丰富的拍摄信息。</span
-        >
-        <span class="desc-text"
-          >EXIF是一种可以嵌入在JPEG、TIFF、RAW等图像文件中的元数据格式，用于记录拍摄参数和相机信息。</span
-        >
-      </div>
-      <div class="image-compression-desc image-tool-desc">
-        <span class="title"
-          ><svg class="icon" aria-hidden="true">
-            <use xlink:href="#levi-guanyu-"></use></svg
-          ><span><strong>注意：</strong>请上传原图</span></span
-        >
-        <span class="desc-text"
-          >如想准确查看镜头信息、快门次数，请不要上传Photoshop处理过的图片。</span
-        >
-        <span class="desc-text"
-          >经过Photoshop处理过的图片，会丢失厂商注释信息，从而导致镜头信息丢失。</span
-        >
+        <div class="image-compression-desc image-tool-desc">
+          <span class="title"
+            ><svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-guanyu-"></use></svg
+            ><span>什么是EXIF？</span></span
+          >
+          <span class="desc-text"
+            >EXIF（Exchangeable Image File
+            Format，可交换图像文件格式）是专为数码照片设计的元数据标准，用于记录丰富的拍摄信息。</span
+          >
+          <span class="desc-text"
+            >EXIF是一种可以嵌入在JPEG、TIFF、RAW等图像文件中的元数据格式，用于记录拍摄参数和相机信息。</span
+          >
+        </div>
+        <div class="image-compression-desc image-tool-desc">
+          <span class="title"
+            ><svg class="icon" aria-hidden="true">
+              <use xlink:href="#levi-guanyu-"></use></svg
+            ><span><strong>注意：</strong>请上传原图</span></span
+          >
+          <span class="desc-text"
+            >如想准确查看镜头信息、快门次数，请不要上传Photoshop处理过的图片。</span
+          >
+          <span class="desc-text"
+            >经过Photoshop处理过的图片，会丢失厂商注释信息，从而导致镜头信息丢失。</span
+          >
+        </div>
       </div>
     </div>
   </div>

@@ -1,205 +1,51 @@
 <template>
-  <div class="tabs-item theme-bg-color">
-    <el-form label-position="top">
-      <el-form-item>
-        <el-button type="primary" @click="encrypt">加密</el-button>
-        <el-button type="primary" @click="decrypt">解密</el-button>
-        <el-button type="primary" @click="clear">清除</el-button>
-      </el-form-item>
-      <el-form-item>
-        <el-input
-          v-model="secretKey"
-          placeholder="在此输入密钥"
-          style="width: 150px; margin-right: 10px"
-        ></el-input>
-        <span class="key-tips">密钥为可选项，可以不输入</span>
-      </el-form-item>
-      <div class="input-block">
-        <el-form-item label="需要加/解密的内容:">
-          <el-input
-            v-model="textarea"
-            :rows="8"
-            type="textarea"
-            placeholder="在此输入需要加/解密的内容"
-          />
-        </el-form-item>
-        <el-form-item label="结果:">
-          <el-input
-            readonly
-            v-model="result"
-            :rows="8"
-            type="textarea"
-            placeholder="加/解密的结果"
-          />
-          <div class="copy-btn-card">
-            <el-button
-              style="width: 100%"
-              type="success"
-              @click="copyResult"
-              class="clipboardBtn"
-              >一键复制结果</el-button
-            >
-          </div>
-        </el-form-item>
-      </div>
-    </el-form>
-    <div>
-      <div>3DES（Triple DES） 介绍</div>
-      <div>
-        <p class="introduction-text">
-          在线Triple DES加密，Triple
-          DES解密，可以输入密钥后进行加密和解密，支持可逆加密解密。
-        </p>
-        <p class="introduction-text">
-          <span class="red-text">[Triple DES加/解密]</span>
-          明文和密文都放在加/解密内容的输入框，点击加密或者解密按钮后输出结果到加/解密结果区域。加密时密钥选填，解密时必须填写和加密时一致的密钥，否则解密失败。
-        </p>
-        <p class="introduction-text">
-          3DES（或称为Triple DES）是三重数据加密算法（TDEA，Triple Data Encryption
-          Algorithm）块密码的通称。它相当于是对每个数据块应用三次DES加密算法。由于计算机运算能力的增强，原版DES密码的密钥长度变得容易被暴力破解；3DES即是设计用来提供一种相对简单的方法，即通过增加DES的密钥长度来避免类似的攻击，而不是设计一种全新的块密码算法。
-        </p>
-        <el-form label-width="auto" label-position="left">
-          <el-form-item label="名称">
-            <span>3DES</span>
-          </el-form-item>
-          <el-form-item label="原理">
-            <span>3条56位的密钥对数据进行三次加密</span>
-          </el-form-item>
-          <el-form-item label="全称">
-            <span>Triple DES</span>
-          </el-form-item>
-          <el-form-item label="关系">
-            <span>DES向AES过渡的加密算法</span>
-          </el-form-item>
-        </el-form>
-      </div>
-      <div>3DES（Triple DES）算法介绍</div>
-      <div>
-        <p class="introduction-text">
-          3DES又称Triple
-          DES，是DES加密算法的一种模式，它使用3条56位的密钥对数据进行三次加密。数据加密标准（DES）是美国的一种由来已久的加密标准，它使用对称密钥加密法，并于1981年被ANSI组织规范为ANSI
-          X.3.92。DES使用56位密钥和密码块的方法，而在密码块的方法中，文本被分成64位大小的文本块然后再进行加密。比起最初的DES，3DES更为安全。
-        </p>
-        <p class="introduction-text">
-          3DES（即Triple
-          DES）是DES向AES过渡的加密算法（1999年，NIST将3-DES指定为过渡的加密标准），加密算法，其具体实现如下：设Ek()和Dk()代表DES算法的加密和解密过程，K代表DES算法使用的密钥，M代表明文，C代表密文，这样：
-        </p>
-        <p class="introduction-text">* 3DES加密过程为：C=Ek3(Dk2(Ek1(M)))</p>
-        <p class="introduction-text">* 3DES解密过程为：M=Dk1(EK2(Dk3(C)))</p>
-      </div>
-    </div>
+  <div class="pw-card">
+    <div class="pw-card-head"><div class="pw-algo-badge">3D</div><div><div class="pw-card-title">TripleDES 加/解密</div><div class="pw-card-sub">三重数据加密标准 &mdash; DES 的增强版本，安全性更高</div></div></div>
+    <div class="pw-toolbar"><button class="pw-btn pw-btn-encrypt" @click="encrypt"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>加密</button><button class="pw-btn pw-btn-decrypt" @click="decrypt"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/><line x1="12" y1="17" x2="12" y2="19"/></svg>解密</button><span class="pw-toolbar-spacer"></span><button class="pw-btn pw-btn-clear" @click="clear"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>清除</button></div>
+    <div class="pw-key-row"><div class="pw-key-input-wrap"><el-input v-model="secretKey" placeholder="输入密钥（可选）" size="default" clearable><template #prefix><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:.5"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></template></el-input></div><span class="pw-key-hint">密钥为可选项，不填写则使用空密钥加密</span></div>
+    <div class="pw-io-grid"><div class="pw-io-block"><label class="pw-io-label">需要加/解密的内容</label><el-input v-model="textarea" type="textarea" :rows="8" placeholder="在此输入需要加/解密的内容" class="pw-textarea" /><div class="pw-char-count">{{ textarea.length }} 字符</div></div><div class="pw-io-arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--el-text-color-placeholder)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div><div class="pw-io-block"><label class="pw-io-label">结果</label><el-input v-model="result" type="textarea" :rows="8" placeholder="加/解密结果将显示在此处" readonly class="pw-textarea pw-textarea-result" /><div class="pw-io-actions"><span class="pw-char-count">{{ result.length }} 字符</span><button class="pw-copy-btn" :class="{ copied: copyDone }" @click="copyResult"><svg v-if="!copyDone" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><svg v-else width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>{{ copyDone ? '已复制' : '复制结果' }}</button></div></div></div>
+    <div class="pw-info-section"><div class="pw-info-head" @click="infoOpen = !infoOpen"><svg class="icon" aria-hidden="true"><use xlink:href="#levi-guanyu-"></use></svg><span>关于 3DES</span><svg class="pw-info-arrow" :class="{ open: infoOpen }" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div><div class="pw-info-body" v-show="infoOpen"><p>在线TripleDES加密，TripleDES解密，可以输入密钥后进行加密和解密，支持可逆加密解密。</p><p>3DES（Triple DES）是 DES 向 AES 过渡的加密算法，使用3条56位密钥对数据进行三次加密。相比于最初的 DES，3DES 更为安全。</p><p><b>加密过程：</b>C = E<sub>k3</sub>(D<sub>k2</sub>(E<sub>k1</sub>(M)))，即加密-解密-加密。</p></div></div>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import CryptoJS from "crypto-js";
-
-let secretKey = ref("");
-let textarea = ref("");
-let result = ref("");
-
-const encrypt = () => {
-  if (textarea.value === "") {
-    ElNotification({
-      title: "警告",
-      zIndex: 99999,
-      type: "warning",
-      message: "请输入需要加/解密的内容",
-    });
-    return;
-  }
-  const bytes = CryptoJS.TripleDES.encrypt(textarea.value, secretKey.value);
-  if (bytes.ciphertext.sigBytes && bytes.ciphertext.words) {
-    result.value = bytes.toString();
-  } else {
-    ElNotification({
-      title: "失败",
-      zIndex: 99999,
-      type: "error",
-      message: "加密失败，请检查你输入的内容！",
-    });
-  }
-};
-const decrypt = () => {
-  try {
-    if (textarea.value === "") {
-      ElNotification({
-        title: "警告",
-        zIndex: 99999,
-        type: "warning",
-        message: "请输入需要加/解密的内容",
-      });
-      return;
-    }
-    const bytes = CryptoJS.TripleDES.decrypt(textarea.value, secretKey.value);
-    result.value = bytes.toString(CryptoJS.enc.Utf8);
-    if (!result.value) {
-      ElNotification({
-        title: "失败",
-        zIndex: 99999,
-        type: "error",
-        message: "解密失败，请检查你的密钥是否正确！",
-      });
-    }
-  } catch (e) {
-    console.log(e, "----------------------");
-    ElNotification({
-      title: "失败",
-      zIndex: 99999,
-      type: "error",
-      message: "解密失败，请检查你输入的内容！",
-    });
-  }
-};
-const clear = () => {
-  secretKey.value = "";
-  textarea.value = "";
-  result.value = "";
-};
-const copyResult = () => {
-  if (result.value === "") {
-    ElNotification({
-      title: "警告",
-      zIndex: 99999,
-      type: "warning",
-      message: "复制失败！结果为空",
-    });
-    return;
-  }
-  navigator.clipboard
-    .writeText(result.value)
-    .then(() => {
-      ElNotification({
-        title: "成功",
-        zIndex: 99999,
-        type: "success",
-        message: "已复制到剪切板",
-      });
-      close();
-    })
-    .catch(() => {
-      ElNotification({
-        title: "失败",
-        zIndex: 99999,
-        type: "error",
-        message: "复制出错，请重试",
-      });
-    });
-};
+const secretKey = ref(""), textarea = ref(""), result = ref(""), copyDone = ref(false), infoOpen = ref(false); let copyTimer = null;
+const encrypt = () => { if (!textarea.value) { ElNotification({ title: "提示", message: "请输入需要加/解密的内容", type: "warning", zIndex: 99999 }); return; } try { const bytes = CryptoJS.TripleDES.encrypt(textarea.value, secretKey.value); if (bytes.ciphertext.sigBytes && bytes.ciphertext.words) result.value = bytes.toString(); else ElNotification({ title: "失败", message: "加密失败", type: "error", zIndex: 99999 }); } catch (e) { ElNotification({ title: "失败", message: "加密失败", type: "error", zIndex: 99999 }); } };
+const decrypt = () => { if (!textarea.value) { ElNotification({ title: "提示", message: "请输入需要加/解密的内容", type: "warning", zIndex: 99999 }); return; } try { const bytes = CryptoJS.TripleDES.decrypt(textarea.value, secretKey.value); result.value = bytes.toString(CryptoJS.enc.Utf8); if (!result.value) ElNotification({ title: "失败", message: "解密失败，请检查密钥", type: "error", zIndex: 99999 }); } catch (e) { ElNotification({ title: "失败", message: "解密失败", type: "error", zIndex: 99999 }); } };
+const clear = () => { secretKey.value = ""; textarea.value = ""; result.value = ""; };
+const copyResult = () => { if (!result.value) { ElNotification({ title: "提示", message: "结果为空", type: "warning", zIndex: 99999 }); return; } navigator.clipboard.writeText(result.value).then(() => { copyDone.value = true; clearTimeout(copyTimer); copyTimer = setTimeout(() => copyDone.value = false, 2000); ElNotification({ title: "成功", message: "已复制", type: "success", zIndex: 99999 }); }).catch(() => ElNotification({ title: "失败", message: "复制失败", type: "error", zIndex: 99999 })); };
 </script>
 
 <style lang="scss" scoped>
-.key-tips {
-  font-size: 12px;
-  color: #7171718a;
-}
-
-.copy-btn-card {
-  margin-top: 10px;
-}
-
-.introduction-text {
-  font-size: 14px;
-}
+.pw-card { padding: 28px; border-radius: 16px; background: var(--el-bg-color); border: 1px solid var(--el-border-color); box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.pw-card-head { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--el-border-color-light); }
+.pw-algo-badge { display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 14px; background: linear-gradient(135deg, var(--btn-tag-bg-color), #e67a1a); color: #fff; font-size: 16px; font-weight: 700; flex-shrink: 0; letter-spacing: .02em; }
+.pw-card-title { font-size: 18px; font-weight: 700; color: var(--el-text-color-primary); }
+.pw-card-sub { font-size: 13px; color: var(--el-text-color-secondary); margin-top: 4px; }
+.pw-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.pw-toolbar-spacer { flex: 1; }
+.pw-btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 20px; font-size: 13px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: all .2s; outline: none; }
+.pw-btn-encrypt { background: var(--btn-tag-bg-color); color: #fff; &:hover { background: #e67a1a; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,139,38,.3); } }
+.pw-btn-decrypt { background: var(--theme-btn-hover-color); color: #fff; &:hover { background: #4a7ca8; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(90,140,189,.3); } }
+.pw-btn-clear { background: transparent; color: var(--el-text-color-secondary); border: 1.5px solid var(--el-border-color); &:hover { background: var(--el-fill-color-light); color: var(--el-text-color-primary); } }
+.pw-key-row { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; padding: 14px 18px; background: var(--el-fill-color-lighter); border-radius: 10px; }
+.pw-key-input-wrap { width: 200px; }
+.pw-key-hint { font-size: 12px; color: var(--el-text-color-placeholder); }
+.pw-io-grid { display: flex; align-items: flex-start; gap: 16px; }
+.pw-io-block { flex: 1; min-width: 0; }
+.pw-io-label { display: block; font-size: 13px; font-weight: 600; color: var(--el-text-color-regular); margin-bottom: 8px; }
+.pw-io-arrow { display: flex; align-items: center; padding-top: 32px; flex-shrink: 0; }
+.pw-textarea :deep(textarea) { font-family: 'SF Mono','Fira Code','Consolas',monospace; font-size: 13px; line-height: 1.7; }
+.pw-textarea-result :deep(textarea) { background: var(--el-fill-color-lighter); }
+.pw-char-count { margin-top: 6px; font-size: 11px; color: var(--el-text-color-placeholder); font-variant-numeric: tabular-nums; }
+.pw-io-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+.pw-copy-btn { display: inline-flex; align-items: center; gap: 4px; padding: 5px 14px; font-size: 12px; font-weight: 600; border: 1.5px solid var(--el-border-color); border-radius: 6px; background: transparent; color: var(--el-text-color-regular); cursor: pointer; transition: all .2s; outline: none; &:hover { border-color: #67c23a; color: #67c23a; background: rgba(103,194,58,.06); } &.copied { border-color: #67c23a; color: #67c23a; background: rgba(103,194,58,.08); } }
+.pw-info-section { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--el-border-color-light); }
+.pw-info-head { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; font-size: 14px; font-weight: 600; color: var(--el-text-color-primary); .icon { width: 1.1em; height: 1.1em; color: var(--theme-btn-hover-color); } &:hover { color: var(--theme-btn-hover-color); } }
+.pw-info-arrow { margin-left: auto; transition: transform .2s; &.open { transform: rotate(180deg); } }
+.pw-info-body { margin-top: 14px; font-size: 13px; color: var(--el-text-color-secondary); line-height: 1.75; p { margin: 0 0 8px; } b { color: var(--el-text-color-primary); } }
+.pw-info-dl { margin: 14px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; div { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--el-border-color-lighter); } dt { font-weight: 600; color: var(--el-text-color-primary); white-space: nowrap; } dd { color: var(--el-text-color-secondary); margin: 0; } }
+@media (max-width: 860px) { .pw-card { padding: 20px 16px; } .pw-card-head { flex-direction: column; align-items: flex-start; gap: 12px; } .pw-io-grid { flex-direction: column; gap: 12px; } .pw-io-arrow { display: none; } .pw-key-row { flex-direction: column; align-items: stretch; gap: 8px; } .pw-key-input-wrap { width: 100%; } .pw-toolbar { flex-wrap: wrap; } .pw-info-dl { grid-template-columns: 1fr; } }
 </style>

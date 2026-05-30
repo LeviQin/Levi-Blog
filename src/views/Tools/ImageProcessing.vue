@@ -1,41 +1,43 @@
 <template>
-  <Head>
-    <meta
-      name="keywords"
-      content="在线图片格式转换， 智能压缩， 图片加水印， 图片裁切， 图片转文字。"
-    />
-    <meta
-      name="description"
-      content="在线图片格式转换， 智能压缩， 图片加水印， 图片裁切， 图片转文字。"
-    />
-    <meta
-      property="og:description"
-      content="在线图片格式转换， 智能压缩， 图片加水印， 图片裁切， 图片转文字。"
-    />
-    <meta
-      name="twitter:description"
-      content="在线图片格式转换， 智能压缩， 图片加水印， 图片裁切， 图片转文字。"
-    />
-  </Head>
-  <div class="image-processing w">
-    <div></div>
-    <div class="image-tool-list" @click="toPage">
-      <div class="image-tool-item theme-bg-color" data-router="image-compression">
-        图片压缩
-      </div>
-      <div class="image-tool-item theme-bg-color" data-router="image-exif-view">
-        图片EXIF查看
-      </div>
-      <!-- <div class="image-tool-item theme-bg-color" data-router="image-format-conversion">
+  <div>
+    <Head>
+      <meta
+        name="keywords"
+        content="在线图片格式转换， 智能压缩， 图片加水印， 图片裁切， 图片转文字。"
+      />
+      <meta
+        name="description"
+        content="在线图片格式转换， 智能压缩， 图片加水印， 图片裁切， 图片转文字。"
+      />
+      <meta
+        property="og:description"
+        content="在线图片格式转换， 智能压缩， 图片加水印， 图片裁切， 图片转文字。"
+      />
+      <meta
+        name="twitter:description"
+        content="在线图片格式转换， 智能压缩， 图片加水印， 图片裁切， 图片转文字。"
+      />
+    </Head>
+    <div class="image-processing w">
+      <div></div>
+      <div class="image-tool-list" @click="toPage">
+        <div class="image-tool-item theme-bg-color" data-router="image-compression">
+          图片压缩
+        </div>
+        <div class="image-tool-item theme-bg-color" data-router="image-exif-view">
+          图片EXIF查看
+        </div>
+        <!-- <div class="image-tool-item theme-bg-color" data-router="image-format-conversion">
         图片格式转换
       </div> -->
-      <!-- <div class="image-tool-item theme-bg-color" data-router="image-shuiyin">
+        <!-- <div class="image-tool-item theme-bg-color" data-router="image-shuiyin">
         图片加水印
       </div>
       <div class="image-tool-item theme-bg-color" data-router="image-crop">图片裁切</div>
       <div class="image-tool-item theme-bg-color" data-router="image-text">
         图片转文字
       </div> -->
+      </div>
     </div>
   </div>
 </template>
