@@ -28,6 +28,10 @@
   }
 }
 
+.md-editor blockquote p:last-child {
+  margin-bottom: .5rem !important;
+}
+
 // ===== 加粗 / 斜体 =====
 .md-editor strong {
   color: var(--btn-tag-bg-color);

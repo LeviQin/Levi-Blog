@@ -5,7 +5,7 @@ const TYPE_COLOR_MAP = {
   info: '#909399',
 };
 
-const DEFAULT_DURATION = 3200;
+const DEFAULT_DURATION = 4200;
 let notificationSeed = 1;
 let messageSeed = 1;
 let messageInstance = null;
@@ -77,11 +77,37 @@ function createNotice(kind, rawOptions = {}) {
     closeButton.type = 'button';
     closeButton.className = 'el-notification__closeBtn';
     closeButton.setAttribute('aria-label', 'close');
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('viewBox', '0 0 16 16');
+    svg.setAttribute('width', '14');
+    svg.setAttribute('height', '14');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '2');
+    svg.setAttribute('stroke-linecap', 'round');
+    const line1 = document.createElementNS(svgNS, 'path');
+    line1.setAttribute('d', 'M4 4l8 8');
+    const line2 = document.createElementNS(svgNS, 'path');
+    line2.setAttribute('d', 'M12 4l-8 8');
+    svg.appendChild(line1);
+    svg.appendChild(line2);
+    closeButton.appendChild(svg);
     notice.appendChild(closeButton);
+  }
+
+  const duration = options.duration === 0 ? 0 : Number(options.duration || DEFAULT_DURATION);
+
+  if (duration > 0) {
+    const progress = document.createElement('div');
+    progress.className = 'el-notice__progress';
+    progress.style.animationDuration = duration + 'ms';
+    notice.appendChild(progress);
   }
 
   let closed = false;
   let timer = null;
+  let progressEl = null;
   const container = ensureContainer(kind);
 
   const close = () => {
@@ -102,12 +128,16 @@ function createNotice(kind, rawOptions = {}) {
   container.appendChild(notice);
   requestAnimationFrame(() => notice.classList.add('is-visible'));
 
-  const duration = options.duration === 0 ? 0 : Number(options.duration || DEFAULT_DURATION);
   if (duration > 0) {
+    progressEl = notice.querySelector('.el-notice__progress');
     timer = window.setTimeout(close, duration);
-    notice.addEventListener('mouseenter', () => clearTimeout(timer));
+    notice.addEventListener('mouseenter', () => {
+      clearTimeout(timer);
+      if (progressEl) progressEl.classList.add('is-paused');
+    });
     notice.addEventListener('mouseleave', () => {
       timer = window.setTimeout(close, Math.min(duration, 1600));
+      if (progressEl) progressEl.classList.remove('is-paused');
     });
   }
 

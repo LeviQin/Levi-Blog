@@ -50,6 +50,8 @@ html[data-theme="dark"] {
 .el-message,
 .el-notification {
   --notice-accent: var(--theme-btn-hover-color);
+  position: relative;
+  overflow: hidden;
   min-width: 260px;
   max-width: min(420px, calc(100vw - 36px));
   display: flex;
@@ -108,14 +110,49 @@ html[data-theme="dark"] {
 }
 
 .el-notification__closeBtn {
-  width: 28px;
-  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
-  border-radius: 999px;
-  background: rgba(90, 140, 189, 0.08);
-  color: #7a8191;
+  background: transparent;
+  color: var(--black-text-color);
   cursor: pointer;
   flex-shrink: 0;
+  transition: background 0.15s ease, color 0.15s ease;
+  padding: 0;
+}
+
+.el-notification__closeBtn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.el-notification__closeBtn:hover {
+  color: var(--notice-accent);
+}
+
+.el-notice__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--notice-accent);
+  animation: notice-progress linear forwards;
+  transform-origin: left center;
+}
+
+.el-notice__progress.is-paused {
+  animation-play-state: paused;
+}
+
+@keyframes notice-progress {
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
+  }
 }
 
 .el-loading-mask {

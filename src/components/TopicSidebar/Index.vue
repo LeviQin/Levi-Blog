@@ -123,10 +123,12 @@ import { vSlidIn } from "@/utils/vSlidIn.js";
 import { useMainStore } from "@/stores/mainStore";
 
 const tags = computed(() => {
-  return mainStore.tagMap.map((item) => {
-    item.color = getRandomHexColor();
-    return item;
-  });
+  return mainStore.tagMap
+    .filter((item) => item.status === 1)
+    .map((item) => {
+      item.color = getRandomHexColor();
+      return item;
+    });
 });
 
 const mainStore = useMainStore();

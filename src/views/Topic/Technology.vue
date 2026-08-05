@@ -349,7 +349,6 @@ const getData = async () => {
   margin-bottom: 12px;
 }
 
-.article-item-kicker,
 .article-item-entry {
   display: inline-flex;
   align-items: center;
@@ -357,13 +356,6 @@ const getData = async () => {
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
-}
-
-.article-item-kicker {
-  min-height: 28px;
-  padding: 0 12px;
-  background: rgba(255, 139, 38, 0.12);
-  color: var(--btn-tag-bg-color);
 }
 
 .article-item-entry {
@@ -394,8 +386,8 @@ const getData = async () => {
 
 .is-top-box {
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: 10px;
+  left: 10px;
   background: var(--btn-tag-bg-color);
   border-radius: 50%;
   display: flex;

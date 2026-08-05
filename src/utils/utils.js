@@ -56,10 +56,21 @@ export const _isMobile = () => {
  * @returns 
  */
 export const getRandomHexColor = () => {
-    // 生成随机的 R、G、B 分量
-    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-    // 补全至 6 位
-    return '#' + '0'.repeat(6 - randomColor.length) + randomColor;
+    const h = Math.floor(Math.random() * 360);
+    const s = Math.floor(Math.random() * 50) + 40;
+    const l = Math.floor(Math.random() * 40) + 30;
+    const hslToRgb = (h, s, l) => {
+        s /= 100;
+        l /= 100;
+        const a = s * Math.min(l, 1 - l);
+        const f = (n) => {
+            const k = (n + h / 30) % 12;
+            return Math.round((l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1)) * 255);
+        };
+        return [f(0), f(8), f(4)];
+    };
+    const [r, g, b] = hslToRgb(h, s, l);
+    return '#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('');
 };
 
 
