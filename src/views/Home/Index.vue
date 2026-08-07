@@ -127,7 +127,6 @@ const blogSettingMap = computed(() => {
 const router = useRouter();
 
 onMounted(async () => {
-  banner.value = document.querySelector(".banner-bar");
   getData();
   const previousRouteName = getStore("LEVI_PREVIONS_ROUTE_NAME");
   const pageStatus = getStore("LEVI_HOME_PAGE_STATUS");
@@ -149,7 +148,6 @@ const dataMap = reactive({
   },
 });
 
-const banner = ref(null);
 const page = ref(1);
 const pageSize = ref(10);
 const loading = ref(false);
@@ -184,7 +182,7 @@ const getReadTime = (item) => {
 };
 
 const nextPosition = () => {
-  scrollAnimation(banner.value.scrollHeight, "bottom");
+  scrollToArticleList();
 };
 
 const toArticleDetail = (item) => {
@@ -206,7 +204,16 @@ const getTableData = () => {
 const handleCurrentChange = (val) => {
   page.value = val;
   getTableData();
-  scrollAnimation(banner.value.scrollHeight, "bottom", 16);
+  scrollToArticleList();
+};
+
+// 滚动到文章列表区顶部(第一个文章位置)
+const scrollToArticleList = () => {
+  const container = document.querySelector(".home-container");
+  if (container) {
+    const top = container.getBoundingClientRect().top + window.scrollY - 20;
+    scrollAnimation(top, "top", 16);
+  }
 };
 
 const getData = async () => {
