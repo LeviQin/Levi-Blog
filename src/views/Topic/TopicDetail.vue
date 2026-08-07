@@ -67,7 +67,7 @@
               class="tag-pill"
               v-for="item in dataMap.articleInfo.article_tags"
               :key="item"
-            >{{ tagsList[item - 1] }}</span>
+            >{{ tagNameById[item] || '' }}</span>
           </div>
 
           <div class="article-actions">
@@ -130,8 +130,12 @@ import { useMainStore } from "@/stores/mainStore";
 
 const mainStore = useMainStore();
 
-const tagsList = computed(() => {
-  return mainStore.tagMap.map((item) => item.tag_name);
+const tagNameById = computed(() => {
+  const map = {};
+  mainStore.tagMap.forEach((item) => {
+    map[item.id] = item.tag_name;
+  });
+  return map;
 });
 
 const route = useRoute();

@@ -104,7 +104,7 @@
         <div
           class="tags-item"
           v-for="item in tags"
-          :key="item.tag_id"
+          :key="item.id"
           :style="{ color: item.color }"
         >
           {{ item.tag_name }}

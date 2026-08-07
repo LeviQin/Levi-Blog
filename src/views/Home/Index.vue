@@ -68,7 +68,7 @@
                   class="tag-pill"
                   v-for="key in item.article_tags"
                   :key="key"
-                >{{ tagsList[key - 1] }}</span>
+                >{{ tagNameById[key] || '' }}</span>
               </div>
             </div>
           </div>
@@ -112,8 +112,12 @@ import { useMainStore } from "@/stores/mainStore";
 
 const mainStore = useMainStore();
 
-const tagsList = computed(() => {
-  return mainStore.tagMap.map((item) => item.tag_name);
+const tagNameById = computed(() => {
+  const map = {};
+  mainStore.tagMap.forEach((item) => {
+    map[item.id] = item.tag_name;
+  });
+  return map;
 });
 
 const blogSettingMap = computed(() => {

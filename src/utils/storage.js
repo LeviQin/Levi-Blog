@@ -69,7 +69,7 @@ export const clearStore = name => {
  * Clear all storage
  */
 export const clearAll = () => {
-    if (!window || !name) {
+    if (!window) {
         return;
     }
 

@@ -65,7 +65,7 @@
                   <use xlink:href="#levi-biaoqian_1"></use>
                 </svg>
                 <span class="tags-item" v-for="key in item.article_tags" :key="key">{{
-                  tagsList[key - 1]
+                  tagNameById[key] || ''
                 }}</span>
               </div>
             </div>
@@ -101,8 +101,12 @@ import { Head } from "@vueuse/head";
 import { getStore, setStore } from "@/utils/storage.js";
 import { useMainStore } from "@/stores/mainStore";
 
-const tagsList = computed(() => {
-  return mainStore.tagMap.map((item) => item.tag_name);
+const tagNameById = computed(() => {
+  const map = {};
+  mainStore.tagMap.forEach((item) => {
+    map[item.id] = item.tag_name;
+  });
+  return map;
 });
 
 const mainStore = useMainStore();
