@@ -128,6 +128,23 @@
         </div>
       </div>
 
+      <!-- 主题设置 -->
+      <div class="fx-theme-row">
+        <div class="fx-theme-info">
+          <span class="fx-theme-label">自动跟随时间</span>
+          <span class="fx-theme-desc">18:00 - 08:00 自动切换暗色，其余时间为亮色</span>
+        </div>
+        <el-switch
+          :model-value="autoTheme"
+          @change="handleAutoThemeChange"
+          :active-value="true"
+          :inactive-value="false"
+          inline-prompt
+          active-text="开"
+          inactive-text="关"
+        />
+      </div>
+
       <!-- 底部操作 -->
       <div class="fx-footer">
         <button class="fx-btn ghost" type="button" @click="resetDefault">
@@ -145,8 +162,14 @@
 <script setup>
 import { ref, defineExpose, onMounted, onUnmounted, computed, nextTick } from "vue";
 import { useMainStore } from "@/stores/mainStore";
+import { useTheme } from "@/hooks/useTheme";
 
 const mainStore = useMainStore();
+const { autoTheme, setAutoTheme } = useTheme();
+
+const handleAutoThemeChange = (val) => {
+  setAutoTheme(val);
+};
 
 const wallpaperOptions = [
   { id: "cyber-cyan", name: "极客青", accent: "#22d3ee", css: "radial-gradient(circle at 22% 30%, rgba(34,211,238,0.12), transparent 46%), radial-gradient(circle at 78% 65%, rgba(34,211,238,0.08), transparent 42%), var(--background)" },
@@ -734,6 +757,38 @@ defineExpose({
       opacity: 0.55;
     }
   }
+}
+
+/* 主题设置 */
+.fx-theme-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(230, 237, 243, 0.03);
+  border: 1px solid var(--border-color);
+  margin-bottom: 20px;
+}
+
+.fx-theme-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.fx-theme-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color);
+}
+
+.fx-theme-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
 }
 
 /* 底部 */
