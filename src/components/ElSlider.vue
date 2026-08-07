@@ -19,5 +19,5 @@ const handleChange = (event) => emitValue(event.target.value, 'change');
 .el-slider__runway { position: relative; flex: 1; height: 6px; border-radius: 999px; background: rgba(34,211,238,.16); }
 .el-slider__bar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: inherit; background: var(--theme-btn-hover-color,#22d3ee); }
 .el-slider__input { position: absolute; inset: -7px 0 -7px 0; width: 100%; opacity: 0; cursor: pointer; }
-.el-slider__input-number input { width: 64px; min-height: 34px; border-radius: 10px; border: 1px solid rgba(34,211,238,.18); background: rgba(255,255,255,.92); padding: 0 10px; box-sizing: border-box; }
+.el-slider__input-number input { width: 64px; min-height: 34px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--theme-color); padding: 0 10px; box-sizing: border-box; color: var(--color); }
 </style>

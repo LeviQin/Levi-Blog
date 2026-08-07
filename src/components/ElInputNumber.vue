@@ -23,8 +23,11 @@ defineExpose({ focus: () => inputRef.value?.focus() });
 </script>
 
 <style scoped>
-.el-input-number { display: inline-flex; align-items: stretch; width: 100%; border: 1px solid rgba(34,211,238,.18); border-radius: 10px; overflow: hidden; background: rgba(255,255,255,.92); }
-.el-input-number input { flex: 1; min-width: 0; border: none; outline: none; padding: 0 12px; background: transparent; font: inherit; color: var(--black-text-color,#181a2a); }
-.el-input-number button { width: 34px; border: none; background: rgba(34,211,238,.08); color: var(--black-text-color,#181a2a); cursor: pointer; }
+.el-input-number { display: inline-flex; align-items: stretch; width: 100%; border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; background: var(--theme-color); transition: border-color .2s ease, box-shadow .2s ease; }
+.el-input-number:focus-within { border-color: var(--theme-btn-hover-color,#22d3ee); box-shadow: 0 0 0 3px rgba(34,211,238,.14); }
+.el-input-number input { flex: 1; min-width: 0; border: none; outline: none; padding: 0 12px; background: transparent; font: inherit; color: var(--color); }
+.el-input-number input::placeholder { color: var(--text-secondary); }
+.el-input-number button { width: 34px; border: none; background: rgba(34,211,238,.08); color: var(--theme-btn-hover-color); cursor: pointer; transition: background .2s; }
+.el-input-number button:hover { background: rgba(34,211,238,.14); }
 .el-input-number button:disabled { opacity: .5; cursor: not-allowed; }
 </style>

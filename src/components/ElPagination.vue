@@ -177,9 +177,9 @@ const changePage = (page) => {
   height: 38px;
   padding: 0 12px;
   border-radius: 12px;
-  border: 1px solid rgba(34, 211, 238, 0.16);
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--black-text-color, #181a2a);
+  border: 1px solid var(--border-color);
+  background: var(--theme-color);
+  color: var(--color);
   cursor: pointer;
   display: inline-flex;
   align-items: center;

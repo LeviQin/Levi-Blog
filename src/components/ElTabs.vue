@@ -125,9 +125,9 @@ const tabsClasses = computed(() => {
 }
 
 .el-tabs__item {
-  border: 1px solid rgba(34, 211, 238, 0.18);
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--black-text-color, #181a2a);
+  border: 1px solid var(--border-color);
+  background: var(--theme-color);
+  color: var(--color);
   border-radius: 10px;
   padding: 10px 14px;
   cursor: pointer;
