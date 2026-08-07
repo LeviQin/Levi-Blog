@@ -4,48 +4,55 @@
 }
 
 html[data-theme='dark'] {
-  --color: #fff;
-  --background: #181a2a;
+  --color: #e6edf3;
+  --background: #0d1117;
 
-  --theme-color: #000000;
-  --header-bar-bg-color: 0, 0, 0;
-  --grey-color: #ececec;
-  --red-color: red;
-  --nav-bar-text-color: var(--white-color);
-  --theme-btn-hover-color: #5a8cbd;
-  --nav-text-color: var(--white-color);
-  --filing-color: #000;
-  --link-text-color: #409eff;
-  --btn-tag-bg-color: #ff8b26;
+  --theme-color: #161b22;
+  --header-bar-bg-color: 13, 17, 23;
+  --grey-color: #30363d;
+  --red-color: #f85149;
+  --nav-bar-text-color: #e6edf3;
+  --theme-btn-hover-color: #22d3ee;
+  --nav-text-color: #e6edf3;
+  --filing-color: #0d1117;
+  --link-text-color: #22d3ee;
+  --btn-tag-bg-color: #22d3ee;
+  --border-color: #21262d;
+  --text-secondary: #8b949e;
+  --black-text-color: #e6edf3;
 
-  --about-color: #95a5a6;
-  --work-color: #79bbff;
+  --about-color: #8b949e;
+  --work-color: #22d3ee;
   --ability-color: #792a31;
 
-  --message-author-color: #fff;
+  --message-author-color: #e6edf3;
 }
 
 :root {
-  --font-family: 'CustomFont', sans-serif;
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --mono-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono',
+    monospace;
   --font-size: 16px;
 
-  --color: #181a2a;
-  --background: #efefef;
+  --color: #1f2328;
+  --background: #f6f8fa;
 
-  --theme-color: #dbe6eef1;
-  --header-bar-bg-color: 0, 0, 0;
+  --theme-color: #ffffff;
+  --header-bar-bg-color: 255, 255, 255;
   --header-bar-color-opacity: 0;
-  // --theme-color: linear-gradient(60deg, rgba(225, 215, 240, 0.9) 0, rgba(200, 241, 255, 0.9) 93%);
-  --white-color: #fff;
+  --white-color: #ffffff;
   --grey-color: #ececec;
-  --red-color: red;
-  --nav-bar-text-color: var(--white-color);
-  --theme-btn-hover-color: #5a8cbd;
-  --nav-text-color: var(--white-color);
-  --filing-color: #000;
-  --black-text-color: #181a2a;
-  --link-text-color: #409eff;
-  --btn-tag-bg-color: #ff8b26;
+  --red-color: #f85149;
+  --nav-bar-text-color: #1f2328;
+  --theme-btn-hover-color: #06b6d4;
+  --nav-text-color: #1f2328;
+  --filing-color: #1f2328;
+  --black-text-color: #1f2328;
+  --link-text-color: #06b6d4;
+  --btn-tag-bg-color: #06b6d4;
+  --border-color: #d0d7de;
+  --text-secondary: #57606a;
   --min-width: 200px;
   --heart-width: 1360px;
   --header-bar-height: 80px;
@@ -53,10 +60,10 @@ html[data-theme='dark'] {
   --theme-radius: 10px;
   --theme-min-radius: 5px;
 
-  --about-color: #95a5a6;
-  --work-color: #79bbff;
+  --about-color: #57606a;
+  --work-color: #06b6d4;
   --ability-color: #792a31;
-  --connect-color: #eebe77;
+  --connect-color: #06b6d4;
   overflow-x: hidden;
 
   --message-author-color: #323438;
@@ -84,7 +91,7 @@ a:hover {
 }
 
 html {
-  font-family: var(--font-family), -apple-system, IBM Plex Mono, monosapce, '微软雅黑', sans-serif;
+  font-family: var(--font-family), -apple-system, 'Microsoft YaHei', sans-serif;
   width: 100%;
   height: 100%;
   font-size: var(--font-size);
