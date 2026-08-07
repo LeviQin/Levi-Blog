@@ -11,23 +11,38 @@
     </footer>
 
     <div class="banner-bar" :style="bannerBarStyle"></div>
-    <matrix-rain></matrix-rain>
+    <component :is="effectComponent" v-if="effectComponent"></component>
 
     <float-tool-bar></float-tool-bar>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from "vue";
+import { ref, onMounted, onUnmounted, computed, markRaw } from "vue";
 import Hedader from "./Hedader/Index.vue";
 import Footer from "./Footer/Index.vue";
 import { useRoute } from "vue-router";
 import { ElNotification } from "@/utils/element.js";
 import FloatToolBar from "../components/FloatToolBar/Index.vue";
 import MatrixRain from "../components/MatrixRain/Index.vue";
+import ParticleNetwork from "../components/ParticleNetwork/Index.vue";
+import StarField from "../components/StarField/Index.vue";
+import DustParticles from "../components/DustParticles/Index.vue";
 import { useMainStore } from "@/stores/mainStore";
 
 const mainStore = useMainStore();
+
+// 特效类型 -> 组件映射（markRaw 避免组件被响应式代理影响性能）
+const effectMap = {
+  matrix: markRaw(MatrixRain),
+  particles: markRaw(ParticleNetwork),
+  stars: markRaw(StarField),
+  dust: markRaw(DustParticles),
+};
+
+const effectComponent = computed(() => {
+  return effectMap[mainStore.fxConfig.type] || null;
+});
 
 const DEFAULT_BG = "radial-gradient(circle at 22% 30%, rgba(34,211,238,0.10), transparent 46%), radial-gradient(circle at 78% 65%, rgba(34,211,238,0.06), transparent 42%), #0d1117";
 

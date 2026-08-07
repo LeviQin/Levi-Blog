@@ -5,7 +5,15 @@ export const useMainStore = defineStore("main", {
         tagMap: [],
         wallpaperMap: [],
         blogSettingMap: {},
-        backgroundImage: "radial-gradient(circle at 22% 30%, rgba(34,211,238,0.10), transparent 46%), radial-gradient(circle at 78% 65%, rgba(34,211,238,0.06), transparent 42%), #0d1117"
+        backgroundImage: "radial-gradient(circle at 22% 30%, rgba(34,211,238,0.10), transparent 46%), radial-gradient(circle at 78% 65%, rgba(34,211,238,0.06), transparent 42%), #0d1117",
+        // 背景特效配置：type 特效类型，density/speed/opacity 0-100，color 十六进制
+        fxConfig: {
+            type: "matrix",
+            density: 50,
+            speed: 50,
+            opacity: 40,
+            color: "#22d3ee",
+        },
     }),
     actions: {
         setTagMap(tagMap) {
@@ -19,6 +27,9 @@ export const useMainStore = defineStore("main", {
         },
         setWallpaperMap(wallpaperMap) {
             this.wallpaperMap = wallpaperMap;
+        },
+        setFxConfig(config) {
+            this.fxConfig = { ...this.fxConfig, ...config };
         },
     },
     persist: {

@@ -5,89 +5,98 @@
     :lock-scroll="false"
     :append-to-body="true"
     :z-index="10002"
-    class="wallpaper-dialog"
+    class="fx-dialog"
   >
     <template #header>
-      <div class="wallpaper-dialog-header">
+      <div class="fx-dialog-header">
         <div>
-          <div class="wallpaper-model-title">切换背景</div>
-          <p class="wallpaper-model-subtitle">选择一种贴合当前风格的背景，也可以随时恢复默认。</p>
+          <div class="fx-model-title">背景特效设置</div>
+          <p class="fx-model-subtitle">选择底色与叠加特效，调整密度、速度、透明度与颜色。</p>
         </div>
-        <div class="wallpaper-current-tag">当前 {{ selectedWallpaperLabel }}</div>
       </div>
     </template>
-    <div
-      class="wallpaper-model-main"
-      v-loading="loading"
-      element-loading-text="Loading..."
-    >
-      <div class="wallpaper-hero">
-        <div
-          class="wallpaper-hero-preview"
-          :style="heroPreviewStyle"
-          :aria-label="selectedWallpaperLabel"
-        >
-          <div class="wallpaper-hero-overlay">
-            <span class="wallpaper-hero-chip">当前使用中</span>
-            <h3>{{ selectedWallpaperLabel }}</h3>
-          </div>
-        </div>
-        <div class="wallpaper-hero-info">
-          <p class="wallpaper-hero-title">极客背景方案</p>
-          <p class="wallpaper-hero-desc">
-            已收录 {{ wallpaperOptions.length }} 套背景方案，点击卡片即可立即应用，当前方案会高亮标记。
-          </p>
-          <div class="wallpaper-actions">
-            <button
-              class="wallpaper-action-btn primary"
-              type="button"
-              @click="setWallpaper(wallpaperOptions[0])"
-            >
-              恢复默认背景
-            </button>
-            <button
-              class="wallpaper-action-btn"
-              type="button"
-              @click="dialogVisible = false"
-            >
-              稍后再说
-            </button>
+    <div class="fx-model-main">
+      <!-- 底色选择 -->
+      <div class="fx-section">
+        <div class="fx-section-title">底色</div>
+        <div class="fx-color-row">
+          <div
+            v-for="scheme in wallpaperOptions"
+            :key="scheme.id"
+            class="fx-scheme-chip"
+            :class="{ active: currentScheme.id === scheme.id }"
+            @click="setWallpaper(scheme)"
+          >
+            <span class="fx-swatch" :style="swatchStyle(scheme)"></span>
+            <span class="fx-scheme-name">{{ scheme.name }}</span>
           </div>
         </div>
       </div>
 
-      <ul class="wallpaper-grid">
-        <li
-          v-for="item in wallpaperOptions"
-          :key="item.id"
-          class="wallpaper-card"
-          :class="{ 'is-active': isWallpaperActive(item) }"
-          @click="setWallpaper(item)"
-        >
-          <div class="wallpaper-card-thumb">
-            <div class="wallpaper-card-swatch" :style="swatchStyle(item)"></div>
-            <div class="wallpaper-card-mask">
-              <span>{{ isWallpaperActive(item) ? "当前背景" : "点击切换" }}</span>
-            </div>
+      <!-- 特效选择 -->
+      <div class="fx-section">
+        <div class="fx-section-title">背景特效</div>
+        <div class="fx-effect-grid">
+          <div
+            v-for="fx in effectOptions"
+            :key="fx.id"
+            class="fx-effect-card"
+            :class="{ active: fxConfig.type === fx.id }"
+            @click="selectEffect(fx.id)"
+          >
+            <i :class="fx.icon"></i>
+            <span>{{ fx.name }}</span>
           </div>
-          <div class="wallpaper-card-info">
-            <span class="wallpaper-card-name">{{ item.name }}</span>
-            <span v-if="isWallpaperActive(item)" class="wallpaper-card-badge">已应用</span>
+        </div>
+      </div>
+
+      <!-- 配置项 -->
+      <div class="fx-section" v-if="fxConfig.type !== 'none'">
+        <div class="fx-slider-row">
+          <span class="fx-slider-label">密度</span>
+          <el-slider v-model="fxConfig.density" :min="5" :max="100" size="small" />
+          <span class="fx-slider-val">{{ fxConfig.density }}</span>
+        </div>
+        <div class="fx-slider-row">
+          <span class="fx-slider-label">速度</span>
+          <el-slider v-model="fxConfig.speed" :min="5" :max="100" size="small" />
+          <span class="fx-slider-val">{{ fxConfig.speed }}</span>
+        </div>
+        <div class="fx-slider-row">
+          <span class="fx-slider-label">透明度</span>
+          <el-slider v-model="fxConfig.opacity" :min="5" :max="100" size="small" />
+          <span class="fx-slider-val">{{ fxConfig.opacity }}</span>
+        </div>
+        <div class="fx-color-picker-row">
+          <span class="fx-slider-label">颜色</span>
+          <div class="fx-color-options">
+            <span
+              v-for="c in colorOptions"
+              :key="c"
+              class="fx-color-dot"
+              :class="{ active: fxConfig.color === c }"
+              :style="{ background: c }"
+              @click="fxConfig.color = c"
+            ></span>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
+
+      <div class="fx-actions">
+        <button class="fx-btn primary" type="button" @click="resetDefault">恢复默认</button>
+        <button class="fx-btn" type="button" @click="dialogVisible = false">完成</button>
+      </div>
     </div>
   </el-dialog>
 </template>
 
 <script setup>
-import { ref, defineExpose, onMounted, onUnmounted, computed } from "vue";
+import { ref, defineExpose, onMounted, onUnmounted, computed, watch } from "vue";
 import { useMainStore } from "@/stores/mainStore";
 
 const mainStore = useMainStore();
 
-// 背景方案：css 为完整 background 值；空字符串表示跟随主题默认
-const defaultSchemeId = "cyber-cyan";
+// 底色方案（与之前一致）
 const wallpaperOptions = [
   {
     id: "cyber-cyan",
@@ -121,30 +130,55 @@ const wallpaperOptions = [
   },
 ];
 
-const defaultScheme = computed(() => {
-  return wallpaperOptions.find((s) => s.id === defaultSchemeId) || wallpaperOptions[0];
-});
+// 特效选项
+const effectOptions = [
+  { id: "none", name: "无特效", icon: "bi bi-square" },
+  { id: "matrix", name: "代码雨", icon: "bi bi-terminal" },
+  { id: "particles", name: "粒子连线", icon: "bi bi-circle-half" },
+  { id: "stars", name: "星空", icon: "bi bi-stars" },
+  { id: "dust", name: "浮尘", icon: "bi bi-arrow-up-circle" },
+];
+
+// 5 档预设色
+const colorOptions = ["#22d3ee", "#3fb950", "#60a5fa", "#a78bfa", "#f87171"];
+
+const defaultScheme = computed(() => wallpaperOptions[0]);
 
 const currentCss = computed(() => mainStore.backgroundImage || "");
-
 const currentScheme = computed(() => {
   return wallpaperOptions.find((s) => s.css === currentCss.value) || defaultScheme.value;
 });
 
-const selectedWallpaperImage = computed(() => currentScheme.value.css);
-const heroPreviewStyle = computed(() => ({
-  background: selectedWallpaperImage.value || "var(--background)",
-}));
-
-const selectedWallpaperLabel = computed(() => currentScheme.value.name);
+// 本地编辑副本，改动实时写回 store
+const fxConfig = computed({
+  get: () => mainStore.fxConfig,
+  set: () => {},
+});
 
 const swatchStyle = (item) => {
   if (!item.css) {
-    return {
-      background: "linear-gradient(135deg, #0d1117 0%, #161b22 100%)",
-    };
+    return { background: "linear-gradient(135deg, #0d1117 0%, #161b22 100%)" };
   }
   return { background: item.css };
+};
+
+const selectEffect = (id) => {
+  mainStore.setFxConfig({ type: id });
+};
+
+const setWallpaper = (scheme) => {
+  mainStore.setBackgroundImage(scheme.css);
+};
+
+const resetDefault = () => {
+  mainStore.setBackgroundImage(defaultScheme.value.css);
+  mainStore.setFxConfig({
+    type: "matrix",
+    density: 50,
+    speed: 50,
+    opacity: 40,
+    color: "#22d3ee",
+  });
 };
 
 onMounted(() => {
@@ -156,27 +190,20 @@ onUnmounted(() => {
   window.removeEventListener("resize", setModelWidth, true);
 });
 
-const loading = ref(false);
 const dialogVisible = ref(false);
-const modelWidth = ref("780px");
+const modelWidth = ref("720px");
 
 const show = () => {
   dialogVisible.value = true;
 };
 
-const isWallpaperActive = (item) => currentScheme.value.id === item.id;
-
-const setWallpaper = (scheme) => {
-  mainStore.setBackgroundImage(scheme.css);
-};
-
 const setModelWidth = () => {
   if (window.innerWidth <= 640) {
-    modelWidth.value = "98%";
-  } else if (window.innerWidth <= 1100) {
+    modelWidth.value = "96%";
+  } else if (window.innerWidth <= 900) {
     modelWidth.value = "88%";
   } else {
-    modelWidth.value = "1040px";
+    modelWidth.value = "720px";
   }
 };
 
@@ -186,517 +213,225 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-.wallpaper-dialog-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
+.fx-dialog-header {
   padding-right: 24px;
 }
 
-.wallpaper-model-title {
+.fx-model-title {
   color: var(--btn-tag-bg-color);
-  font-size: 22px;
-  line-height: 1.1;
+  font-size: 20px;
+  line-height: 1.2;
 }
 
-.wallpaper-model-subtitle {
-  margin: 8px 0 0;
+.fx-model-subtitle {
+  margin: 6px 0 0;
   color: var(--color);
   opacity: 0.72;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.6;
 }
 
-.wallpaper-current-tag {
-  flex-shrink: 0;
-  border: 1px solid rgba(127, 127, 127, 0.22);
-  border-radius: 999px;
-  padding: 8px 14px;
-  color: var(--color);
+.fx-model-main {
+  padding: 4px 8px 20px;
+}
+
+.fx-section {
+  margin-bottom: 22px;
+}
+
+.fx-section-title {
   font-size: 13px;
-  background: rgba(127, 127, 127, 0.08);
+  font-weight: 600;
+  color: var(--color);
+  opacity: 0.85;
+  margin-bottom: 12px;
 }
 
-.wallpaper-model-main {
-  padding: 0 8px 20px;
-  overflow: hidden;
-}
-
-.wallpaper-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr);
-  gap: 22px;
-  margin-bottom: 24px;
-}
-
-.wallpaper-hero-preview {
-  position: relative;
-  min-height: 280px;
-  overflow: hidden;
-  border-radius: 24px;
-  background: var(--background);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
-}
-
-.wallpaper-hero-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 10px;
-  padding: 20px;
-  background: linear-gradient(180deg, rgba(5, 9, 18, 0.04), rgba(5, 9, 18, 0.75));
-
-  h3 {
-    margin: 0;
-    color: #fff;
-    font-size: 24px;
-  }
-}
-
-.wallpaper-hero-chip {
-  width: fit-content;
-  border-radius: 999px;
-  padding: 6px 12px;
-  background: rgba(255, 255, 255, 0.14);
-  color: #fff;
-  font-size: 12px;
-  backdrop-filter: blur(12px);
-}
-
-.wallpaper-hero-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 18px 20px;
-  border-radius: 24px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-    rgba(15, 20, 32, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.wallpaper-hero-title {
-  margin: 0 0 10px;
-  color: #fff;
-  font-size: 20px;
-}
-
-.wallpaper-hero-desc {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.7;
-  font-size: 14px;
-}
-
-.wallpaper-actions {
+/* 底色横排色卡 */
+.fx-color-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 22px;
+  gap: 10px;
 }
 
-.wallpaper-action-btn {
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  padding: 11px 18px;
-  color: rgba(255, 255, 255, 0.82);
-  background: rgba(255, 255, 255, 0.04);
-  transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+.fx-scheme-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px 7px 7px;
+  border-radius: 12px;
+  border: 1px solid rgba(127, 127, 127, 0.22);
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(127, 127, 127, 0.05);
 
   &:hover {
-    transform: translateY(-1px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(34, 211, 238, 0.5);
   }
 
-  &.primary {
-    background: linear-gradient(135deg, var(--btn-tag-bg-color), #22d3ee);
-    color: #fff;
-    border-color: transparent;
+  &.active {
+    border-color: rgba(34, 211, 238, 0.8);
+    box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.15);
   }
 }
 
-.wallpaper-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  max-height: 520px;
-  overflow: auto;
-  gap: 18px;
-  padding: 4px 8px 4px 2px;
-}
-
-.wallpaper-card {
-  cursor: pointer;
-  list-style: none;
-  padding: 10px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transform: translateZ(0);
-  will-change: transform;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease,
-    background-color 0.3s ease;
-
-  &:hover:not(.is-active) {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.2);
-    border-color: rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.06);
-  }
-
-  &.is-active {
-    transform: translateZ(0);
-    border-color: rgba(34, 211, 238, 0.65);
-    background: rgba(34, 211, 238, 0.1);
-    box-shadow: 0 18px 40px rgba(34, 211, 238, 0.16);
-  }
-}
-
-.wallpaper-card-thumb {
-  position: relative;
-  overflow: hidden;
-  border-radius: 16px;
-  aspect-ratio: 16 / 10;
-}
-
-.wallpaper-card-swatch {
-  position: absolute;
-  inset: 0;
-  transition: transform 0.4s ease;
-}
-
-.wallpaper-card:hover:not(.is-active) .wallpaper-card-swatch {
-  transform: scale(1.05);
-}
-
-.wallpaper-card-mask {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.58));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-
-  span {
-    border-radius: 999px;
-    padding: 8px 12px;
-    background: rgba(255, 255, 255, 0.14);
-    color: #fff;
-    font-size: 12px;
-    backdrop-filter: blur(8px);
-  }
-}
-
-.wallpaper-card:hover .wallpaper-card-mask,
-.wallpaper-card.is-active .wallpaper-card-mask {
-  opacity: 1;
-}
-
-.wallpaper-card-info {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 12px;
-}
-
-.wallpaper-card-name {
-  font-size: 14px;
-}
-
-.wallpaper-card-badge {
+.fx-swatch {
+  width: 28px;
+  height: 20px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   flex-shrink: 0;
-  border-radius: 999px;
-  padding: 4px 10px;
-  background: rgba(34, 211, 238, 0.18);
-  color: #7ce3f5;
-  font-size: 12px;
 }
 
-:deep(.wallpaper-dialog .el-dialog__header) {
-  padding-bottom: 12px;
+.fx-scheme-name {
+  font-size: 13px;
+  color: var(--color);
 }
 
-:deep(.wallpaper-dialog .el-dialog__body) {
-  padding-top: 4px;
+/* 特效卡片 */
+.fx-effect-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
 }
 
-@media (max-width: 860px) {
-  :deep(.wallpaper-dialog .el-dialog) {
-    margin-top: 6vh !important;
-    border-radius: 24px;
-  }
+.fx-effect-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 8px;
+  border-radius: 14px;
+  border: 1px solid rgba(127, 127, 127, 0.22);
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(127, 127, 127, 0.05);
+  color: var(--color);
+  font-size: 13px;
 
-  :deep(.wallpaper-dialog .el-dialog__header) {
-    padding: 18px 18px 10px;
-  }
-
-  :deep(.wallpaper-dialog .el-dialog__body) {
-    padding: 0 12px 14px;
-  }
-
-  :deep(.wallpaper-dialog .el-dialog__headerbtn) {
-    top: 18px;
-    right: 16px;
-  }
-
-  .wallpaper-dialog-header {
-    flex-direction: column;
-    gap: 12px;
-    padding-right: 28px;
-  }
-
-  .wallpaper-hero {
-    grid-template-columns: minmax(120px, 0.9fr) minmax(0, 1.1fr);
-    gap: 10px;
-    margin-bottom: 14px;
-    align-items: stretch;
-  }
-
-  .wallpaper-hero-preview {
-    min-height: 142px;
-    border-radius: 20px;
-  }
-
-  .wallpaper-hero-overlay {
-    padding: 14px;
-    gap: 8px;
-  }
-
-  .wallpaper-hero-overlay h3 {
-    font-size: 16px;
-  }
-
-  .wallpaper-hero-info {
-    padding: 12px;
-    border-radius: 20px;
-  }
-
-  .wallpaper-model-title {
+  i {
     font-size: 20px;
   }
 
-  .wallpaper-model-subtitle {
-    font-size: 13px;
-    line-height: 1.5;
+  &:hover {
+    border-color: rgba(34, 211, 238, 0.5);
+    transform: translateY(-2px);
   }
 
-  .wallpaper-current-tag {
-    align-self: flex-start;
-    padding: 6px 12px;
-  }
-
-  .wallpaper-grid {
-    max-height: 50vh;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    padding: 0 1px 2px;
-  }
-
-  .wallpaper-card {
-    padding: 6px;
-    border-radius: 16px;
-  }
-
-  .wallpaper-card-info {
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    margin-top: 8px;
-  }
-
-  .wallpaper-card-name {
-    min-width: 0;
-    font-size: 12px;
-    line-height: 1.35;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .wallpaper-actions {
-    gap: 8px;
-    margin-top: 14px;
-  }
-
-  .wallpaper-action-btn {
-    flex: 1 1 calc(50% - 5px);
-    min-height: 38px;
-    padding: 9px 12px;
-    font-size: 12px;
-  }
-
-  .wallpaper-card-badge {
-    padding: 3px 8px;
-    font-size: 11px;
+  &.active {
+    border-color: rgba(34, 211, 238, 0.8);
+    color: var(--theme-btn-hover-color);
+    box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.15);
+    background: rgba(34, 211, 238, 0.08);
   }
 }
 
-@media (max-width: 560px) {
-  :deep(.wallpaper-dialog .el-dialog) {
-    margin-top: 2vh !important;
-    border-radius: 20px;
+/* 滑块 */
+.fx-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.fx-slider-label {
+  width: 56px;
+  font-size: 13px;
+  color: var(--color);
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.fx-slider-row :deep(.el-slider) {
+  flex: 1;
+}
+
+.fx-slider-val {
+  width: 32px;
+  text-align: right;
+  font-family: var(--mono-font-family);
+  font-size: 13px;
+  color: var(--color);
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+/* 颜色 */
+.fx-color-picker-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.fx-color-options {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.fx-color-dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+
+  &:hover {
+    transform: scale(1.15);
   }
 
-  :deep(.wallpaper-dialog .el-dialog__header) {
-    padding: 16px 14px 8px;
+  &.active {
+    border-color: var(--color);
+    box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2);
+    transform: scale(1.1);
+  }
+}
+
+/* 操作按钮 */
+.fx-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(127, 127, 127, 0.15);
+}
+
+.fx-btn {
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid rgba(127, 127, 127, 0.25);
+  background: rgba(127, 127, 127, 0.08);
+  color: var(--color);
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: rgba(34, 211, 238, 0.5);
   }
 
-  :deep(.wallpaper-dialog .el-dialog__body) {
-    padding: 0 10px 12px;
-  }
+  &.primary {
+    background: var(--btn-tag-bg-color);
+    border-color: transparent;
+    color: #0d1117;
 
-  .wallpaper-model-main {
-    padding: 0 0 10px;
+    &:hover {
+      opacity: 0.9;
+    }
   }
+}
 
-  .wallpaper-dialog-header {
-    gap: 8px;
-    padding-right: 26px;
+@media (max-width: 860px) {
+  .fx-effect-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
 
-  .wallpaper-model-title {
-    font-size: 18px;
-  }
-
-  .wallpaper-model-subtitle {
-    margin-top: 6px;
-    font-size: 12px;
-  }
-
-  .wallpaper-current-tag {
-    font-size: 12px;
-    padding: 5px 10px;
-  }
-
-  .wallpaper-hero {
-    grid-template-columns: 104px minmax(0, 1fr);
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
-  .wallpaper-hero-preview {
-    min-height: 104px;
-    border-radius: 16px;
-  }
-
-  .wallpaper-hero-overlay {
-    gap: 6px;
-    padding: 10px;
-  }
-
-  .wallpaper-hero-overlay h3 {
-    font-size: 14px;
-    line-height: 1.25;
-  }
-
-  .wallpaper-hero-chip {
-    padding: 4px 8px;
-    font-size: 10px;
-  }
-
-  .wallpaper-hero-info {
-    padding: 10px;
-    border-radius: 16px;
-  }
-
-  .wallpaper-hero-title {
-    font-size: 15px;
-    margin-bottom: 4px;
-  }
-
-  .wallpaper-hero-desc {
-    font-size: 11px;
-    line-height: 1.45;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .wallpaper-actions {
-    flex-direction: row;
-    gap: 6px;
-    margin-top: 10px;
-  }
-
-  .wallpaper-action-btn {
-    min-height: 34px;
-    padding: 8px 10px;
-    font-size: 11px;
-    justify-content: center;
-  }
-
-  .wallpaper-grid {
-    max-height: 54vh;
+@media (max-width: 420px) {
+  .fx-effect-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 6px;
-    padding: 2px 0 0;
-  }
-
-  .wallpaper-card {
-    display: block;
-    padding: 6px;
-    border-radius: 14px;
-  }
-
-  .wallpaper-card-thumb {
-    aspect-ratio: 16 / 11;
-    border-radius: 10px;
-  }
-
-  .wallpaper-card-info {
-    margin-top: 6px;
-    min-width: 0;
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .wallpaper-card-name {
-    font-size: 11px;
-    line-height: 1.3;
-  }
-
-  .wallpaper-card-badge {
-    padding: 2px 6px;
-    font-size: 10px;
-  }
-
-  .wallpaper-card-mask span {
-    padding: 5px 8px;
-    font-size: 10px;
-  }
-}
-
-@media (max-width: 380px) {
-  .wallpaper-hero {
-    grid-template-columns: 92px minmax(0, 1fr);
-  }
-
-  .wallpaper-hero-preview {
-    min-height: 92px;
-  }
-
-  .wallpaper-grid {
-    max-height: 56vh;
-    gap: 5px;
-  }
-
-  .wallpaper-card {
-    padding: 5px;
-  }
-
-  .wallpaper-card-name {
-    font-size: 10px;
   }
 }
 </style>

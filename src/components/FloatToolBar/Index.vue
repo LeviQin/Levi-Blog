@@ -35,10 +35,10 @@
 
         <button
           class="tool-btn"
-          title="切换壁纸"
+          title="切换背景特效"
           @click="clickSwitchWallpaper"
         >
-          <i class="bi bi-images"></i>
+          <i class="bi bi-stars"></i>
         </button>
       </div>
     </Transition>

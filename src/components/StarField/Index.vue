@@ -1,5 +1,5 @@
 <template>
-  <div class="matrix-rain">
+  <div class="star-field">
     <canvas ref="canvasRef"></canvas>
   </div>
 </template>
@@ -8,19 +8,16 @@
 import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { useMainStore } from "@/stores/mainStore";
 
-// 克制低调的代码雨背景：canvas 保持透明(clearRect)，字符渐变拖尾，不遮挡底层光晕
+// 星空粒子：星星闪烁 + 缓慢漂移，克制低调
 const canvasRef = ref(null);
 const mainStore = useMainStore();
 let ctx = null;
 let rafId = null;
-let fontSize = 16;
 let canvasWidth = 0;
 let canvasHeight = 0;
 let running = false;
-let drops = [];
-const CHARS = "0123456789ABCDEF<>/{}[]()*+-=#$&@:%.;!?~^_`|".split("");
+let stars = [];
 
-// 颜色工具：hex -> rgba
 const hexToRgb = (hex) => {
   const h = hex.replace("#", "");
   return {
@@ -28,6 +25,21 @@ const hexToRgb = (hex) => {
     g: parseInt(h.substring(2, 4), 16),
     b: parseInt(h.substring(4, 6), 16),
   };
+};
+
+const rebuild = () => {
+  const cfg = mainStore.fxConfig;
+  const count = Math.floor((cfg.density / 100) * 120); // 0-120 颗星
+  stars = new Array(count).fill(0).map(() => ({
+    x: Math.random() * canvasWidth,
+    y: Math.random() * canvasHeight,
+    size: Math.random() * 1.8 + 0.4,
+    baseOpacity: Math.random() * 0.5 + 0.3,
+    twinkleSpeed: Math.random() * 0.03 + 0.008,
+    phase: Math.random() * Math.PI * 2,
+    vx: (Math.random() - 0.5) * 0.2,
+    vy: (Math.random() - 0.5) * 0.2,
+  }));
 };
 
 const setupCanvas = () => {
@@ -40,57 +52,35 @@ const setupCanvas = () => {
   canvas.height = canvasHeight * dpr;
   ctx = canvas.getContext("2d");
   ctx.scale(dpr, dpr);
-  ctx.font = `${fontSize}px ui-monospace, Menlo, Consolas, monospace`;
-  rebuildColumns();
-};
-
-const rebuildColumns = () => {
-  const cfg = mainStore.fxConfig;
-  // density: 0-100 -> 列间距因子，越大越密
-  const spacing = 3.4 - (cfg.density / 100) * 1.4; // 3.4(稀) ~ 2.0(密)
-  const colCount = Math.ceil(canvasWidth / (fontSize * spacing));
-  drops = new Array(colCount).fill(0).map(() => ({
-    cursor: Math.floor(Math.random() * CHARS.length),
-    y: Math.floor(Math.random() * -60),
-    speed: 0.5 + Math.random() * 0.9,
-    len: Math.floor(6 + Math.random() * 14),
-  }));
+  rebuild();
 };
 
 const draw = () => {
   if (!running) return;
   const cfg = mainStore.fxConfig;
   const rgb = hexToRgb(cfg.color);
-  // 透明度/强度映射到字符 alpha
-  const baseAlpha = (cfg.opacity / 100) * 0.9;
+  const baseAlpha = cfg.opacity / 100;
+  const speedFactor = 0.4 + (cfg.speed / 100) * 1.2;
+  const now = Date.now() / 1000;
+
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-  const spacing = 3.4 - (cfg.density / 100) * 1.4;
-  const speedFactor = 0.5 + (cfg.speed / 100) * 2;
 
-  for (let i = 0; i < drops.length; i++) {
-    const drop = drops[i];
-    const x = i * fontSize * spacing;
+  for (const s of stars) {
+    s.x += s.vx * speedFactor;
+    s.y += s.vy * speedFactor;
+    if (s.x < -5) s.x = canvasWidth + 5;
+    if (s.x > canvasWidth + 5) s.x = -5;
+    if (s.y < -5) s.y = canvasHeight + 5;
+    if (s.y > canvasHeight + 5) s.y = -5;
 
-    for (let k = 0; k < drop.len; k++) {
-      const y = drop.y - k * fontSize;
-      if (y < 0 || y > canvasHeight) continue;
-      const char = CHARS[(drop.cursor - k + CHARS.length) % CHARS.length];
-      if (k === 0) {
-        ctx.fillStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${Math.min(1, baseAlpha * 1.2)})`;
-      } else {
-        const alpha = Math.max(0, baseAlpha * 0.6 - k * 0.045);
-        ctx.fillStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
-      }
-      ctx.fillText(char, x, y);
-    }
+    // 闪烁：sin 波驱动
+    const twinkle = 0.5 + 0.5 * Math.sin(now * s.twinkleSpeed * 100 + s.phase);
+    const alpha = baseAlpha * s.baseOpacity * (0.4 + twinkle * 0.6);
 
-    drop.cursor = (drop.cursor + 1) % CHARS.length;
-    drop.y += drop.speed * speedFactor;
-
-    if (drop.y > canvasHeight + drop.len * fontSize && Math.random() > 0.975) {
-      drop.y = Math.floor(Math.random() * -60);
-      drop.speed = 0.5 + Math.random() * 0.9;
-    }
+    ctx.fillStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${Math.min(1, alpha)})`;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+    ctx.fill();
   }
 
   rafId = requestAnimationFrame(draw);
@@ -112,11 +102,10 @@ const handleResize = () => {
   setupCanvas();
 };
 
-// 配置变化：密度变化需重建列，其余直接生效
 watch(
   () => mainStore.fxConfig,
   () => {
-    rebuildColumns();
+    rebuild();
   },
   { deep: true }
 );
@@ -139,7 +128,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.matrix-rain {
+.star-field {
   position: fixed;
   top: 0;
   left: 0;

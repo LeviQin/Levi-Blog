@@ -190,14 +190,6 @@ onBeforeUnmount(() => {
   position: absolute;
   inset: 0;
   background-color: transparent;
-  /* 柔和氛围光，与全局 banner-bar 光晕呼应，不产生独立色块 */
-  background-image:
-    radial-gradient(circle at 22% 30%, rgba(34, 211, 238, 0.07), transparent 46%),
-    radial-gradient(circle at 78% 65%, rgba(34, 211, 238, 0.05), transparent 42%);
-  z-index: 0;
-  /* 底部渐变过渡到内容区，消除硬边界 */
-  -webkit-mask-image: linear-gradient(180deg, #000 82%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 82%, transparent 100%);
 }
 
 /* ===== 分屏 Hero 模式 ===== */
