@@ -10,8 +10,8 @@
     <template #header>
       <div class="wallpaper-dialog-header">
         <div>
-          <div class="wallpaper-model-title">切换壁纸</div>
-          <p class="wallpaper-model-subtitle">挑一张更适合当前心情的背景，也可以随时恢复默认。</p>
+          <div class="wallpaper-model-title">切换背景</div>
+          <p class="wallpaper-model-subtitle">选择一种贴合当前风格的背景，也可以随时恢复默认。</p>
         </div>
         <div class="wallpaper-current-tag">当前 {{ selectedWallpaperLabel }}</div>
       </div>
@@ -33,17 +33,17 @@
           </div>
         </div>
         <div class="wallpaper-hero-info">
-          <p class="wallpaper-hero-title">精选壁纸库</p>
+          <p class="wallpaper-hero-title">极客背景方案</p>
           <p class="wallpaper-hero-desc">
-            已收录 {{ wallpaperOptions.length }} 张壁纸，点击卡片即可立即应用，当前壁纸会高亮标记。
+            已收录 {{ wallpaperOptions.length }} 套背景方案，点击卡片即可立即应用，当前方案会高亮标记。
           </p>
           <div class="wallpaper-actions">
             <button
               class="wallpaper-action-btn primary"
               type="button"
-              @click="setWallpaper(gridWallpaper, defaultWallpaperLabel)"
+              @click="setWallpaper(wallpaperOptions[0])"
             >
-              恢复默认壁纸
+              恢复默认背景
             </button>
             <button
               class="wallpaper-action-btn"
@@ -61,18 +61,18 @@
           v-for="item in wallpaperOptions"
           :key="item.id"
           class="wallpaper-card"
-          :class="{ 'is-active': isWallpaperActive(item.image) }"
-          @click="setWallpaper(item.image, item.name)"
+          :class="{ 'is-active': isWallpaperActive(item) }"
+          @click="setWallpaper(item)"
         >
           <div class="wallpaper-card-thumb">
-            <img v-lazy="item.image" :alt="item.name" />
+            <div class="wallpaper-card-swatch" :style="swatchStyle(item)"></div>
             <div class="wallpaper-card-mask">
-              <span>{{ isWallpaperActive(item.image) ? "当前壁纸" : "点击切换" }}</span>
+              <span>{{ isWallpaperActive(item) ? "当前背景" : "点击切换" }}</span>
             </div>
           </div>
           <div class="wallpaper-card-info">
             <span class="wallpaper-card-name">{{ item.name }}</span>
-            <span v-if="isWallpaperActive(item.image)" class="wallpaper-card-badge">已应用</span>
+            <span v-if="isWallpaperActive(item)" class="wallpaper-card-badge">已应用</span>
           </div>
         </li>
       </ul>
@@ -82,63 +82,70 @@
 
 <script setup>
 import { ref, defineExpose, onMounted, onUnmounted, computed } from "vue";
-import gufengnvImag from "@/assets/images/banner/gufengnv.jpg";
 import { useMainStore } from "@/stores/mainStore";
 
 const mainStore = useMainStore();
-const defaultWallpaperLabel = "极客网格";
-const ancientWallpaperLabel = "古风";
 
-// 暗色极客网格纹理（SVG data URI，零额外图片请求）
-const gridWallpaper = "data:image/svg+xml;utf8," + encodeURIComponent(`
-<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80">
-  <defs>
-    <radialGradient id="g" cx="30%" cy="25%" r="80%">
-      <stop offset="0%" stop-color="#16222e" />
-      <stop offset="100%" stop-color="#0d1117" />
-    </radialGradient>
-  </defs>
-  <rect width="80" height="80" fill="url(#g)" />
-  <path d="M80 0H0V80" fill="none" stroke="#22d3ee" stroke-opacity="0.08" stroke-width="1" />
-</svg>`);
+// 背景方案：css 为完整 background 值；空字符串表示跟随主题默认
+const defaultSchemeId = "cyber-cyan";
+const wallpaperOptions = [
+  {
+    id: "cyber-cyan",
+    name: "极客青",
+    css: "radial-gradient(circle at 22% 30%, rgba(34,211,238,0.10), transparent 46%), radial-gradient(circle at 78% 65%, rgba(34,211,238,0.06), transparent 42%), #0d1117",
+  },
+  {
+    id: "deep-blue",
+    name: "深空蓝",
+    css: "radial-gradient(circle at 20% 25%, rgba(59,130,246,0.10), transparent 45%), radial-gradient(circle at 80% 75%, rgba(30,64,175,0.06), transparent 42%), #0d1117",
+  },
+  {
+    id: "graphite",
+    name: "极简灰",
+    css: "radial-gradient(circle at 50% 40%, rgba(148,163,184,0.06), transparent 50%), #161b22",
+  },
+  {
+    id: "amber",
+    name: "琥珀暖",
+    css: "radial-gradient(circle at 75% 30%, rgba(255,139,38,0.08), transparent 46%), #0d1117",
+  },
+  {
+    id: "mint",
+    name: "薄荷青",
+    css: "radial-gradient(circle at 25% 70%, rgba(63,185,80,0.08), transparent 45%), radial-gradient(circle at 70% 20%, rgba(34,211,238,0.05), transparent 40%), #0d1117",
+  },
+  {
+    id: "theme",
+    name: "跟随主题",
+    css: "",
+  },
+];
 
-const wallpaperOptions = computed(() => {
-  const remoteWallpapers = (mainStore.wallpaperMap || []).map((item, index) => ({
-    ...item,
-    id: item.id ?? `wallpaper-${index}`,
-    name: item.name || `壁纸 ${index + 1}`,
-  }));
-
-  return [
-    {
-      id: "default-wallpaper",
-      name: defaultWallpaperLabel,
-      image: gridWallpaper,
-    },
-    {
-      id: "ancient-wallpaper",
-      name: ancientWallpaperLabel,
-      image: gufengnvImag,
-    },
-    ...remoteWallpapers,
-  ];
+const defaultScheme = computed(() => {
+  return wallpaperOptions.find((s) => s.id === defaultSchemeId) || wallpaperOptions[0];
 });
 
-const currentWallpaper = computed(() => {
-  const rawValue = mainStore.backgroundImage || "";
-  const matched = rawValue.match(/^url\((['"]?)(.*?)\1\)$/);
-  return matched?.[2] || gridWallpaper;
+const currentCss = computed(() => mainStore.backgroundImage || "");
+
+const currentScheme = computed(() => {
+  return wallpaperOptions.find((s) => s.css === currentCss.value) || defaultScheme.value;
 });
 
-const selectedWallpaperImage = computed(() => currentWallpaper.value);
+const selectedWallpaperImage = computed(() => currentScheme.value.css);
 const heroPreviewStyle = computed(() => ({
-  backgroundImage: `url(${selectedWallpaperImage.value})`,
+  background: selectedWallpaperImage.value || "var(--background)",
 }));
 
-const selectedWallpaperLabel = computed(() => {
-  const matchedWallpaper = wallpaperOptions.value.find((item) => item.image === currentWallpaper.value);
-  return matchedWallpaper?.name || defaultWallpaperLabel;
-});
+const selectedWallpaperLabel = computed(() => currentScheme.value.name);
+
+const swatchStyle = (item) => {
+  if (!item.css) {
+    return {
+      background: "linear-gradient(135deg, #0d1117 0%, #161b22 100%)",
+    };
+  }
+  return { background: item.css };
+};
 
 onMounted(() => {
   setModelWidth();
@@ -157,10 +164,10 @@ const show = () => {
   dialogVisible.value = true;
 };
 
-const isWallpaperActive = (image) => currentWallpaper.value === image;
+const isWallpaperActive = (item) => currentScheme.value.id === item.id;
 
-const setWallpaper = (image) => {
-  mainStore.setBackgroundImage(`url(${image})`);
+const setWallpaper = (scheme) => {
+  mainStore.setBackgroundImage(scheme.css);
 };
 
 const setModelWidth = () => {
@@ -228,7 +235,7 @@ defineExpose({
   min-height: 280px;
   overflow: hidden;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--background);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -345,8 +352,8 @@ defineExpose({
 
   &.is-active {
     transform: translateZ(0);
-    border-color: rgba(255, 170, 77, 0.65);
-    background: rgba(255, 170, 77, 0.1);
+    border-color: rgba(34, 211, 238, 0.65);
+    background: rgba(34, 211, 238, 0.1);
     box-shadow: 0 18px 40px rgba(34, 211, 238, 0.16);
   }
 }
@@ -356,22 +363,16 @@ defineExpose({
   overflow: hidden;
   border-radius: 16px;
   aspect-ratio: 16 / 10;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s ease;
-  }
 }
 
-.wallpaper-card:hover:not(.is-active) .wallpaper-card-thumb img {
+.wallpaper-card-swatch {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.4s ease;
+}
+
+.wallpaper-card:hover:not(.is-active) .wallpaper-card-swatch {
   transform: scale(1.05);
-}
-
-.wallpaper-card.is-active .wallpaper-card-thumb img {
-  transform: scale(1);
 }
 
 .wallpaper-card-mask {
@@ -415,8 +416,8 @@ defineExpose({
   flex-shrink: 0;
   border-radius: 999px;
   padding: 4px 10px;
-  background: rgba(255, 170, 77, 0.18);
-  color: #ffd29d;
+  background: rgba(34, 211, 238, 0.18);
+  color: #7ce3f5;
   font-size: 12px;
 }
 

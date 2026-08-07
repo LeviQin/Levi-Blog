@@ -10,7 +10,7 @@
       <Footer />
     </footer>
 
-    <div class="banner-bar" :style="{ backgroundImage: backgroundImage }"></div>
+    <div class="banner-bar" :style="bannerBarStyle"></div>
 
     <float-tool-bar></float-tool-bar>
   </div>
@@ -27,8 +27,15 @@ import { useMainStore } from "@/stores/mainStore";
 
 const mainStore = useMainStore();
 
-const backgroundImage = computed(() => {
-  return mainStore.backgroundImage;
+const DEFAULT_BG = "radial-gradient(circle at 22% 30%, rgba(34,211,238,0.10), transparent 46%), radial-gradient(circle at 78% 65%, rgba(34,211,238,0.06), transparent 42%), #0d1117";
+
+// 背景支持完整 CSS background 值（渐变/纯色），空值或旧图片 url 格式则回退默认
+const bannerBarStyle = computed(() => {
+  const bg = mainStore.backgroundImage;
+  if (bg && !/^url\(/.test(bg)) {
+    return { background: bg };
+  }
+  return { background: DEFAULT_BG };
 });
 
 const route = useRoute();
@@ -104,9 +111,6 @@ const keydownEvent = (event) => {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: var(--background);
-  background-image: radial-gradient(circle at 25% 20%, rgba(34, 211, 238, 0.08), transparent 45%),
-    radial-gradient(circle at 75% 70%, rgba(34, 211, 238, 0.06), transparent 45%);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

@@ -38,7 +38,6 @@
 import { onMounted, ref } from "vue";
 import { getTagList } from "@/api/articles";
 import { getBlogSetting } from "@/api/blogSetting";
-import { getBlogWallpaper } from "@/api/wallpaper.js";
 import { useMainStore } from "@/stores/mainStore";
 import CatPet from "@/components/CatPet/Index.vue";
 
@@ -49,7 +48,6 @@ const isDoorOpening = ref(false);
 onMounted(() => {
   getTags();
   getBlogSettingInfo();
-  getWallpaper();
   playEntranceDoor();
 });
 
@@ -61,14 +59,6 @@ const updateMetaDescription = (description) => {
     document.head.appendChild(meta);
   }
   meta.content = description;
-};
-
-const getWallpaper = async () => {
-  const res = await getBlogWallpaper("levi-blog");
-  const { code, data } = res.data;
-  if (code === 200) {
-    mainStore.setWallpaperMap(data);
-  }
 };
 
 const getTags = async () => {

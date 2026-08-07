@@ -5,7 +5,7 @@ export const useMainStore = defineStore("main", {
         tagMap: [],
         wallpaperMap: [],
         blogSettingMap: {},
-        backgroundImage: ""
+        backgroundImage: "radial-gradient(circle at 22% 30%, rgba(34,211,238,0.10), transparent 46%), radial-gradient(circle at 78% 65%, rgba(34,211,238,0.06), transparent 42%), #0d1117"
     }),
     actions: {
         setTagMap(tagMap) {
