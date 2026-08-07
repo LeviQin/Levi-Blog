@@ -11,6 +11,7 @@
     </footer>
 
     <div class="banner-bar" :style="bannerBarStyle"></div>
+    <matrix-rain></matrix-rain>
 
     <float-tool-bar></float-tool-bar>
   </div>
@@ -23,6 +24,7 @@ import Footer from "./Footer/Index.vue";
 import { useRoute } from "vue-router";
 import { ElNotification } from "@/utils/element.js";
 import FloatToolBar from "../components/FloatToolBar/Index.vue";
+import MatrixRain from "../components/MatrixRain/Index.vue";
 import { useMainStore } from "@/stores/mainStore";
 
 const mainStore = useMainStore();
