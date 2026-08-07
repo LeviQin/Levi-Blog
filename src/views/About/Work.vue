@@ -1,84 +1,37 @@
 <template>
-  <div
-    class="container"
-  >
+  <div class="container">
     <div class="info">
       <h1 class="info-title">{{ props.blogSettingMap.blog_work_title }}</h1>
       <div class="info-content">
-        <div class="info-item">
-          <a href="https://open.lwim.cn/doc/" target="_blank">
-            <img class="info-img" src="@/assets/images/about/im-sdk.webp" alt="IM SDK" />
-            <div class="info-text">
-              <div class="info-item-title"><span>IM SDK</span></div>
-              <div class="info-item-desc m-hide-box"></div>
-            </div>
-          </a>
-        </div>
-        <div class="info-item">
-          <a href="https://www.kefangapp.com/#/download" target="_blank">
-            <img
-              class="info-img"
-              src="@/assets/images/about/kefang-flutter.webp"
-              alt="可访APP Flutter版"
-            />
-            <div class="info-text">
-              <div class="info-item-title"><span>可访APP Flutter版</span></div>
-              <div class="info-item-desc m-hide-box"></div>
-            </div>
-          </a>
-        </div>
-        <div class="info-item">
-          <a href="https://web.kefangapp.com/" target="_blank">
-            <img
-              class="info-img"
-              src="@/assets/images/about/kefang.webp"
-              alt="可访Web版"
-            />
-            <div class="info-text">
-              <div class="info-item-title"><span>可访Web版</span></div>
-            </div>
-          </a>
-        </div>
-        <div class="info-item">
-          <a href="https://www.lwim.cn/" target="_blank">
-            <img
-              class="info-img"
-              src="/src/assets/images/about/lingwuyun.webp"
-              alt="领兀云官网"
-            />
-            <div class="info-text">
-              <div class="info-item-title"><span>领兀云官网</span></div>
-            </div>
-          </a>
-        </div>
-        <div class="info-item">
-          <a href="https://open.lwim.cn/" target="_blank">
-            <img
-              class="info-img"
-              src="@/assets/images/about/kaifazhe.webp"
-              alt="开发者平台"
-            />
-            <div class="info-text">
-              <div class="info-item-title"><span>开发者平台</span></div>
-            </div>
-          </a>
-        </div>
-        <div class="info-item m-hide-box">
-          <a href="https://www.aiwinn.com/" target="_blank">
-            <img
-              class="info-img"
-              src="@/assets/images/about/aihuayigtong.webp"
-              alt="爱华盈通官网"
-            />
-            <div class="info-text">
-              <div class="info-item-title"><span>爱华盈通官网</span></div>
-            </div>
+        <div
+          v-for="item in displayProjects"
+          :key="item.id"
+          class="info-item"
+          :class="{ 'text-card': item.type === 'text' }"
+        >
+          <a :href="item.link || undefined" :target="item.link ? '_blank' : undefined" :rel="item.link ? 'noopener noreferrer' : undefined">
+            <template v-if="item.type === 'image'">
+              <img class="info-img" :src="item.image" :alt="item.name" />
+              <div class="info-text">
+                <div class="info-item-title"><span>{{ item.name }}</span></div>
+                <div class="info-item-desc m-hide-box">{{ item.desc }}</div>
+              </div>
+            </template>
+            <template v-else>
+              <div class="text-card-body">
+                <div class="text-card-title">{{ item.name }}</div>
+                <div class="text-card-tags">
+                  <span v-for="tag in item.tags" :key="tag" class="tag-chip">{{ tag }}</span>
+                </div>
+                <div class="text-card-desc">{{ item.desc }}</div>
+              </div>
+            </template>
           </a>
         </div>
       </div>
-      <!-- <div class="button-card">
-        <div class="button" @click="toPage">查看更多</div>
-      </div> -->
+      <div class="button-card" v-if="showAll">
+        <div class="button" @click="toPage">查看全部项目</div>
+      </div>
     </div>
     <div class="button-arrow" @click="toNextPage"></div>
   </div>
@@ -86,16 +39,26 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-import { defineEmits, defineProps } from "vue";
+import { defineEmits, defineProps, computed } from "vue";
+import { featuredProjects } from "./projects";
 
 const props = defineProps({
   blogSettingMap: {
     type: Object,
     default: () => {},
   },
+  showAll: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const router = useRouter();
+
+const displayProjects = computed(() => {
+  // 若页面空间有限，展示精选；否则展示全部由父组件决定
+  return featuredProjects;
+});
 
 const toNextPage = () => {
   emit("toNextPage");
@@ -149,35 +112,50 @@ const emit = defineEmits(["toNextPage"]);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 88%;
 }
 
 .info-title {
   color: var(--color);
   font-size: 30px;
   font-family: var(--mono-font-family);
+  margin-bottom: 24px;
 }
 
 .info-content {
   width: 1000px;
+  max-width: 92vw;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 50px;
+  gap: 24px;
 }
 
 .info-item {
   width: 100%;
-  height: 200px;
+  height: 210px;
   overflow: hidden;
   position: relative;
   border-radius: 12px;
   border: 1px solid var(--border-color);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+
+  a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+  }
 }
 
 .info-img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
   transition: all 0.4s ease-in;
 }
 
@@ -195,6 +173,7 @@ const emit = defineEmits(["toNextPage"]);
   transition: opacity 0.3s ease;
   color: var(--color);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -210,6 +189,64 @@ const emit = defineEmits(["toNextPage"]);
 
 .info-item-desc {
   margin: 10px 0;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+/* 文字卡片 */
+.text-card {
+  background: var(--theme-color);
+}
+
+.text-card a {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.text-card-body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.text-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--theme-btn-hover-color);
+  font-family: var(--mono-font-family);
+}
+
+.text-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-chip {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-family: var(--mono-font-family);
+  color: var(--theme-btn-hover-color);
+  background: rgba(34, 211, 238, 0.1);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+}
+
+.text-card-desc {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--color);
+  opacity: 0.85;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
 .button-arrow {
@@ -232,42 +269,51 @@ const emit = defineEmits(["toNextPage"]);
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 35px;
+  margin-top: 24px;
 
   .button {
-    background: rgba(0, 0, 0, 0.652);
-    padding: 7px 20px;
-    color: #fff;
+    background: var(--theme-btn-hover-color);
+    padding: 10px 28px;
+    color: #0d1117;
     cursor: pointer;
-    border-radius: 7px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 14px;
     transition: all 0.2s ease-in 0s;
+    font-family: var(--mono-font-family);
+  }
+}
+
+@media (max-width: 1200px) {
+  .info-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 }
 
 @media (max-width: 860px) {
   .info {
-    width: 85%;
-    top: 43%;
+    width: 92%;
+    top: 45%;
+    max-height: 80%;
+  }
+
+  .info-title {
+    font-size: 1.4rem;
+    margin-bottom: 16px;
   }
 
   .info-content {
     grid-template-columns: repeat(1, 1fr);
-    padding: 0.5rem 0 0 0 !important;
     width: 100% !important;
-    gap: 10px;
-  }
-
-  .info-title {
-    font-size: 1.6rem;
-    padding-bottom: 0 !important;
-    text-shadow: 0 5px 15px rgb(0, 0, 0) !important;
+    gap: 12px;
+    overflow-y: auto;
+    max-height: 70%;
   }
 
   .info-item {
-    height: 3.5rem !important;
+    height: 100px !important;
     width: 100% !important;
-    backdrop-filter: blur(15px);
-    text-shadow: 0 5px 15px rgb(0, 0, 0) !important;
   }
 
   .info-item a {
@@ -279,6 +325,7 @@ const emit = defineEmits(["toNextPage"]);
     width: 4.5rem !important;
     display: block !important;
     border-radius: 5px 0 0 5px;
+    height: 100% !important;
   }
 
   .info-text {
@@ -294,8 +341,29 @@ const emit = defineEmits(["toNextPage"]);
     color: var(--color);
   }
 
+  .info-item-desc {
+    display: none;
+  }
+
+  .text-card a {
+    padding: 12px;
+  }
+
+  .text-card-title {
+    font-size: 15px;
+  }
+
+  .text-card-tags {
+    display: none;
+  }
+
+  .text-card-desc {
+    font-size: 12px;
+    -webkit-line-clamp: 2;
+  }
+
   .button-card {
-    margin-top: 10px;
+    margin-top: 14px;
   }
 }
 </style>
