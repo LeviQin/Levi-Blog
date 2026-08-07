@@ -104,8 +104,9 @@ const keydownEvent = (event) => {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: var(--theme-color);
-  background-image: url(@/assets/images/banner/gufengnv.jpg);
+  background-color: var(--background);
+  background-image: radial-gradient(circle at 25% 20%, rgba(34, 211, 238, 0.08), transparent 45%),
+    radial-gradient(circle at 75% 70%, rgba(34, 211, 238, 0.06), transparent 45%);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
