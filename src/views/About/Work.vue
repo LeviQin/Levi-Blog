@@ -29,7 +29,7 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-import { defineEmits, defineProps, computed } from "vue";
+import { defineEmits, defineProps, computed, ref, onMounted, onBeforeUnmount } from "vue";
 import { featuredProjects } from "./projects";
 
 const props = defineProps({
@@ -45,9 +45,24 @@ const props = defineProps({
 
 const router = useRouter();
 
+// 移动端(≤860px)最多显示 4 个作品
+const isMobile = ref(false);
+
+const updateViewport = () => {
+  isMobile.value = window.innerWidth <= 860;
+};
+
+onMounted(() => {
+  updateViewport();
+  window.addEventListener("resize", updateViewport, { passive: true });
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", updateViewport);
+});
+
 const displayProjects = computed(() => {
-  // 若页面空间有限，展示精选；否则展示全部由父组件决定
-  return featuredProjects;
+  return isMobile.value ? featuredProjects.slice(0, 4) : featuredProjects;
 });
 
 const toNextPage = () => {

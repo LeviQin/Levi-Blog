@@ -4,6 +4,7 @@ export const projects = [
     id: 12,
     name: "归期本（SubEase）",
     link: "",
+    isApp: true,
     desc: "个人独立开发的微信小程序，订阅管理与到期提醒工具。支持微信登录、订阅增删改查与筛选、订阅消息到期推送提醒、多币种汇率折算与支出分析、CSV 数据导出（带鉴权与越权防护）、反馈闭环与轻量埋点。前端 uni-app + Pinia，后端 Koa2 + MySQL + JWT + Socket.IO。",
     tags: ["uni-app", "Vue3", "Pinia", "Koa2"],
   },
@@ -11,6 +12,7 @@ export const projects = [
     id: 13,
     name: "口袋任务（pocket-task）",
     link: "",
+    isApp: true,
     desc: "个人独立开发的 uni-app 多端小程序，任务管理与互动场景。基于 Vue 3 构建，内置 Pinia 状态管理、Socket.IO 实时能力，以及请求层鉴权与自动刷新 Token 逻辑，面向微信小程序等多端运行。",
     tags: ["uni-app", "Vue3", "Pinia", "Socket.IO"],
   },
@@ -93,5 +95,5 @@ export const projects = [
   },
 ];
 
-// 作品页精选（最新项目优先）
-export const featuredProjects = projects.slice(0, 6);
+// 作品页精选（排除小程序项目，保留 6 个工作项目；小程序只在完整作品集页显示）
+export const featuredProjects = projects.filter((p) => !p.isApp).slice(0, 6);
