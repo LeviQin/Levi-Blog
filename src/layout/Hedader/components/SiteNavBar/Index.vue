@@ -202,7 +202,7 @@ const handleCommandToPage = (val) => {
     color: var(--btn-tag-bg-color);
     text-shadow:
       0 1px 3px rgba(0, 0, 0, 0.6),
-      0 0 10px rgba(255, 139, 38, 0.35);
+      0 0 10px rgba(34, 211, 238, 0.35);
   }
 }
 
@@ -210,7 +210,7 @@ const handleCommandToPage = (val) => {
   color: var(--btn-tag-bg-color);
   text-shadow:
     0 1px 3px rgba(0, 0, 0, 0.5),
-    0 0 8px rgba(255, 139, 38, 0.35);
+    0 0 8px rgba(34, 211, 238, 0.35);
 }
 
 svg.icon {

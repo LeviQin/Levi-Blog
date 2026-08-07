@@ -19,6 +19,6 @@ const onDrop = async (event) => { isDragover.value = false; if (!props.drag) ret
 <style scoped>
 .el-upload { display: block; width: 100%; }
 .el-upload.is-drag { cursor: pointer; }
-.el-upload-dragger { border: 2px dashed rgba(90,140,189,.28); border-radius: 18px; background: rgba(255,255,255,.4); padding: 26px 18px; text-align: center; transition: all .2s ease; }
-.el-upload.is-dragover .el-upload-dragger { border-color: var(--theme-btn-hover-color,#5a8cbd); background: rgba(90,140,189,.08); }
+.el-upload-dragger { border: 2px dashed rgba(34,211,238,.28); border-radius: 18px; background: rgba(255,255,255,.4); padding: 26px 18px; text-align: center; transition: all .2s ease; }
+.el-upload.is-dragover .el-upload-dragger { border-color: var(--theme-btn-hover-color,#22d3ee); background: rgba(34,211,238,.08); }
 </style>

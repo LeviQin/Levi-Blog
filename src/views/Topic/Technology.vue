@@ -231,7 +231,7 @@ const getData = async () => {
   height: 190px;
   top: -74px;
   right: -42px;
-  background: radial-gradient(circle, rgba(90, 140, 189, 0.18), transparent 68%);
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.18), transparent 68%);
 }
 
 .technology-overview::after {
@@ -239,7 +239,7 @@ const getData = async () => {
   height: 132px;
   bottom: -58px;
   left: -24px;
-  background: radial-gradient(circle, rgba(255, 139, 38, 0.15), transparent 70%);
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.15), transparent 70%);
 }
 
 .technology-overview-main,
@@ -261,7 +261,7 @@ const getData = async () => {
   min-height: 30px;
   padding: 0 12px;
   border-radius: 999px;
-  background: rgba(255, 139, 38, 0.14);
+  background: rgba(34, 211, 238, 0.14);
   color: var(--btn-tag-bg-color);
   font-size: 12px;
   font-weight: 700;
@@ -299,7 +299,7 @@ const getData = async () => {
   padding: 16px 18px;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.58);
-  border: 1px solid rgba(90, 140, 189, 0.12);
+  border: 1px solid rgba(34, 211, 238, 0.12);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
   backdrop-filter: blur(10px);
 }
@@ -324,7 +324,7 @@ const getData = async () => {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(90, 140, 189, 0.1);
+  border: 1px solid rgba(34, 211, 238, 0.1);
   box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
   transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
 }
@@ -333,7 +333,7 @@ const getData = async () => {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(90, 140, 189, 0.04));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(34, 211, 238, 0.04));
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.24s ease;
@@ -364,13 +364,13 @@ const getData = async () => {
 
 .article-item-entry {
   gap: 2px;
-  color: rgba(90, 140, 189, 0.92);
+  color: rgba(34, 211, 238, 0.92);
 }
 
 @media (hover: hover) {
   .article-item:hover {
     transform: translateY(-4px);
-    border-color: rgba(90, 140, 189, 0.2);
+    border-color: rgba(34, 211, 238, 0.2);
     box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
   }
 
@@ -399,7 +399,7 @@ const getData = async () => {
   justify-content: center;
   width: 42px;
   height: 42px;
-  box-shadow: 0 12px 24px rgba(255, 139, 38, 0.24);
+  box-shadow: 0 12px 24px rgba(34, 211, 238, 0.24);
 
   .bi {
     font-size: 18px !important;

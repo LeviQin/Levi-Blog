@@ -40,7 +40,7 @@ const copyResult = (val) => {
 .pw-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
 .pw-toolbar-spacer { flex: 1; }
 .pw-btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 20px; font-size: 13px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: all .2s; outline: none; }
-.pw-btn-encrypt { background: var(--btn-tag-bg-color); color: #fff; &:hover { background: #e67a1a; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,139,38,.3); } }
+.pw-btn-encrypt { background: var(--btn-tag-bg-color); color: #fff; &:hover { background: #e67a1a; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(34,211,238,.3); } }
 .pw-btn-clear { background: transparent; color: var(--el-text-color-secondary); border: 1.5px solid var(--el-border-color); &:hover { background: var(--el-fill-color-light); color: var(--el-text-color-primary); } }
 .pw-io-grid { display: flex; align-items: flex-start; gap: 16px; }
 .pw-io-block { flex: 1; min-width: 0; }

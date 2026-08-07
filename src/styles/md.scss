@@ -55,7 +55,7 @@
   font-weight: 700;
   line-height: 1.4;
   padding-bottom: 0.4rem;
-  border-bottom: 2px solid rgba(255, 139, 38, 0.2);
+  border-bottom: 2px solid rgba(34, 211, 238, 0.2);
 
   &:hover {
     transition: all 0.4s;
@@ -169,7 +169,7 @@
 
 // ===== 引用块 =====
 .md-editor blockquote {
-  background-color: rgba(255, 139, 38, 0.04);
+  background-color: rgba(34, 211, 238, 0.04);
   border-left: 4px solid var(--btn-tag-bg-color) !important;
   margin: 1.2rem 0;
   padding: 1rem 1.2rem;
@@ -194,9 +194,9 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 139, 38, 0.3) 20%,
-    rgba(90, 140, 189, 0.3) 50%,
-    rgba(255, 139, 38, 0.3) 80%,
+    rgba(34, 211, 238, 0.3) 20%,
+    rgba(34, 211, 238, 0.3) 50%,
+    rgba(34, 211, 238, 0.3) 80%,
     transparent 100%
   );
 }
@@ -241,7 +241,7 @@
   }
 
   &:hover {
-    background: rgba(255, 139, 38, 0.06);
+    background: rgba(34, 211, 238, 0.06);
   }
 }
 
@@ -308,7 +308,7 @@ html[data-theme='dark'] {
   }
 
   .md-editor blockquote {
-    background-color: rgba(255, 139, 38, 0.06);
+    background-color: rgba(34, 211, 238, 0.06);
   }
 
   .md-editor td {

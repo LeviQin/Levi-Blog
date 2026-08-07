@@ -22,8 +22,8 @@ const handleChange = (event) => { const value = event.target.value; emit('update
 
 <style scoped>
 .el-select { position: relative; display: inline-flex; width: 100%; }
-.el-select__wrapper { width: 100%; min-height: 36px; padding: 0 34px 0 12px; border-radius: 10px; border: 1px solid rgba(90,140,189,.18); background: rgba(255,255,255,.92); color: var(--black-text-color,#181a2a); font: inherit; outline: none; appearance: none; box-sizing: border-box; }
-.el-select__wrapper:focus { border-color: var(--theme-btn-hover-color,#5a8cbd); box-shadow: 0 0 0 3px rgba(90,140,189,.14); }
+.el-select__wrapper { width: 100%; min-height: 36px; padding: 0 34px 0 12px; border-radius: 10px; border: 1px solid rgba(34,211,238,.18); background: rgba(255,255,255,.92); color: var(--black-text-color,#181a2a); font: inherit; outline: none; appearance: none; box-sizing: border-box; }
+.el-select__wrapper:focus { border-color: var(--theme-btn-hover-color,#22d3ee); box-shadow: 0 0 0 3px rgba(34,211,238,.14); }
 .el-select__caret { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #6b7280; }
 .el-select--large .el-select__wrapper { min-height: 40px; }
 .is-disabled .el-select__wrapper { cursor: not-allowed; opacity: .75; }

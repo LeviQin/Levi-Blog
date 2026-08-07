@@ -309,7 +309,7 @@ defineExpose({
   }
 
   &.primary {
-    background: linear-gradient(135deg, var(--btn-tag-bg-color), #ff9a43);
+    background: linear-gradient(135deg, var(--btn-tag-bg-color), #22d3ee);
     color: #fff;
     border-color: transparent;
   }
@@ -347,7 +347,7 @@ defineExpose({
     transform: translateZ(0);
     border-color: rgba(255, 170, 77, 0.65);
     background: rgba(255, 170, 77, 0.1);
-    box-shadow: 0 18px 40px rgba(255, 139, 38, 0.16);
+    box-shadow: 0 18px 40px rgba(34, 211, 238, 0.16);
   }
 }
 

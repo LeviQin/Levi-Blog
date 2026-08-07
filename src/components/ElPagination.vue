@@ -168,7 +168,7 @@ const changePage = (page) => {
     rgba(255, 255, 255, 0.82),
     rgba(255, 255, 255, 0.62)
   );
-  border: 1px solid rgba(90, 140, 189, 0.14);
+  border: 1px solid rgba(34, 211, 238, 0.14);
   box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
   backdrop-filter: blur(12px);
 }
@@ -177,7 +177,7 @@ const changePage = (page) => {
   height: 38px;
   padding: 0 12px;
   border-radius: 12px;
-  border: 1px solid rgba(90, 140, 189, 0.16);
+  border: 1px solid rgba(34, 211, 238, 0.16);
   background: rgba(255, 255, 255, 0.92);
   color: var(--black-text-color, #181a2a);
   cursor: pointer;
@@ -194,25 +194,25 @@ const changePage = (page) => {
 
 .page-btn:hover:not(:disabled) {
   transform: translateY(-1px);
-  border-color: rgba(90, 140, 189, 0.35);
-  box-shadow: 0 12px 24px rgba(90, 140, 189, 0.16);
+  border-color: rgba(34, 211, 238, 0.35);
+  box-shadow: 0 12px 24px rgba(34, 211, 238, 0.16);
 }
 
 .page-btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(90, 140, 189, 0.18);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.18);
 }
 
 .page-btn.is-active {
   background: linear-gradient(
     135deg,
-    var(--theme-btn-hover-color, #5a8cbd),
+    var(--theme-btn-hover-color, #22d3ee),
     #79a7d4
   );
   color: #fff;
   border-color: transparent;
   transform: translateY(-1px);
-  box-shadow: 0 14px 28px rgba(90, 140, 189, 0.28);
+  box-shadow: 0 14px 28px rgba(34, 211, 238, 0.28);
 }
 
 .page-btn-arrow {

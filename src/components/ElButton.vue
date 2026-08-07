@@ -29,9 +29,9 @@ const handleClick = (event) => {
 </script>
 
 <style scoped>
-.el-button { --button-bg: rgba(255,255,255,.88); --button-border: rgba(90,140,189,.18); --button-color: var(--black-text-color,#181a2a); min-height: 32px; padding: 8px 18px; border-radius: 10px; border: 1px solid var(--button-border); background: var(--button-bg); color: var(--button-color); display: inline-flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; font: inherit; line-height: 1; transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease; box-sizing: border-box; }
+.el-button { --button-bg: rgba(255,255,255,.88); --button-border: rgba(34,211,238,.18); --button-color: var(--black-text-color,#181a2a); min-height: 32px; padding: 8px 18px; border-radius: 10px; border: 1px solid var(--button-border); background: var(--button-bg); color: var(--button-color); display: inline-flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; font: inherit; line-height: 1; transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease; box-sizing: border-box; }
 .el-button:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(15,23,42,.08); }
-.el-button--primary { --button-bg: linear-gradient(135deg,var(--theme-btn-hover-color,#5a8cbd),#7da7d1); --button-border: transparent; --button-color: #fff; }
+.el-button--primary { --button-bg: linear-gradient(135deg,var(--theme-btn-hover-color,#22d3ee),#7da7d1); --button-border: transparent; --button-color: #fff; }
 .el-button--info { --button-bg: rgba(144,147,153,.14); --button-border: rgba(144,147,153,.2); --button-color: #606266; }
 .el-button--large { min-height: 40px; padding: 10px 20px; }
 .is-circle { width: 40px; min-width: 40px; padding: 0; border-radius: 999px; }

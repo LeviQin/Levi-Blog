@@ -135,7 +135,7 @@ const handleOverlayClose = () => {
   width: 30px;
   height: 30px;
   border-radius: 999px;
-  background: rgba(90, 140, 189, 0.08);
+  background: rgba(34, 211, 238, 0.08);
   cursor: pointer;
   font-size: 18px;
 }

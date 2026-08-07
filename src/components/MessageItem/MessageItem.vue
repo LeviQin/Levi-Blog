@@ -10,7 +10,7 @@
           <div class="item-name">
             <div
               class="item-author"
-              :style="{ color: message.is_admin ? '#5a8cbd' : '' }"
+              :style="{ color: message.is_admin ? '#22d3ee' : '' }"
             >
               {{ message.user_nickname }}
             </div>

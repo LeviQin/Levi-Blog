@@ -192,7 +192,7 @@ const onRequestClose = () => {
   justify-content: center;
   border: none;
   border-radius: 50%;
-  background: rgba(90, 140, 189, 0.08);
+  background: rgba(34, 211, 238, 0.08);
   cursor: pointer;
   line-height: 1;
   box-sizing: border-box;

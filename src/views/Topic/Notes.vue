@@ -355,7 +355,7 @@ const getData = async () => {
   height: 180px;
   top: -70px;
   right: -40px;
-  background: radial-gradient(circle, rgba(90, 140, 189, 0.18), transparent 68%);
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.18), transparent 68%);
 }
 
 .notes-overview::after {
@@ -363,7 +363,7 @@ const getData = async () => {
   height: 128px;
   left: -22px;
   bottom: -56px;
-  background: radial-gradient(circle, rgba(255, 139, 38, 0.14), transparent 70%);
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.14), transparent 70%);
 }
 
 .notes-overview-main,
@@ -385,7 +385,7 @@ const getData = async () => {
   min-height: 30px;
   padding: 0 12px;
   border-radius: 999px;
-  background: rgba(255, 139, 38, 0.14);
+  background: rgba(34, 211, 238, 0.14);
   color: var(--btn-tag-bg-color);
   font-size: 12px;
   font-weight: 700;
@@ -423,7 +423,7 @@ const getData = async () => {
   padding: 16px 18px;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.58);
-  border: 1px solid rgba(90, 140, 189, 0.12);
+  border: 1px solid rgba(34, 211, 238, 0.12);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
   backdrop-filter: blur(10px);
 }
@@ -475,7 +475,7 @@ const getData = async () => {
   overflow: hidden;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.58);
-  border: 1px solid rgba(90, 140, 189, 0.12);
+  border: 1px solid rgba(34, 211, 238, 0.12);
   box-shadow:
     0 18px 40px rgba(15, 23, 42, 0.12),
     inset 0 0 0 1px rgba(255, 255, 255, 0.2);

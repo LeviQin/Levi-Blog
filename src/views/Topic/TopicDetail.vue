@@ -460,12 +460,12 @@ const getArticleDetail = async () => {
   border-radius: 14px;
   font-size: 13px;
   color: var(--theme-btn-hover-color);
-  background: rgba(90, 140, 189, 0.1);
+  background: rgba(34, 211, 238, 0.1);
   transition: all 0.2s;
   cursor: pointer;
 
   &:hover {
-    background: rgba(90, 140, 189, 0.2);
+    background: rgba(34, 211, 238, 0.2);
   }
 }
 
@@ -487,7 +487,7 @@ const getArticleDetail = async () => {
   cursor: pointer;
   user-select: none;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background: rgba(255, 139, 38, 0.1);
+  background: rgba(34, 211, 238, 0.1);
   color: var(--btn-tag-bg-color);
   border: 1px solid transparent;
 
@@ -500,7 +500,7 @@ const getArticleDetail = async () => {
     background: var(--btn-tag-bg-color);
     color: #fff;
     transform: translateY(-1px);
-    box-shadow: 0 4px 15px rgba(255, 139, 38, 0.3);
+    box-shadow: 0 4px 15px rgba(34, 211, 238, 0.3);
 
     .bi {
       transform: scale(1.15);

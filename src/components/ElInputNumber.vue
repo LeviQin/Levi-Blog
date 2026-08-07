@@ -23,8 +23,8 @@ defineExpose({ focus: () => inputRef.value?.focus() });
 </script>
 
 <style scoped>
-.el-input-number { display: inline-flex; align-items: stretch; width: 100%; border: 1px solid rgba(90,140,189,.18); border-radius: 10px; overflow: hidden; background: rgba(255,255,255,.92); }
+.el-input-number { display: inline-flex; align-items: stretch; width: 100%; border: 1px solid rgba(34,211,238,.18); border-radius: 10px; overflow: hidden; background: rgba(255,255,255,.92); }
 .el-input-number input { flex: 1; min-width: 0; border: none; outline: none; padding: 0 12px; background: transparent; font: inherit; color: var(--black-text-color,#181a2a); }
-.el-input-number button { width: 34px; border: none; background: rgba(90,140,189,.08); color: var(--black-text-color,#181a2a); cursor: pointer; }
+.el-input-number button { width: 34px; border: none; background: rgba(34,211,238,.08); color: var(--black-text-color,#181a2a); cursor: pointer; }
 .el-input-number button:disabled { opacity: .5; cursor: not-allowed; }
 </style>

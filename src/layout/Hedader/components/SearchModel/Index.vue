@@ -240,7 +240,7 @@ defineExpose({
     rgba(255, 255, 255, 0.92),
     rgba(245, 249, 252, 0.82)
   );
-  box-shadow: inset 0 0 0 1px rgba(90, 140, 189, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.1);
 }
 
 .search-panel-meta {
@@ -257,7 +257,7 @@ defineExpose({
   min-height: 26px;
   padding: 0 10px;
   border-radius: 999px;
-  background: rgba(255, 139, 38, 0.14);
+  background: rgba(34, 211, 238, 0.14);
   color: var(--btn-tag-bg-color);
   font-size: 11px;
   font-weight: 700;
@@ -286,7 +286,7 @@ defineExpose({
   min-height: 26px;
   padding: 0 10px;
   border-radius: 999px;
-  background: rgba(90, 140, 189, 0.12);
+  background: rgba(34, 211, 238, 0.12);
   color: var(--theme-btn-hover-color);
   font-size: 12px;
   font-weight: 600;
@@ -301,7 +301,7 @@ defineExpose({
 .search-empty-state {
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.68);
-  box-shadow: inset 0 0 0 1px rgba(90, 140, 189, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.08);
 }
 
 .search-result-panel {
@@ -336,7 +336,7 @@ defineExpose({
   min-height: 34px;
   padding: 0 10px;
   border-radius: 999px;
-  background: rgba(255, 139, 38, 0.14);
+  background: rgba(34, 211, 238, 0.14);
   color: var(--btn-tag-bg-color);
   font-size: 14px;
 }
@@ -362,7 +362,7 @@ defineExpose({
   padding: 14px 16px;
   cursor: pointer;
   border-radius: 16px;
-  border: 1px solid rgba(90, 140, 189, 0.12);
+  border: 1px solid rgba(34, 211, 238, 0.12);
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.92),
@@ -386,7 +386,7 @@ defineExpose({
   min-height: 30px;
   padding: 0 10px;
   border-radius: 999px;
-  background: rgba(90, 140, 189, 0.12);
+  background: rgba(34, 211, 238, 0.12);
   color: var(--theme-btn-hover-color);
   font-size: 12px;
   font-weight: 600;
@@ -397,7 +397,7 @@ defineExpose({
   .result-content-item:hover {
     transform: translateY(-2px);
     box-shadow: 0 14px 26px rgba(50, 72, 95, 0.1);
-    border-color: rgba(90, 140, 189, 0.24);
+    border-color: rgba(34, 211, 238, 0.24);
   }
 
   .result-content-item:hover .result-content-item-title {
@@ -466,12 +466,12 @@ defineExpose({
 }
 
 .no-data-icon {
-  background: rgba(255, 139, 38, 0.12);
+  background: rgba(34, 211, 238, 0.12);
   color: var(--btn-tag-bg-color);
 }
 
 .search-empty-icon {
-  background: rgba(90, 140, 189, 0.12);
+  background: rgba(34, 211, 238, 0.12);
   color: var(--theme-btn-hover-color);
 }
 

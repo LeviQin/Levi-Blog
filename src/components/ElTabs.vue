@@ -125,7 +125,7 @@ const tabsClasses = computed(() => {
 }
 
 .el-tabs__item {
-  border: 1px solid rgba(90, 140, 189, 0.18);
+  border: 1px solid rgba(34, 211, 238, 0.18);
   background: rgba(255, 255, 255, 0.9);
   color: var(--black-text-color, #181a2a);
   border-radius: 10px;
@@ -134,7 +134,7 @@ const tabsClasses = computed(() => {
 }
 
 .el-tabs__item.is-active {
-  background: var(--theme-btn-hover-color, #5a8cbd);
+  background: var(--theme-btn-hover-color, #22d3ee);
   color: #fff;
   border-color: transparent;
 }

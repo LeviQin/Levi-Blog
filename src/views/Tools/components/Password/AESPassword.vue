@@ -218,13 +218,13 @@ const copyResult = () => {
 .pw-btn-encrypt {
   background: var(--btn-tag-bg-color);
   color: #fff;
-  &:hover { background: #e67a1a; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,139,38,.3); }
+  &:hover { background: #e67a1a; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(34,211,238,.3); }
 }
 
 .pw-btn-decrypt {
   background: var(--theme-btn-hover-color);
   color: #fff;
-  &:hover { background: #4a7ca8; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(90,140,189,.3); }
+  &:hover { background: #4a7ca8; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(34,211,238,.3); }
 }
 
 .pw-btn-clear {

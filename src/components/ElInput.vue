@@ -73,19 +73,19 @@ defineExpose({ focus: () => (isTextarea.value ? textareaRef.value?.focus() : inp
 <style scoped>
 .el-input,.el-textarea { width: 100%; }
 .el-input { display: inline-flex; align-items: stretch; }
-.el-input__wrapper { width: 100%; min-height: 38px; display: inline-flex; align-items: center; gap: 8px; padding: 0 12px; border-radius: 10px; border: 1px solid rgba(90,140,189,.18); background: rgba(255,255,255,.92); box-sizing: border-box; transition: border-color .2s ease, box-shadow .2s ease; }
-.el-input__wrapper.is-focus { border-color: var(--theme-btn-hover-color,#5a8cbd); box-shadow: 0 0 0 3px rgba(90,140,189,.14); }
+.el-input__wrapper { width: 100%; min-height: 38px; display: inline-flex; align-items: center; gap: 8px; padding: 0 12px; border-radius: 10px; border: 1px solid rgba(34,211,238,.18); background: rgba(255,255,255,.92); box-sizing: border-box; transition: border-color .2s ease, box-shadow .2s ease; }
+.el-input__wrapper.is-focus { border-color: var(--theme-btn-hover-color,#22d3ee); box-shadow: 0 0 0 3px rgba(34,211,238,.14); }
 .el-input--large .el-input__wrapper { min-height: 42px; }
 .el-input__inner { flex: 1; min-width: 0; border: none; outline: none; background: transparent; color: var(--black-text-color,#181a2a); font: inherit; }
 .el-input__prefix,.el-input__suffix,.el-input-group__append { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.el-input__clear { position: relative; width: 20px; height: 20px; border: none; border-radius: 999px; background: rgba(90,140,189,.12); color: #8b95a7; cursor: pointer; padding: 0; transition: background-color .2s ease, color .2s ease, transform .2s ease; }
+.el-input__clear { position: relative; width: 20px; height: 20px; border: none; border-radius: 999px; background: rgba(34,211,238,.12); color: #8b95a7; cursor: pointer; padding: 0; transition: background-color .2s ease, color .2s ease, transform .2s ease; }
 .el-input__clear::before,
 .el-input__clear::after { content: ""; position: absolute; left: 50%; top: 50%; width: 10px; height: 1.6px; border-radius: 999px; background: currentColor; transform-origin: center; }
 .el-input__clear::before { transform: translate(-50%, -50%) rotate(45deg); }
 .el-input__clear::after { transform: translate(-50%, -50%) rotate(-45deg); }
-.el-input__clear:hover { background: rgba(90,140,189,.2); color: var(--theme-btn-hover-color,#5a8cbd); transform: scale(1.05); }
+.el-input__clear:hover { background: rgba(34,211,238,.2); color: var(--theme-btn-hover-color,#22d3ee); transform: scale(1.05); }
 .el-input-group__append { margin-left: 8px; }
-.el-textarea__inner { width: 100%; min-height: 96px; border-radius: 12px; border: 1px solid rgba(90,140,189,.18); background: rgba(255,255,255,.92); box-sizing: border-box; padding: 10px 12px; color: var(--black-text-color,#181a2a); font: inherit; resize: vertical; outline: none; }
-.el-textarea__inner:focus { border-color: var(--theme-btn-hover-color,#5a8cbd); box-shadow: 0 0 0 3px rgba(90,140,189,.14); }
+.el-textarea__inner { width: 100%; min-height: 96px; border-radius: 12px; border: 1px solid rgba(34,211,238,.18); background: rgba(255,255,255,.92); box-sizing: border-box; padding: 10px 12px; color: var(--black-text-color,#181a2a); font: inherit; resize: vertical; outline: none; }
+.el-textarea__inner:focus { border-color: var(--theme-btn-hover-color,#22d3ee); box-shadow: 0 0 0 3px rgba(34,211,238,.14); }
 .is-disabled { opacity: .75; }
 </style>

@@ -140,7 +140,7 @@ onMounted(() => {
   width: 68px;
   height: 68px;
   border-radius: 18px;
-  background: linear-gradient(135deg, rgba(255,139,38,0.15) 0%, rgba(255,139,38,0.04) 100%);
+  background: linear-gradient(135deg, rgba(34,211,238,0.15) 0%, rgba(34,211,238,0.04) 100%);
   margin-bottom: 18px;
 }
 
@@ -189,7 +189,7 @@ onMounted(() => {
   &.active {
     background: var(--btn-tag-bg-color);
     color: #fff;
-    box-shadow: 0 4px 14px rgba(255,139,38,.3);
+    box-shadow: 0 4px 14px rgba(34,211,238,.3);
 
     .ed-nav-icon { color: #fff; }
     .ed-nav-badge { background: rgba(255,255,255,.2); color: #fff; }
@@ -215,7 +215,7 @@ onMounted(() => {
   padding: 1px 6px;
   border-radius: 999px;
   color: var(--btn-tag-bg-color);
-  background: rgba(255,139,38,.12);
+  background: rgba(34,211,238,.12);
   transition: background .2s, color .2s;
   white-space: nowrap;
 }
