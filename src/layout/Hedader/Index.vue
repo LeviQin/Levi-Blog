@@ -7,7 +7,7 @@
       <div class="log-crad">
         <div class="log-text" @click="router.push('/')">
           <span class="logo-dot"></span>
-          <h1>{{ blogSettingMap.blog_name }}</h1>
+          <h1>Levi:~$</h1>
         </div>
         <site-nav-bar></site-nav-bar>
       </div>
@@ -102,7 +102,10 @@ const showSearchModel = () => {
   }
 
   &.is-scrolled {
-    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
+    background-color: rgba(var(--header-bar-bg-color), 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 }
 
@@ -135,27 +138,28 @@ const showSearchModel = () => {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: var(--btn-tag-bg-color);
-    box-shadow: 0 0 8px rgba(255, 139, 38, 0.6);
+    background: var(--theme-btn-hover-color);
+    box-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
     transition: all 0.4s ease;
     flex-shrink: 0;
   }
 
   &:hover .logo-dot {
     transform: scale(1.5);
-    box-shadow: 0 0 16px rgba(255, 139, 38, 0.8), 0 0 32px rgba(255, 139, 38, 0.3);
+    box-shadow: 0 0 16px rgba(34, 211, 238, 0.8), 0 0 32px rgba(34, 211, 238, 0.3);
   }
 
   h1 {
-    font-size: 24px;
+    font-family: var(--mono-font-family);
+    font-size: 20px;
     margin: 0;
     margin-right: 20px;
     color: var(--nav-bar-text-color);
     font-weight: 600;
-    background: linear-gradient(135deg, var(--nav-bar-text-color) 0%, var(--theme-btn-hover-color) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    background: none;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: var(--nav-bar-text-color);
+    background-clip: initial;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -182,7 +186,7 @@ const showSearchModel = () => {
   }
 
   &:hover {
-    background: rgba(255, 139, 38, 0.12);
+    background: rgba(34, 211, 238, 0.12);
 
     i {
       color: var(--btn-tag-bg-color);
@@ -227,7 +231,7 @@ const showSearchModel = () => {
     }
 
     h1 {
-      font-size: 18px;
+      font-size: 16px;
       margin-right: 10px;
     }
   }
