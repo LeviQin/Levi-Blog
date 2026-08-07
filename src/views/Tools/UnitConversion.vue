@@ -7,175 +7,160 @@
       />
       <meta
         name="description"
-        content="长度重量单位换算工具，为跨境电商卖家提供在线单位转换器、非常用长度单位、重量转换换算、非常用重量单位等换算功能，可以帮助卖家快速准确地进行单位换算，方便处理跨境电商业务中的尺寸和重量问题。"
+        content="长度重量单位换算工具，支持长度、质量、面积、时间、温度、体积、数据、速度、压力、角度、功率、电量、电流、电压、频率、力、密度等多种单位的互相转换。"
       />
       <meta
         property="og:description"
-        content="长度重量单位换算工具，为跨境电商卖家提供在线单位转换器、非常用长度单位、重量转换换算、非常用重量单位等换算功能，可以帮助卖家快速准确地进行单位换算，方便处理跨境电商业务中的尺寸和重量问题。"
+        content="长度重量单位换算工具，支持长度、质量、面积、时间、温度、体积、数据、速度、压力、角度、功率、电量、电流、电压、频率、力、密度等多种单位的互相转换。"
       />
     </Head>
-    <div class="unit-conversion theme-bg-color all-tool-container w">
+    <div class="unit-conversion w">
       <div class="unit-conversion-container" ref="unitConversionContainerRef">
-        <div class="unit-conversion-header">
-          <div class="unit-conversion-title">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-danweihuansuanx"></use>
-            </svg>
-            <h1>单位换算</h1>
+        <!-- 头部 -->
+        <header class="uc-header">
+          <div class="uc-header-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--theme-btn-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
           </div>
-        </div>
-        <div class="main-content">
-          <div class="conversion-panel">
-            <div class="select-type-box">
-              <div class="select-type-label">
-                <el-icon><Operation /></el-icon>
-                <span>选择类型</span>
-              </div>
-              <el-select
-                v-model="typeVal"
-                class="type-select"
-                placeholder="选择转换类型"
-                size="large"
-                @change="selectType"
-                filterable
+          <div class="uc-header-text">
+            <h1>单位换算</h1>
+            <p>支持 17 种单位类型的互相转换，输入即出结果</p>
+          </div>
+        </header>
+
+        <div class="uc-layout">
+          <!-- 主操作区 -->
+          <main class="uc-main">
+            <!-- 类型选择卡片 -->
+            <div class="uc-type-grid">
+              <button
+                v-for="t in types"
+                :key="t.value"
+                class="uc-type-chip"
+                :class="{ active: typeVal === t.value }"
+                @click="selectType(t.value)"
               >
-                <el-option
-                  v-for="item in types"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                />
-              </el-select>
+                {{ t.label }}
+              </button>
             </div>
-            <div class="conversion-section">
-              <div class="conversion-label">
-                <el-icon><Edit /></el-icon>
+
+            <!-- 输入区 -->
+            <section class="uc-section">
+              <div class="uc-section-label">
+                <span class="uc-dot"></span>
                 <span>输入数据</span>
               </div>
-              <div class="conversion-inputs">
+              <div class="uc-input-row">
                 <el-input-number
                   v-model="dataVal"
-                  class="data-input"
+                  class="uc-number-input"
                   placeholder="输入数值"
                   size="large"
                   controls-position="right"
                   :min="0"
                   @input="changeData"
-                >
-                </el-input-number>
+                />
                 <el-select
                   v-model="dataUnit"
-                  class="unit-select"
+                  class="uc-unit-select"
                   placeholder="选择单位"
                   size="large"
                   filterable
                   @change="changeData"
                 >
-                  <el-option
-                    v-for="item in dataMap.dataUnits"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  />
+                  <el-option v-for="item in dataMap.dataUnits" :key="item.value" :label="item.label" :value="item.value" />
                 </el-select>
               </div>
+            </section>
+
+            <!-- 交换 -->
+            <div class="uc-exchange">
+              <div class="uc-exchange-line"></div>
+              <button class="uc-exchange-btn" type="button" @click="exchangeData" title="交换单位">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 16 12 21 17 16"/><polyline points="7 8 12 3 17 8"/></svg>
+              </button>
+              <div class="uc-exchange-line"></div>
             </div>
-            <div class="exchange-button-container">
-              <div class="exchange-line"></div>
-              <el-button
-                class="exchange-button"
-                circle
-                @click="exchangeData"
-                type="primary"
-              >
-                <el-icon><Sort /></el-icon>
-              </el-button>
-              <div class="exchange-line"></div>
-            </div>
-            <div class="conversion-section">
-              <div class="conversion-label">
-                <el-icon><DataAnalysis /></el-icon>
+
+            <!-- 结果区 -->
+            <section class="uc-section">
+              <div class="uc-section-label">
+                <span class="uc-dot"></span>
                 <span>转换结果</span>
               </div>
-              <div class="conversion-inputs">
-                <el-input v-model="resultVal" class="result-input" size="large" disabled>
-                  <template #append>
-                    <el-button @click="copyData">
-                      <el-icon><DocumentCopy /></el-icon>
-                    </el-button>
-                  </template>
-                </el-input>
+              <div class="uc-input-row">
+                <div class="uc-result-wrap">
+                  <el-input v-model="resultVal" class="uc-result-input" size="large" readonly />
+                  <button class="uc-copy-btn" :class="{ copied: copyDone }" type="button" @click="copyData" title="复制结果">
+                    <svg v-if="!copyDone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                    <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>{{ copyDone ? '已复制' : '复制' }}</span>
+                  </button>
+                </div>
                 <el-select
                   v-model="resultUnit"
-                  class="unit-select"
+                  class="uc-unit-select"
                   placeholder="选择单位"
                   size="large"
                   filterable
                   @change="changeData"
                 >
-                  <el-option
-                    v-for="item in dataMap.resultUnits"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  />
+                  <el-option v-for="item in dataMap.resultUnits" :key="item.value" :label="item.label" :value="item.value" />
                 </el-select>
               </div>
+            </section>
+
+            <!-- 操作按钮 -->
+            <div class="uc-actions">
+              <button class="uc-btn primary" type="button" @click="changeData">转换</button>
+              <button class="uc-btn ghost" type="button" @click="clearData">清空</button>
             </div>
-            <div class="action-buttons">
-              <el-button type="primary" @click="changeData">转换</el-button>
-              <el-button @click="clearData">清空</el-button>
-            </div>
-          </div>
-          <div class="info-panel">
-            <div class="unit-type-info">
-              <div class="info-header">
-                <el-icon><InfoFilled /></el-icon>
-                <h4>{{ typeVal }}单位</h4>
+          </main>
+
+          <!-- 信息面板 -->
+          <aside class="uc-aside">
+            <div class="uc-info-card">
+              <div class="uc-info-head">
+                <span class="uc-info-title">{{ typeVal }}单位</span>
+                <span class="uc-info-count">{{ dataMap.dataUnits.length }}</span>
               </div>
-              <div class="unit-list">
-                <div
-                  v-for="(item, index) in dataMap.dataUnits"
-                  :key="index"
-                  class="unit-item"
-                >
-                  <span class="unit-name">{{ item.label }}</span>
-                  <span class="unit-value">{{ item.value }}</span>
-                </div>
-              </div>
-            </div>
-            <div class="usage-guide">
-              <div class="info-header">
-                <el-icon><Guide /></el-icon>
-                <h4>使用说明</h4>
-              </div>
-              <div class="guide-steps">
-                <div class="step">
-                  <div class="step-number">1</div>
-                  <div class="step-text">选择需要转换的单位类型</div>
-                </div>
-                <div class="step">
-                  <div class="step-number">2</div>
-                  <div class="step-text">输入待转换的数据和单位</div>
-                </div>
-                <div class="step">
-                  <div class="step-number">3</div>
-                  <div class="step-text">选择目标单位，查看转换结果</div>
-                </div>
-                <div class="step">
-                  <div class="step-number">4</div>
-                  <div class="step-text">点击复制按钮可复制结果</div>
+              <div class="uc-unit-list">
+                <div v-for="(item, index) in dataMap.dataUnits" :key="index" class="uc-unit-item">
+                  <span class="uc-unit-name">{{ item.label }}</span>
+                  <span class="uc-unit-value">{{ item.value }}</span>
                 </div>
               </div>
             </div>
-          </div>
+
+            <div class="uc-info-card">
+              <div class="uc-info-head">
+                <span class="uc-info-title">使用说明</span>
+              </div>
+              <div class="uc-steps">
+                <div class="uc-step">
+                  <span class="uc-step-num">1</span>
+                  <span class="uc-step-text">选择单位类型</span>
+                </div>
+                <div class="uc-step">
+                  <span class="uc-step-num">2</span>
+                  <span class="uc-step-text">输入数值并选单位</span>
+                </div>
+                <div class="uc-step">
+                  <span class="uc-step-num">3</span>
+                  <span class="uc-step-text">选择目标单位</span>
+                </div>
+                <div class="uc-step">
+                  <span class="uc-step-num">4</span>
+                  <span class="uc-step-text">复制转换结果</span>
+                </div>
+              </div>
+            </div>
+          </aside>
         </div>
-        <div class="tool-description">
-          <p>
-            单位换算工具，支持长度、容量、质量、面积、数据、时间、温度、速度、角度、
-            功率、电量、电流、电压、频率、力、密度等多种单位的互相转换。
-          </p>
-        </div>
+
+        <!-- 底部描述 -->
+        <footer class="uc-footer">
+          <p>单位换算工具，支持长度、容量、质量、面积、数据、时间、温度、速度、角度、功率、电量、电流、电压、频率、力、密度等多种单位的互相转换。所有计算均在浏览器本地完成。</p>
+        </footer>
       </div>
     </div>
   </div>
@@ -202,79 +187,31 @@ const dataVal = ref(0);
 const dataUnit = ref("");
 const resultVal = ref(0);
 const resultUnit = ref("");
+const copyDone = ref(false);
+let copyTimer = null;
 
 const types = [
-  {
-    label: "长度",
-    value: "长度",
-  },
-  {
-    label: "质量",
-    value: "质量",
-  },
-  {
-    label: "面积",
-    value: "面积",
-  },
-  {
-    label: "时间",
-    value: "时间",
-  },
-  {
-    label: "温度",
-    value: "温度",
-  },
-  {
-    label: "体积",
-    value: "体积",
-  },
-  {
-    label: "数据",
-    value: "数据",
-  },
-  {
-    label: "速度",
-    value: "速度",
-  },
-  {
-    label: "压力",
-    value: "压力",
-  },
-  {
-    label: "角度",
-    value: "角度",
-  },
-  {
-    label: "功率",
-    value: "功率",
-  },
-  {
-    label: "电量",
-    value: "电量",
-  },
-  {
-    label: "电流",
-    value: "电流",
-  },
-  {
-    label: "力",
-    value: "力",
-  },
-  {
-    label: "电压",
-    value: "电压",
-  },
-  {
-    label: "密度",
-    value: "密度",
-  },
-  {
-    label: "频率",
-    value: "频率",
-  },
+  { label: "长度", value: "长度" },
+  { label: "质量", value: "质量" },
+  { label: "面积", value: "面积" },
+  { label: "时间", value: "时间" },
+  { label: "温度", value: "温度" },
+  { label: "体积", value: "体积" },
+  { label: "数据", value: "数据" },
+  { label: "速度", value: "速度" },
+  { label: "压力", value: "压力" },
+  { label: "角度", value: "角度" },
+  { label: "功率", value: "功率" },
+  { label: "电量", value: "电量" },
+  { label: "电流", value: "电流" },
+  { label: "力", value: "力" },
+  { label: "电压", value: "电压" },
+  { label: "密度", value: "密度" },
+  { label: "频率", value: "频率" },
 ];
 
 const selectType = (type) => {
+  typeVal.value = type;
   dataMap.dataUnits = unitInTtype(type);
   dataMap.resultUnits = unitInTtype(type);
   dataUnit.value = dataMap.dataUnits[0].value;
@@ -297,33 +234,19 @@ const exchangeData = () => {
 };
 
 const copyData = () => {
-  if (!resultVal.value) {
-    ElNotification({
-      title: "警告",
-      message: "复制失败！无效的结果。",
-      type: "warning",
-      zIndex: 99999,
-    });
+  const val = String(resultVal.value ?? "");
+  if (val.trim() === "") {
+    ElNotification({ title: "警告", message: "复制失败！无效的结果。", type: "warning", zIndex: 99999 });
     return;
   }
-  navigator.clipboard
-    .writeText(resultVal.value)
-    .then(() => {
-      ElNotification({
-        title: "成功",
-        message: "结果已复制到剪切板。",
-        type: "success",
-        zIndex: 99999,
-      });
-    })
-    .catch(() => {
-      ElNotification({
-        title: "失败",
-        message: "复制出错，请重试",
-        type: "error",
-        zIndex: 99999,
-      });
-    });
+  navigator.clipboard.writeText(val).then(() => {
+    copyDone.value = true;
+    clearTimeout(copyTimer);
+    copyTimer = setTimeout(() => { copyDone.value = false; }, 2000);
+    ElNotification({ title: "成功", message: "结果已复制到剪切板。", type: "success", zIndex: 99999 });
+  }).catch(() => {
+    ElNotification({ title: "失败", message: "复制出错，请重试", type: "error", zIndex: 99999 });
+  });
 };
 
 const clearData = () => {
@@ -333,284 +256,371 @@ const clearData = () => {
 </script>
 
 <style lang="scss" scoped>
-.all-tool-container {
-  border-radius: var(--theme-radius);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  padding: 0;
-}
-
-.unit-conversion-container {
-  padding: 16px;
-  max-width: 100%;
+.unit-conversion {
+  max-width: 1180px;
   margin: 0 auto;
 }
 
-.unit-conversion-header {
-  margin-bottom: 16px;
-  padding-bottom: 12px;
+.unit-conversion-container {
+  padding: 24px 20px 32px;
 }
 
-.unit-conversion-title {
+/* ===== Header ===== */
+.uc-header {
   display: flex;
   align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
 }
 
-.unit-conversion-title .icon {
-  width: 1.8em;
-  height: 1.8em;
-  margin-right: 10px;
-  color: var(--el-color-primary);
-}
-
-.unit-conversion-title h1 {
-  font-size: 22px;
-  font-weight: 600;
-  margin: 0;
-}
-
-.main-content {
+.uc-header-icon {
   display: flex;
-  gap: 16px;
-  margin-bottom: 16px;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--theme-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
 }
 
-.conversion-panel {
+.uc-header-text {
+  h1 { font-size: 24px; font-weight: 700; margin: 0 0 4px; color: var(--color); letter-spacing: -0.02em; }
+  p  { font-size: 14px; color: var(--text-secondary); margin: 0; }
+}
+
+/* ===== Layout ===== */
+.uc-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.uc-main {
   flex: 1;
-  background-color: var(--el-bg-color);
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  min-width: 0;
+  background: var(--theme-color);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
-.select-type-box {
-  margin-bottom: 16px;
+/* ===== Type chips ===== */
+.uc-type-grid {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
 }
 
-.select-type-label {
-  display: flex;
-  align-items: center;
-  margin-right: 12px;
+.uc-type-chip {
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
   font-weight: 500;
+  cursor: pointer;
+  transition: all .2s;
+  outline: none;
+
+  &:hover {
+    border-color: rgba(34, 211, 238, 0.4);
+    color: var(--color);
+  }
+
+  &.active {
+    background: rgba(34, 211, 238, 0.1);
+    border-color: rgba(34, 211, 238, 0.35);
+    color: var(--theme-btn-hover-color);
+    font-weight: 600;
+  }
 }
 
-.select-type-label .el-icon {
-  margin-right: 6px;
-  color: var(--el-color-primary);
-}
-
-.type-select {
-  width: 100%;
-}
-
-.conversion-section {
-  background-color: var(--el-fill-color-light);
-  border-radius: 6px;
-  padding: 12px;
+/* ===== Sections ===== */
+.uc-section {
   margin-bottom: 16px;
 }
 
-.conversion-label {
+.uc-section-label {
   display: flex;
   align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color);
   margin-bottom: 10px;
-  font-weight: 500;
+
+  .uc-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--theme-btn-hover-color);
+  }
 }
 
-.conversion-label .el-icon {
-  margin-right: 6px;
-  color: var(--el-color-primary);
-}
-
-.conversion-inputs {
+.uc-input-row {
   display: flex;
   gap: 12px;
 }
 
-.data-input,
-.result-input {
+.uc-number-input {
   flex: 1;
 }
 
-.unit-select {
+.uc-unit-select {
   width: 40%;
 }
 
-.exchange-button-container {
+/* ===== Exchange ===== */
+.uc-exchange {
+  display: flex;
+  align-items: center;
+  margin: 8px 0 16px;
+}
+
+.uc-exchange-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border-color);
+}
+
+.uc-exchange-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 12px 0;
-  .el-icon {
-    color: #fff !important;
+  width: 40px;
+  height: 40px;
+  margin: 0 12px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--theme-color);
+  color: var(--theme-btn-hover-color);
+  cursor: pointer;
+  transition: all .3s;
+  outline: none;
+
+  &:hover {
+    transform: rotate(180deg);
+    border-color: rgba(34, 211, 238, 0.4);
+    background: rgba(34, 211, 238, 0.08);
   }
 }
 
-.exchange-line {
-  height: 1px;
-  background-color: var(--el-border-color);
+/* ===== Result ===== */
+.uc-result-wrap {
+  position: relative;
   flex: 1;
-}
-
-.exchange-button {
-  margin: 0 12px;
-  font-size: 16px;
-  transition: transform 0.3s ease;
-}
-
-.exchange-button:hover {
-  transform: rotate(180deg);
-}
-
-/* 操作按钮样式 */
-.action-buttons {
   display: flex;
-  justify-content: center;
+  align-items: center;
+}
+
+.uc-result-input {
+  flex: 1;
+  :deep(.el-input__wrapper) {
+    padding-right: 68px;
+  }
+}
+
+.uc-copy-btn {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--theme-color);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  outline: none;
+
+  &:hover { border-color: var(--theme-btn-hover-color); color: var(--theme-btn-hover-color); background: rgba(34, 211, 238, 0.06); }
+  &.copied { border-color: var(--theme-btn-hover-color); color: var(--theme-btn-hover-color); background: rgba(34, 211, 238, 0.1); }
+}
+
+/* ===== Actions ===== */
+.uc-actions {
+  display: flex;
+  justify-content: flex-end;
   gap: 12px;
   margin-top: 16px;
 }
 
-/* 右侧信息面板 */
-.info-panel {
+.uc-btn {
+  padding: 10px 28px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  outline: none;
+
+  &:active { transform: scale(0.96); }
+
+  &.primary {
+    background: var(--theme-btn-hover-color);
+    color: #0d1117;
+    border: none;
+    &:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(34, 211, 238, 0.25); }
+  }
+
+  &.ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    &:hover { background: rgba(127, 127, 127, 0.08); color: var(--color); }
+  }
+}
+
+/* ===== Aside ===== */
+.uc-aside {
   width: 280px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.unit-type-info,
-.usage-guide {
-  background-color: var(--el-bg-color);
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+.uc-info-card {
+  background: var(--theme-color);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 20px;
 }
 
-.info-header {
+.uc-info-head {
   display: flex;
   align-items: center;
-  margin-bottom: 12px;
-  border-bottom: 1px solid var(--el-border-color-light);
-  padding-bottom: 8px;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
 }
 
-.info-header .el-icon {
-  margin-right: 6px;
-  color: var(--el-color-primary);
-  font-size: 16px;
+.uc-info-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color);
 }
 
-.info-header h4 {
-  margin: 0;
-  font-size: 16px;
+.uc-info-count {
+  font-size: 12px;
   font-weight: 600;
+  font-family: var(--mono-font-family);
+  color: var(--theme-btn-hover-color);
+  background: rgba(34, 211, 238, 0.1);
+  border-radius: 999px;
+  padding: 2px 8px;
 }
 
-/* 单位列表 */
-.unit-list {
+.uc-unit-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  max-height: 200px;
+  gap: 6px;
+  max-height: 220px;
   overflow-y: auto;
 }
 
-.unit-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 8px;
-  border-radius: 4px;
-  background-color: var(--el-fill-color-lighter);
-  font-size: 12px;
-}
-
-.unit-name {
-  color: var(--el-text-color-primary);
-}
-
-.unit-value {
-  color: var(--el-text-color-secondary);
-}
-
-/* 使用步骤 */
-.guide-steps {
+.uc-unit-item {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 2px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: rgba(230, 237, 243, 0.03);
+  border: 1px solid var(--border-color);
 }
 
-.step {
+.uc-unit-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color);
+}
+
+.uc-unit-value {
+  font-size: 11px;
+  font-family: var(--mono-font-family);
+  color: var(--text-secondary);
+}
+
+/* ===== Steps ===== */
+.uc-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.uc-step {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.step-number {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background-color: var(--el-color-primary);
-  color: white;
+.uc-step-num {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  font-weight: bold;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(34, 211, 238, 0.12);
+  color: var(--theme-btn-hover-color);
+  font-family: var(--mono-font-family);
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
 }
 
-.step-text {
-  font-size: 14px;
-  color: var(--el-text-color-regular);
+.uc-step-text {
+  font-size: 13px;
+  color: var(--text-secondary);
 }
 
-/* 底部描述 */
-.tool-description {
-  margin-top: 16px;
-  padding: 12px;
-  background-color: var(--el-bg-color);
-  border-radius: 8px;
-  font-size: 14px;
-  color: var(--el-text-color-secondary);
-  line-height: 1.5;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+/* ===== Footer ===== */
+.uc-footer {
+  margin-top: 20px;
+  padding: 16px 20px;
+  background: var(--theme-color);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+
+  p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
 }
 
-/* 响应式设计 */
+/* ===== Responsive ===== */
 @media (max-width: 960px) {
-  .main-content {
-    flex-direction: column;
-  }
-
-  .info-panel {
-    width: 100%;
-  }
-
-  .unit-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  .uc-layout { flex-direction: column; }
+  .uc-aside { width: 100%; flex-direction: row; gap: 12px; }
+  .uc-info-card { flex: 1; }
+  .uc-unit-list { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 640px) {
-  .conversion-inputs {
-    flex-direction: column;
-  }
-
-  .unit-select {
-    width: 100%;
-  }
-
-  .unit-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .action-buttons {
-    flex-direction: column;
-  }
-
-  .action-buttons .el-button {
-    width: 100%;
-  }
+  .unit-conversion-container { padding: 16px 12px 24px; }
+  .uc-main { padding: 16px; }
+  .uc-aside { flex-direction: column; }
+  .uc-input-row { flex-direction: column; }
+  .uc-unit-select { width: 100%; }
+  .uc-actions { flex-direction: column; }
+  .uc-btn { width: 100%; justify-content: center; }
 }
 </style>
