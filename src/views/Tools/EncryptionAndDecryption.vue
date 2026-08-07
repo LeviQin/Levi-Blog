@@ -125,7 +125,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .ed-root {
   border-radius: var(--theme-radius);
-  padding: 28px 32px;
+  padding: 32px 36px;
 }
 
 .ed-header {
@@ -137,16 +137,18 @@ onMounted(() => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 68px;
-  height: 68px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, rgba(34,211,238,0.15) 0%, rgba(34,211,238,0.04) 100%);
-  margin-bottom: 18px;
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  background: var(--theme-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
 }
 
 .ed-header-text {
-  h1 { font-size: 28px; font-weight: 700; margin: 0 0 8px; color: var(--el-text-color-primary); letter-spacing: -0.02em; }
-  p  { font-size: 15px; color: var(--el-text-color-secondary); margin: 0; }
+  h1 { font-size: 26px; font-weight: 700; margin: 0 0 8px; color: var(--color); letter-spacing: -0.02em; }
+  p  { font-size: 14px; color: var(--text-secondary); margin: 0; }
 }
 
 .ed-layout {
@@ -156,54 +158,67 @@ onMounted(() => {
 }
 
 .ed-sidebar {
-  width: 180px;
+  width: 184px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   position: sticky;
   top: 100px;
 }
 
 .ed-nav-item {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 11px 16px;
+  padding: 10px 14px;
   border: none;
   border-radius: 10px;
   background: transparent;
   cursor: pointer;
-  transition: background .2s, color .2s, box-shadow .2s;
+  transition: background .2s, color .2s;
   text-align: left;
-  color: var(--el-text-color-regular);
+  color: var(--text-secondary);
   font-size: 14px;
   font-weight: 500;
   outline: none;
 
   &:hover {
-    background: var(--el-fill-color-light);
-    color: var(--el-text-color-primary);
+    background: rgba(127, 127, 127, 0.08);
+    color: var(--color);
   }
 
   &.active {
-    background: var(--btn-tag-bg-color);
-    color: #fff;
-    box-shadow: 0 4px 14px rgba(34,211,238,.3);
+    background: rgba(34, 211, 238, 0.1);
+    color: var(--theme-btn-hover-color);
+    font-weight: 600;
 
-    .ed-nav-icon { color: #fff; }
-    .ed-nav-badge { background: rgba(255,255,255,.2); color: #fff; }
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 18px;
+      border-radius: 2px;
+      background: var(--theme-btn-hover-color);
+    }
+
+    .ed-nav-icon { color: var(--theme-btn-hover-color); }
+    .ed-nav-badge { background: rgba(34,211,238,.16); color: var(--theme-btn-hover-color); }
   }
 }
 
 .ed-nav-icon {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--el-text-color-secondary);
+  color: var(--text-secondary);
   transition: color .2s;
 }
 
@@ -214,7 +229,7 @@ onMounted(() => {
   font-weight: 600;
   padding: 1px 6px;
   border-radius: 999px;
-  color: var(--btn-tag-bg-color);
+  color: var(--theme-btn-hover-color);
   background: rgba(34,211,238,.12);
   transition: background .2s, color .2s;
   white-space: nowrap;
@@ -233,7 +248,7 @@ onMounted(() => {
 .ed-footer {
   margin-top: 48px;
   padding-top: 28px;
-  border-top: 1px solid var(--el-border-color-light);
+  border-top: 1px solid var(--border-color);
 }
 
 .ed-footer-head {
@@ -242,7 +257,7 @@ onMounted(() => {
   gap: 8px;
   font-size: 16px;
   font-weight: 600;
-  color: var(--el-text-color-primary);
+  color: var(--color);
   margin-bottom: 20px;
   .icon { width: 1.2em; height: 1.2em; color: var(--theme-btn-hover-color); }
 }
@@ -256,24 +271,23 @@ onMounted(() => {
   flex: 1;
   padding: 22px;
   border-radius: 14px;
-  background: var(--el-bg-color);
-  border: 1px solid var(--el-border-color-light);
-  transition: border-color .25s, box-shadow .25s, transform .2s;
+  background: var(--theme-color);
+  border: 1px solid var(--border-color);
+  transition: border-color .25s, transform .2s;
   &:hover {
-    border-color: var(--el-border-color);
-    box-shadow: 0 4px 16px rgba(0,0,0,.08);
+    border-color: rgba(34, 211, 238, 0.35);
     transform: translateY(-2px);
   }
   .ed-footer-card-icon { margin-bottom: 12px; }
-  strong { display: block; font-size: 14px; font-weight: 600; color: var(--el-text-color-primary); margin-bottom: 6px; }
-  p { font-size: 13px; color: var(--el-text-color-secondary); margin: 0; line-height: 1.65; }
+  strong { display: block; font-size: 14px; font-weight: 600; color: var(--color); margin-bottom: 6px; }
+  p { font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.65; }
 }
 
 @media (max-width: 860px) {
   .ed-root { padding: 20px 16px; }
   .ed-header { margin-bottom: 24px; }
   .ed-header-text h1 { font-size: 22px; }
-  .ed-header-icon { width: 56px; height: 56px; }
+  .ed-header-icon { width: 52px; height: 52px; }
   .ed-layout { flex-direction: column; gap: 20px; }
   .ed-sidebar {
     width: 100%;
@@ -281,9 +295,9 @@ onMounted(() => {
     flex-wrap: wrap;
     gap: 6px;
     position: static;
-    overflow-x: auto;
   }
-  .ed-nav-item { font-size: 12px; padding: 9px 14px; border-radius: 8px; }
+  .ed-nav-item { font-size: 12px; padding: 8px 14px; border-radius: 8px; }
+  .ed-nav-item.active::before { display: none; }
   .ed-nav-badge { display: none; }
   .ed-footer-grid { flex-direction: column; }
 }

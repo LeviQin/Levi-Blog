@@ -42,7 +42,7 @@
         <div class="pw-char-count">{{ textarea.length }} 字符</div>
       </div>
       <div class="pw-io-arrow">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--el-text-color-placeholder)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </div>
       <div class="pw-io-block">
         <label class="pw-io-label">结果</label>
@@ -151,9 +151,9 @@ const copyResult = () => {
 .pw-card {
   padding: 28px;
   border-radius: 16px;
-  background: var(--el-bg-color);
-  border: 1px solid var(--el-border-color);
-  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  background: var(--theme-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 .pw-card-head {
@@ -162,33 +162,35 @@ const copyResult = () => {
   gap: 16px;
   margin-bottom: 24px;
   padding-bottom: 20px;
-  border-bottom: 1px solid var(--el-border-color-light);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .pw-algo-badge {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   border-radius: 14px;
-  background: linear-gradient(135deg, var(--btn-tag-bg-color), #e67a1a);
-  color: #fff;
-  font-size: 16px;
+  background: rgba(34, 211, 238, 0.12);
+  color: var(--theme-btn-hover-color);
+  font-family: var(--mono-font-family);
+  font-size: 15px;
   font-weight: 700;
   flex-shrink: 0;
   letter-spacing: 0.02em;
+  border: 1px solid rgba(34, 211, 238, 0.2);
 }
 
 .pw-card-title {
   font-size: 18px;
   font-weight: 700;
-  color: var(--el-text-color-primary);
+  color: var(--color);
 }
 
 .pw-card-sub {
   font-size: 13px;
-  color: var(--el-text-color-secondary);
+  color: var(--text-secondary);
   margin-top: 4px;
 }
 
@@ -209,29 +211,31 @@ const copyResult = () => {
   font-size: 13px;
   font-weight: 600;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all .2s;
   outline: none;
+  font-family: inherit;
 }
 
 .pw-btn-encrypt {
-  background: var(--btn-tag-bg-color);
-  color: #fff;
-  &:hover { background: #e67a1a; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(34,211,238,.3); }
+  background: var(--theme-btn-hover-color);
+  color: #0d1117;
+  &:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(34, 211, 238, 0.25); }
 }
 
 .pw-btn-decrypt {
-  background: var(--theme-btn-hover-color);
-  color: #fff;
-  &:hover { background: #4a7ca8; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(34,211,238,.3); }
+  background: rgba(34, 211, 238, 0.1);
+  color: var(--theme-btn-hover-color);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  &:hover { background: rgba(34, 211, 238, 0.16); transform: translateY(-1px); }
 }
 
 .pw-btn-clear {
   background: transparent;
-  color: var(--el-text-color-secondary);
-  border: 1.5px solid var(--el-border-color);
-  &:hover { background: var(--el-fill-color-light); color: var(--el-text-color-primary); border-color: var(--el-text-color-placeholder); }
+  color: var(--text-secondary);
+  border: 1.5px solid var(--border-color);
+  &:hover { background: rgba(127, 127, 127, 0.08); color: var(--color); }
 }
 
 .pw-key-row {
@@ -240,8 +244,9 @@ const copyResult = () => {
   gap: 14px;
   margin-bottom: 22px;
   padding: 14px 18px;
-  background: var(--el-fill-color-lighter);
-  border-radius: 10px;
+  background: rgba(230, 237, 243, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
 }
 
 .pw-key-input-wrap {
@@ -250,7 +255,7 @@ const copyResult = () => {
 
 .pw-key-hint {
   font-size: 12px;
-  color: var(--el-text-color-placeholder);
+  color: var(--text-secondary);
 }
 
 .pw-io-grid {
@@ -268,7 +273,7 @@ const copyResult = () => {
   display: block;
   font-size: 13px;
   font-weight: 600;
-  color: var(--el-text-color-regular);
+  color: var(--color);
   margin-bottom: 8px;
 }
 
@@ -277,24 +282,25 @@ const copyResult = () => {
   align-items: center;
   padding-top: 32px;
   flex-shrink: 0;
+  color: var(--text-secondary);
 }
 
 .pw-textarea {
   :deep(textarea) {
-    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-family: var(--mono-font-family);
     font-size: 13px;
     line-height: 1.7;
   }
 }
 
 .pw-textarea-result :deep(textarea) {
-  background: var(--el-fill-color-lighter);
+  background: rgba(230, 237, 243, 0.03);
 }
 
 .pw-char-count {
   margin-top: 6px;
   font-size: 11px;
-  color: var(--el-text-color-placeholder);
+  color: var(--text-secondary);
   font-variant-numeric: tabular-nums;
 }
 
@@ -312,22 +318,22 @@ const copyResult = () => {
   padding: 5px 14px;
   font-size: 12px;
   font-weight: 600;
-  border: 1.5px solid var(--el-border-color);
-  border-radius: 6px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 8px;
   background: transparent;
-  color: var(--el-text-color-regular);
+  color: var(--text-secondary);
   cursor: pointer;
   transition: all .2s;
   outline: none;
 
-  &:hover { border-color: #67c23a; color: #67c23a; background: rgba(103,194,58,.06); }
-  &.copied { border-color: #67c23a; color: #67c23a; background: rgba(103,194,58,.08); }
+  &:hover { border-color: var(--theme-btn-hover-color); color: var(--theme-btn-hover-color); background: rgba(34, 211, 238, 0.06); }
+  &.copied { border-color: var(--theme-btn-hover-color); color: var(--theme-btn-hover-color); background: rgba(34, 211, 238, 0.08); }
 }
 
 .pw-info-section {
   margin-top: 28px;
   padding-top: 20px;
-  border-top: 1px solid var(--el-border-color-light);
+  border-top: 1px solid var(--border-color);
 }
 
 .pw-info-head {
@@ -338,7 +344,7 @@ const copyResult = () => {
   user-select: none;
   font-size: 14px;
   font-weight: 600;
-  color: var(--el-text-color-primary);
+  color: var(--color);
 
   .icon { width: 1.1em; height: 1.1em; color: var(--theme-btn-hover-color); }
   &:hover { color: var(--theme-btn-hover-color); }
@@ -347,17 +353,18 @@ const copyResult = () => {
 .pw-info-arrow {
   margin-left: auto;
   transition: transform .2s;
+  color: var(--text-secondary);
   &.open { transform: rotate(180deg); }
 }
 
 .pw-info-body {
   margin-top: 14px;
   font-size: 13px;
-  color: var(--el-text-color-secondary);
+  color: var(--text-secondary);
   line-height: 1.75;
 
   p { margin: 0 0 8px; }
-  b { color: var(--el-text-color-primary); font-weight: 600; }
+  b { color: var(--color); font-weight: 600; }
 }
 
 .pw-info-dl {
@@ -370,10 +377,10 @@ const copyResult = () => {
     display: flex;
     gap: 8px;
     padding: 6px 0;
-    border-bottom: 1px solid var(--el-border-color-lighter);
+    border-bottom: 1px solid var(--border-color);
   }
-  dt { font-weight: 600; color: var(--el-text-color-primary); white-space: nowrap; }
-  dd { color: var(--el-text-color-secondary); margin: 0; }
+  dt { font-weight: 600; color: var(--color); white-space: nowrap; }
+  dd { color: var(--text-secondary); margin: 0; }
 }
 
 @media (max-width: 860px) {
