@@ -92,7 +92,6 @@ const blogSettingMap = computed(() => {
 .info-item span {
   color: var(--color);
   font-size: 16px;
-  text-shadow: 0 5px 15px rgba(0, 0, 0, 1) !important;
 }
 
 .info-box {
