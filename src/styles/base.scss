@@ -26,6 +26,11 @@ html[data-theme='dark'] {
   --ability-color: #792a31;
 
   --message-author-color: #e6edf3;
+
+  /* 下拉菜单 */
+  --dropdown-bg-color: #161b22;
+  --dropdown-item-color: #e6edf3;
+  --dropdown-item-hover-bg: rgba(34, 211, 238, 0.12);
 }
 
 :root {
@@ -67,6 +72,11 @@ html[data-theme='dark'] {
   overflow-x: hidden;
 
   --message-author-color: #323438;
+
+  /* 下拉菜单 */
+  --dropdown-bg-color: #ffffff;
+  --dropdown-item-color: #4b5563;
+  --dropdown-item-hover-bg: rgba(6, 182, 212, 0.08);
 }
 
 a {
