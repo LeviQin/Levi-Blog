@@ -25,14 +25,14 @@ export const projects = [
   },
   {
     id: 2,
-    name: "Easeware ECC 后台",
+    name: "Easeware ECC",
     link: "",
     desc: "内部运营后台，负责整体工程搭建与项目结构设计。搭建权限体系（动态菜单/路由守卫/按钮指令）并封装 Axios 请求层（Token 刷新、401 重试）；抽象通用 DataTable 支持万级数据本地搜索/筛选/排序/导出；开发订单详情操作台（退款/订阅/自动扣费/License），Webpack 构建体积 19MB→7MB。",
     tags: ["Vue3", "Element Plus", "Webpack", "权限体系"],
   },
   {
     id: 3,
-    name: "supereasy.com 插件体系",
+    name: "Super Easy 插件体系",
     link: "https://www.supereasy.com/",
     desc: "开发维护约 30 个 WordPress 插件、10+ 转化类 Gutenberg Block（基于 React/wp.element 实现编辑器组件），将内容增长需求产品化；建设 People Search 与工具页体系（Username/Email/Caller ID/VIN 等），支持校验、reCAPTCHA 与 tracking；按页面/模板/短代码条件加载脚本，优化内容页性能。",
     tags: ["WordPress", "PHP", "React", "Gutenberg"],
