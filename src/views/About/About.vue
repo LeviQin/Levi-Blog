@@ -15,7 +15,7 @@
             </svg>
           </div>
           <div class="right-content">
-            <span class="bio-text">9 年前端经验，长期担任前端负责人</span>
+            <span class="bio-text">9年前端开发经验，具备复杂业务落地能力。</span>
           </div>
         </div>
         <!-- <div class="info-item">
@@ -36,7 +36,7 @@
           </div>
           <div class="right-content">
             <span class="bio-text"
-              >主导 AI 创作平台、复杂权限后台、WordPress 插件体系等多项前端架构与技术选型</span
+              >主导 AI 创作平台、IM SDK 及复杂后台系统的前端架构与技术选型，覆盖跨端开发、权限体系与插件化架构，持续优化系统可维护性与开发效率。</span
             >
           </div>
         </div>
@@ -48,7 +48,7 @@
           </div>
           <div class="right-content">
             <span class="bio-text"
-              >以 Vue3 / Nuxt4 / TypeScript 为核心栈，兼有 React、Node.js、uni-app、Flutter 全栈与跨端能力</span
+              >以 Vue3 / Nuxt4 / TypeScript 为核心栈，兼有 React、Node.js、uni-app、Flutter 全栈与跨端能力。</span
             >
           </div>
         </div>
