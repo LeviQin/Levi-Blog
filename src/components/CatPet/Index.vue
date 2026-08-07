@@ -10,6 +10,8 @@
       'is-standing': currentTrick === 'standing',
       'is-spinning': currentTrick === 'spinning',
       'is-hopping': currentTrick === 'hopping',
+      'is-frightened': isFrightened,
+      'is-eating': isEating,
     }"
     :style="positionStyle"
     ref="catRef"
@@ -18,6 +20,11 @@
   >
     <div class="cat-inner">
       <div ref="lottieRef" class="lottie-container"></div>
+
+      <!-- 喂食时的食物碗 -->
+      <div v-if="isEating" class="food-bowl">
+        <span class="food-emoji">🍖</span>
+      </div>
 
       <div class="cat-paw-wave" v-if="isWaving">
         <div class="wave-paw"></div>
@@ -45,6 +52,21 @@
       <span class="z z2">Z</span>
       <span class="z z3">Z</span>
     </div>
+
+    <!-- 点击波纹特效 -->
+    <TransitionGroup name="ripple-pop" tag="div" class="ripples-container">
+      <span
+        v-for="ripple in ripples"
+        :key="ripple.id"
+        class="click-ripple"
+        :style="ripple.style"
+      ></span>
+    </TransitionGroup>
+
+    <!-- 抚摸流光 -->
+    <Transition name="pet-shine">
+      <div v-if="isPetted" class="pet-shine"></div>
+    </Transition>
   </div>
 </template>
 
@@ -64,11 +86,15 @@ const isPetted = ref(false);
 const isExcited = ref(false);
 const isWaving = ref(false);
 const isAutoRelocating = ref(false);
+const isFrightened = ref(false);
+const isEating = ref(false);
 const showBubble = ref(false);
 const currentBubble = ref("");
 const bubbleEmoji = ref("");
 const bubbleType = ref("");
 const floatingHearts = ref([]);
+const ripples = ref([]);
+let rippleIdCounter = 0;
 const currentTrick = ref("");
 
 const position = reactive({ x: 0, y: 0 });
@@ -288,41 +314,43 @@ const sparkleMoment = () => {
 };
 
 const triggerRandomEvent = () => {
-  if (!canStartAction() || showBubble.value || isPetted.value || isExcited.value || isWaving.value) return;
+  if (!canStartAction() || showBubble.value || isPetted.value || isExcited.value || isWaving.value || isEating.value) return;
 
   const r = Math.random();
-  if (r < 0.22) {
+  if (r < 0.18) {
     showMeow();
     return;
   }
-  if (r < 0.4) {
+  if (r < 0.34) {
     showMeow({ text: "摸摸我嘛~", emoji: "🥺", type: "playful" });
     return;
   }
-  if (r < 0.56) {
+  if (r < 0.5) {
     wavePaw();
     return;
   }
-  if (r < 0.72) {
+  if (r < 0.63) {
     standUp();
     return;
   }
-  if (r < 0.86) {
+  if (r < 0.74) {
     spinAround();
     return;
   }
-
-  if (r < 0.95) {
+  if (r < 0.85) {
     happyHop();
     return;
   }
-
+  if (r < 0.93) {
+    feedCat();
+    return;
+  }
   sparkleMoment();
 };
 
 const scheduleRandomEvent = () => {
   clearTimeout(randomEventTimer);
-  const delay = 20000 + Math.random() * 40000;
+  const delay = 15000 + Math.random() * 25000;
   randomEventTimer = setTimeout(() => {
     triggerRandomEvent();
     scheduleRandomEvent();
@@ -379,6 +407,24 @@ const spawnHearts = (count, emojis) => {
   }
 };
 
+// 点击位置波纹特效
+const spawnRipple = (x, y) => {
+  const id = ++rippleIdCounter;
+  const size = 34;
+  ripples.value.push({
+    id,
+    style: {
+      left: `${x - size / 2}px`,
+      top: `${y - size / 2}px`,
+      width: `${size}px`,
+      height: `${size}px`,
+    },
+  });
+  setTimeout(() => {
+    ripples.value = ripples.value.filter((r) => r.id !== id);
+  }, 600);
+};
+
 const petCat = () => {
   if (isPetted.value || isExcited.value || isSleeping.value || isAutoRelocating.value || currentTrick.value) return;
   isPetted.value = true;
@@ -429,12 +475,63 @@ const wavePaw = () => {
   }, 1500);
 };
 
+// 滚轮惊吓（鼠标滚轮快速滚动时）
+const scareCat = () => {
+  if (isFrightened.value || isSleeping.value || isAutoRelocating.value) return;
+  isFrightened.value = true;
+  showMeow({ text: "呀!!", emoji: "😱", type: "excited" });
+  spawnHearts(2, ["💨", "❗"]);
+  clearTimeout(trickTimer);
+  trickTimer = setTimeout(() => {
+    isFrightened.value = false;
+  }, 600);
+};
+
+// 喂食
+const feedCat = () => {
+  if (isEating.value || isSleeping.value) return;
+  isEating.value = true;
+  showMeow({ text: "好香~", emoji: "😋", type: "happy" });
+  spawnHearts(3, ["❤️", "✨", "🍖"]);
+  clearTimeout(trickTimer);
+  trickTimer = setTimeout(() => {
+    isEating.value = false;
+    showMeow({ text: "吃饱啦!", emoji: "😌", type: "happy" });
+  }, 3200);
+};
+
+// 视线跟随鼠标（轻微朝向）
+let lookTimer = null;
+const handleMouseMove = (e) => {
+  if (!catRef.value || isDragging.value) return;
+  const rect = catRef.value.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const dx = e.clientX - cx;
+  const dy = e.clientY - cy;
+  const maxTilt = 10;
+  const tiltX = Math.max(-maxTilt, Math.min(maxTilt, dx * 0.04));
+  const tiltY = Math.max(-maxTilt, Math.min(maxTilt, dy * 0.04));
+  if (lookTimer) return;
+  lookTimer = requestAnimationFrame(() => {
+    catRef.value?.style.setProperty("--look-x", `${tiltX}px`);
+    catRef.value?.style.setProperty("--look-y", `${tiltY}px`);
+    lookTimer = null;
+  });
+};
+
 let clickTimer = null;
 let pressTimer = null;
 let clickCount = 0;
 let lastClickTime = 0;
 
-const handleClick = () => {
+const handleClick = (clientX, clientY) => {
+  // 点击位置波纹反馈
+  if (clientX !== undefined && clientY !== undefined && catRef.value) {
+    const rect = catRef.value.getBoundingClientRect();
+    spawnRipple(clientX - rect.left, clientY - rect.top);
+  }
+
   if (isSleeping.value) {
     wakeUp();
     return;
@@ -461,7 +558,7 @@ const handleClick = () => {
 
   clearTimeout(clickTimer);
   clickTimer = setTimeout(() => {
-    const actions = [petCat, petCat, petCat, wavePaw, wavePaw];
+    const actions = [petCat, petCat, petCat, wavePaw, wavePaw, feedCat];
     const action = actions[Math.floor(Math.random() * actions.length)];
     action();
     clickCount = 0;
@@ -517,7 +614,7 @@ const onPointerMove = (e) => {
   }
 };
 
-const onPointerUp = () => {
+const onPointerUp = (e) => {
   clearTimeout(pressTimer);
 
   document.removeEventListener("pointermove", onPointerMove);
@@ -537,7 +634,7 @@ const onPointerUp = () => {
   isDragging.value = false;
 
   if (!hasMoved) {
-    handleClick();
+    handleClick(e?.clientX, e?.clientY);
   }
 };
 
@@ -559,7 +656,26 @@ onMounted(async () => {
   scheduleRandomEvent();
 
   window.addEventListener("resize", handleResize);
+  window.addEventListener("wheel", handleWheel, { passive: true });
+  window.addEventListener("mousemove", handleMouseMove, { passive: true });
 });
+
+// 滚轮互动：快速滚动时惊吓
+let wheelAccum = 0;
+let wheelTimer = null;
+const handleWheel = () => {
+  wheelAccum += 1;
+  if (wheelAccum >= 4) {
+    scareCat();
+    wheelAccum = 0;
+    clearTimeout(wheelTimer);
+    return;
+  }
+  clearTimeout(wheelTimer);
+  wheelTimer = setTimeout(() => {
+    wheelAccum = 0;
+  }, 800);
+};
 
 onBeforeUnmount(() => {
   clearInterval(teleportTimer);
@@ -570,8 +686,12 @@ onBeforeUnmount(() => {
   clearTimeout(trickTimer);
   clearTimeout(clickTimer);
   clearTimeout(pressTimer);
+  clearTimeout(wheelTimer);
+  if (lookTimer) cancelAnimationFrame(lookTimer);
   if (animInstance) animInstance.destroy();
   window.removeEventListener("resize", handleResize);
+  window.removeEventListener("wheel", handleWheel);
+  window.removeEventListener("mousemove", handleMouseMove);
   document.removeEventListener("pointermove", onPointerMove);
   document.removeEventListener("pointerup", onPointerUp);
   document.removeEventListener("pointercancel", onPointerUp);
@@ -603,19 +723,19 @@ $pet-size-mobile: 92px;
   &.is-sleeping {
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.12));
     .cat-inner {
-      animation: sleep-breathe 2.5s ease-in-out infinite;
+      animation: sleep-breathe 2.8s ease-in-out infinite;
     }
   }
 
   &.is-petted {
     .cat-inner {
-      animation: pet-sway 0.5s ease-in-out infinite alternate;
+      animation: pet-sway 0.7s ease-in-out infinite alternate;
     }
   }
 
   &.is-excited {
     .cat-inner {
-      animation: excited-bounce 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 2;
+      animation: excited-bounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 2;
     }
   }
 
@@ -626,21 +746,35 @@ $pet-size-mobile: 92px;
 
   &.is-standing {
     .cat-inner {
-      animation: stand-tall 1.5s ease-in-out;
+      animation: stand-tall 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
       transform-origin: center bottom;
     }
   }
 
   &.is-spinning {
     .cat-inner {
-      animation: spin-trick 1.1s cubic-bezier(0.55, 0.05, 0.35, 1) 1;
+      animation: spin-trick 1.2s cubic-bezier(0.45, 0.05, 0.35, 1) 1;
       transform-origin: center center;
     }
   }
 
   &.is-hopping {
     .cat-inner {
-      animation: happy-hop 0.5s ease-in-out 2;
+      animation: happy-hop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 2;
+      transform-origin: center bottom;
+    }
+  }
+
+  &.is-frightened {
+    .cat-inner {
+      animation: fright-jump 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: center bottom;
+    }
+  }
+
+  &.is-eating {
+    .cat-inner {
+      animation: eat-bob 0.5s ease-in-out infinite alternate;
       transform-origin: center bottom;
     }
   }
@@ -651,10 +785,39 @@ $pet-size-mobile: 92px;
   width: $pet-size;
   height: $pet-size;
   transition: transform 0.25s ease;
+  transform: translate(var(--look-x, 0px), var(--look-y, 0px));
 }
 
 .cat-pet:hover:not(.is-dragging):not(.is-sleeping) .cat-inner {
-  transform: scale(1.06);
+  transform: translate(var(--look-x, 0px), var(--look-y, 0px)) scale(1.06);
+}
+
+// ==================== FOOD BOWL ====================
+.food-bowl {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 26px;
+  background: linear-gradient(180deg, #e8e2d0, #c9c1ab);
+  border-radius: 4px 4px 12px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+
+  .food-emoji {
+    font-size: 14px;
+    animation: food-wiggle 0.6s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes food-wiggle {
+  0% { transform: rotate(-6deg) scale(1); }
+  100% { transform: rotate(6deg) scale(1.08); }
 }
 
 .lottie-container {
@@ -798,6 +961,77 @@ $pet-size-mobile: 92px;
   }
 }
 
+// ==================== CLICK RIPPLES ====================
+.ripples-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 15;
+  overflow: hidden;
+}
+
+.click-ripple {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(34, 211, 238, 0.55);
+  animation: ripple-expand 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+.ripple-pop-enter-active {
+  transition: none;
+}
+.ripple-pop-leave-active {
+  transition: none;
+}
+
+@keyframes ripple-expand {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.3);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.2);
+  }
+}
+
+// ==================== PET SHINE ====================
+.pet-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 8;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 215, 180, 0.28) 45%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  animation: pet-shine-sweep 0.9s ease-out;
+}
+
+.pet-shine-enter-active {
+  transition: opacity 0.2s ease;
+}
+.pet-shine-leave-active {
+  transition: opacity 0.4s ease;
+}
+.pet-shine-enter-from,
+.pet-shine-leave-to {
+  opacity: 0;
+}
+
+@keyframes pet-shine-sweep {
+  0% {
+    transform: translateX(-60%);
+  }
+  100% {
+    transform: translateX(60%);
+  }
+}
+
 // ==================== SLEEP ZZZ ====================
 .sleep-zzz {
   position: absolute;
@@ -843,45 +1077,64 @@ $pet-size-mobile: 92px;
 // ==================== ANIMATIONS ====================
 @keyframes sleep-breathe {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.03); }
+  50% { transform: scale(1.04); }
 }
 
 @keyframes pet-sway {
-  0% { transform: rotate(-4deg) scale(1.05); }
-  100% { transform: rotate(4deg) scale(1.05); }
+  0% { transform: rotate(-3deg) scale(1.03); }
+  100% { transform: rotate(3deg) scale(1.03); }
 }
 
 @keyframes excited-bounce {
   0% { transform: translateY(0) scale(1); }
-  40% { transform: translateY(-18px) scale(1.12); }
-  70% { transform: translateY(-8px) scale(1.04); }
+  30% { transform: translateY(-20px) scale(1.12); }
+  50% { transform: translateY(-12px) scale(0.96, 1.05); }
+  70% { transform: translateY(-16px) scale(1.06); }
   100% { transform: translateY(0) scale(1); }
 }
 
 @keyframes paw-wave {
-  0% { transform: rotate(-30deg); }
-  100% { transform: rotate(30deg); }
+  0% { transform: rotate(-28deg); }
+  100% { transform: rotate(28deg); }
 }
 
 @keyframes stand-tall {
   0% { transform: scale(1) translateY(0); }
-  25% { transform: scale(0.96, 1.08) translateY(-10px); }
-  55% { transform: scale(1.02, 1.16) translateY(-18px); }
+  20% { transform: scale(0.94, 1.1) translateY(-8px); }
+  45% { transform: scale(1.03, 1.18) translateY(-20px); }
+  65% { transform: scale(0.98, 1.1) translateY(-14px); }
+  85% { transform: scale(1.02, 1.14) translateY(-18px); }
   100% { transform: scale(1) translateY(0); }
 }
 
 @keyframes spin-trick {
   0% { transform: rotate(0deg) scale(1); }
-  40% { transform: rotate(160deg) scale(1.08); }
-  75% { transform: rotate(310deg) scale(0.96); }
+  20% { transform: rotate(60deg) scale(1.1); }
+  45% { transform: rotate(170deg) scale(1.06); }
+  60% { transform: rotate(230deg) scale(0.98, 1.06); }
+  80% { transform: rotate(320deg) scale(1.04); }
   100% { transform: rotate(360deg) scale(1); }
 }
 
 @keyframes happy-hop {
   0% { transform: translateY(0) scale(1); }
-  30% { transform: translateY(-22px) scale(1.04); }
-  55% { transform: translateY(0) scale(0.98, 1.02); }
+  25% { transform: translateY(-24px) scale(1.05); }
+  45% { transform: translateY(0) scale(0.96, 1.04); }
+  65% { transform: translateY(-16px) scale(1.03); }
+  85% { transform: translateY(0) scale(0.98, 1.02); }
   100% { transform: translateY(0) scale(1); }
+}
+
+@keyframes fright-jump {
+  0% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-26px) scale(1.14) rotate(-6deg); }
+  60% { transform: translateY(-10px) scale(0.95, 1.1) rotate(4deg); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+@keyframes eat-bob {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(4px) rotate(2deg); }
 }
 
 @keyframes bubble-bounce {
