@@ -112,18 +112,14 @@ const emit = defineEmits(["toNextPage"]);
 <style lang="scss" scoped>
 @media (any-hover: hover) {
   .info-item:hover {
-    transform: rotate(-5deg) scale(1.1);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
+    border-color: rgba(34, 211, 238, 0.4);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
   }
 
   .info-item:hover {
-    .info-text {
-      transform: translate(-50%, -50%) rotate(0deg);
-      opacity: 0.9;
-    }
-
     .info-img {
-      transform: scale(1.3);
+      transform: scale(1.08);
     }
   }
 
@@ -140,11 +136,13 @@ const emit = defineEmits(["toNextPage"]);
 
 .container {
   height: 100%;
-  background: linear-gradient(-60deg, #79bbff, #a0d2ff, #d6eaff, #79bbff);
-  background-size: 400% 400%;
+  background:
+    radial-gradient(circle at 25% 30%, rgba(34, 211, 238, 0.07), transparent 45%),
+    radial-gradient(circle at 75% 70%, rgba(34, 211, 238, 0.05), transparent 40%),
+    var(--background);
+  background-size: 100% 100%;
   position: relative;
   background-repeat: no-repeat;
-  background-size: cover;
   background-position: center;
 }
 
@@ -156,8 +154,9 @@ const emit = defineEmits(["toNextPage"]);
 }
 
 .info-title {
-  color: #fff;
+  color: var(--color);
   font-size: 30px;
+  font-family: var(--mono-font-family);
 }
 
 .info-content {
@@ -172,8 +171,10 @@ const emit = defineEmits(["toNextPage"]);
   height: 200px;
   overflow: hidden;
   position: relative;
-  border-radius: 10px;
-  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .info-img {
@@ -186,15 +187,22 @@ const emit = defineEmits(["toNextPage"]);
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(-45deg);
+  transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
   padding: 20px;
   box-sizing: border-box;
-  background-color: #fff;
+  background-color: var(--theme-color);
   opacity: 0;
-  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: opacity 0.3s ease;
   color: var(--color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-item:hover .info-text {
+  opacity: 0.92;
 }
 
 .info-item-title {
@@ -278,14 +286,14 @@ const emit = defineEmits(["toNextPage"]);
   .info-text {
     position: static !important;
     flex: 1 !important;
-    background: transparent;
+    background: var(--theme-color);
     border-radius: 0 5px 5px 0;
     height: auto !important;
     display: flex;
     align-items: center;
     opacity: 1;
     transform: none;
-    color: var(--white-color);
+    color: var(--color);
   }
 
   .button-card {

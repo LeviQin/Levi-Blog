@@ -81,11 +81,13 @@ const emit = defineEmits(["toNextPage"]);
 <style lang="scss" scoped>
 .container {
   height: 100%;
-  background: linear-gradient(-60deg, #95a5a6, #7f8c8d, #bdc3c7, #95a5a6);
-  background-size: 400% 400%;
+  background:
+    radial-gradient(circle at 20% 25%, rgba(34, 211, 238, 0.08), transparent 45%),
+    radial-gradient(circle at 80% 75%, rgba(34, 211, 238, 0.06), transparent 42%),
+    var(--background);
+  background-size: 100% 100%;
   position: relative;
   background-repeat: no-repeat;
-  background-size: cover;
   background-position: center;
 }
 
@@ -94,31 +96,32 @@ const emit = defineEmits(["toNextPage"]);
   top: 50%;
   left: 50%;
   box-sizing: border-box;
-  font-family: cursive;
   font-size: 20px;
-  border-radius: 10px;
+  border-radius: 16px;
   padding: 30px;
-  background: #edc;
-  border: 8px solid #000;
-  box-shadow: 15px 15px 0 #000;
-  transform: translate(-50%, -50%) rotate(-2deg);
-  transition: transform 0.3s ease;
+  background: var(--theme-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease, border-color 0.3s ease;
   position: relative;
   overflow: hidden;
   width: 800px;
+  max-width: 90vw;
 }
 
 .card:hover {
-  transform: translate(-50%, -50%) rotate(0deg) scale(1.02);
-  box-shadow: 20px 20px 0 #000;
+  transform: translate(-50%, -50%) scale(1.01);
+  border-color: rgba(34, 211, 238, 0.4);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
 }
 
 .banner {
   position: absolute;
   top: 3px;
   right: -95px;
-  background: #000;
-  color: #fff;
+  background: var(--theme-btn-hover-color);
+  color: #0d1117;
   padding: 15px;
   width: 350px;
   text-align: center;
@@ -142,31 +145,13 @@ const emit = defineEmits(["toNextPage"]);
 .info-title {
   font-size: 30px;
   font-weight: 700;
-  color: #000;
+  color: var(--color);
   text-transform: uppercase;
   margin-bottom: 10px;
   display: block;
-  border-bottom: 2px solid #000;
+  border-bottom: 2px solid var(--theme-btn-hover-color);
   width: 50%;
-}
-
-.sign-up {
-  border: 4px solid #000;
-  background: #000;
-  color: #fff;
-  padding: 12px;
-  font-size: 18px;
-  font-weight: bold;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.sign-up:hover {
-  background: #fff;
-  color: #000;
-  transform: translateY(-5px);
-  box-shadow: 0 5px 0 #000;
+  font-family: var(--mono-font-family);
 }
 
 .info-item {
@@ -220,6 +205,7 @@ const emit = defineEmits(["toNextPage"]);
   opacity: 0;
   font-size: 20px;
   line-height: 30px;
+  color: var(--color);
 }
 
 @keyframes bioTextIn {

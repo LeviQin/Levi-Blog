@@ -223,7 +223,10 @@ const changeCarousel = (val) => {
 
 .about-header {
   height: 80px;
-  background-color: #000000;
+  background-color: var(--theme-color);
+  border-bottom: 1px solid var(--border-color);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 
   .about-header-nav ul {
     height: 100%;
@@ -232,7 +235,7 @@ const changeCarousel = (val) => {
 
     li {
       width: 20%;
-      color: #fff;
+      color: var(--color);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -248,7 +251,7 @@ const changeCarousel = (val) => {
         left: 50%;
         transform: translateX(-50%);
         border-radius: 50%;
-        border: 4px solid #fff;
+        border: 4px solid var(--border-color);
         overflow: hidden;
         text-indent: -9999px;
         padding: 0 !important;

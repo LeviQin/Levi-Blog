@@ -46,11 +46,13 @@ const emit = defineEmits(["toNextPage"]);
 <style lang="scss" scoped>
 .container {
   height: 100%;
-  background: linear-gradient(-60deg, #792a31, #a94449, #d98880, #792a31);
-  background-size: 400% 400%;
+  background:
+    radial-gradient(circle at 22% 28%, rgba(34, 211, 238, 0.08), transparent 45%),
+    radial-gradient(circle at 78% 70%, rgba(34, 211, 238, 0.05), transparent 42%),
+    var(--background);
+  background-size: 100% 100%;
   position: relative;
   background-repeat: no-repeat;
-  background-size: cover;
   background-position: center;
 }
 
@@ -60,13 +62,15 @@ const emit = defineEmits(["toNextPage"]);
   left: 50%;
   transform: translate(-50%, -50%);
   box-sizing: border-box;
-  font-family: cursive;
   font-size: 20px;
-  border-radius: 10px;
-  background: #000;
+  border-radius: 14px;
+  background: var(--theme-color);
+  border: 1px solid var(--border-color);
   line-height: 1.2rem;
   padding: 20px;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  min-width: 420px;
+  max-width: 90vw;
 }
 
 .tools {
@@ -101,19 +105,21 @@ const emit = defineEmits(["toNextPage"]);
 }
 
 .card-content {
-  color: #fff;
+  color: var(--color);
   padding: 0 20px;
 }
 
 .info-content p {
   margin: 0;
   padding-bottom: 1.2rem;
-  color: #fff;
+  color: var(--color);
   line-height: 20px;
 }
 
 .info-title {
   font-size: 30px;
+  font-family: var(--mono-font-family);
+  color: var(--theme-btn-hover-color);
 }
 
 .info-content {
