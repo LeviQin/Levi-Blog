@@ -41,7 +41,7 @@
             <button
               class="wallpaper-action-btn primary"
               type="button"
-              @click="setWallpaper(gufengnvImag, defaultWallpaperLabel)"
+              @click="setWallpaper(gridWallpaper, defaultWallpaperLabel)"
             >
               恢复默认壁纸
             </button>
@@ -86,7 +86,21 @@ import gufengnvImag from "@/assets/images/banner/gufengnv.jpg";
 import { useMainStore } from "@/stores/mainStore";
 
 const mainStore = useMainStore();
-const defaultWallpaperLabel = "默认壁纸";
+const defaultWallpaperLabel = "极客网格";
+const ancientWallpaperLabel = "古风";
+
+// 暗色极客网格纹理（SVG data URI，零额外图片请求）
+const gridWallpaper = "data:image/svg+xml;utf8," + encodeURIComponent(`
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+  <defs>
+    <radialGradient id="g" cx="30%" cy="25%" r="80%">
+      <stop offset="0%" stop-color="#16222e" />
+      <stop offset="100%" stop-color="#0d1117" />
+    </radialGradient>
+  </defs>
+  <rect width="80" height="80" fill="url(#g)" />
+  <path d="M80 0H0V80" fill="none" stroke="#22d3ee" stroke-opacity="0.08" stroke-width="1" />
+</svg>`);
 
 const wallpaperOptions = computed(() => {
   const remoteWallpapers = (mainStore.wallpaperMap || []).map((item, index) => ({
@@ -99,6 +113,11 @@ const wallpaperOptions = computed(() => {
     {
       id: "default-wallpaper",
       name: defaultWallpaperLabel,
+      image: gridWallpaper,
+    },
+    {
+      id: "ancient-wallpaper",
+      name: ancientWallpaperLabel,
       image: gufengnvImag,
     },
     ...remoteWallpapers,
@@ -108,7 +127,7 @@ const wallpaperOptions = computed(() => {
 const currentWallpaper = computed(() => {
   const rawValue = mainStore.backgroundImage || "";
   const matched = rawValue.match(/^url\((['"]?)(.*?)\1\)$/);
-  return matched?.[2] || gufengnvImag;
+  return matched?.[2] || gridWallpaper;
 });
 
 const selectedWallpaperImage = computed(() => currentWallpaper.value);
