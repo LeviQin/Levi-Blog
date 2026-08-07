@@ -12,51 +12,18 @@
         </div>
       </div>
       <div class="support-box">
-        <div class="support-item">
+        <div class="support-item" v-for="badge in techBadges" :key="badge.label">
           <a
-            class="vue-badge"
+            :class="badge.class"
             target="_blank"
-            href="https://vuejs.org/"
+            :href="badge.href"
             style="margin-inline: 5px"
-            title="本站前端界面由Vue3构建"
+            :title="badge.title"
             rel="external nofollow noreferrer"
             ><img
-              src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=vuedotjs&logoColor=white&labelColor=%23343536"
-              data-lazy-src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=vuedotjs&logoColor=white&labelColor=%23343536"
-              alt="Vue.js Badge"
-              data-ll-status="loaded"
-              class="entered loaded"
-          /></a>
-        </div>
-        <div class="support-item">
-          <a
-            class="node-badge"
-            target="_blank"
-            href="https://nodejs.org/"
-            style="margin-inline: 5px"
-            title="本站后端由Node.js构建"
-            rel="external nofollow noreferrer"
-            ><img
-              src="https://img.shields.io/badge/-Node.js-%23579050?style=flat&logo=nodedotjs&logoColor=ffffff"
-              data-lazy-src="https://img.shields.io/badge/-Node.js-%23579050?style=flat&logo=nodedotjs&logoColor=ffffff"
-              alt="Node.js Badge"
-              data-ll-status="loaded"
-              class="entered loaded"
-          /></a>
-        </div>
-        <div class="support-item">
-          <a
-            class="github-badge"
-            target="_blank"
-            href="https://github.com/"
-            style="margin-inline: 5px"
-            title="本网站源码由Github提供存储仓库托管"
-            rel="external nofollow noreferrer"
-            ><img
-              class="no-lazyload entered loading"
-              src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub"
-              alt="本网站源码由Github提供存储仓库托管"
-              data-ll-status="loading"
+              :src="badge.src"
+              :alt="badge.label"
+              loading="lazy"
           /></a>
         </div>
       </div>
@@ -73,6 +40,94 @@ const mainStore = useMainStore();
 const blogSettingMap = computed(() => {
   return mainStore.blogSettingMap;
 });
+
+// 技术栈徽章：与博主简历对齐
+const techBadges = [
+  {
+    label: "Vue.js",
+    class: "vue-badge",
+    href: "https://vuejs.org/",
+    title: "前端框架 Vue3",
+    src: "https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=vuedotjs&logoColor=white&labelColor=%23343536",
+  },
+  {
+    label: "Nuxt",
+    class: "nuxt-badge",
+    href: "https://nuxt.com/",
+    title: "Nuxt4 SSR/CSR",
+    src: "https://img.shields.io/badge/Nuxt-00DC82?style=flat&logo=nuxtdotjs&logoColor=white&labelColor=%23343536",
+  },
+  {
+    label: "TypeScript",
+    class: "ts-badge",
+    href: "https://www.typescriptlang.org/",
+    title: "TypeScript",
+    src: "https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white&labelColor=%23343536",
+  },
+  {
+    label: "Node.js",
+    class: "node-badge",
+    href: "https://nodejs.org/",
+    title: "后端 Node.js",
+    src: "https://img.shields.io/badge/Node.js-339933?style=flat&logo=nodedotjs&logoColor=white&labelColor=%23343536",
+  },
+  {
+    label: "MySQL",
+    class: "mysql-badge",
+    href: "https://www.mysql.com/",
+    title: "数据库 MySQL",
+    src: "https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white&labelColor=%23343536",
+  },
+  {
+    label: "React",
+    class: "react-badge",
+    href: "https://react.dev/",
+    title: "React 组件开发",
+    src: "https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=white&labelColor=%23343536",
+  },
+  {
+    label: "WordPress",
+    class: "wp-badge",
+    href: "https://wordpress.org/",
+    title: "WordPress 插件",
+    src: "https://img.shields.io/badge/WordPress-21759B?style=flat&logo=wordpress&logoColor=white&labelColor=%23343536",
+  },
+  {
+    label: "Vite",
+    class: "vite-badge",
+    href: "https://vite.dev/",
+    title: "构建工具 Vite",
+    src: "https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white&labelColor=%23343536",
+  },
+  {
+    label: "Docker",
+    class: "docker-badge",
+    href: "https://www.docker.com/",
+    title: "Docker 部署",
+    src: "https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white&labelColor=%23343536",
+  },
+  {
+    label: "Nginx",
+    class: "nginx-badge",
+    href: "https://nginx.org/",
+    title: "Nginx 部署",
+    src: "https://img.shields.io/badge/Nginx-009639?style=flat&logo=nginx&logoColor=white&labelColor=%23343536",
+  },
+  {
+    label: "Flutter",
+    class: "flutter-badge",
+    href: "https://flutter.dev/",
+    title: "Flutter 跨平台",
+    src: "https://img.shields.io/badge/Flutter-02569B?style=flat&logo=flutter&logoColor=white&labelColor=%23343536",
+  },
+  {
+    label: "GitHub",
+    class: "github-badge",
+    href: "https://github.com/",
+    title: "源码托管 GitHub",
+    src: "https://img.shields.io/badge/Source-GitHub-d021d6?style=flat&logo=GitHub&labelColor=%23343536",
+  },
+];
 </script>
 
 <style lang="scss" scoped>
@@ -106,6 +161,8 @@ const blogSettingMap = computed(() => {
   padding-top: 10px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
 }
 
 .support-item {
@@ -126,7 +183,7 @@ const blogSettingMap = computed(() => {
   }
 
   .support-box {
-    justify-content: space-around;
+    justify-content: center;
   }
 }
 </style>
