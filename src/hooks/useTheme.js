@@ -9,7 +9,9 @@ import {
 
 const key = "__theme__";
 
-const theme = ref(getStore(key) || "dark");
+// 读取主题，仅接受 dark/light，其他值(含残留脏数据)回退默认 dark
+const stored = getStore(key);
+const theme = ref(stored === "dark" || stored === "light" ? stored : "dark");
 
 watchEffect(() => {
     document.documentElement.dataset.theme = theme.value;

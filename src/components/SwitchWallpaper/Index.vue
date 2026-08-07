@@ -149,11 +149,11 @@ import { useMainStore } from "@/stores/mainStore";
 const mainStore = useMainStore();
 
 const wallpaperOptions = [
-  { id: "cyber-cyan", name: "极客青", accent: "#22d3ee", css: "radial-gradient(circle at 22% 30%, rgba(34,211,238,0.10), transparent 46%), radial-gradient(circle at 78% 65%, rgba(34,211,238,0.06), transparent 42%), #0d1117" },
-  { id: "deep-blue", name: "深空蓝", accent: "#3b82f6", css: "radial-gradient(circle at 20% 25%, rgba(59,130,246,0.10), transparent 45%), radial-gradient(circle at 80% 75%, rgba(30,64,175,0.06), transparent 42%), #0d1117" },
-  { id: "graphite", name: "极简灰", accent: "#94a3b8", css: "radial-gradient(circle at 50% 40%, rgba(148,163,184,0.06), transparent 50%), #161b22" },
-  { id: "amber", name: "琥珀暖", accent: "#ff8b26", css: "radial-gradient(circle at 75% 30%, rgba(255,139,38,0.08), transparent 46%), #0d1117" },
-  { id: "mint", name: "薄荷青", accent: "#22c55e", css: "radial-gradient(circle at 25% 70%, rgba(63,185,80,0.08), transparent 45%), radial-gradient(circle at 70% 20%, rgba(34,211,238,0.05), transparent 40%), #0d1117" },
+  { id: "cyber-cyan", name: "极客青", accent: "#22d3ee", css: "radial-gradient(circle at 22% 30%, rgba(34,211,238,0.12), transparent 46%), radial-gradient(circle at 78% 65%, rgba(34,211,238,0.08), transparent 42%), var(--background)" },
+  { id: "deep-blue", name: "深空蓝", accent: "#3b82f6", css: "radial-gradient(circle at 20% 25%, rgba(59,130,246,0.12), transparent 45%), radial-gradient(circle at 80% 75%, rgba(30,64,175,0.08), transparent 42%), var(--background)" },
+  { id: "graphite", name: "极简灰", accent: "#94a3b8", css: "radial-gradient(circle at 50% 40%, rgba(148,163,184,0.08), transparent 50%), var(--background)" },
+  { id: "amber", name: "琥珀暖", accent: "#ff8b26", css: "radial-gradient(circle at 75% 30%, rgba(255,139,38,0.10), transparent 46%), var(--background)" },
+  { id: "mint", name: "薄荷青", accent: "#22c55e", css: "radial-gradient(circle at 25% 70%, rgba(63,185,80,0.10), transparent 45%), radial-gradient(circle at 70% 20%, rgba(34,211,238,0.06), transparent 40%), var(--background)" },
   { id: "theme", name: "跟随主题", accent: "", css: "" },
 ];
 

@@ -80,6 +80,8 @@ const blogSettingMap = computed(() => {
   min-width: var(--min-width);
   display: flex;
   justify-content: center;
+  background: var(--theme-color);
+  border-top: 1px solid var(--border-color);
   backdrop-filter: blur(20px);
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
   padding: 20px 0;
@@ -88,7 +90,7 @@ const blogSettingMap = computed(() => {
 
 .info-item a,
 .info-item span {
-  color: var(--nav-text-color);
+  color: var(--color);
   font-size: 16px;
   text-shadow: 0 5px 15px rgba(0, 0, 0, 1) !important;
 }
@@ -120,7 +122,7 @@ const blogSettingMap = computed(() => {
 
   .info-item a,
   .info-item span {
-    color: var(--nav-text-color);
+    color: var(--color);
     font-size: 14px;
   }
 

@@ -12,6 +12,18 @@
   <meta http-equiv="Content-Type" content="text/html;charset=gb2312" />
   <meta name="sogou_site_verification" content="Llp2yrvLcC" />
   <meta name="robots" content="index, follow">
+  <script>
+    // 主题初始化：优先读取用户偏好，默认暗色，防止首屏闪烁
+    (function () {
+      try {
+        var t = localStorage.getItem('__theme__');
+        if (t !== 'dark' && t !== 'light') t = 'dark';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {
+        document.documentElement.dataset.theme = 'dark';
+      }
+    })();
+  </script>
   <title>Levi's space -
     一个有意思的Blog，工作记录，日常分享，欢迎访问
   </title>

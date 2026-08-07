@@ -44,7 +44,7 @@ const effectComponent = computed(() => {
   return effectMap[mainStore.fxConfig.type] || null;
 });
 
-const DEFAULT_BG = "radial-gradient(circle at 22% 30%, rgba(34,211,238,0.10), transparent 46%), radial-gradient(circle at 78% 65%, rgba(34,211,238,0.06), transparent 42%), #0d1117";
+const DEFAULT_BG = "radial-gradient(circle at 22% 30%, rgba(34,211,238,0.10), transparent 46%), radial-gradient(circle at 78% 65%, rgba(34,211,238,0.06), transparent 42%), var(--background)";
 
 // 背景支持完整 CSS background 值（渐变/纯色），空值或旧图片 url 格式则回退默认
 const bannerBarStyle = computed(() => {
