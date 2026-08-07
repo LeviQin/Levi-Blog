@@ -76,7 +76,10 @@ const emit = defineEmits(["toNextPage"]);
 
   .button-card .button:hover {
     background: rgba(0, 0, 0, 0.849);
-    transition: transform 0.2s ease-in 0s;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease-in 0s;
   }
 }
 
