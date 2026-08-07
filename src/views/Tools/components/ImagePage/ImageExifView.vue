@@ -402,7 +402,7 @@ h4 {
 }
 
 .image-exif-view-result-item {
-  background-color: #fff;
+  background-color: var(--theme-color);
   border-radius: var(--theme-min-radius);
   padding: 20px;
 }
@@ -440,8 +440,8 @@ h4 {
 }
 
 .result-item-value {
-  background-color: #fff;
-  color: #555;
+  background-color: var(--theme-color);
+  color: var(--color);
 }
 
 @media (max-width: 860px) {

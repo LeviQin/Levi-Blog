@@ -199,7 +199,7 @@ const getSiteNavList = async () => {
 .select-category-ul li {
   padding: 10px 16px;
   border-radius: var(--theme-radius);
-  background: #fff;
+  background: var(--theme-color);
   cursor: pointer;
   font-size: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -227,7 +227,7 @@ const getSiteNavList = async () => {
   padding: 15px;
   border-radius: var(--theme-radius);
   color: var(--color);
-  background: #fff;
+  background: var(--theme-color);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   display: flex;

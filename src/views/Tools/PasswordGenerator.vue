@@ -412,7 +412,7 @@ const copyText = (val) => {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  background-color: #fff;
+  background-color: var(--theme-color);
   border-radius: 5px;
   margin-top: 10px;
 
