@@ -213,18 +213,16 @@ onBeforeUnmount(() => {
   font-size: 48px;
   font-weight: 700;
   margin: 0 0 14px 0;
-  color: #ffffff;
+  color: var(--color);
   letter-spacing: -1px;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
 }
 
 .banner-sub {
   font-size: 17px;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--text-secondary);
   margin: 0 0 26px 0;
   line-height: 1.6;
   min-height: 32px;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
 }
 
 .typing-caret {
