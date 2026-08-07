@@ -161,7 +161,7 @@ const bannerConfig = computed(() => ({
   text: "浮世景色百千年依旧，人之在世却如白露与泡影",
   terminalLines: [
     { cmd: "npm create blog@latest", output: "√ 欢迎使用 Levi-Blog" },
-    { cmd: "git commit -m \"feat: 修复\"", output: "[main 3087c9e1] 改造完成" },
+    { cmd: "git commit -m \"feat: BUG修复\"", output: "[main 3087c9e1] 改造完成" },
     { cmd: "npm run dev", output: "VITE ready in 320ms" },
   ],
 }));
