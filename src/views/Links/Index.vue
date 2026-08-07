@@ -19,13 +19,13 @@
       >
         <section class="links-overview links-panel">
           <div class="links-overview-content">
-            <span class="section-kicker">Friendship Directory</span>
+            <span class="section-kicker">~/friends</span>
             <div class="section-title-row">
               <h2>在互联网里，和有趣的人彼此点亮</h2>
               <span class="section-badge">共 {{ friendCount }} 位朋友</span>
             </div>
             <p class="links-overview-text">
-              以下友情链接与本博客相互独立，不代表博主 Levi 认同其观点。若发现异常站点内容，请到留言板反馈，我会尽快核查处理。愿每一个认真表达的人，都能在这里被更多同频读者看见。
+              以下友情链接与本博客相互独立，不代表博主 Levi 认同其观点。若发现异常站点内容，请到留言板反馈，我会尽快核查处理。
             </p>
             <div class="links-overview-metrics">
               <div class="metric-card">
@@ -70,14 +70,14 @@
         <section class="friends-section links-panel">
           <div class="section-header">
             <div>
-              <span class="section-kicker">Friends</span>
+              <span class="section-kicker">~/friend-list</span>
               <div class="section-title-row">
                 <h2>朋友们</h2>
                 <span class="section-badge">持续更新</span>
               </div>
             </div>
             <p class="section-desc">
-              每一位友链伙伴都在认真书写自己的角落，欢迎你顺着这些链接继续发现更多值得驻足的站点。
+              每位友链伙伴都在认真书写自己的角落，欢迎顺着这些链接继续探索。
             </p>
           </div>
 
@@ -136,7 +136,7 @@
             <div class="info-card links-panel">
               <div class="section-header compact">
                 <div>
-                  <span class="section-kicker">Site Profile</span>
+                  <span class="section-kicker">~/site</span>
                   <div class="section-title-row">
                     <h2>本站信息</h2>
                   </div>
@@ -157,7 +157,7 @@
             <div class="info-card links-panel">
               <div class="section-header compact">
                 <div>
-                  <span class="section-kicker">Guideline</span>
+                  <span class="section-kicker">~/rules</span>
                   <div class="section-title-row">
                     <h2>友链须知</h2>
                   </div>
@@ -184,10 +184,10 @@
             </div>
 
             <div class="apply-section links-panel">
-              <span class="section-kicker">Apply</span>
+              <span class="section-kicker">~/apply</span>
               <h2>把你的站点也放进这份名单里</h2>
               <p>
-                如果你也在认真记录、持续更新，欢迎互换友链。先添加本站后前往留言板，会更方便我快速处理。
+                如果你也在认真记录、持续更新，欢迎互换友链。先添加本站后前往留言板，会更方便快速处理。
               </p>
               <div class="apply-btn-box">
                 <button class="apply-btn primary" type="button" @click="openApplyPage">
@@ -328,17 +328,16 @@ const getData = async () => {
   gap: 24px;
   max-width: var(--w);
   margin: 0 auto;
-  box-shadow: 0 18px 42px rgba(15, 30, 45, 0.08);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
 }
 
 .links-panel {
   position: relative;
   overflow: hidden;
   border-radius: calc(var(--theme-radius) + 4px);
-  background: rgba(255, 255, 255, 0.76);
-  border: 1px solid rgba(255, 255, 255, 0.62);
-  box-shadow: 0 14px 34px rgba(41, 61, 82, 0.08);
-  backdrop-filter: blur(12px);
+  background: var(--theme-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.16);
 }
 
 .section-kicker {
@@ -348,8 +347,9 @@ const getData = async () => {
   min-height: 28px;
   padding: 0 12px;
   border-radius: 999px;
-  background: rgba(var(--btn-tag-bg-color-rgb, 102, 133, 255), 0.12);
-  color: var(--btn-tag-bg-color);
+  background: rgba(34, 211, 238, 0.1);
+  color: var(--theme-btn-hover-color);
+  font-family: var(--mono-font-family);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -386,10 +386,11 @@ const getData = async () => {
 .section-badge {
   padding: 6px 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.88);
-  color: var(--color);
+  background: rgba(34, 211, 238, 0.08);
+  color: var(--theme-btn-hover-color);
+  font-family: var(--mono-font-family);
   font-size: 12px;
-  box-shadow: inset 0 0 0 1px rgba(140, 162, 184, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.2);
 }
 
 .section-desc,
@@ -427,12 +428,13 @@ const getData = async () => {
   gap: 8px;
   padding: 18px 16px;
   border-radius: 20px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(244, 248, 251, 0.92));
-  box-shadow: inset 0 0 0 1px rgba(140, 162, 184, 0.12);
+  background: rgba(230, 237, 243, 0.04);
+  box-shadow: inset 0 0 0 1px var(--border-color);
 }
 
 .metric-value {
   color: var(--black-text-color);
+  font-family: var(--mono-font-family);
   font-size: 24px;
   font-weight: 700;
 }
@@ -451,8 +453,8 @@ const getData = async () => {
   width: 100%;
   padding: 24px;
   border-radius: 24px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(243, 247, 250, 0.88));
-  box-shadow: inset 0 0 0 1px rgba(143, 165, 180, 0.12);
+  background: rgba(230, 237, 243, 0.04);
+  box-shadow: inset 0 0 0 1px var(--border-color);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -504,8 +506,9 @@ const getData = async () => {
   span {
     padding: 7px 12px;
     border-radius: 999px;
-    background: rgba(var(--btn-tag-bg-color-rgb, 102, 133, 255), 0.1);
-    color: var(--btn-tag-bg-color);
+    background: rgba(34, 211, 238, 0.1);
+    color: var(--theme-btn-hover-color);
+    font-family: var(--mono-font-family);
     font-size: 12px;
   }
 }
@@ -528,11 +531,11 @@ const getData = async () => {
   color: #fff;
   font-size: 14px;
   font-weight: 600;
-  box-shadow: 0 12px 24px rgba(var(--btn-tag-bg-color-rgb, 74, 124, 255), 0.25);
+  box-shadow: 0 12px 24px rgba(34, 211, 238, 0.25);
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 18px 28px rgba(var(--btn-tag-bg-color-rgb, 74, 124, 255), 0.3);
+    box-shadow: 0 18px 28px rgba(34, 211, 238, 0.3);
   }
 }
 
@@ -547,14 +550,14 @@ const getData = async () => {
 }
 
 .links-category-item {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(244, 248, 251, 0.92));
+  background: rgba(230, 237, 243, 0.03);
   padding: 20px;
-  box-shadow: 0 10px 26px rgba(28, 44, 66, 0.08);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.14);
   border-radius: calc(var(--theme-radius) + 2px);
   cursor: pointer;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-  border: 1px solid rgba(143, 165, 180, 0.14);
+  border: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -593,13 +596,13 @@ const getData = async () => {
   width: 62px;
   height: 62px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--theme-color);
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 12px 24px rgba(51, 77, 104, 0.14);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--border-color);
   img {
     width: 100%;
     height: 100%;
@@ -637,8 +640,9 @@ const getData = async () => {
 .links-category-link {
   padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(var(--btn-tag-bg-color-rgb, 102, 133, 255), 0.1);
-  color: var(--btn-tag-bg-color);
+  background: rgba(34, 211, 238, 0.1);
+  color: var(--theme-btn-hover-color);
+  font-family: var(--mono-font-family);
   opacity: 1;
   font-weight: 600;
 }
@@ -661,8 +665,8 @@ const getData = async () => {
 .links-empty-state {
   padding: 42px 24px;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.6);
-  box-shadow: inset 0 0 0 1px rgba(143, 165, 180, 0.12);
+  background: rgba(230, 237, 243, 0.03);
+  box-shadow: inset 0 0 0 1px var(--border-color);
   text-align: center;
 
   h3 {
@@ -692,8 +696,9 @@ const getData = async () => {
   width: 58px;
   height: 58px;
   border-radius: 18px;
-  background: rgba(var(--btn-tag-bg-color-rgb, 102, 133, 255), 0.1);
-  color: var(--btn-tag-bg-color);
+  background: rgba(34, 211, 238, 0.1);
+  color: var(--theme-btn-hover-color);
+  font-family: var(--mono-font-family);
   font-size: 22px;
   font-weight: 700;
 }
@@ -726,10 +731,10 @@ const getData = async () => {
   gap: 10px;
   padding: 12px 14px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(230, 237, 243, 0.03);
   line-height: 1.65;
   font-size: 14px;
-  box-shadow: inset 0 0 0 1px rgba(143, 165, 180, 0.1);
+  box-shadow: inset 0 0 0 1px var(--border-color);
 }
 
 .info-label {
@@ -799,13 +804,13 @@ const getData = async () => {
     &.primary {
       background-color: var(--btn-tag-bg-color);
       color: #fff;
-      box-shadow: 0 12px 22px rgba(var(--btn-tag-bg-color-rgb, 0, 0, 0), 0.2);
+      box-shadow: 0 12px 22px rgba(34, 211, 238, 0.2);
     }
 
     &.secondary {
-      background: rgba(255, 255, 255, 0.78);
+      background: rgba(230, 237, 243, 0.03);
       color: var(--color);
-      box-shadow: inset 0 0 0 1px rgba(143, 165, 180, 0.14);
+      box-shadow: inset 0 0 0 1px var(--border-color);
     }
 
     &:hover {
@@ -817,8 +822,8 @@ const getData = async () => {
 @media (hover: hover) {
   .links-category-item:hover {
     transform: translateY(-6px);
-    box-shadow: 0 18px 32px rgba(28, 44, 66, 0.12);
-    border-color: rgba(var(--btn-tag-bg-color-rgb, 102, 133, 255), 0.3);
+    box-shadow: 0 18px 32px rgba(0, 0, 0, 0.22);
+    border-color: rgba(34, 211, 238, 0.35);
 
     .links-category-icon img {
       transform: scale(1.08);
