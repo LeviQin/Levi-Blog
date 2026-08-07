@@ -9,7 +9,7 @@ import {
 
 const key = "__theme__";
 
-const theme = ref(getStore(key) || "light");
+const theme = ref(getStore(key) || "dark");
 
 watchEffect(() => {
     document.documentElement.dataset.theme = theme.value;
