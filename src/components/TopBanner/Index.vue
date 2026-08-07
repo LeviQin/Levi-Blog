@@ -189,14 +189,15 @@ onBeforeUnmount(() => {
 .banner-grid-bg {
   position: absolute;
   inset: 0;
-  background-color: var(--background);
+  background-color: transparent;
+  /* 柔和氛围光，与全局 banner-bar 光晕呼应，不产生独立色块 */
   background-image:
-    radial-gradient(circle at 20% 25%, rgba(34, 211, 238, 0.08), transparent 42%),
-    radial-gradient(circle at 80% 70%, rgba(34, 211, 238, 0.05), transparent 40%),
-    linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+    radial-gradient(circle at 22% 30%, rgba(34, 211, 238, 0.07), transparent 46%),
+    radial-gradient(circle at 78% 65%, rgba(34, 211, 238, 0.05), transparent 42%);
   z-index: 0;
+  /* 底部渐变过渡到内容区，消除硬边界 */
+  -webkit-mask-image: linear-gradient(180deg, #000 82%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 82%, transparent 100%);
 }
 
 /* ===== 分屏 Hero 模式 ===== */
@@ -296,9 +297,13 @@ onBeforeUnmount(() => {
   max-width: 460px;
   border-radius: 12px;
   overflow: hidden;
-  background: #0d1117;
-  border: 1px solid #21262d;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  background: rgba(13, 17, 23, 0.92);
+  border: 1px solid rgba(34, 211, 238, 0.18);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .terminal-bar {
