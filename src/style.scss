@@ -95,10 +95,16 @@
 .tags-item {
   margin: 0 5px;
   font-size: 12px;
-  background: #f4ebeb6b;
+  background: rgba(34, 211, 238, 0.1);
+  color: var(--theme-btn-hover-color);
   padding: 3px 7px;
   border-radius: 10px;
   white-space: nowrap;
+}
+
+html[data-theme="dark"] .tags-item {
+  background: rgba(34, 211, 238, 0.12);
+  color: var(--theme-btn-hover-color);
 }
 
 .sidin-start {

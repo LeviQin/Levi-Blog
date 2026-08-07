@@ -424,7 +424,7 @@ const getData = async () => {
   flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 12px;
-  color: #3c3b3b;
+  color: var(--color);
 }
 
 .footer-date {
