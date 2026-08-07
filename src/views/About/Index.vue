@@ -227,6 +227,9 @@ const changeCarousel = (val) => {
   border-bottom: 1px solid var(--border-color);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  /* backdrop-filter 创建新层叠上下文，需整体抬到轮播内容之上，否则头像溢出部分被盖住 */
+  position: relative;
+  z-index: 999;
 
   .about-header-nav ul {
     height: 100%;

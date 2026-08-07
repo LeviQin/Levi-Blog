@@ -86,7 +86,8 @@ const emit = defineEmits(["toOnePage"]);
   font-size: 20px;
   border-radius: 14px;
   line-height: 1.2rem;
-  min-width: 420px;
+  width: max-content;
+  min-width: 320px;
   max-width: 90vw;
 }
 
