@@ -1,7 +1,6 @@
 <template>
   <div
     class="container"
-    :style="{ backgroundImage: `url(${props.blogSettingMap.blog_work_bg_img})` }"
   >
     <div class="info">
       <h1 class="info-title">{{ props.blogSettingMap.blog_work_title }}</h1>

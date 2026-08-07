@@ -1,7 +1,6 @@
 <template>
   <div
     class="container"
-    :style="{ backgroundImage: `url(${props.blogSettingMap.blog_connect_bg_img})` }"
   >
     <div class="info card">
       <div class="connect-header">
