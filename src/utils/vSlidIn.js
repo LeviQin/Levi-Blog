@@ -2,8 +2,9 @@
  * 元素由下而上位移一段距离的通用型动画，使用自定义指令
  */
 
-const DISTANCE = 120; // 位移距离
-const DURACTION = 800; // 动画时间
+const DISTANCE = 60; // 位移距离(减小，更柔和)
+const DURACTION = 1200; // 动画时间(加长，更缓慢)
+const EASING = "cubic-bezier(0.25, 0.46, 0.45, 0.94)"; // 平滑缓出，无回弹
 const map = new WeakMap();
 
 const ob = new IntersectionObserver((entries) => {
@@ -32,16 +33,16 @@ export const vSlidIn = {
             [{
                     transform: `translateY(${DISTANCE}px)`,
                     opacity: 0.3,
-                    transition: `opacity 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)`
+                    transition: `opacity 0.6s ease, transform 0.6s ${EASING}`
                 },
                 {
                     transform: `translateY(0)`,
                     opacity: 1,
-                    transition: `opacity 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)`
+                    transition: `opacity 0.6s ease, transform 0.6s ${EASING}`
                 }
             ], {
                 duration: DURACTION,
-                easing: "ease-in-out",
+                easing: EASING,
                 fill: "forwards"
             }
         );
