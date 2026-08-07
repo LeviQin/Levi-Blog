@@ -39,10 +39,10 @@
 }
 
 .lv-card {
-  background: #fff;
+  background: var(--theme-color);
   padding: 20px;
   border-radius: 5px;
-  border: 1px solid #dcdfe6;
+  border: 1px solid var(--border-color);
 }
 
 .theme-bg-color {
