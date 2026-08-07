@@ -104,6 +104,8 @@ const emit = defineEmits(["toNextPage"]);
   flex-direction: column;
   align-items: center;
   max-height: 88%;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .info-title {
@@ -234,36 +236,47 @@ const emit = defineEmits(["toNextPage"]);
 
 @media (max-width: 860px) {
   .info {
-    width: 92%;
-    top: 45%;
-    max-height: 80%;
+    width: 94%;
+    top: 50%;
+    max-height: 88%;
+    padding: 0 8px;
+    box-sizing: border-box;
   }
 
   .info-title {
-    font-size: 1.4rem;
-    margin-bottom: 16px;
+    font-size: 1.3rem;
+    margin-bottom: 14px;
+    flex-shrink: 0;
   }
 
   .info-content {
     grid-template-columns: repeat(1, 1fr);
     width: 100% !important;
-    gap: 12px;
+    gap: 10px;
     overflow-y: auto;
-    max-height: 70%;
+    flex: 1;
+    max-height: none;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .info-item {
-    height: 100px !important;
+    height: auto !important;
+    min-height: 92px;
     width: 100% !important;
   }
 
   .info-item a {
-    display: flex !important;
+    display: block !important;
     height: 100%;
   }
 
   .text-card a {
-    padding: 12px;
+    padding: 14px;
+  }
+
+  .text-card-body {
+    gap: 8px;
   }
 
   .text-card-title {
@@ -271,16 +284,25 @@ const emit = defineEmits(["toNextPage"]);
   }
 
   .text-card-tags {
-    display: none;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  .tag-chip {
+    padding: 2px 8px;
+    font-size: 10px;
   }
 
   .text-card-desc {
     font-size: 12px;
     -webkit-line-clamp: 2;
+    line-height: 1.5;
   }
 
   .button-card {
-    margin-top: 14px;
+    margin-top: 12px;
+    flex-shrink: 0;
   }
 }
 </style>
