@@ -154,17 +154,17 @@ const page = ref(1);
 const pageSize = ref(10);
 const loading = ref(false);
 
-const bannerConfig = {
+const bannerConfig = computed(() => ({
   height: "min-height: 88vh",
   showArrow: false,
   title: "Levi",
-  text: "全栈开发者，热爱 Vue 与前端工程化",
+  text: blogSettingMap.value.blog_description || "一个有意思的Blog，工作记录，日常分享，欢迎访问",
   terminalLines: [
     { cmd: "npm create blog@latest", output: "√ 欢迎使用 Levi-Blog" },
     { cmd: "git commit -m \"feat: 暗色极客风\"", output: "[main 3087c9e1] 改造完成" },
     { cmd: "npm run dev", output: "VITE ready in 320ms" },
   ],
-};
+}));
 
 const categoryList = ["日常随记", "开发心得", "萌宠日记", "学习笔记", "光影故事"];
 
