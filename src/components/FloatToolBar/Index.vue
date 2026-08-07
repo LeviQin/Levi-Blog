@@ -40,6 +40,14 @@
         >
           <i class="bi bi-stars"></i>
         </button>
+
+        <button
+          class="tool-btn"
+          :title="isDark ? '切换到亮色' : '切换到暗色'"
+          @click="toggleTheme"
+        >
+          <i class="bi" :class="isDark ? 'bi-sun' : 'bi-moon-stars'"></i>
+        </button>
       </div>
     </Transition>
 
@@ -49,10 +57,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { scrollAnimation } from "@/utils/scrollAnimation.js";
 import SwitchWallpaper from "../SwitchWallpaper/Index.vue";
 import SetModel from "../SetModel/Index.vue";
+import { useTheme } from "@/hooks/useTheme";
+
+const { theme, toggleTheme } = useTheme();
+const isDark = computed(() => theme.value === "dark");
 
 const switchWallpaperRef = ref(null);
 const setModelRef = ref(null);

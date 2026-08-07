@@ -39,7 +39,11 @@ import { onMounted, ref } from "vue";
 import { getTagList } from "@/api/articles";
 import { getBlogSetting } from "@/api/blogSetting";
 import { useMainStore } from "@/stores/mainStore";
+import { useTheme } from "@/hooks/useTheme";
 import CatPet from "@/components/CatPet/Index.vue";
+
+// 初始化主题(默认暗色)，确保 html[data-theme] 生效
+useTheme();
 
 const mainStore = useMainStore();
 const showEntranceDoor = ref(true);
