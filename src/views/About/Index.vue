@@ -19,6 +19,7 @@
       />
     </Head>
     <div class="about">
+      <component :is="effectComponent" v-if="effectComponent"></component>
       <div class="about-header">
         <div class="about-header-nav w">
           <ul>
@@ -64,7 +65,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, computed, nextTick } from "vue";
+import { ref, onMounted, onBeforeUnmount, computed, nextTick, markRaw } from "vue";
 import { useRouter } from "vue-router";
 import About from "./About.vue";
 import Work from "./Work.vue";
@@ -73,8 +74,25 @@ import Connect from "./Connect.vue";
 import Hammer from "hammerjs";
 import { Head } from "@vueuse/head";
 import { useMainStore } from "@/stores/mainStore";
+import MatrixRain from "@/components/MatrixRain/Index.vue";
+import ParticleNetwork from "@/components/ParticleNetwork/Index.vue";
+import StarField from "@/components/StarField/Index.vue";
+import DustParticles from "@/components/DustParticles/Index.vue";
 
 const mainStore = useMainStore();
+
+// 背景特效：与全站一致，跟随 fxConfig 动态切换
+const effectMap = {
+  matrix: markRaw(MatrixRain),
+  particles: markRaw(ParticleNetwork),
+  stars: markRaw(StarField),
+  dust: markRaw(DustParticles),
+};
+
+const effectComponent = computed(() => {
+  return effectMap[mainStore.fxConfig.type] || null;
+});
+
 const rootStyle = document.documentElement.style;
 const bodyStyle = document.body.style;
 const previousHtmlOverflow = ref("");

@@ -46,9 +46,8 @@ const emit = defineEmits(["toNextPage"]);
 .container {
   height: 100%;
   background:
-    radial-gradient(circle at 22% 28%, rgba(34, 211, 238, 0.08), transparent 45%),
-    radial-gradient(circle at 78% 70%, rgba(34, 211, 238, 0.05), transparent 42%),
-    var(--background);
+    radial-gradient(circle at 22% 28%, rgba(34, 211, 238, 0.06), transparent 45%),
+    radial-gradient(circle at 78% 70%, rgba(34, 211, 238, 0.04), transparent 42%);
   background-size: 100% 100%;
   position: relative;
   background-repeat: no-repeat;
