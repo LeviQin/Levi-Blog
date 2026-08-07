@@ -130,7 +130,7 @@ onBeforeUnmount(() => {
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1.2);
   outline: none;
   -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 2px 8px rgba(255, 139, 38, 0.25);
+  box-shadow: 0 2px 8px rgba(34, 211, 238, 0.25);
 
   .bi {
     font-size: 16px;
@@ -141,7 +141,7 @@ onBeforeUnmount(() => {
   &:hover {
     background: var(--theme-btn-hover-color);
     transform: translateY(-2px);
-    box-shadow: 0 4px 14px rgba(90, 140, 189, 0.35);
+    box-shadow: 0 4px 14px rgba(34, 211, 238, 0.35);
 
     .bi {
       transform: scale(1.1);
