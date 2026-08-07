@@ -85,7 +85,7 @@ const isSplit = computed(() => Array.isArray(props.bannerConfig.terminalLines));
 
 const bannerStyle = computed(() => {
   if (isSplit.value) {
-    return "min-height: 88vh";
+    return "min-height: 62vh";
   }
   return `height: ${props.bannerConfig.height}`;
 });
@@ -205,10 +205,10 @@ onBeforeUnmount(() => {
   z-index: 1;
   width: min(1180px, 92vw);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.05fr 0.95fr;
   align-items: center;
-  gap: 48px;
-  padding: 60px 0;
+  gap: 40px;
+  padding: 40px 0;
 }
 
 .banner-left {
@@ -217,25 +217,25 @@ onBeforeUnmount(() => {
 
 .banner-title {
   font-family: var(--mono-font-family);
-  font-size: 64px;
+  font-size: 48px;
   font-weight: 700;
-  margin: 0 0 18px 0;
+  margin: 0 0 14px 0;
   color: var(--color);
   letter-spacing: -1px;
 }
 
 .banner-sub {
-  font-size: 20px;
+  font-size: 17px;
   color: var(--text-secondary);
-  margin: 0 0 32px 0;
+  margin: 0 0 26px 0;
   line-height: 1.6;
-  min-height: 36px;
+  min-height: 32px;
 }
 
 .typing-caret {
   display: inline-block;
   width: 2px;
-  height: 22px;
+  height: 19px;
   margin-left: 4px;
   background: var(--theme-btn-hover-color);
   animation: caretBlink 0.9s steps(1) infinite;
@@ -249,9 +249,9 @@ onBeforeUnmount(() => {
 }
 
 .banner-btn {
-  padding: 12px 26px;
+  padding: 10px 22px;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   font-family: var(--mono-font-family);
   border: 1px solid transparent;
@@ -293,26 +293,26 @@ onBeforeUnmount(() => {
 
 .terminal-window {
   width: 100%;
-  max-width: 520px;
+  max-width: 460px;
   border-radius: 12px;
   overflow: hidden;
   background: #0d1117;
   border: 1px solid #21262d;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
 }
 
 .terminal-bar {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 16px;
+  padding: 10px 14px;
   background: #161b22;
   border-bottom: 1px solid #21262d;
 }
 
 .dot {
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -337,10 +337,10 @@ onBeforeUnmount(() => {
 }
 
 .terminal-body {
-  padding: 18px 20px;
+  padding: 16px 18px;
   font-family: var(--mono-font-family);
-  font-size: 14px;
-  line-height: 1.9;
+  font-size: 13px;
+  line-height: 1.85;
 }
 
 .terminal-line {
@@ -417,8 +417,8 @@ onBeforeUnmount(() => {
 @media (max-width: 860px) {
   .banner-split {
     grid-template-columns: 1fr;
-    gap: 36px;
-    padding: 80px 0 60px;
+    gap: 28px;
+    padding: 72px 0 48px;
     text-align: center;
   }
 
@@ -427,11 +427,11 @@ onBeforeUnmount(() => {
   }
 
   .banner-title {
-    font-size: 42px;
+    font-size: 36px;
   }
 
   .banner-sub {
-    font-size: 17px;
+    font-size: 16px;
   }
 
   .banner-actions {

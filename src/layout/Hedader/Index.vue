@@ -69,7 +69,8 @@ const scrollWindow = () => {
     const isTop = top === 0;
     navheight.value = isTop ? maxHeaderHeight : minHeaderHeight;
     isScrolled.value = !isTop;
-    const opacity = Math.min(top / 400, 1);
+    // 顶部也保留 0.4 的半透明毛玻璃，保证导航文字任何背景下都清晰
+    const opacity = Math.min(0.4 + top / 400, 0.92);
     document.documentElement.style.setProperty("--header-bar-color-opacity", opacity);
     rafId = null;
   });
@@ -87,6 +88,8 @@ const showSearchModel = () => {
 
 .header {
   background-color: rgba(var(--header-bar-bg-color), var(--header-bar-color-opacity));
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
   min-width: var(--min-width);
   position: fixed;
   top: 0;
@@ -103,9 +106,6 @@ const showSearchModel = () => {
 
   &.is-scrolled {
     box-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
-    background-color: rgba(var(--header-bar-bg-color), 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
   }
 }
 
