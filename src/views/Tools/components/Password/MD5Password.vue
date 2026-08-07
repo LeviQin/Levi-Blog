@@ -39,7 +39,7 @@ const copyResult = (val) => {
 .pw-card-sub { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
 .pw-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
 .pw-toolbar-spacer { flex: 1; }
-.pw-btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 20px; font-size: 13px; font-weight: 600; border: none; border-radius: 12px; cursor: pointer; transition: all .2s; outline: none; }
+.pw-btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 20px; font-size: 13px; font-weight: 600; border: none; border-radius: 12px; cursor: pointer; transition: all .2s; outline: none; &:active { transform: scale(0.96); } }
 .pw-btn-encrypt { background: var(--theme-btn-hover-color); color: #0d1117; &:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(34,211,238,.3); } }
 .pw-btn-clear { background: transparent; color: var(--text-secondary); border: 1.5px solid var(--border-color); &:hover { background: rgba(127, 127, 127, 0.08); color: var(--color); } }
 .pw-io-grid { display: flex; align-items: flex-start; gap: 16px; }

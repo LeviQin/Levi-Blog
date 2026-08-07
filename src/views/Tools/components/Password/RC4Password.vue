@@ -26,7 +26,7 @@ const copyResult = () => { if (!result.value) { ElNotification({ title: "提示"
 .pw-card-sub { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
 .pw-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
 .pw-toolbar-spacer { flex: 1; }
-.pw-btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 20px; font-size: 13px; font-weight: 600; border: none; border-radius: 12px; cursor: pointer; transition: all .2s; outline: none; }
+.pw-btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 20px; font-size: 13px; font-weight: 600; border: none; border-radius: 12px; cursor: pointer; transition: all .2s; outline: none; &:active { transform: scale(0.96); } }
 .pw-btn-encrypt { background: var(--theme-btn-hover-color); color: #0d1117; &:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(34,211,238,.3); } }
 .pw-btn-decrypt { background: rgba(34, 211, 238, 0.1); color: var(--theme-btn-hover-color); border: 1px solid rgba(34, 211, 238, 0.3); &:hover { background: rgba(34, 211, 238, 0.16); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(34,211,238,.3); } }
 .pw-btn-clear { background: transparent; color: var(--text-secondary); border: 1.5px solid var(--border-color); &:hover { background: rgba(127, 127, 127, 0.08); color: var(--color); } }
@@ -38,7 +38,7 @@ const copyResult = () => { if (!result.value) { ElNotification({ title: "提示"
 .pw-io-label { display: block; font-size: 13px; font-weight: 600; color: var(--color); margin-bottom: 8px; }
 .pw-io-arrow { display: flex; align-items: center; padding-top: 32px; flex-shrink: 0; }
 .pw-textarea :deep(textarea) { font-family: 'SF Mono','Fira Code','Consolas',monospace; font-size: 13px; line-height: 1.7; }
-.pw-textarea-result :deep(textarea) { background: rgba(230, 237, 243, 0.03); }
+.pw-textarea-result :deep(textarea) { background: rgba(34, 211, 238, 0.04); border-color: rgba(34, 211, 238, 0.15); }
 .pw-char-count { margin-top: 6px; font-size: 11px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
 .pw-io-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
 .pw-copy-btn { display: inline-flex; align-items: center; gap: 4px; padding: 5px 14px; font-size: 12px; font-weight: 600; border: 1.5px solid var(--border-color); border-radius: 6px; background: transparent; color: var(--color); cursor: pointer; transition: all .2s; outline: none; &:hover { border-color: var(--theme-btn-hover-color); color: var(--theme-btn-hover-color); background: rgba(34, 211, 238, 0.06); } &.copied { border-color: var(--theme-btn-hover-color); color: var(--theme-btn-hover-color); background: rgba(34, 211, 238, 0.08); } }

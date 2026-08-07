@@ -216,6 +216,7 @@ const copyResult = () => {
   transition: all .2s;
   outline: none;
   font-family: inherit;
+  &:active { transform: scale(0.96); }
 }
 
 .pw-btn-encrypt {
@@ -247,6 +248,11 @@ const copyResult = () => {
   background: rgba(230, 237, 243, 0.03);
   border: 1px solid var(--border-color);
   border-radius: 12px;
+  transition: border-color .2s;
+
+  &:focus-within {
+    border-color: rgba(34, 211, 238, 0.4);
+  }
 }
 
 .pw-key-input-wrap {
@@ -260,8 +266,8 @@ const copyResult = () => {
 
 .pw-io-grid {
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
+  align-items: stretch;
+  gap: 12px;
 }
 
 .pw-io-block {
@@ -280,8 +286,8 @@ const copyResult = () => {
 .pw-io-arrow {
   display: flex;
   align-items: center;
-  padding-top: 32px;
   flex-shrink: 0;
+  padding-top: 32px;
   color: var(--text-secondary);
 }
 
@@ -294,7 +300,8 @@ const copyResult = () => {
 }
 
 .pw-textarea-result :deep(textarea) {
-  background: rgba(230, 237, 243, 0.03);
+  background: rgba(34, 211, 238, 0.04);
+  border-color: rgba(34, 211, 238, 0.15);
 }
 
 .pw-char-count {
@@ -365,6 +372,12 @@ const copyResult = () => {
 
   p { margin: 0 0 8px; }
   b { color: var(--color); font-weight: 600; }
+}
+
+.pw-info-section {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
 }
 
 .pw-info-dl {
