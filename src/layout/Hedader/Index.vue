@@ -72,8 +72,9 @@ const scrollWindow = () => {
     // 顶部完全透明，滚动后渐变为不透明
     const opacity = Math.min(top / 400, 0.92);
     document.documentElement.style.setProperty("--header-bar-color-opacity", opacity);
-    // 顶部时导航文字强制白色(适配暗色 Hero)，滚动后恢复主题色
-    if (isTop) {
+    // 仅暗色主题 + 滚动到顶部时，导航文字强制白色(适配暗色 Hero)；浅色或滚动后恢复主题色
+    const isDark = document.documentElement.dataset.theme === "dark";
+    if (isTop && isDark) {
       document.documentElement.style.setProperty("--nav-bar-text-color", "#ffffff");
       document.documentElement.style.setProperty("--nav-text-color", "#ffffff");
     } else {
