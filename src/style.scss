@@ -162,7 +162,7 @@ html[data-theme="dark"] .tags-item {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  color: #3c3b3b;
+  color: var(--color);
   padding: 0 20px 20px 20px;
 }
 
@@ -178,7 +178,7 @@ html[data-theme="dark"] .tags-item {
 }
 
 .waterfall-footer-date {
-  color: #555555;
+  color: var(--text-secondary);
   font-size: 16px;
 }
 

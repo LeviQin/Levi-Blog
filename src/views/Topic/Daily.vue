@@ -506,7 +506,7 @@ const getData = async () => {
 .daily-pet .waterfall-footer {
   justify-content: space-between;
   flex-wrap: wrap;
-  color: #3c3b3b;
+  color: var(--color);
   padding: 0 20px 20px;
 }
 
@@ -531,7 +531,7 @@ const getData = async () => {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: rgba(60, 59, 59, 0.82);
+  color: var(--text-secondary);
   font-size: 14px;
 }
 
