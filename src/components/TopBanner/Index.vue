@@ -380,22 +380,31 @@ onBeforeUnmount(() => {
   width: min(80vw, 720px);
   text-align: center;
   z-index: 1;
+  /* 半透明深色遮罩兜底，保证文字任何背景下都清晰 */
+  padding: 20px 32px;
+  border-radius: 16px;
+  background: rgba(13, 17, 23, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .banner-text-box h2 {
   font-family: var(--mono-font-family);
-  color: var(--color);
+  color: #ffffff;
   text-align: center;
   font-size: 35px;
   margin: 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
 }
 
 .banner-text-box p {
   font-size: 18px;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.82);
   margin: 12px auto 0;
   min-height: 32px;
   line-height: 32px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
 }
 
 .button-arrow {
