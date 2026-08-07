@@ -16,10 +16,10 @@
             </svg>
           </div>
           <div class="right-content">
-            <span class="bio-text">我是一名Web前端开发</span>
+            <span class="bio-text">9 年前端经验，长期担任前端负责人</span>
           </div>
         </div>
-        <div class="info-item">
+        <!-- <div class="info-item">
           <div class="left-icon">
             <svg class="icon diqiuyi" aria-hidden="true">
               <use xlink:href="#levi-diqiuyi"></use>
@@ -28,7 +28,7 @@
           <div class="right-content">
             <span class="bio-text">目前就职于深圳市笨鸟软件有限公司</span>
           </div>
-        </div>
+        </div> -->
         <div class="info-item">
           <div class="left-icon">
             <svg class="icon" aria-hidden="true">
@@ -37,8 +37,7 @@
           </div>
           <div class="right-content">
             <span class="bio-text"
-              >有丰富的前端开发经验，
-              熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术</span
+              >主导 AI 创作平台、复杂权限后台、WordPress 插件体系等多项前端架构与技术选型</span
             >
           </div>
         </div>
@@ -50,8 +49,7 @@
           </div>
           <div class="right-content">
             <span class="bio-text"
-              >擅长使用Vue全家桶，并有Flutter跨平台开发经验和Wordpress开发经验，
-              熟悉小程序和Node.js</span
+              >以 Vue3 / Nuxt4 / TypeScript 为核心栈，兼有 React、Node.js、uni-app、Flutter 全栈与跨端能力</span
             >
           </div>
         </div>
