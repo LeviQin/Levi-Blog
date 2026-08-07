@@ -675,14 +675,14 @@ const getData = async () => {
   margin-top: 14px;
   justify-content: flex-start;
   gap: 8px;
-  color: #3c3b3b;
+  color: var(--color);
 }
 
 .notes .waterfall-footer-date {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: rgba(60, 59, 59, 0.82);
+  color: var(--text-secondary);
   font-size: 14px;
 }
 
