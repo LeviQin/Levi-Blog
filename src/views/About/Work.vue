@@ -6,26 +6,16 @@
         <div
           v-for="item in displayProjects"
           :key="item.id"
-          class="info-item"
-          :class="{ 'text-card': item.type === 'text' }"
+          class="info-item text-card"
         >
           <a :href="item.link || undefined" :target="item.link ? '_blank' : undefined" :rel="item.link ? 'noopener noreferrer' : undefined">
-            <template v-if="item.type === 'image'">
-              <img class="info-img" :src="item.image" :alt="item.name" />
-              <div class="info-text">
-                <div class="info-item-title"><span>{{ item.name }}</span></div>
-                <div class="info-item-desc m-hide-box">{{ item.desc }}</div>
+            <div class="text-card-body">
+              <div class="text-card-title">{{ item.name }}</div>
+              <div class="text-card-tags">
+                <span v-for="tag in item.tags" :key="tag" class="tag-chip">{{ tag }}</span>
               </div>
-            </template>
-            <template v-else>
-              <div class="text-card-body">
-                <div class="text-card-title">{{ item.name }}</div>
-                <div class="text-card-tags">
-                  <span v-for="tag in item.tags" :key="tag" class="tag-chip">{{ tag }}</span>
-                </div>
-                <div class="text-card-desc">{{ item.desc }}</div>
-              </div>
-            </template>
+              <div class="text-card-desc">{{ item.desc }}</div>
+            </div>
           </a>
         </div>
       </div>
@@ -77,12 +67,6 @@ const emit = defineEmits(["toNextPage"]);
     transform: translateY(-4px);
     border-color: rgba(34, 211, 238, 0.4);
     box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
-  }
-
-  .info-item:hover {
-    .info-img {
-      transform: scale(1.08);
-    }
   }
 
   .button-arrow:hover {
@@ -152,52 +136,6 @@ const emit = defineEmits(["toNextPage"]);
   }
 }
 
-.info-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: all 0.4s ease-in;
-}
-
-.info-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-  box-sizing: border-box;
-  background-color: var(--theme-color);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  color: var(--color);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.info-item:hover .info-text {
-  opacity: 0.92;
-}
-
-.info-item-title {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.info-item-desc {
-  margin: 10px 0;
-  font-size: 13px;
-  line-height: 1.6;
-  text-align: center;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-
 /* 文字卡片 */
 .text-card {
   background: var(--theme-color);
@@ -245,7 +183,7 @@ const emit = defineEmits(["toNextPage"]);
   opacity: 0.85;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
 }
 
@@ -319,30 +257,6 @@ const emit = defineEmits(["toNextPage"]);
   .info-item a {
     display: flex !important;
     height: 100%;
-  }
-
-  .info-img {
-    width: 4.5rem !important;
-    display: block !important;
-    border-radius: 5px 0 0 5px;
-    height: 100% !important;
-  }
-
-  .info-text {
-    position: static !important;
-    flex: 1 !important;
-    background: var(--theme-color);
-    border-radius: 0 5px 5px 0;
-    height: auto !important;
-    display: flex;
-    align-items: center;
-    opacity: 1;
-    transform: none;
-    color: var(--color);
-  }
-
-  .info-item-desc {
-    display: none;
   }
 
   .text-card a {

@@ -9,35 +9,20 @@
       <div
         v-for="item in projects"
         :key="item.id"
-        class="portfolio-card"
-        :class="{ 'text-card': item.type === 'text' }"
+        class="portfolio-card text-card"
       >
         <a
           :href="item.link || undefined"
           :target="item.link ? '_blank' : undefined"
           :rel="item.link ? 'noopener noreferrer' : undefined"
         >
-          <template v-if="item.type === 'image'">
-            <div class="portfolio-cover">
-              <img :src="item.image" :alt="item.name" loading="lazy" />
+          <div class="portfolio-body text">
+            <div class="portfolio-name">{{ item.name }}</div>
+            <p class="portfolio-desc">{{ item.desc }}</p>
+            <div class="portfolio-tags">
+              <span v-for="tag in item.tags" :key="tag" class="tag-chip">{{ tag }}</span>
             </div>
-            <div class="portfolio-body">
-              <div class="portfolio-name">{{ item.name }}</div>
-              <p class="portfolio-desc">{{ item.desc }}</p>
-              <div class="portfolio-tags">
-                <span v-for="tag in item.tags" :key="tag" class="tag-chip">{{ tag }}</span>
-              </div>
-            </div>
-          </template>
-          <template v-else>
-            <div class="portfolio-body text">
-              <div class="portfolio-name">{{ item.name }}</div>
-              <p class="portfolio-desc">{{ item.desc }}</p>
-              <div class="portfolio-tags">
-                <span v-for="tag in item.tags" :key="tag" class="tag-chip">{{ tag }}</span>
-              </div>
-            </div>
-          </template>
+          </div>
         </a>
       </div>
     </div>
@@ -118,30 +103,11 @@ const router = useRouter();
   }
 }
 
-.portfolio-cover {
-  height: 180px;
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-  }
-
-  .portfolio-card:hover & img {
-    transform: scale(1.06);
-  }
-}
-
 .portfolio-body {
   padding: 22px;
-
-  &.text {
-    min-height: 220px;
-    display: flex;
-    flex-direction: column;
-  }
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
 }
 
 .portfolio-name {
