@@ -25,7 +25,7 @@
             <span class="dot dot-red"></span>
             <span class="dot dot-yellow"></span>
             <span class="dot dot-green"></span>
-            <span class="terminal-title">leviqin:~</span>
+            <span class="terminal-title">levi:~</span>
           </div>
           <div class="terminal-body">
             <div v-for="(line, i) in props.bannerConfig.terminalLines" :key="i" class="terminal-line">

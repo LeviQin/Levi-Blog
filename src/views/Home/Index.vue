@@ -158,10 +158,10 @@ const bannerConfig = computed(() => ({
   height: "min-height: 88vh",
   showArrow: false,
   title: "Levi",
-  text: blogSettingMap.value.blog_description || "一个有意思的Blog，工作记录，日常分享，欢迎访问",
+  text: "浮世景色百千年依旧，人之在世却如白露与泡影",
   terminalLines: [
     { cmd: "npm create blog@latest", output: "√ 欢迎使用 Levi-Blog" },
-    { cmd: "git commit -m \"feat: 暗色极客风\"", output: "[main 3087c9e1] 改造完成" },
+    { cmd: "git commit -m \"feat: 修复\"", output: "[main 3087c9e1] 改造完成" },
     { cmd: "npm run dev", output: "VITE ready in 320ms" },
   ],
 }));

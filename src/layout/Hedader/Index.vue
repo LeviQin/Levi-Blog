@@ -7,7 +7,7 @@
       <div class="log-crad">
         <div class="log-text" @click="router.push('/')">
           <span class="logo-dot"></span>
-          <h1>Levi:~$</h1>
+          <h1>Levi space</h1>
         </div>
         <site-nav-bar></site-nav-bar>
       </div>
