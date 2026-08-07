@@ -126,7 +126,7 @@ const playEntranceDoor = () => {
   width: 50.2vw;
   overflow: hidden;
   transition: transform 1.15s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.42s ease;
-  background: #dbe6ee;
+  background: var(--theme-color);
 }
 
 .door-panel-inner {
@@ -140,7 +140,7 @@ const playEntranceDoor = () => {
     top: 0;
     bottom: 0;
     width: 1px;
-    background: rgba(255, 255, 255, 0.28);
+    background: rgba(127, 127, 127, 0.22);
   }
 
   &::before {
@@ -154,30 +154,30 @@ const playEntranceDoor = () => {
 
 .door-panel-left {
   left: 0;
-  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.45);
+  box-shadow: inset -1px 0 0 rgba(127, 127, 127, 0.2);
 
   .door-panel-inner::after {
     right: 0;
     width: 2px;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(127, 127, 127, 0.32);
   }
 }
 
 .door-panel-right {
   right: 0;
-  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.45);
+  box-shadow: inset 1px 0 0 rgba(127, 127, 127, 0.2);
 
   .door-panel-inner::before {
     left: 0;
     width: 2px;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(127, 127, 127, 0.32);
   }
 }
 
 .door-glow {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02));
+  background: linear-gradient(180deg, rgba(34, 211, 238, 0.06), rgba(34, 211, 238, 0.02));
   opacity: 1;
 }
 
@@ -189,15 +189,15 @@ const playEntranceDoor = () => {
   align-items: center;
   gap: 12px;
   padding: 11px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--border-color);
   border-radius: 999px;
-  color: #5f7280;
+  color: var(--color);
   font-size: 14px;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  background: rgba(247, 251, 253, 0.64);
+  background: var(--theme-color);
   backdrop-filter: blur(10px);
-  box-shadow: 0 16px 32px rgba(143, 165, 179, 0.24);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.22);
   transform: translate(-50%, -50%);
   transition: opacity 0.55s ease, transform 0.9s ease;
   z-index: 2;
@@ -206,7 +206,7 @@ const playEntranceDoor = () => {
 .door-badge-line {
   width: 26px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(116, 134, 145, 0.75), transparent);
+  background: linear-gradient(90deg, transparent, var(--text-secondary), transparent);
 }
 
 .door-reveal.is-opening {
