@@ -3,26 +3,26 @@
 :root {
   --el-color-primary: var(--theme-btn-hover-color);
   --el-text-color-primary: var(--black-text-color);
-  --el-text-color-regular: #606266;
-  --el-text-color-secondary: #909399;
-  --el-border-color: rgba(90, 140, 189, 0.18);
-  --el-border-color-light: rgba(90, 140, 189, 0.12);
-  --el-bg-color: rgba(255, 255, 255, 0.72);
-  --el-fill-color-light: rgba(255, 255, 255, 0.5);
-  --el-fill-color-lighter: rgba(255, 255, 255, 0.36);
-  --el-input-border-color: rgba(90, 140, 189, 0.18);
+  --el-text-color-regular: #57606a;
+  --el-text-color-secondary: #8b949e;
+  --el-border-color: var(--border-color);
+  --el-border-color-light: rgba(13, 17, 23, 0.1);
+  --el-bg-color: var(--theme-color);
+  --el-fill-color-light: rgba(13, 17, 23, 0.04);
+  --el-fill-color-lighter: rgba(13, 17, 23, 0.03);
+  --el-input-border-color: var(--border-color);
 }
 
 html[data-theme="dark"] {
   --el-text-color-primary: var(--color);
-  --el-text-color-regular: rgba(255, 255, 255, 0.86);
-  --el-text-color-secondary: rgba(255, 255, 255, 0.62);
-  --el-border-color: rgba(122, 161, 209, 0.22);
-  --el-border-color-light: rgba(122, 161, 209, 0.14);
-  --el-bg-color: rgba(255, 255, 255, 0.05);
-  --el-fill-color-light: rgba(255, 255, 255, 0.04);
-  --el-fill-color-lighter: rgba(255, 255, 255, 0.06);
-  --el-input-border-color: rgba(122, 161, 209, 0.22);
+  --el-text-color-regular: rgba(230, 237, 243, 0.86);
+  --el-text-color-secondary: rgba(230, 237, 243, 0.62);
+  --el-border-color: rgba(34, 211, 238, 0.22);
+  --el-border-color-light: rgba(34, 211, 238, 0.14);
+  --el-bg-color: #161b22;
+  --el-fill-color-light: rgba(230, 237, 243, 0.04);
+  --el-fill-color-lighter: rgba(230, 237, 243, 0.06);
+  --el-input-border-color: rgba(34, 211, 238, 0.22);
 }
 
 .el-header,
@@ -59,8 +59,8 @@ html[data-theme="dark"] {
   gap: 12px;
   padding: 14px 16px;
   border-radius: 16px;
-  border: 1px solid rgba(90, 140, 189, 0.16);
-  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--border-color);
+  background: var(--theme-color);
   box-shadow: 0 18px 36px rgba(15, 23, 42, 0.14);
   color: var(--black-text-color);
   transform: translateY(-8px);
