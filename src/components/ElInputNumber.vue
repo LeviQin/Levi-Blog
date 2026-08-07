@@ -27,7 +27,11 @@ defineExpose({ focus: () => inputRef.value?.focus() });
 .el-input-number:focus-within { border-color: var(--theme-btn-hover-color,#22d3ee); box-shadow: 0 0 0 3px rgba(34,211,238,.14); }
 .el-input-number input { flex: 1; min-width: 0; border: none; outline: none; padding: 0 12px; background: transparent; font: inherit; color: var(--color); }
 .el-input-number input::placeholder { color: var(--text-secondary); }
-.el-input-number button { width: 34px; border: none; background: rgba(34,211,238,.08); color: var(--theme-btn-hover-color); cursor: pointer; transition: background .2s; }
-.el-input-number button:hover { background: rgba(34,211,238,.14); }
+/* 隐藏 type=number 的原生上下微调按钮（避免暗色模式浅灰按钮），使用自定义 - / + 按钮 */
+.el-input-number input::-webkit-outer-spin-button,
+.el-input-number input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.el-input-number input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+.el-input-number button { width: 34px; border: none; background: rgba(34,211,238,.1); color: var(--theme-btn-hover-color); cursor: pointer; transition: background .2s; }
+.el-input-number button:hover { background: rgba(34,211,238,.18); }
 .el-input-number button:disabled { opacity: .5; cursor: not-allowed; }
 </style>
