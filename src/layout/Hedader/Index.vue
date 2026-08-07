@@ -69,9 +69,17 @@ const scrollWindow = () => {
     const isTop = top === 0;
     navheight.value = isTop ? maxHeaderHeight : minHeaderHeight;
     isScrolled.value = !isTop;
-    // 顶部也保留 0.4 的半透明毛玻璃，保证导航文字任何背景下都清晰
-    const opacity = Math.min(0.4 + top / 400, 0.92);
+    // 顶部完全透明，滚动后渐变为不透明
+    const opacity = Math.min(top / 400, 0.92);
     document.documentElement.style.setProperty("--header-bar-color-opacity", opacity);
+    // 顶部时导航文字强制白色(适配暗色 Hero)，滚动后恢复主题色
+    if (isTop) {
+      document.documentElement.style.setProperty("--nav-bar-text-color", "#ffffff");
+      document.documentElement.style.setProperty("--nav-text-color", "#ffffff");
+    } else {
+      document.documentElement.style.removeProperty("--nav-bar-text-color");
+      document.documentElement.style.removeProperty("--nav-text-color");
+    }
     rafId = null;
   });
 };

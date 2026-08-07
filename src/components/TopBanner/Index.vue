@@ -221,16 +221,18 @@ onBeforeUnmount(() => {
   font-size: 48px;
   font-weight: 700;
   margin: 0 0 14px 0;
-  color: var(--color);
+  color: #ffffff;
   letter-spacing: -1px;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
 }
 
 .banner-sub {
   font-size: 17px;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.85);
   margin: 0 0 26px 0;
   line-height: 1.6;
   min-height: 32px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
 }
 
 .typing-caret {
@@ -265,19 +267,18 @@ onBeforeUnmount(() => {
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(34, 211, 238, 0.25);
+      box-shadow: 0 8px 24px rgba(34, 211, 238, 0.35);
     }
   }
 
   &.ghost {
-    background: transparent;
-    border-color: var(--border-color);
-    color: var(--color);
+    background: #ffffff;
+    border-color: #ffffff;
+    color: #0d1117;
 
     &:hover {
-      border-color: var(--theme-btn-hover-color);
-      color: var(--theme-btn-hover-color);
       transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
     }
   }
 
