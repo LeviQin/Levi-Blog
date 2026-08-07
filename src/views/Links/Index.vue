@@ -206,7 +206,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onBeforeUnmount, computed } from "vue";
+import { ref, reactive, onMounted, onBeforeUnmount, computed, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { Head } from "@vueuse/head";
@@ -226,8 +226,13 @@ const bannerHeight = ref("30vh");
 onMounted(() => {
   updateBannerHeight();
   window.addEventListener("resize", updateBannerHeight, { passive: true });
-  isSidebarVisible.value = true;
   getData();
+  // 先以 sidin-start 渲染一帧，再切到 sidin-end，触发"由下往上"过渡动画
+  nextTick(() => {
+    requestAnimationFrame(() => {
+      isSidebarVisible.value = true;
+    });
+  });
 });
 
 onBeforeUnmount(() => {
