@@ -247,13 +247,13 @@ const getData = async () => {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   overflow: hidden;
-  border: 1px solid transparent;
+  border: 1px solid var(--border-color);
   border-left: 3px solid transparent;
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-    border-color: rgba(100, 100, 100, 0.08);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    border-color: var(--theme-btn-hover-color);
     border-left-color: var(--theme-btn-hover-color);
   }
 
@@ -305,6 +305,7 @@ const getData = async () => {
   border-radius: 20px;
   font-size: 13px;
   font-weight: 500;
+  font-family: var(--mono-font-family);
   white-space: nowrap;
 }
 
@@ -316,8 +317,9 @@ const getData = async () => {
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
-  color: #fff;
-  background: linear-gradient(135deg, #ff8b26, #ff6b6b);
+  font-family: var(--mono-font-family);
+  color: #0d1117;
+  background: var(--theme-btn-hover-color);
   white-space: nowrap;
 
   .bi {
@@ -345,7 +347,7 @@ const getData = async () => {
 .card-desc {
   font-size: 15px;
   line-height: 1.7;
-  color: #666;
+  color: var(--text-secondary);
   margin: 0 0 16px 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -367,7 +369,8 @@ const getData = async () => {
   align-items: center;
   gap: 5px;
   font-size: 13px;
-  color: #888;
+  font-family: var(--mono-font-family);
+  color: var(--text-secondary);
 
   .bi {
     font-size: 13px;
@@ -378,7 +381,7 @@ const getData = async () => {
   width: 3px;
   height: 3px;
   border-radius: 50%;
-  background: #ccc;
+  background: var(--border-color);
   margin: 0 10px;
 }
 
@@ -394,13 +397,14 @@ const getData = async () => {
   padding: 3px 12px;
   border-radius: 12px;
   font-size: 12px;
+  font-family: var(--mono-font-family);
   color: var(--theme-btn-hover-color);
-  background: rgba(90, 140, 189, 0.1);
+  background: rgba(34, 211, 238, 0.1);
   transition: all 0.2s;
   white-space: nowrap;
 
   &:hover {
-    background: rgba(90, 140, 189, 0.2);
+    background: rgba(34, 211, 238, 0.2);
   }
 }
 
