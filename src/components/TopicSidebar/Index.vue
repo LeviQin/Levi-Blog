@@ -157,6 +157,7 @@ const selectCategory = (e) => {
 .sidebar-category,
 .sidebar-tags {
   background: var(--theme-color);
+  border: 1px solid var(--border-color);
   border-radius: var(--theme-radius);
   margin-bottom: 20px;
   padding: 20px;
@@ -203,6 +204,8 @@ const selectCategory = (e) => {
   border-radius: 10px;
   font-size: 10px;
   font-weight: 500;
+  font-family: var(--mono-font-family);
+  color: var(--theme-btn-hover-color);
   line-height: 1;
   cursor: default;
   overflow: hidden;
@@ -223,7 +226,7 @@ const selectCategory = (e) => {
 
   &:hover {
     transform: translateY(-1px);
-    box-shadow: inset 0 0 0 1px currentColor, 0 6px 14px rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 0 0 1px currentColor, 0 6px 14px rgba(34, 211, 238, 0.16);
 
     &::before {
       opacity: 0.14;

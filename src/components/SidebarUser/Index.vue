@@ -210,15 +210,12 @@ const getData = async () => {
 <style lang="scss" scoped>
 .sidebar-info {
   position: relative;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.06)),
-    var(--theme-color);
+  background: var(--theme-color);
   border-radius: var(--theme-radius);
   margin-bottom: 20px;
   overflow: hidden;
-  border: 1px solid rgba(90, 140, 189, 0.14);
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
-  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
 }
 
 .sidebar-info-hero {
@@ -236,7 +233,7 @@ const getData = async () => {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(180deg, rgba(24, 26, 42, 0.08), rgba(24, 26, 42, 0.56)),
+    linear-gradient(180deg, rgba(13, 17, 23, 0.12), rgba(13, 17, 23, 0.6)),
     var(--sidebar-hero-bg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -249,7 +246,7 @@ const getData = async () => {
   position: absolute;
   inset: auto 0 0;
   height: 62px;
-  background: linear-gradient(180deg, rgba(219, 230, 238, 0), var(--theme-color));
+  background: linear-gradient(180deg, rgba(22, 27, 34, 0), var(--theme-color));
   z-index: -1;
 }
 
@@ -287,8 +284,8 @@ const getData = async () => {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(90, 140, 189, 0.55));
-  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.16);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(34, 211, 238, 0.55));
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.24);
   opacity: 0.92;
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
@@ -390,14 +387,14 @@ const getData = async () => {
   padding: 10px 8px 9px;
   border-radius: calc(var(--theme-radius) + 2px);
   text-align: center;
-  background: rgba(255, 255, 255, 0.42);
-  border: 1px solid rgba(90, 140, 189, 0.12);
+  background: rgba(230, 237, 243, 0.04);
+  border: 1px solid var(--border-color);
   transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
 
   &:hover {
     transform: translateY(-2px);
-    border-color: rgba(90, 140, 189, 0.28);
-    box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
+    border-color: rgba(34, 211, 238, 0.4);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.24);
   }
 }
 
@@ -405,8 +402,9 @@ const getData = async () => {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: #6b7280;
+  color: var(--text-secondary);
   font-size: 12px;
+  font-family: var(--mono-font-family);
 
   .icon {
     width: 1em;
@@ -419,6 +417,7 @@ const getData = async () => {
   font-size: 20px;
   line-height: 1;
   font-weight: 700;
+  font-family: var(--mono-font-family);
   color: var(--black-text-color);
 }
 
@@ -439,7 +438,7 @@ const getData = async () => {
 
 .sidebar-info-contact-desc {
   font-size: 11px;
-  color: #7a8191;
+  color: var(--text-secondary);
 }
 
 .sidebar-info-contact {
@@ -460,22 +459,22 @@ const getData = async () => {
   padding: 8px 10px;
   border-radius: calc(var(--theme-radius) + 2px);
   color: var(--black-text-color);
-  background: rgba(255, 255, 255, 0.46);
-  border: 1px solid rgba(90, 140, 189, 0.12);
+  background: rgba(230, 237, 243, 0.04);
+  border: 1px solid var(--border-color);
   box-sizing: border-box;
   transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
 
   &:hover {
     transform: translateY(-2px);
-    border-color: rgba(90, 140, 189, 0.24);
-    box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
+    border-color: rgba(34, 211, 238, 0.4);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.24);
     color: var(--black-text-color);
   }
 }
 
 .sidebar-contact-button {
   margin: 0;
-  border: 1px solid rgba(90, 140, 189, 0.12);
+  border: 1px solid var(--border-color);
   cursor: pointer;
   font-family: inherit;
 }
@@ -487,7 +486,7 @@ const getData = async () => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(90, 140, 189, 0.1);
+  background: rgba(34, 211, 238, 0.12);
 
   .bi {
     font-size: 16px;
@@ -497,71 +496,57 @@ const getData = async () => {
 .sidebar-contact-text {
   font-size: 13px;
   font-weight: 600;
+  font-family: var(--mono-font-family);
 }
 
 .github-box .sidebar-contact-icon {
-  background: rgba(24, 26, 42, 0.12);
+  background: rgba(34, 211, 238, 0.12);
 }
 
 .github-box .bi {
-  color: #181a2a;
+  color: var(--theme-btn-hover-color);
 }
 
 .wechat-box .sidebar-contact-icon {
-  background: rgba(40, 196, 69, 0.16);
+  background: rgba(34, 211, 238, 0.12);
 }
 
 .wechat-box .bi {
-  color: #28c445;
+  color: var(--theme-btn-hover-color);
 }
 
 .envelope-box .sidebar-contact-icon {
-  background: rgba(67, 125, 255, 0.14);
+  background: rgba(34, 211, 238, 0.12);
 }
 
 .envelope-box .bi {
-  color: #437dff;
+  color: var(--theme-btn-hover-color);
 }
 
 .rss-box .sidebar-contact-icon {
-  background: rgba(255, 122, 0, 0.14);
+  background: rgba(34, 211, 238, 0.12);
 }
 
 .rss-box .bi {
-  color: #ff7a00;
+  color: var(--theme-btn-hover-color);
 }
 
 html[data-theme="dark"] .sidebar-info {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
-    var(--theme-color);
-  border-color: rgba(122, 161, 209, 0.18);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+  border-color: rgba(34, 211, 238, 0.18);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.36);
 }
 
 html[data-theme="dark"] .sidebar-info-hero::after {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0), var(--theme-color));
+  background: linear-gradient(180deg, rgba(13, 17, 23, 0), var(--theme-color));
 }
 
 html[data-theme="dark"] .sidebar-info-data-item,
 html[data-theme="dark"] .sidebar-contact {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(122, 161, 209, 0.18);
-}
-
-html[data-theme="dark"] .sidebar-info-data-item-title,
-html[data-theme="dark"] .sidebar-info-contact-desc {
-  color: rgba(255, 255, 255, 0.64);
-}
-
-html[data-theme="dark"] .sidebar-info-data-num,
-html[data-theme="dark"] .sidebar-info-contact-title,
-html[data-theme="dark"] .sidebar-contact {
-  color: var(--color);
+  border-color: rgba(34, 211, 238, 0.16);
 }
 
 html[data-theme="dark"] .github-box .bi {
-  color: #fff;
+  color: var(--theme-btn-hover-color);
 }
 
 @media (max-width: 1200px) {
