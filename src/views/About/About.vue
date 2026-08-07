@@ -168,7 +168,6 @@ const emit = defineEmits(["toNextPage"]);
   transition: all 0.2s ease-in 0s;
   z-index: 9999;
   transform: scale(0.8);
-  background-position: 0 -60px;
   cursor: pointer;
 
   &:hover {
