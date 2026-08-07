@@ -185,7 +185,7 @@ const emit = defineEmits(["toNextPage"]);
   width: 3.2em;
   height: 4.2em;
   opacity: 0;
-  animation: bioIconIn 0.3s ease-out 0.7s 1 forwards;
+  animation: bioIconIn 0.6s ease 0.7s 1 forwards;
 }
 
 .right-content {
@@ -196,7 +196,7 @@ const emit = defineEmits(["toNextPage"]);
 }
 
 .bio-text {
-  animation: bioTextIn 0.3s ease-out 0.7s 1 forwards;
+  animation: bioTextIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.7s 1 forwards;
   opacity: 0;
   font-size: 20px;
   line-height: 30px;
@@ -205,22 +205,22 @@ const emit = defineEmits(["toNextPage"]);
 
 @keyframes bioTextIn {
   0% {
-    transform: translateX(500px);
+    transform: translateY(20px);
     opacity: 0;
   }
   100% {
-    transform: translateX(0);
+    transform: translateY(0);
     opacity: 1;
   }
 }
 
 @keyframes bioIconIn {
   0% {
-    transform: translateX(0) rotate(-90deg);
+    transform: translateY(8px);
     opacity: 0;
   }
   100% {
-    transform: translateX(10px) rotate(0deg);
+    transform: translateY(0);
     opacity: 1;
   }
 }
