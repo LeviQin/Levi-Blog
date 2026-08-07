@@ -7,15 +7,15 @@
       />
       <meta
         name="description"
-        content="我是一名Web前端开发，目前就职于深圳市笨鸟软件有限公司，有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术，擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js"
+        content="我是一名Web前端开发，有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术，擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js"
       />
       <meta
         property="og:description"
-        content="我是一名Web前端开发，目前就职于深圳市笨鸟软件有限公司，有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术，擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js"
+        content="我是一名Web前端开发，有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术，擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js"
       />
       <meta
         name="twitter:description"
-        content="我是一名Web前端开发，目前就职于深圳市笨鸟软件有限公司，有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术, 擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js"
+        content="我是一名Web前端开发，有丰富的前端开发经验，熟练掌握HTML5、CSS3、ES6、JavaScript等Web开发技术, 擅长使用Vue2、Vue3全家桶,并有Flutter跨平台开发经验,熟悉小程序和Node.js"
       />
     </Head>
     <div class="about">
