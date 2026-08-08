@@ -25,7 +25,7 @@
             v-slid-in
           >
             <div class="card-cover" v-if="item.image">
-              <img :src="item.image" :alt="item.title" />
+              <img v-lazy="item.image" :alt="item.title" />
             </div>
             <div class="card-body">
               <div class="card-header">
