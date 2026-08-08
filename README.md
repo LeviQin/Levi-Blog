@@ -1,7 +1,7 @@
 <h1 align="center">Levi Blog</h1>
 
 <p align="center">
-  <strong>一个有意思的博客 · 工作记录 · 日常分享 · 实用工具箱</strong>
+  <strong>个人博客前端 · 随记 / 技术笔记 / 一些顺手的小工具</strong>
 </p>
 
 <p align="center">
@@ -24,16 +24,16 @@
 
 ## 📖 项目简介
 
-Levi Blog 是一个基于 **Vue 3 + Vite** 构建的个人博客系统，集成了 **文章发布、分类浏览、在线工具箱、作品集、留言互动** 等功能模块。整体采用 GitHub Dark 风格的深色基底 + 青色强调色，支持明暗主题切换与按时间自动切换。项目采用响应式设计，完美适配桌面端与移动端。
+Levi Blog 是我个人独立开发并长期自用的一套博客前端（Vue 3 + Vite）。主要用来写文章、整理笔记、放一些自己经常用的小工具。UI 走深色系 + 青色点缀的路线，支持明暗主题切换，也做了按时间自动切换的开关。布局偏响应式，桌面和手机都能用，但仍以我自己日常使用场景为主。
 
 <table>
   <tr>
     <td><strong>⭐ 组件总数</strong></td>
-    <td><code>101</code> 个 Vue 单文件组件</td>
+    <td>约 <code>101</code> 个 Vue 单文件组件（会随迭代变化）</td>
   </tr>
   <tr>
     <td><strong>📄 页面路由</strong></td>
-    <td><code>28</code> 条，含文章分类 / 工具箱 / 独立页面</td>
+    <td>约 <code>28</code> 条（文章分类 / 工具箱 / 独立页面）</td>
   </tr>
   <tr>
     <td><strong>🧰 工具模块</strong></td>
@@ -41,15 +41,11 @@ Levi Blog 是一个基于 **Vue 3 + Vite** 构建的个人博客系统，集成�
   </tr>
   <tr>
     <td><strong>🎨 主题系统</strong></td>
-    <td>明暗切换 · 按时自动切换</td>
-  </tr>
-  <tr>
-    <td><strong>🔍 SEO</strong></td>
-    <td>Google · Baidu · Bing · 360 · 搜狗 五站验证</td>
+    <td>明暗切换 + 可选按时自动切换</td>
   </tr>
   <tr>
     <td><strong>📦 包管理</strong></td>
-    <td>Yarn · 24 个依赖 · 零冗余</td>
+    <td>Yarn · 依赖数量保持可控</td>
   </tr>
 </table>
 
@@ -62,20 +58,20 @@ Levi Blog 是一个基于 **Vue 3 + Vite** 构建的个人博客系统，集成�
     <td width="50%">
       <h4>🌙 暗色极客主题</h4>
       <ul>
-        <li>GitHub Dark 基底 + 青色强调，克制不刺眼</li>
-        <li>明暗主题一键切换，偏好持久化</li>
-        <li>按时间自动切换（18:00-08:00 暗色）</li>
-        <li>全站组件（卡片/输入框/下拉/分页）跟随主题</li>
-        <li>开门动画、卡片入场动画适配明暗模式</li>
+        <li>深色底 + 青色强调，整体尽量克制</li>
+        <li>明暗主题切换，偏好会被记住</li>
+        <li>可选按时间自动切换（默认 18:00-08:00 暗色）</li>
+        <li>常用组件样式随主题联动</li>
+        <li>部分页面有入场动画，避免过度花哨</li>
       </ul>
     </td>
     <td width="50%">
       <h4>✨ 动态背景特效</h4>
       <ul>
         <li>Canvas 实时渲染：代码雨 / 粒子连线 / 星空 / 浮尘</li>
-        <li>特效设置面板：密度 / 速度 / 强度 / 颜色实时预览</li>
-        <li>配色底色选择 + 特效叠加，自由组合</li>
-        <li>特效全局应用，含关于我页面</li>
+        <li>提供简单面板调参：密度 / 速度 / 强度 / 颜色（实时预览）</li>
+        <li>底色与特效可叠加，按喜好组合</li>
+        <li>特效可全局使用，也可随时关闭</li>
       </ul>
     </td>
   </tr>
@@ -83,11 +79,10 @@ Levi Blog 是一个基于 **Vue 3 + Vite** 构建的个人博客系统，集成�
     <td>
       <h4>🐱 互动宠物</h4>
       <ul>
-        <li>Lottie 猫咪，可拖动 / 点击抚摸 / 双击兴奋</li>
-        <li>长按睡觉 / 滚轮惊吓 / 随机喂食</li>
-        <li>站立 / 转圈 / 蹦跳 / 挥手等动作</li>
-        <li>点击波纹、抚摸流光、视线跟随鼠标</li>
-        <li>15-40s 随机互动事件</li>
+        <li>一只 Lottie 猫咪：可拖动、可点击互动</li>
+        <li>长按会“睡觉”，偶尔有随机动作</li>
+        <li>视线跟随鼠标、点击有反馈</li>
+        <li>更多是氛围功能，不想要也能关</li>
       </ul>
     </td>
     <td>
@@ -96,7 +91,7 @@ Levi Blog 是一个基于 **Vue 3 + Vite** 构建的个人博客系统，集成�
         <li>加密解密（AES / DES / MD5 / RC4 / Rabbit / 3DES / Base64）</li>
         <li>图片处理（压缩 / 裁剪 / 格式转换 / EXIF）</li>
         <li>密码生成器 / 单位换算 / 二维码生成</li>
-        <li>苹果式克制 UI，统一青色系交互</li>
+        <li>样式尽量统一，交互不追求“炫”，主要图好用</li>
       </ul>
     </td>
   </tr>
@@ -108,18 +103,18 @@ Levi Blog 是一个基于 **Vue 3 + Vite** 构建的个人博客系统，集成�
 
 | 类别 | 技术选型 | 说明 |
 |------|----------|------|
-| **框架** | Vue 3.3 + Composition API | 渐进式前端框架 |
-| **构建** | Vite 3.0 | 下一代前端构建工具 |
-| **路由** | Vue Router 4 | SPA 路由管理 |
-| **状态** | Pinia 3 + 持久化插件 | 轻量级状态管理 |
-| **HTTP** | Axios | Promise 风格 HTTP 客户端 |
-| **样式** | Sass + Bootstrap Icons | CSS 预处理 + 图标库 |
-| **Markdown** | md-editor-v3 + Prism.js | 富文本渲染与语法高亮 |
+| **框架** | Vue 3.3 + Composition API | 主要开发方式 |
+| **构建** | Vite 3.0 | 本地开发 / 打包 |
+| **路由** | Vue Router 4 | 页面路由 |
+| **状态** | Pinia 3 + 持久化插件 | 全局状态 + 本地持久化 |
+| **HTTP** | Axios | 请求层基础 |
+| **样式** | Sass + Bootstrap Icons | 样式与图标 |
+| **Markdown** | md-editor-v3 + Prism.js | Markdown 编辑 / 高亮 |
 | **图片** | Compressor.js + Cropper.js + ExifReader | 压缩 / 裁剪 / 元数据 |
-| **加密** | Crypto-JS | 浏览器端加解密（多算法） |
-| **动画** | Lottie Web + Hammer.js | 矢量动画 + 手势交互 |
-| **特效** | Canvas + requestAnimationFrame | 背景特效实时渲染 |
-| **自动导入** | unplugin 系列 | API / 组件 / 图标按需加载 |
+| **加密** | Crypto-JS | 浏览器端加解密 |
+| **动画** | Lottie Web + Hammer.js | 动画与拖拽等交互 |
+| **特效** | Canvas + requestAnimationFrame | 背景特效 |
+| **自动导入** | unplugin 系列 | 组件 / API / 图标自动导入 |
 
 ---
 
@@ -266,7 +261,7 @@ yarn preview
 
 ## ⚡ 构建优化
 
-Vite 生产构建采用以下策略确保最佳性能：
+生产构建里做了一些偏“实用主义”的处理，主要目标是减少体积、让首屏更轻一点：
 
 | 优化项 | 策略 |
 |--------|------|
@@ -283,7 +278,7 @@ Vite 生产构建采用以下策略确保最佳性能：
 
 ## 🤝 参与贡献
 
-欢迎任何形式的贡献！如果你有好的想法或发现了 Bug：
+如果你在使用中发现问题，或者有更顺手的实现方式，欢迎提 Issue / PR：
 
 1. **Fork** 本仓库
 2. 创建你的特性分支：`git checkout -b feature/amazing-feature`
