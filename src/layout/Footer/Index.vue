@@ -41,7 +41,7 @@ const blogSettingMap = computed(() => {
   return mainStore.blogSettingMap;
 });
 
-// 技术栈徽章：本站实际使用的技术
+// 技术栈徽章
 const techBadges = [
   {
     label: "Vue.js",

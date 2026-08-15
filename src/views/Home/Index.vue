@@ -31,9 +31,9 @@
               <div class="card-header">
                 <span
                   class="category-badge"
-                  :style="{ background: categoryColorMap[item.category]?.bg, color: categoryColorMap[item.category]?.color }"
+                  :style="{ background: activeCategoryColorMap[item.category]?.bg, color: activeCategoryColorMap[item.category]?.color }"
                 >
-                  <i :class="categoryColorMap[item.category]?.icon"></i>
+                  <i :class="activeCategoryColorMap[item.category]?.icon"></i>
                   {{ categoryList[item.category - 1] }}
                 </span>
                 <span class="pinned-tag" v-if="item.is_top">
@@ -105,6 +105,8 @@ import { useRouter } from "vue-router";
 import TopBanner from "@/components/TopBanner/Index.vue";
 import { scrollAnimation } from "@/utils/scrollAnimation.js";
 import { vSlidIn } from "@/utils/vSlidIn.js";
+import { categoryList, categoryColorMap, categoryColorMapDark } from "@/utils/categories.js";
+import { useTheme } from "@/hooks/useTheme";
 import { Head } from "@vueuse/head";
 import { getStore, setStore } from "@/utils/storage.js";
 import ArticleSkeleton from "@/components/ArticleSkeleton/Index.vue";
@@ -123,6 +125,11 @@ const tagNameById = computed(() => {
 const blogSettingMap = computed(() => {
   return mainStore.blogSettingMap;
 });
+
+const { theme } = useTheme();
+const activeCategoryColorMap = computed(() =>
+  theme.value === "dark" ? categoryColorMapDark : categoryColorMap
+);
 
 const router = useRouter();
 
@@ -163,16 +170,6 @@ const bannerConfig = computed(() => ({
     { cmd: "npm run dev", output: "VITE ready in 320ms" },
   ],
 }));
-
-const categoryList = ["日常随记", "开发心得", "萌宠日记", "学习笔记", "光影故事"];
-
-const categoryColorMap = {
-  1: { bg: "rgba(76,175,80,0.12)", color: "#388e3c", icon: "bi bi-journal-text" },
-  2: { bg: "rgba(33,150,243,0.12)", color: "#1976d2", icon: "bi bi-code-slash" },
-  3: { bg: "rgba(233,30,99,0.12)", color: "#c2185b", icon: "bi bi-heart" },
-  4: { bg: "rgba(156,39,176,0.12)", color: "#7b1fa2", icon: "bi bi-book" },
-  5: { bg: "rgba(255,152,0,0.12)", color: "#e65100", icon: "bi bi-camera" },
-};
 
 const getReadTime = (item) => {
   const text = item.content || item.article_description || "";
@@ -251,16 +248,20 @@ const getData = async () => {
   cursor: pointer;
   margin-bottom: 24px;
   position: relative;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--dur-normal) var(--ease-standard);
   display: flex;
   overflow: hidden;
   border: 1px solid var(--border-color);
   border-left: 3px solid transparent;
 
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-card-hover);
     border-color: var(--theme-btn-hover-color);
+    border-left-color: var(--theme-btn-hover-color);
+  }
+
+  &.is-pinned {
+    border-left-width: 5px;
     border-left-color: var(--theme-btn-hover-color);
   }
 
@@ -281,7 +282,7 @@ const getData = async () => {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform var(--dur-slow) var(--ease-standard);
   }
 
   .article-card:hover & img {
@@ -405,13 +406,22 @@ const getData = async () => {
   border-radius: 12px;
   font-size: 12px;
   font-family: var(--mono-font-family);
-  color: var(--theme-btn-hover-color);
-  background: rgba(34, 211, 238, 0.1);
+  color: #0e7490;
+  background: rgba(14, 116, 144, 0.1);
   transition: all 0.2s;
   white-space: nowrap;
 
   &:hover {
-    background: rgba(34, 211, 238, 0.2);
+    background: rgba(14, 116, 144, 0.18);
+  }
+}
+
+html[data-theme="dark"] .tag-pill {
+  color: #67e8f9;
+  background: rgba(34, 211, 238, 0.14);
+
+  &:hover {
+    background: rgba(34, 211, 238, 0.24);
   }
 }
 

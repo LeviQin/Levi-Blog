@@ -20,9 +20,9 @@
           <div class="article-header-top">
             <span
               class="category-badge"
-              :style="{ background: categoryColorMap[dataMap.articleInfo.category]?.bg, color: categoryColorMap[dataMap.articleInfo.category]?.color }"
+              :style="{ background: activeCategoryColorMap[dataMap.articleInfo.category]?.bg, color: activeCategoryColorMap[dataMap.articleInfo.category]?.color }"
             >
-              <i :class="categoryColorMap[dataMap.articleInfo.category]?.icon"></i>
+              <i :class="activeCategoryColorMap[dataMap.articleInfo.category]?.icon"></i>
               {{ categoryList[dataMap.articleInfo.category - 1] }}
             </span>
           </div>
@@ -124,11 +124,18 @@ import TopBanner from "@/components/TopBanner/Index.vue";
 import { dateToString } from "@/utils/utils.js";
 import { Head } from "@vueuse/head";
 import { getStore, setStore } from "@/utils/storage.js";
+import { categoryList, categoryColorMap, categoryColorMapDark } from "@/utils/categories.js";
+import { useTheme } from "@/hooks/useTheme";
 import Comments from "./components/Comments.vue";
 import CommentList from "./components/CommentList.vue";
 import { useMainStore } from "@/stores/mainStore";
 
 const mainStore = useMainStore();
+
+const { theme } = useTheme();
+const activeCategoryColorMap = computed(() =>
+  theme.value === "dark" ? categoryColorMapDark : categoryColorMap
+);
 
 const tagNameById = computed(() => {
   const map = {};
@@ -188,16 +195,6 @@ const bannerConfig = {
   showArrow: false,
   title: "Levi",
   text: "莫道桑榆晚，为霞尚满天",
-};
-
-const categoryList = ["日常随记", "开发心得", "萌宠日记", "学习笔记", "光影故事"];
-
-const categoryColorMap = {
-  1: { bg: "rgba(76,175,80,0.12)", color: "#388e3c", icon: "bi bi-journal-text" },
-  2: { bg: "rgba(33,150,243,0.12)", color: "#1976d2", icon: "bi bi-code-slash" },
-  3: { bg: "rgba(233,30,99,0.12)", color: "#c2185b", icon: "bi bi-heart" },
-  4: { bg: "rgba(156,39,176,0.12)", color: "#7b1fa2", icon: "bi bi-book" },
-  5: { bg: "rgba(255,152,0,0.12)", color: "#e65100", icon: "bi bi-camera" },
 };
 
 const readTime = computed(() => {
@@ -486,7 +483,7 @@ const getArticleDetail = async () => {
   font-size: 15px;
   cursor: pointer;
   user-select: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--dur-normal) var(--ease-standard);
   background: rgba(34, 211, 238, 0.1);
   color: var(--btn-tag-bg-color);
   border: 1px solid transparent;

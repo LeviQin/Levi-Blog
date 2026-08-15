@@ -2,7 +2,6 @@
   <div class="top-banner" :style="bannerStyle">
     <div class="banner-grid-bg"></div>
 
-    <!-- 分屏 Hero 模式（首页：传入 terminalLines） -->
     <div v-if="isSplit" class="banner-split">
       <div class="banner-left">
         <h2 class="banner-title">{{ props.bannerConfig.title }}</h2>
@@ -42,7 +41,6 @@
       </div>
     </div>
 
-    <!-- 常规文案模式（其余页面） -->
     <div v-else class="banner-text-box">
       <h2 v-if="props.bannerConfig.title">
         {{ props.bannerConfig.title }}
@@ -249,26 +247,24 @@ onBeforeUnmount(() => {
   font-family: var(--mono-font-family);
   border: 1px solid transparent;
   cursor: pointer;
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--dur-fast) var(--ease-standard);
 
   &.primary {
     background: var(--theme-btn-hover-color);
     color: #0d1117;
 
     &:hover {
-      transform: translateY(-2px);
       box-shadow: 0 8px 24px rgba(34, 211, 238, 0.35);
     }
   }
 
   &.ghost {
-    background: #ffffff;
-    border-color: #ffffff;
-    color: #0d1117;
+    background: var(--theme-color);
+    border-color: var(--border-color);
+    color: var(--black-text-color);
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+      box-shadow: var(--shadow-raise);
     }
   }
 
@@ -378,7 +374,6 @@ onBeforeUnmount(() => {
   width: min(80vw, 720px);
   text-align: center;
   z-index: 1;
-  /* 半透明深色遮罩兜底，保证文字任何背景下都清晰 */
   padding: 20px 32px;
   border-radius: 16px;
   background: rgba(13, 17, 23, 0.45);

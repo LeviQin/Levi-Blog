@@ -118,15 +118,27 @@
 import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import SidebarUser from "../SidebarUser/Index.vue";
-import { getRandomHexColor } from "@/utils/utils.js";
 import { vSlidIn } from "@/utils/vSlidIn.js";
 import { useMainStore } from "@/stores/mainStore";
+import { useTheme } from "@/hooks/useTheme";
+
+const { theme } = useTheme();
+
+// 按主题生成可读的随机色：浅色主题深色文字，深色主题亮色文字
+const tagColor = (dark) => {
+  const h = Math.floor(Math.random() * 360);
+  const s = Math.floor(Math.random() * 35) + 45;
+  const l = dark
+    ? Math.floor(Math.random() * 20) + 68
+    : Math.floor(Math.random() * 18) + 30;
+  return `hsl(${h}, ${s}%, ${l}%)`;
+};
 
 const tags = computed(() => {
   return mainStore.tagMap
     .filter((item) => item.status === 1)
     .map((item) => {
-      item.color = getRandomHexColor();
+      item.color = tagColor(theme.value === "dark");
       return item;
     });
 });
@@ -225,7 +237,6 @@ const selectCategory = (e) => {
   }
 
   &:hover {
-    transform: translateY(-1px);
     box-shadow: inset 0 0 0 1px currentColor, 0 6px 14px rgba(34, 211, 238, 0.16);
 
     &::before {
@@ -293,5 +304,13 @@ const selectCategory = (e) => {
   transition: all 0.3s;
   background: #e9e6e69e;
   color: var(--link-text-color);
+}
+
+html[data-theme="dark"] .sidebar-category-li {
+  &:hover,
+  &.active-category {
+    background: rgba(34, 211, 238, 0.12);
+    color: var(--link-text-color);
+  }
 }
 </style>

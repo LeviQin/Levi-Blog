@@ -70,30 +70,17 @@ const debounceTime = 100;
 let lastCall = 0;
 
 const keydownEvent = (event) => {
-  // 检测是否按下了 F12 键
   if (event.keyCode === 123) {
     if (!isF12.value) {
       ElNotification({
-        title: "发现你啦🎉",
-        message: "欢迎查看我的网站，开发者朋友！🕵️",
+        title: "发现你啦",
+        message: "欢迎查看我的网站，开发者朋友！",
         type: "warning",
         zIndex: 99999,
       });
       console.log(
-        "%c" + "🎉 欢迎来到 Levi's space! 🚀",
-        "font-size: 20px; color: #ff6347; text-shadow: 1px 1px 2px #555;"
-      );
-      console.log(
-        "%c" + "🔍 按下 F12 键，你发现了隐藏的世界！",
-        "font-size: 20px; color: #3498db; text-shadow: 1px 1px 2px #555;"
-      );
-      console.log(
-        "%c" + "💬 欢迎在 GitHub 上与我交流！🔗 https://github.com/LeviQin",
-        "font-size: 20px; color: #2ecc71; text-shadow: 1px 1px 2px #555;"
-      );
-      console.log(
-        "%c" + "🌟 如果你喜欢这个项目，请给我一个 star！⭐",
-        "font-size: 20px; color: #f1c40f; text-shadow: 1px 1px 2px #555;"
+        "%c欢迎来到 Levi's space",
+        "font-size: 16px; font-weight: 600; color: #06b6d4;"
       );
       isF12.value = true;
     }

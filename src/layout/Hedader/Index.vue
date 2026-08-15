@@ -69,10 +69,9 @@ const scrollWindow = () => {
     const isTop = top === 0;
     navheight.value = isTop ? maxHeaderHeight : minHeaderHeight;
     isScrolled.value = !isTop;
-    // 顶部完全透明，滚动后渐变为不透明
     const opacity = Math.min(top / 400, 0.92);
     document.documentElement.style.setProperty("--header-bar-color-opacity", opacity);
-    // 仅暗色主题 + 滚动到顶部时，导航文字强制白色(适配暗色 Hero)；浅色或滚动后恢复主题色
+    // 暗色主题滚动到顶部时导航文字用白色，适配暗色 Hero
     const isDark = document.documentElement.dataset.theme === "dark";
     if (isTop && isDark) {
       document.documentElement.style.setProperty("--nav-bar-text-color", "#ffffff");
@@ -106,7 +105,7 @@ const showSearchModel = () => {
   z-index: 9998;
   transform: translateY(-100%);
   opacity: 0;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+  transition: transform var(--dur-slow) var(--ease-out-expo), opacity 0.4s ease;
 
   &.is-entrance {
     transform: translateY(0);
@@ -122,7 +121,7 @@ const showSearchModel = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: height 0.4s var(--ease-standard);
 
   .log-crad {
     display: flex;
@@ -169,7 +168,7 @@ const showSearchModel = () => {
     -webkit-background-clip: initial;
     -webkit-text-fill-color: var(--nav-bar-text-color);
     background-clip: initial;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.4s var(--ease-standard);
   }
 
   &:hover h1 {
@@ -190,7 +189,7 @@ const showSearchModel = () => {
     color: var(--nav-bar-text-color);
     cursor: pointer;
     font-size: 20px;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: color 0.35s var(--ease-standard), transform 0.35s var(--ease-standard);
     display: inline-block;
   }
 

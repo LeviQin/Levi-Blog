@@ -50,8 +50,8 @@
       </div>
 
       <div class="sidebar-info-contact-head">
-        <span class="sidebar-info-contact-title">联系与订阅</span>
-        <span class="sidebar-info-contact-desc">保持连接，获取最新内容</span>
+        <span class="sidebar-info-contact-title">联系我</span>
+        <span class="sidebar-info-contact-desc">有问题随时找我聊聊</span>
       </div>
 
       <div class="sidebar-info-contact">
@@ -103,6 +103,7 @@ import { getStatistics } from "@/api/articles.js";
 import { getBaseURL } from "@/utils/judgmentEnv";
 import WXModel from "../WXModel/Index.vue";
 import { useMainStore } from "@/stores/mainStore";
+import { categoryList } from "@/utils/categories.js";
 
 const mainStore = useMainStore();
 
@@ -116,9 +117,9 @@ const rssFeedUrl = computed(() => {
 
 const router = useRouter();
 const totalArticles = ref(0);
+const totalCategories = ref(0);
 const wxModelRef = ref(null);
 const isSidebarVisible = ref(false);
-const categoryCount = 6;
 
 onMounted(() => {
   getData();
@@ -136,7 +137,7 @@ const sidebarInfoStyle = computed(() => {
 const profileStats = computed(() => {
   return [
     { label: "文章", value: totalArticles.value, icon: "#levi-wenzhang" },
-    { label: "分类", value: categoryCount, icon: "#levi-fenlei" },
+    { label: "分类", value: totalCategories.value || categoryList.length, icon: "#levi-fenlei" },
     {
       label: "标签",
       value: mainStore.tagMap.length,
@@ -200,6 +201,7 @@ const getData = async () => {
     const { code, data } = res.data;
     if (code === 200) {
       totalArticles.value = data.total_articles;
+      totalCategories.value = data.total_categories;
     }
   } catch (error) {
     console.log(error, "error------------------------------");
@@ -215,7 +217,7 @@ const getData = async () => {
   margin-bottom: 20px;
   overflow: hidden;
   border: 1px solid var(--border-color);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+  box-shadow: var(--shadow-raise);
 }
 
 .sidebar-info-hero {
@@ -233,7 +235,7 @@ const getData = async () => {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(180deg, rgba(13, 17, 23, 0.12), rgba(13, 17, 23, 0.6)),
+    linear-gradient(180deg, rgba(13, 17, 23, 0.4), rgba(13, 17, 23, 0.68)),
     var(--sidebar-hero-bg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -267,8 +269,6 @@ const getData = async () => {
   transition: transform 0.3s ease;
 
   &:hover {
-    transform: translateY(-2px);
-
     .avatar {
       transform: scale(1.03) rotate(4deg);
     }
@@ -367,9 +367,8 @@ const getData = async () => {
   }
 
   &:hover {
-    transform: translateY(-2px);
     background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.14);
+    box-shadow: var(--shadow-raise);
   }
 }
 
@@ -392,9 +391,8 @@ const getData = async () => {
   transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
 
   &:hover {
-    transform: translateY(-2px);
     border-color: rgba(34, 211, 238, 0.4);
-    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.24);
+    box-shadow: var(--shadow-raise);
   }
 }
 
@@ -465,9 +463,8 @@ const getData = async () => {
   transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
 
   &:hover {
-    transform: translateY(-2px);
     border-color: rgba(34, 211, 238, 0.4);
-    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.24);
+    box-shadow: var(--shadow-raise);
     color: var(--black-text-color);
   }
 }
@@ -533,7 +530,7 @@ const getData = async () => {
 
 html[data-theme="dark"] .sidebar-info {
   border-color: rgba(34, 211, 238, 0.18);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.36);
+  box-shadow: var(--shadow-raise);
 }
 
 html[data-theme="dark"] .sidebar-info-hero::after {

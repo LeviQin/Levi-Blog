@@ -1,10 +1,6 @@
-/**
- * 元素由下而上位移一段距离的通用型动画，使用自定义指令
- */
-
-const DISTANCE = 60; // 位移距离(减小，更柔和)
-const DURACTION = 1200; // 动画时间(加长，更缓慢)
-const EASING = "cubic-bezier(0.25, 0.46, 0.45, 0.94)"; // 平滑缓出，无回弹
+const DISTANCE = 16;
+const DURATION = 600;
+const EASING = "cubic-bezier(0.25, 0.46, 0.45, 0.94)";
 const map = new WeakMap();
 
 const ob = new IntersectionObserver((entries) => {
@@ -19,6 +15,10 @@ const ob = new IntersectionObserver((entries) => {
     }
 });
 
+const prefersReducedMotion = () =>
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 const isBelowViewport = (el) => {
     const rect = el.getBoundingClientRect();
     return rect.top - DISTANCE > window.innerHeight;
@@ -26,7 +26,7 @@ const isBelowViewport = (el) => {
 
 export const vSlidIn = {
     mounted(el) {
-        if (!isBelowViewport(el)) {
+        if (prefersReducedMotion() || !isBelowViewport(el)) {
             return;
         }
         const animation = el.animate(
@@ -41,7 +41,7 @@ export const vSlidIn = {
                     transition: `opacity 0.6s ease, transform 0.6s ${EASING}`
                 }
             ], {
-                duration: DURACTION,
+                duration: DURATION,
                 easing: EASING,
                 fill: "forwards"
             }

@@ -215,7 +215,7 @@ defineExpose({
 }
 
 .collapse-icon {
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), color 0.25s ease;
+  transition: transform 0.35s var(--ease-out-expo), color 0.25s ease;
 }
 
 .collapse-icon.is-open {
@@ -376,9 +376,9 @@ defineExpose({
 .submenu-slide-enter-active,
 .submenu-slide-leave-active {
   overflow: hidden;
-  transition: max-height 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.25s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    margin 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: max-height 0.35s var(--ease-out-expo),
+    opacity 0.25s ease, transform 0.35s var(--ease-out-expo),
+    margin 0.35s var(--ease-out-expo);
 }
 
 .submenu-slide-enter-from,

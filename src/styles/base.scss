@@ -19,7 +19,7 @@ html[data-theme='dark'] {
   --link-text-color: #22d3ee;
   --btn-tag-bg-color: #22d3ee;
   --border-color: #21262d;
-  --text-secondary: #8b949e;
+  --text-secondary: #9aa4af;
   --black-text-color: #e6edf3;
 
   --about-color: #8b949e;
@@ -32,6 +32,10 @@ html[data-theme='dark'] {
   --dropdown-bg-color: #161b22;
   --dropdown-item-color: #e6edf3;
   --dropdown-item-hover-bg: rgba(34, 211, 238, 0.12);
+
+  /* 阴影：深色主题 */
+  --shadow-card-hover: 0 6px 16px rgba(0, 0, 0, 0.28), 0 14px 28px rgba(0, 0, 0, 0.32);
+  --shadow-raise: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 :root {
@@ -59,13 +63,24 @@ html[data-theme='dark'] {
   --link-text-color: #06b6d4;
   --btn-tag-bg-color: #06b6d4;
   --border-color: #d0d7de;
-  --text-secondary: #57606a;
+  --text-secondary: #4b5563;
   --min-width: 200px;
   --heart-width: 1360px;
   --header-bar-height: 80px;
   --header-mobile-bar-height: 50px;
   --theme-radius: 10px;
   --theme-min-radius: 5px;
+
+  /* 缓动与时长 */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.2s;
+  --dur-normal: 0.3s;
+  --dur-slow: 0.5s;
+
+  /* 阴影：浅色主题 */
+  --shadow-card-hover: 0 6px 16px rgba(0, 0, 0, 0.08), 0 14px 28px rgba(0, 0, 0, 0.1);
+  --shadow-raise: 0 8px 20px rgba(0, 0, 0, 0.08);
 
   --about-color: #57606a;
   --work-color: #06b6d4;
@@ -201,5 +216,17 @@ li {
 @media (max-width: 860px) {
   .topic-sidebar {
     display: none;
+  }
+}
+
+/* 用户偏好减弱动效时，禁用动画与过渡 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

@@ -125,7 +125,7 @@ const playEntranceDoor = () => {
   bottom: 0;
   width: 50.2vw;
   overflow: hidden;
-  transition: transform 1.15s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.42s ease;
+  transition: transform 1.15s var(--ease-out-expo), opacity 0.42s ease;
   background: var(--theme-color);
 }
 
