@@ -169,11 +169,16 @@ const emit = defineEmits(["toNextPage"]);
   z-index: 9999;
   transform: scale(0.8);
   cursor: pointer;
+  filter: invert(1);
 
   &:hover {
     transform: scale(1);
     transition: all 0.2s ease-in 0s;
   }
+}
+
+html[data-theme="dark"] .button-arrow {
+  filter: none;
 }
 
 .left-icon {

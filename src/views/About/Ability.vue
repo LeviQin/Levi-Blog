@@ -137,10 +137,15 @@ const emit = defineEmits(["toNextPage"]);
   z-index: 1;
   transform: scale(0.8);
   cursor: pointer;
+  filter: invert(1);
   &:hover {
     transform: scale(1);
     transition: transform 0.2s ease-in 0s;
   }
+}
+
+html[data-theme="dark"] .button-arrow {
+  filter: none;
 }
 
 @media (max-width: 860px) {

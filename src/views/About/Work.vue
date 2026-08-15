@@ -221,6 +221,11 @@ const emit = defineEmits(["toNextPage"]);
   z-index: 9999;
   transform: scale(0.8);
   cursor: pointer;
+  filter: invert(1);
+}
+
+html[data-theme="dark"] .button-arrow {
+  filter: none;
 }
 
 .button-card {

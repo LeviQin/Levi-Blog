@@ -200,10 +200,15 @@ const emit = defineEmits(["toOnePage"]);
   transform: scale(0.8);
   cursor: pointer;
   background-position: -60px 0px;
+  filter: invert(1);
   &:hover {
     transform: scale(1);
     transition: all 0.2s ease-in 0s;
   }
+}
+
+html[data-theme="dark"] .button-arrow {
+  filter: none;
 }
 
 @media (max-width: 860px) {
