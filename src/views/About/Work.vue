@@ -62,7 +62,7 @@ onBeforeUnmount(() => {
 });
 
 const displayProjects = computed(() => {
-  return isMobile.value ? featuredProjects.slice(0, 4) : featuredProjects;
+  return isMobile.value ? featuredProjects.slice(0, 3) : featuredProjects;
 });
 
 const toNextPage = () => {
@@ -131,7 +131,7 @@ const emit = defineEmits(["toNextPage"]);
 }
 
 .info-content {
-  width: 1000px;
+  width: 1200px;
   max-width: 92vw;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -140,7 +140,7 @@ const emit = defineEmits(["toNextPage"]);
 
 .info-item {
   width: 100%;
-  height: 210px;
+  height: 240px;
   overflow: hidden;
   position: relative;
   border-radius: 12px;
@@ -268,7 +268,6 @@ const emit = defineEmits(["toNextPage"]);
     grid-template-columns: repeat(1, 1fr);
     width: 100% !important;
     gap: 10px;
-    overflow-y: auto;
     flex: 1;
     max-height: none;
     padding-bottom: 4px;

@@ -2,7 +2,7 @@
   <div>
     <div class="app-shell">
       <router-view />
-      <cat-pet />
+      <cat-pet :initial-delay="1820" />
     </div>
 
     <Teleport to="body">

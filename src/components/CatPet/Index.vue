@@ -1,85 +1,207 @@
 <template>
-  <div
-    class="cat-pet"
-    :class="{
-      'is-dragging': isDragging,
-      'is-sleeping': isSleeping,
-      'is-petted': isPetted,
-      'is-excited': isExcited,
-      'is-auto-relocating': isAutoRelocating,
-      'is-standing': currentTrick === 'standing',
-      'is-spinning': currentTrick === 'spinning',
-      'is-hopping': currentTrick === 'hopping',
-      'is-frightened': isFrightened,
-      'is-eating': isEating,
-    }"
-    :style="positionStyle"
-    ref="catRef"
-    @pointerdown.prevent="onPointerDown"
-    @click.stop
-  >
-    <div class="cat-inner">
-      <div ref="lottieRef" class="lottie-container"></div>
+  <div>
+    <div
+      class="cat-pet"
+      :class="{
+        'is-dragging': isDragging,
+        'is-sleeping': isSleeping,
+        'is-petted': isPetted,
+        'is-excited': isExcited,
+        'is-auto-relocating': isAutoRelocating,
+        'is-standing': currentTrick === 'standing',
+        'is-spinning': currentTrick === 'spinning',
+        'is-hopping': currentTrick === 'hopping',
+        'is-frightened': isFrightened,
+        'is-eating': isEating,
+        'is-hidden': isHidden || !settings.visible,
+      }"
+      :style="positionStyle"
+      ref="catRef"
+      @pointerdown.prevent="onPointerDown"
+      @click.stop
+      @contextmenu.prevent="onContextMenu"
+    >
+      <div class="cat-inner" :style="{ width: catSizePx, height: catSizePx }">
+        <div ref="lottieRef" class="lottie-container"></div>
 
-      <!-- 喂食时的食物碗 -->
-      <div v-if="isEating" class="food-bowl">
-        <span class="food-emoji">🍖</span>
+        <!-- 喂食时的食物碗 -->
+        <div v-if="isEating" class="food-bowl">
+          <span class="food-emoji">🍖</span>
+        </div>
+
+        <div class="cat-paw-wave" v-if="isWaving">
+          <div class="wave-paw"></div>
+        </div>
       </div>
 
-      <div class="cat-paw-wave" v-if="isWaving">
-        <div class="wave-paw"></div>
+      <button
+        class="cat-settings-btn"
+        :class="{ 'is-active': showSettings }"
+        aria-label="宠物设置"
+        title="宠物设置"
+        @pointerdown.stop
+        @click.stop="toggleSettings"
+      >⚙️</button>
+
+      <Transition name="bubble-pop">
+        <div
+          v-if="showBubble"
+          class="speech-bubble"
+          :class="[bubbleType, 'align-' + bubbleAlign, bubbleAbove ? 'below' : '']"
+        >
+          <span class="bubble-emoji" v-if="bubbleEmoji">{{ bubbleEmoji }}</span>
+          {{ currentBubble }}
+        </div>
+      </Transition>
+
+      <TransitionGroup name="float-heart" tag="div" class="hearts-container">
+        <span
+          v-for="heart in floatingHearts"
+          :key="heart.id"
+          class="float-heart"
+          :style="heart.style"
+        >{{ heart.emoji }}</span>
+      </TransitionGroup>
+
+      <div v-if="isSleeping" class="sleep-zzz">
+        <span class="z z1">z</span>
+        <span class="z z2">Z</span>
+        <span class="z z3">Z</span>
       </div>
+
+      <!-- 点击波纹特效 -->
+      <TransitionGroup name="ripple-pop" tag="div" class="ripples-container">
+        <span
+          v-for="ripple in ripples"
+          :key="ripple.id"
+          class="click-ripple"
+          :style="ripple.style"
+        ></span>
+      </TransitionGroup>
+
+      <!-- 抚摸流光 -->
+      <Transition name="pet-shine">
+        <div v-if="isPetted" class="pet-shine"></div>
+      </Transition>
     </div>
 
-    <Transition name="bubble-pop">
-      <div v-if="showBubble" class="speech-bubble" :class="bubbleType">
-        <span class="bubble-emoji" v-if="bubbleEmoji">{{ bubbleEmoji }}</span>
-        {{ currentBubble }}
+    <!-- 设置面板 -->
+    <Transition name="panel-pop">
+      <div v-if="showSettings" class="cat-settings" @click.stop>
+        <div class="settings-header">
+          <span class="settings-title">🐱 宠物设置</span>
+          <button class="settings-close" @click="showSettings = false" aria-label="关闭">✕</button>
+        </div>
+        <div class="settings-body">
+          <div class="setting-row">
+            <span>显示宠物</span>
+            <button class="toggle" :class="{ on: settings.visible }" @click="settings.visible = !settings.visible"><span class="knob"></span></button>
+          </div>
+          <div class="setting-row">
+            <span>随机事件</span>
+            <button class="toggle" :class="{ on: settings.randomEvents }" @click="settings.randomEvents = !settings.randomEvents"><span class="knob"></span></button>
+          </div>
+          <div class="setting-row">
+            <span>自动移动</span>
+            <button class="toggle" :class="{ on: settings.autoMove }" @click="settings.autoMove = !settings.autoMove"><span class="knob"></span></button>
+          </div>
+          <div class="setting-row">
+            <span>大小</span>
+            <div class="size-group">
+              <button :class="{ active: settings.size === 'small' }" @click="setSize('small')">小</button>
+              <button :class="{ active: settings.size === 'medium' }" @click="setSize('medium')">中</button>
+              <button :class="{ active: settings.size === 'large' }" @click="setSize('large')">大</button>
+            </div>
+          </div>
+          <button class="reset-btn" @click="resetPosition">重置位置</button>
+        </div>
       </div>
     </Transition>
 
-    <TransitionGroup name="float-heart" tag="div" class="hearts-container">
-      <span
-        v-for="heart in floatingHearts"
-        :key="heart.id"
-        class="float-heart"
-        :style="heart.style"
-      >{{ heart.emoji }}</span>
-    </TransitionGroup>
-
-    <div v-if="isSleeping" class="sleep-zzz">
-      <span class="z z1">z</span>
-      <span class="z z2">Z</span>
-      <span class="z z3">Z</span>
-    </div>
-
-    <!-- 点击波纹特效 -->
-    <TransitionGroup name="ripple-pop" tag="div" class="ripples-container">
-      <span
-        v-for="ripple in ripples"
-        :key="ripple.id"
-        class="click-ripple"
-        :style="ripple.style"
-      ></span>
-    </TransitionGroup>
-
-    <!-- 抚摸流光 -->
-    <Transition name="pet-shine">
-      <div v-if="isPetted" class="pet-shine"></div>
+    <!-- 隐藏后的恢复按钮 -->
+    <Transition name="restore-pop">
+      <button
+        v-if="!settings.visible"
+        class="cat-restore-btn"
+        title="召唤猫咪"
+        aria-label="召唤猫咪"
+        @click="restoreCat"
+      >🐱</button>
     </Transition>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, onBeforeUnmount, nextTick } from "vue";
+import { ref, reactive, computed, watch, onMounted, onBeforeUnmount, nextTick } from "vue";
 import lottie from "lottie-web";
 import catAnim from "./cat.json";
+
+const props = defineProps({
+  initialDelay: { type: Number, default: 0 },
+});
 
 const catRef = ref(null);
 const lottieRef = ref(null);
 
 let animInstance = null;
 
+// ==================== 设置持久化 ====================
+const SETTINGS_KEY = "levi-catpet-settings-v1";
+const POS_KEY = "levi-catpet-pos-v1";
+
+const defaultSettings = {
+  visible: true,
+  randomEvents: true,
+  autoMove: true,
+  size: "medium",
+};
+
+const loadSettings = () => {
+  try {
+    const raw = localStorage.getItem(SETTINGS_KEY);
+    if (raw) {
+      const s = JSON.parse(raw);
+      return { ...defaultSettings, ...s };
+    }
+  } catch (e) { /* ignore */ }
+  return { ...defaultSettings };
+};
+
+const settings = reactive(loadSettings());
+
+const saveSettings = () => {
+  try {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ ...settings }));
+  } catch (e) { /* ignore */ }
+};
+watch(settings, saveSettings, { deep: true });
+
+const loadPosition = () => {
+  try {
+    const raw = localStorage.getItem(POS_KEY);
+    if (raw) {
+      const p = JSON.parse(raw);
+      if (typeof p.x === "number" && typeof p.y === "number") return p;
+    }
+  } catch (e) { /* ignore */ }
+  return null;
+};
+
+const savePosition = () => {
+  try {
+    localStorage.setItem(POS_KEY, JSON.stringify({ x: position.x, y: position.y }));
+  } catch (e) { /* ignore */ }
+};
+
+// ==================== 减弱动态效果 ====================
+const mqReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+const reducedMotion = ref(mqReduced.matches);
+
+const onReducedChange = (e) => {
+  reducedMotion.value = e.matches;
+};
+
+// ==================== 状态 ====================
 const isDragging = ref(false);
 const isSleeping = ref(false);
 const isPetted = ref(false);
@@ -88,6 +210,7 @@ const isWaving = ref(false);
 const isAutoRelocating = ref(false);
 const isFrightened = ref(false);
 const isEating = ref(false);
+const isHidden = ref(props.initialDelay > 0);
 const showBubble = ref(false);
 const currentBubble = ref("");
 const bubbleEmoji = ref("");
@@ -96,13 +219,22 @@ const floatingHearts = ref([]);
 const ripples = ref([]);
 let rippleIdCounter = 0;
 const currentTrick = ref("");
+const showSettings = ref(false);
 
 const position = reactive({ x: 0, y: 0 });
 
 const isMobile = /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent);
-const petSize = isMobile ? 92 : 120;
+const isNarrow = ref(window.innerWidth <= 768);
+const viewportW = ref(window.innerWidth);
 const viewportPadding = 12;
 const viewportTopPadding = 50;
+
+const basePetSize = computed(() => ((isMobile || isNarrow.value) ? 92 : 160));
+const petScale = computed(() => (
+  settings.size === "small" ? 0.8 : settings.size === "large" ? 1.15 : 1
+));
+const petSize = computed(() => Math.round(basePetSize.value * petScale.value));
+const catSizePx = computed(() => `${petSize.value}px`);
 
 const SLP_FRAME = 56;
 
@@ -123,25 +255,25 @@ const bubbleTexts = [
   { text: "盯——", emoji: "👀", type: "curious" },
 ];
 
-const positionStyle = computed(() => ({
-  left: `${position.x}px`,
-  top: `${position.y}px`,
-  transition: isDragging.value || isAutoRelocating.value
-    ? "none"
-    : "left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), top 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
-}));
+// ==================== 位置样式（GPU transform） ====================
+const positionStyle = computed(() => {
+  if (isAutoRelocating.value) {
+    return {
+      transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
+      transition: "opacity 0.26s ease",
+    };
+  }
+  return {
+    transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
+    transition: isDragging.value
+      ? "none"
+      : "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.26s ease, filter 0.25s ease",
+  };
+});
 
-let teleportTimer = null;
-let randomEventTimer = null;
-let autoMoveTimer = null;
-let sleepTimer = null;
-let relocateTimer = null;
-let trickTimer = null;
-let heartIdCounter = 0;
-
+// ==================== Lottie ====================
 const initLottie = () => {
   if (!lottieRef.value) return;
-
   animInstance = lottie.loadAnimation({
     container: lottieRef.value,
     renderer: "svg",
@@ -149,27 +281,27 @@ const initLottie = () => {
     autoplay: true,
     animationData: catAnim,
   });
-
   animInstance.setSpeed(0.8);
 };
 
 const resumeIdle = () => {
-  if (!animInstance || animInstance.isPaused) {
-    animInstance?.play();
-  }
-  animInstance?.setSpeed(0.8);
+  if (!animInstance) return;
+  if (animInstance.isPaused) animInstance.play();
+  animInstance.setSpeed(0.8);
 };
 
 const gotoFrameAndHold = (frame) => {
   if (animInstance) {
+    // goToAndStop 不会停止播放中的 RAF 循环，必须显式 pause 才能真正冻结
+    animInstance.pause();
     animInstance.goToAndStop(frame, true);
   }
 };
 
+// ==================== 视口边界 ====================
 const getViewportBounds = () => {
-  const maxX = Math.max(viewportPadding, window.innerWidth - petSize - viewportPadding);
-  const maxY = Math.max(viewportPadding, window.innerHeight - petSize - viewportPadding);
-
+  const maxX = Math.max(viewportPadding, window.innerWidth - petSize.value - viewportPadding);
+  const maxY = Math.max(viewportPadding, window.innerHeight - petSize.value - viewportPadding);
   return {
     minX: viewportPadding,
     minY: viewportTopPadding,
@@ -190,7 +322,6 @@ const getRandomEdgePosition = () => {
   const bounds = getViewportBounds();
   const w = window.innerWidth;
   const h = window.innerHeight;
-
   const edge = Math.floor(Math.random() * 8);
   let x, y;
 
@@ -208,16 +339,19 @@ const getRandomEdgePosition = () => {
   return constrainPosition(x, y);
 };
 
+// ==================== 动作互斥 ====================
 const canStartAction = () => (
-  !isDragging.value
+  !isHidden.value
+  && !isDragging.value
   && !isSleeping.value
   && !isAutoRelocating.value
   && !currentTrick.value
+  && !isEating.value
 );
 
+// ==================== 位移 ====================
 const moveToPositionWithFade = (nextPosition, bubbleData) => {
   if (!canStartAction()) return;
-
   clearTimeout(relocateTimer);
   isAutoRelocating.value = true;
   const constrainedPosition = constrainPosition(nextPosition.x, nextPosition.y);
@@ -225,10 +359,10 @@ const moveToPositionWithFade = (nextPosition, bubbleData) => {
   relocateTimer = setTimeout(() => {
     position.x = constrainedPosition.x;
     position.y = constrainedPosition.y;
+    savePosition();
 
     relocateTimer = setTimeout(() => {
       isAutoRelocating.value = false;
-
       if (bubbleData) {
         showMeow(bubbleData);
       }
@@ -237,6 +371,7 @@ const moveToPositionWithFade = (nextPosition, bubbleData) => {
 };
 
 const teleportToEdge = () => {
+  if (!settings.autoMove || reducedMotion.value || !settings.visible) return;
   const pos = getRandomEdgePosition();
   moveToPositionWithFade(pos, { text: "来这边!", emoji: "🐾", type: "playful" });
 };
@@ -246,27 +381,36 @@ const resetTrickState = () => {
   resumeIdle();
 };
 
+const FLASHY_TRICKS = new Set(["standing", "spinning", "hopping"]);
+
 const performTrick = ({
   name,
   duration,
   bubble,
   speed = 1.1,
   hearts,
+  freezeFrame = null,
 }) => {
   if (!canStartAction() || isPetted.value || isExcited.value || isWaving.value) {
     return false;
   }
 
+  // 减弱动态效果时，闪亮技巧降级为温和反馈（仅气泡+爱心）
+  if (reducedMotion.value && FLASHY_TRICKS.has(name)) {
+    if (bubble) showMeow(bubble);
+    if (hearts) spawnHearts(hearts.count, hearts.emojis);
+    return true;
+  }
+
   currentTrick.value = name;
-  animInstance?.setSpeed(speed);
-
-  if (bubble) {
-    showMeow(bubble);
+  if (freezeFrame !== null) {
+    gotoFrameAndHold(freezeFrame);
+  } else {
+    animInstance?.setSpeed(speed);
   }
 
-  if (hearts) {
-    spawnHearts(hearts.count, hearts.emojis);
-  }
+  if (bubble) showMeow(bubble);
+  if (hearts) spawnHearts(hearts.count, hearts.emojis);
 
   clearTimeout(trickTimer);
   trickTimer = setTimeout(() => {
@@ -285,10 +429,11 @@ const standUp = () => performTrick({
 
 const spinAround = () => performTrick({
   name: "spinning",
-  duration: 1100,
+  duration: 1050,
   speed: 1.5,
   bubble: { text: "转圈圈~", emoji: "🌀", type: "excited" },
   hearts: { count: 3, emojis: ["✨", "🌀", "⭐"] },
+  freezeFrame: 0,
 });
 
 const happyHop = () => performTrick({
@@ -301,7 +446,6 @@ const happyHop = () => performTrick({
 
 const sparkleMoment = () => {
   if (!canStartAction() || isPetted.value || isExcited.value || isWaving.value) return;
-
   showMeow({ text: "嘿嘿~", emoji: "✨", type: "excited" });
   spawnHearts(3, ["✨", "💖", "🌟"]);
   if (animInstance) {
@@ -313,7 +457,9 @@ const sparkleMoment = () => {
   }
 };
 
+// ==================== 随机事件 ====================
 const triggerRandomEvent = () => {
+  if (!settings.visible || !settings.randomEvents) return;
   if (!canStartAction() || showBubble.value || isPetted.value || isExcited.value || isWaving.value || isEating.value) return;
 
   const r = Math.random();
@@ -350,6 +496,7 @@ const triggerRandomEvent = () => {
 
 const scheduleRandomEvent = () => {
   clearTimeout(randomEventTimer);
+  if (!settings.visible || !settings.randomEvents) return;
   const delay = 15000 + Math.random() * 25000;
   randomEventTimer = setTimeout(() => {
     triggerRandomEvent();
@@ -357,7 +504,20 @@ const scheduleRandomEvent = () => {
   }, delay);
 };
 
+// ==================== 自动位移 ====================
+const startTeleport = () => {
+  clearInterval(teleportTimer);
+  if (!settings.visible || !settings.autoMove) return;
+  teleportTimer = setInterval(teleportToEdge, 120000);
+};
+
+const stopTeleport = () => {
+  clearInterval(teleportTimer);
+};
+
+// ==================== 睡眠 ====================
 const goToSleep = () => {
+  if (isSleeping.value || isDragging.value || currentTrick.value) return;
   isSleeping.value = true;
   gotoFrameAndHold(SLP_FRAME);
   showMeow({ text: "Zzz...", emoji: "💤", type: "sleepy" });
@@ -369,12 +529,15 @@ const goToSleep = () => {
 };
 
 const wakeUp = () => {
+  if (!isSleeping.value) return;
   isSleeping.value = false;
   resumeIdle();
   showMeow({ text: "嗯...早上了?", emoji: "🌅", type: "sleepy" });
 };
 
+// ==================== 气泡 ====================
 const showMeow = (bubbleData) => {
+  if (!settings.visible) return;
   if (!bubbleData) {
     const randomBubble = bubbleTexts[Math.floor(Math.random() * bubbleTexts.length)];
     bubbleData = randomBubble;
@@ -390,6 +553,16 @@ const showMeow = (bubbleData) => {
   }, 2200);
 };
 
+const bubbleAlign = computed(() => {
+  const cx = position.x + petSize.value / 2;
+  if (cx < 90) return "left";
+  if (cx > viewportW.value - 90) return "right";
+  return "center";
+});
+
+const bubbleAbove = computed(() => position.y > 140);
+
+// ==================== 爱心 / 波纹 ====================
 const spawnHearts = (count, emojis) => {
   for (let i = 0; i < count; i++) {
     const id = ++heartIdCounter;
@@ -407,7 +580,6 @@ const spawnHearts = (count, emojis) => {
   }
 };
 
-// 点击位置波纹特效
 const spawnRipple = (x, y) => {
   const id = ++rippleIdCounter;
   const size = 34;
@@ -425,14 +597,14 @@ const spawnRipple = (x, y) => {
   }, 600);
 };
 
+// ==================== 交互 ====================
 const petCat = () => {
+  if (!settings.visible || isHidden.value) return;
   if (isPetted.value || isExcited.value || isSleeping.value || isAutoRelocating.value || currentTrick.value) return;
   isPetted.value = true;
   resumeIdle();
 
-  if (animInstance) {
-    animInstance.setSpeed(1.5);
-  }
+  if (animInstance) animInstance.setSpeed(1.5);
 
   const reactions = [
     { text: "呼噜噜~", emoji: "😻", type: "happy" },
@@ -449,12 +621,10 @@ const petCat = () => {
 };
 
 const exciteCat = () => {
+  if (!settings.visible || isHidden.value) return;
   if (isExcited.value || isSleeping.value || isAutoRelocating.value || currentTrick.value) return;
   isExcited.value = true;
-
-  if (animInstance) {
-    animInstance.setSpeed(2.5);
-  }
+  if (animInstance) animInstance.setSpeed(2.5);
 
   showMeow({ text: "好开心!!", emoji: "🎉", type: "excited" });
   spawnHearts(6, ["💖", "🌟", "✨", "💝"]);
@@ -466,6 +636,7 @@ const exciteCat = () => {
 };
 
 const wavePaw = () => {
+  if (!settings.visible || isHidden.value) return;
   if (isWaving.value || isSleeping.value || isAutoRelocating.value || currentTrick.value) return;
   isWaving.value = true;
   showMeow({ text: "Hi~", emoji: "👋", type: "playful" });
@@ -475,9 +646,8 @@ const wavePaw = () => {
   }, 1500);
 };
 
-// 滚轮惊吓（鼠标滚轮快速滚动时）
 const scareCat = () => {
-  if (isFrightened.value || isSleeping.value || isAutoRelocating.value) return;
+  if (isFrightened.value || isSleeping.value || isAutoRelocating.value || isDragging.value) return;
   isFrightened.value = true;
   showMeow({ text: "呀!!", emoji: "😱", type: "excited" });
   spawnHearts(2, ["💨", "❗"]);
@@ -487,9 +657,8 @@ const scareCat = () => {
   }, 600);
 };
 
-// 喂食
 const feedCat = () => {
-  if (isEating.value || isSleeping.value) return;
+  if (isEating.value || isSleeping.value || currentTrick.value || isDragging.value) return;
   isEating.value = true;
   showMeow({ text: "好香~", emoji: "😋", type: "happy" });
   spawnHearts(3, ["❤️", "✨", "🍖"]);
@@ -500,10 +669,10 @@ const feedCat = () => {
   }, 3200);
 };
 
-// 视线跟随鼠标（轻微朝向）
+// ==================== 视线跟随 ====================
 let lookTimer = null;
 const handleMouseMove = (e) => {
-  if (!catRef.value || isDragging.value) return;
+  if (!catRef.value || isDragging.value || currentTrick.value || reducedMotion.value) return;
   const rect = catRef.value.getBoundingClientRect();
   const cx = rect.left + rect.width / 2;
   const cy = rect.top + rect.height / 2;
@@ -520,13 +689,13 @@ const handleMouseMove = (e) => {
   });
 };
 
+// ==================== 点击 ====================
 let clickTimer = null;
 let pressTimer = null;
 let clickCount = 0;
 let lastClickTime = 0;
 
 const handleClick = (clientX, clientY) => {
-  // 点击位置波纹反馈
   if (clientX !== undefined && clientY !== undefined && catRef.value) {
     const rect = catRef.value.getBoundingClientRect();
     spawnRipple(clientX - rect.left, clientY - rect.top);
@@ -566,6 +735,11 @@ const handleClick = (clientX, clientY) => {
   }, 350);
 };
 
+// ==================== 拖拽 ====================
+const dragOffset = reactive({ startX: 0, startY: 0, ox: 0, oy: 0 });
+let hasMoved = false;
+let longPressedSleep = false;
+
 const onPointerDown = (e) => {
   if (e.button !== undefined && e.button !== 0) return;
 
@@ -574,11 +748,13 @@ const onPointerDown = (e) => {
   dragOffset.ox = e.clientX - position.x;
   dragOffset.oy = e.clientY - position.y;
   hasMoved = false;
+  longPressedSleep = false;
 
+  clearTimeout(pressTimer);
   pressTimer = setTimeout(() => {
     if (!hasMoved) {
+      longPressedSleep = true;
       goToSleep();
-      isDragging.value = true;
     }
   }, 600);
 
@@ -586,9 +762,6 @@ const onPointerDown = (e) => {
   document.addEventListener("pointerup", onPointerUp);
   document.addEventListener("pointercancel", onPointerUp);
 };
-
-const dragOffset = reactive({ startX: 0, startY: 0, ox: 0, oy: 0 });
-let hasMoved = false;
 
 const onPointerMove = (e) => {
   const dx = Math.abs(e.clientX - dragOffset.startX);
@@ -600,10 +773,14 @@ const onPointerMove = (e) => {
   }
 
   if (hasMoved) {
-    isDragging.value = true;
-    isSleeping.value = false;
-    clearTimeout(sleepTimer);
-    resumeIdle();
+    if (!isDragging.value) {
+      isDragging.value = true;
+      if (isSleeping.value) {
+        isSleeping.value = false;
+        clearTimeout(sleepTimer);
+        resumeIdle();
+      }
+    }
 
     const constrained = constrainPosition(
       e.clientX - dragOffset.ox,
@@ -624,10 +801,14 @@ const onPointerUp = (e) => {
   if (isDragging.value && hasMoved) {
     isDragging.value = false;
     resumeIdle();
+    savePosition();
+    return;
+  }
 
-    if (isSleeping.value) {
-      wakeUp();
-    }
+  // 长按入睡后释放：保持睡眠，不当作点击唤醒
+  if (longPressedSleep) {
+    longPressedSleep = false;
+    isDragging.value = false;
     return;
   }
 
@@ -638,32 +819,135 @@ const onPointerUp = (e) => {
   }
 };
 
+// ==================== 设置面板 ====================
+const toggleSettings = () => {
+  showSettings.value = !showSettings.value;
+};
+
+const onContextMenu = (e) => {
+  // 触屏长按会触发 contextmenu（约500ms），但长按已被用于入睡；
+  // 因此仅鼠标右键（hover:hover 设备）打开设置面板，触屏走齿轮按钮。
+  if (window.matchMedia("(hover: none)").matches) return;
+  showSettings.value = true;
+};
+
+const setSize = (size) => {
+  settings.size = size;
+  nextTick(() => {
+    const c = constrainPosition(position.x, position.y);
+    position.x = c.x;
+    position.y = c.y;
+    savePosition();
+  });
+};
+
+const resetPosition = () => {
+  const pos = getRandomEdgePosition();
+  position.x = pos.x;
+  position.y = pos.y;
+  savePosition();
+};
+
+const restoreCat = () => {
+  settings.visible = true;
+  showSettings.value = true;
+  if (!isSleeping.value && !currentTrick.value) resumeIdle();
+  if (settings.randomEvents) scheduleRandomEvent();
+  if (settings.autoMove) startTeleport();
+};
+
+const handleEscape = (e) => {
+  if (e.key === "Escape") showSettings.value = false;
+};
+
+// ==================== 可见性 / 尺寸 ====================
 const handleResize = () => {
+  isNarrow.value = window.innerWidth <= 768;
+  viewportW.value = window.innerWidth;
   const constrained = constrainPosition(position.x, position.y);
   position.x = constrained.x;
   position.y = constrained.y;
+  savePosition();
 };
 
+const handleVisibility = () => {
+  if (document.hidden) {
+    animInstance?.pause();
+  } else {
+    if (settings.visible && !isSleeping.value && !currentTrick.value) {
+      resumeIdle();
+    }
+  }
+};
+
+watch(() => settings.visible, (v) => {
+  if (!v) {
+    stopTeleport();
+    clearTimeout(randomEventTimer);
+    showBubble.value = false;
+    animInstance?.pause();
+  } else {
+    if (!isSleeping.value && !currentTrick.value) resumeIdle();
+    if (settings.randomEvents) scheduleRandomEvent();
+    if (settings.autoMove) startTeleport();
+  }
+});
+
+watch(() => settings.autoMove, (v) => {
+  if (v) startTeleport();
+  else stopTeleport();
+});
+
+// ==================== 定时器 ====================
+let teleportTimer = null;
+let randomEventTimer = null;
+let autoMoveTimer = null;
+let sleepTimer = null;
+let relocateTimer = null;
+let trickTimer = null;
+let heartIdCounter = 0;
+
+// ==================== 生命周期 ====================
 onMounted(async () => {
   await nextTick();
   initLottie();
 
-  const pos = getRandomEdgePosition();
-  position.x = pos.x;
-  position.y = pos.y;
+  mqReduced.addEventListener("change", onReducedChange);
+  window.addEventListener("keydown", handleEscape);
 
-  teleportTimer = setInterval(teleportToEdge, 120000);
-  scheduleRandomEvent();
+  if (props.initialDelay > 0) {
+    setTimeout(() => {
+      isHidden.value = false;
+      if (!isSleeping.value && !currentTrick.value && settings.visible) resumeIdle();
+    }, props.initialDelay);
+  }
+
+  const saved = loadPosition();
+  if (saved) {
+    const c = constrainPosition(saved.x, saved.y);
+    position.x = c.x;
+    position.y = c.y;
+  } else {
+    const pos = getRandomEdgePosition();
+    position.x = pos.x;
+    position.y = pos.y;
+  }
+  savePosition();
+
+  if (settings.visible && settings.autoMove) startTeleport();
+  if (settings.visible && settings.randomEvents) scheduleRandomEvent();
 
   window.addEventListener("resize", handleResize);
   window.addEventListener("wheel", handleWheel, { passive: true });
   window.addEventListener("mousemove", handleMouseMove, { passive: true });
+  document.addEventListener("visibilitychange", handleVisibility);
 });
 
 // 滚轮互动：快速滚动时惊吓
 let wheelAccum = 0;
 let wheelTimer = null;
 const handleWheel = () => {
+  if (!settings.visible) return;
   wheelAccum += 1;
   if (wheelAccum >= 4) {
     scareCat();
@@ -678,7 +962,7 @@ const handleWheel = () => {
 };
 
 onBeforeUnmount(() => {
-  clearInterval(teleportTimer);
+  stopTeleport();
   clearTimeout(randomEventTimer);
   clearTimeout(autoMoveTimer);
   clearTimeout(sleepTimer);
@@ -689,9 +973,12 @@ onBeforeUnmount(() => {
   clearTimeout(wheelTimer);
   if (lookTimer) cancelAnimationFrame(lookTimer);
   if (animInstance) animInstance.destroy();
+  mqReduced.removeEventListener("change", onReducedChange);
+  window.removeEventListener("keydown", handleEscape);
   window.removeEventListener("resize", handleResize);
   window.removeEventListener("wheel", handleWheel);
   window.removeEventListener("mousemove", handleMouseMove);
+  document.removeEventListener("visibilitychange", handleVisibility);
   document.removeEventListener("pointermove", onPointerMove);
   document.removeEventListener("pointerup", onPointerUp);
   document.removeEventListener("pointercancel", onPointerUp);
@@ -704,15 +991,22 @@ $pet-size-mobile: 92px;
 
 .cat-pet {
   position: fixed;
+  left: 0;
+  top: 0;
   z-index: 2147483646;
   cursor: grab;
   opacity: 1;
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
-  transition: opacity 0.26s ease, filter 0.25s ease;
-  will-change: left, top, opacity;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.26s ease, filter 0.25s ease;
+  will-change: transform;
   filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.22));
+
+  &.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 
   &.is-dragging {
     cursor: grabbing;
@@ -753,8 +1047,12 @@ $pet-size-mobile: 92px;
 
   &.is-spinning {
     .cat-inner {
-      animation: spin-trick 1.2s cubic-bezier(0.45, 0.05, 0.35, 1) 1;
+      animation: spin-trick 1.05s cubic-bezier(0.45, 0.05, 0.35, 1) 1;
       transform-origin: center center;
+      will-change: transform;
+      transition: none;
+      --look-x: 0px;
+      --look-y: 0px;
     }
   }
 
@@ -782,14 +1080,58 @@ $pet-size-mobile: 92px;
 
 .cat-inner {
   position: relative;
-  width: $pet-size;
-  height: $pet-size;
+  width: var(--cat-size, $pet-size);
+  height: var(--cat-size, $pet-size);
   transition: transform 0.25s ease;
   transform: translate(var(--look-x, 0px), var(--look-y, 0px));
 }
 
-.cat-pet:hover:not(.is-dragging):not(.is-sleeping) .cat-inner {
+.cat-pet:hover:not(.is-dragging):not(.is-sleeping):not(.is-spinning):not(.is-auto-relocating) .cat-inner {
   transform: translate(var(--look-x, 0px), var(--look-y, 0px)) scale(1.06);
+}
+
+// ==================== 设置按钮 ====================
+.cat-settings-btn {
+  position: absolute;
+  top: -16px;
+  right: -14px;
+  z-index: 20;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.6) rotate(-20deg);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+
+  &.is-active {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    pointer-events: auto;
+  }
+}
+
+.cat-pet:hover .cat-settings-btn {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  pointer-events: auto;
+}
+
+@media (hover: none) {
+  .cat-settings-btn {
+    opacity: 0.55;
+    transform: scale(0.9) rotate(0deg);
+    pointer-events: auto;
+  }
 }
 
 // ==================== FOOD BOWL ====================
@@ -865,6 +1207,9 @@ $pet-size-mobile: 92px;
   display: flex;
   align-items: center;
   gap: 4px;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   .bubble-emoji {
     font-size: 15px;
@@ -883,6 +1228,48 @@ $pet-size-mobile: 92px;
     border-top: 7px solid rgba(255, 255, 255, 0.96);
   }
 
+  &.align-left {
+    left: 0;
+    transform: translateX(0);
+  }
+
+  &.align-right {
+    left: auto;
+    right: 0;
+    transform: translateX(0);
+  }
+
+  &.align-left::after {
+    left: 24px;
+    transform: translateX(0);
+  }
+
+  &.align-right::after {
+    left: auto;
+    right: 24px;
+    transform: translateX(0);
+  }
+
+  &.below {
+    top: calc(100% + 10px);
+  }
+
+  &.below::after {
+    bottom: auto;
+    top: -6px;
+    transform: translateX(-50%) rotate(180deg);
+  }
+
+  &.below.align-left::after {
+    transform: translateX(0) rotate(180deg);
+  }
+
+  &.below.align-right::after {
+    left: auto;
+    right: 24px;
+    transform: translateX(0) rotate(180deg);
+  }
+
   &.happy {
     background: rgba(255, 245, 235, 0.96);
     color: #C8704A;
@@ -892,6 +1279,7 @@ $pet-size-mobile: 92px;
     background: rgba(255, 240, 245, 0.96);
     color: #C8708A;
     animation: bubble-bounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: center center;
   }
 
   &.sleepy {
@@ -928,6 +1316,19 @@ $pet-size-mobile: 92px;
 .bubble-pop-leave-to {
   opacity: 0;
   transform: translateX(-50%) translateY(-6px) scale(0.7);
+}
+
+.bubble-pop-enter-from.align-left {
+  transform: translateX(0) translateY(10px) scale(0.6);
+}
+.bubble-pop-leave-to.align-left {
+  transform: translateX(0) translateY(-6px) scale(0.7);
+}
+.bubble-pop-enter-from.align-right {
+  transform: translateX(0) translateY(10px) scale(0.6);
+}
+.bubble-pop-leave-to.align-right {
+  transform: translateX(0) translateY(-6px) scale(0.7);
 }
 
 // ==================== FLOATING HEARTS ====================
@@ -1074,6 +1475,184 @@ $pet-size-mobile: 92px;
   }
 }
 
+// ==================== 设置面板 ====================
+.cat-settings {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2147483648;
+  width: 240px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+  color: #333;
+  font-size: 13px;
+  overflow: hidden;
+
+  .settings-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    background: rgba(0, 0, 0, 0.02);
+
+    .settings-title {
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .settings-close {
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 13px;
+      color: #888;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.06);
+        color: #333;
+      }
+    }
+  }
+
+  .settings-body {
+    padding: 8px 14px 12px;
+  }
+
+  .setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+
+  .toggle {
+    position: relative;
+    width: 38px;
+    height: 21px;
+    border: none;
+    border-radius: 999px;
+    background: #d4d4d4;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    padding: 0;
+
+    .knob {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s ease;
+    }
+
+    &.on {
+      background: #4ade80;
+
+      .knob {
+        transform: translateX(17px);
+      }
+    }
+  }
+
+  .size-group {
+    display: flex;
+    gap: 4px;
+
+    button {
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      background: #fff;
+      color: #555;
+      border-radius: 8px;
+      padding: 3px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+
+      &.active {
+        background: #4ade80;
+        border-color: #4ade80;
+        color: #fff;
+      }
+    }
+  }
+
+  .reset-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 7px 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: #fff;
+    color: #666;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.04);
+      color: #333;
+    }
+  }
+}
+
+.panel-pop-enter-active,
+.panel-pop-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.panel-pop-enter-from,
+.panel-pop-leave-to {
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+}
+
+// ==================== 恢复按钮 ====================
+.cat-restore-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 24px;
+  z-index: 2147483648;
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.28);
+  }
+}
+
+.restore-pop-enter-active,
+.restore-pop-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.restore-pop-enter-from,
+.restore-pop-leave-to {
+  opacity: 0;
+  transform: scale(0.6) translateY(10px);
+}
+
 // ==================== ANIMATIONS ====================
 @keyframes sleep-breathe {
   0%, 100% { transform: scale(1); }
@@ -1109,10 +1688,11 @@ $pet-size-mobile: 92px;
 
 @keyframes spin-trick {
   0% { transform: rotate(0deg) scale(1); }
-  20% { transform: rotate(60deg) scale(1.1); }
-  45% { transform: rotate(170deg) scale(1.06); }
-  60% { transform: rotate(230deg) scale(0.98, 1.06); }
-  80% { transform: rotate(320deg) scale(1.04); }
+  15% { transform: rotate(55deg) scale(1.02); }
+  35% { transform: rotate(125deg) scale(1.04); }
+  55% { transform: rotate(200deg) scale(1.04); }
+  75% { transform: rotate(285deg) scale(1.02); }
+  92% { transform: rotate(345deg) scale(1.06); }
   100% { transform: rotate(360deg) scale(1); }
 }
 
@@ -1138,8 +1718,8 @@ $pet-size-mobile: 92px;
 }
 
 @keyframes bubble-bounce {
-  0% { transform: translateX(-50%) scale(0.8); }
-  100% { transform: translateX(-50%) scale(1); }
+  0% { scale: 0.8; }
+  100% { scale: 1; }
 }
 
 @keyframes zzz-float {
@@ -1159,6 +1739,26 @@ $pet-size-mobile: 92px;
   }
 }
 
+// ==================== 减弱动态效果 ====================
+@media (prefers-reduced-motion: reduce) {
+  .cat-inner {
+    transition: none;
+  }
+
+  .is-spinning .cat-inner,
+  .is-hopping .cat-inner,
+  .is-standing .cat-inner,
+  .is-frightened .cat-inner {
+    animation-duration: 0.3s !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .sleep-zzz .z {
+    animation: none !important;
+    opacity: 0.6 !important;
+  }
+}
+
 // ==================== MOBILE ====================
 @media (max-width: 768px) {
   .cat-pet {
@@ -1166,8 +1766,8 @@ $pet-size-mobile: 92px;
   }
 
   .cat-inner {
-    width: $pet-size-mobile;
-    height: $pet-size-mobile;
+    width: var(--cat-size, $pet-size-mobile);
+    height: var(--cat-size, $pet-size-mobile);
   }
 
   .cat-paw-wave {
@@ -1194,6 +1794,12 @@ $pet-size-mobile: 92px;
 
   .float-heart {
     font-size: 13px;
+  }
+
+  .cat-settings {
+    right: 12px;
+    bottom: 12px;
+    width: 220px;
   }
 }
 </style>
