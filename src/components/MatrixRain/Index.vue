@@ -7,6 +7,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { useMainStore } from "@/stores/mainStore";
+import { getEffectRgb } from "@/utils/effectColor";
 
 // 克制低调的代码雨背景：canvas 保持透明(clearRect)，字符渐变拖尾，不遮挡底层光晕
 const canvasRef = ref(null);
@@ -21,15 +22,6 @@ let drops = [];
 const CHARS = "0123456789ABCDEF<>/{}[]()*+-=#$&@:%.;!?~^_`|".split("");
 
 // 颜色工具：hex -> rgba
-const hexToRgb = (hex) => {
-  const h = hex.replace("#", "");
-  return {
-    r: parseInt(h.substring(0, 2), 16),
-    g: parseInt(h.substring(2, 4), 16),
-    b: parseInt(h.substring(4, 6), 16),
-  };
-};
-
 const setupCanvas = () => {
   const canvas = canvasRef.value;
   if (!canvas) return;
@@ -60,7 +52,7 @@ const rebuildColumns = () => {
 const draw = () => {
   if (!running) return;
   const cfg = mainStore.fxConfig;
-  const rgb = hexToRgb(cfg.color);
+  const rgb = getEffectRgb(cfg.color);
   // 透明度/强度映射到字符 alpha
   const baseAlpha = (cfg.opacity / 100) * 0.9;
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);

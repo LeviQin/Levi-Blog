@@ -21,6 +21,11 @@ html[data-theme='dark'] {
   --border-color: #21262d;
   --text-secondary: #9aa4af;
   --black-text-color: #e6edf3;
+  --accent-soft-bg: rgba(34, 211, 238, 0.12);
+  --accent-soft-bg-strong: rgba(34, 211, 238, 0.2);
+  --accent-contrast: #0d1117;
+  --skeleton-bg: #21262d;
+  --skeleton-highlight: rgba(255, 255, 255, 0.08);
 
   --about-color: #8b949e;
   --work-color: #22d3ee;
@@ -64,6 +69,11 @@ html[data-theme='dark'] {
   --btn-tag-bg-color: #06b6d4;
   --border-color: #d0d7de;
   --text-secondary: #4b5563;
+  --accent-soft-bg: rgba(6, 182, 212, 0.1);
+  --accent-soft-bg-strong: rgba(6, 182, 212, 0.18);
+  --accent-contrast: #0d1117;
+  --skeleton-bg: #e7edf2;
+  --skeleton-highlight: rgba(255, 255, 255, 0.72);
   --min-width: 200px;
   --heart-width: 1360px;
   --header-bar-height: 80px;
@@ -146,24 +156,26 @@ h1 {
 }
 
 button {
+  appearance: none;
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background: #1a1a1a;
+  background: transparent;
+  color: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 
-button:hover {
-  border-color: #646cff;
+button:focus {
+  outline: none;
 }
 
-button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 3px solid rgba(34, 211, 238, 0.45);
+  outline-offset: 2px;
 }
 
 ul {

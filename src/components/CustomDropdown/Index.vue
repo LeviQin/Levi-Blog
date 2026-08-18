@@ -1,10 +1,18 @@
 <template>
   <div class="custom-dropdown" ref="dropdownRef">
-    <div class="dropdown-trigger" @click="toggleDropdown">
+    <div
+      class="dropdown-trigger"
+      @click="toggleDropdown"
+      @keydown.enter.prevent="toggleDropdown"
+      @keydown.space.prevent="toggleDropdown"
+      role="button"
+      tabindex="0"
+      :aria-expanded="isOpen"
+    >
       <slot name="trigger"></slot>
     </div>
     <transition name="dropdown-fade">
-      <div class="dropdown-menu" v-show="isOpen" @click="handleMenuClick">
+      <div class="dropdown-menu" v-show="isOpen" role="menu" @click="handleMenuClick">
         <slot name="menu"></slot>
       </div>
     </transition>

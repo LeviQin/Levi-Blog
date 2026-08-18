@@ -7,6 +7,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { useMainStore } from "@/stores/mainStore";
+import { getEffectRgb } from "@/utils/effectColor";
 
 // 浮尘光点：细微光点上浮，最克制低调
 const canvasRef = ref(null);
@@ -18,23 +19,14 @@ let canvasHeight = 0;
 let running = false;
 let dust = [];
 
-const hexToRgb = (hex) => {
-  const h = hex.replace("#", "");
-  return {
-    r: parseInt(h.substring(0, 2), 16),
-    g: parseInt(h.substring(2, 4), 16),
-    b: parseInt(h.substring(4, 6), 16),
-  };
-};
-
 const rebuild = () => {
   const cfg = mainStore.fxConfig;
-  const count = Math.floor((cfg.density / 100) * 50); // 0-50 个浮尘
+  const count = Math.floor(20 + (cfg.density / 100) * 100); // 20-120 个浮尘
   dust = new Array(count).fill(0).map(() => ({
     x: Math.random() * canvasWidth,
     y: Math.random() * canvasHeight,
-    size: Math.random() * 1.2 + 0.3,
-    opacity: Math.random() * 0.4 + 0.2,
+    size: Math.random() * 1.5 + 0.5,
+    opacity: Math.random() * 0.45 + 0.35,
     vy: -(Math.random() * 0.3 + 0.1), // 上浮
     drift: (Math.random() - 0.5) * 0.2,
     phase: Math.random() * Math.PI * 2,
@@ -57,7 +49,7 @@ const setupCanvas = () => {
 const draw = () => {
   if (!running) return;
   const cfg = mainStore.fxConfig;
-  const rgb = hexToRgb(cfg.color);
+  const rgb = getEffectRgb(cfg.color);
   const baseAlpha = cfg.opacity / 100;
   const speedFactor = 0.4 + (cfg.speed / 100) * 1.2;
   const now = Date.now() / 1000;

@@ -2,17 +2,21 @@
   <div class="header" :class="{ 'is-scrolled': isScrolled, 'is-entrance': showEntrance }">
     <div class="nav-card w" :style="{ height: navheight }">
       <div class="menu-icon-card">
-        <i class="bi bi-text-right collapse-icon" @click="clickCollapse"></i>
+        <button class="icon-button" type="button" aria-label="打开导航菜单" @click="clickCollapse">
+          <i class="bi bi-text-right collapse-icon"></i>
+        </button>
       </div>
       <div class="log-crad">
-        <div class="log-text" @click="router.push('/')">
+        <button class="log-text" type="button" aria-label="返回首页" @click="router.push('/')">
           <span class="logo-dot"></span>
           <h1>Levi space</h1>
-        </div>
+        </button>
         <site-nav-bar></site-nav-bar>
       </div>
       <div class="search-card">
-        <i class="bi bi-search" @click="showSearchModel"></i>
+        <button class="icon-button" type="button" aria-label="搜索文章" @click="showSearchModel">
+          <i class="bi bi-search"></i>
+        </button>
       </div>
     </div>
     <nav-drawer ref="navDrawerRef"></nav-drawer>
@@ -94,6 +98,26 @@ const showSearchModel = () => {
   display: none;
 }
 
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--theme-radius);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.icon-button:focus-visible,
+.log-text:focus-visible {
+  outline: 3px solid rgba(34, 211, 238, 0.45);
+  outline-offset: 3px;
+}
+
 .header {
   background-color: rgba(var(--header-bar-bg-color), var(--header-bar-color-opacity));
   backdrop-filter: blur(14px) saturate(1.2);
@@ -140,6 +164,10 @@ const showSearchModel = () => {
   align-items: center;
   gap: 10px;
   cursor: pointer !important;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
   position: relative;
 
   .logo-dot {
@@ -185,9 +213,12 @@ const showSearchModel = () => {
   border-radius: var(--theme-radius);
   transition: all 0.3s ease;
 
+  .icon-button {
+    color: var(--nav-bar-text-color);
+  }
+
   i {
     color: var(--nav-bar-text-color);
-    cursor: pointer;
     font-size: 20px;
     transition: color 0.35s var(--ease-standard), transform 0.35s var(--ease-standard);
     display: inline-block;

@@ -21,17 +21,20 @@
           <div class="comments-box">
             <div class="message-box theme-bg-color">
               <div class="box-title">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-faxiaoxi"></use>
-                </svg>
-                <h2>发送留言</h2>
+                <span class="title-icon" aria-hidden="true">
+                  <i class="bi bi-chat-left-text"></i>
+                </span>
+                <div class="title-copy">
+                  <h2>留下足迹</h2>
+                  <p>写下你想说的话，让这里多一段有趣的回声</p>
+                </div>
               </div>
               <div class="box-content">
                 <div class="textarea-bpx">
                   <el-input
                     id="msg-content"
                     v-model="messageText"
-                    placeholder="留下你的一笔吧~"
+                    placeholder="写下你想说的话，支持换行和表情～"
                     :autosize="{ minRows: 3, maxRows: 45 }"
                     type="textarea"
                     :disabled="loading"
@@ -40,15 +43,13 @@
                 <div class="input-box">
                   <el-input
                     v-model="userNickname"
-                    placeholder="昵称"
+                    placeholder="你的昵称"
                     class="input-item"
                     size="large"
                     :disabled="loading"
                   >
                     <template #prefix>
-                      <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#levi-nicheng"></use>
-                      </svg>
+                      <i class="bi bi-person" aria-hidden="true"></i>
                     </template>
                   </el-input>
                   <el-input
@@ -59,22 +60,19 @@
                     :disabled="loading"
                   >
                     <template #prefix>
-                      <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#levi-MAILBOX"></use>
-                      </svg>
+                      <i class="bi bi-envelope" aria-hidden="true"></i>
                     </template>
                   </el-input>
                   <el-input
                     v-model="verCode"
-                    placeholder="验证码"
+                    placeholder="输入验证码"
                     class="input-item code-input"
                     size="large"
                     :disabled="loading"
                   >
                     <template #prefix>
-                      <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#levi-yanzhengma"></use>
-                      </svg> </template
+                      <i class="bi bi-shield-check" aria-hidden="true"></i>
+                    </template>
                   ></el-input>
                 </div>
                 <div class="btn-box">
@@ -83,19 +81,29 @@
                   </div>
                   <div class="emoji-send-box">
                     <EmojiIconBox @ok="receiveMessage" />
-                    <div class="send-btn" @click="sendMessage">
+                    <button
+                      class="send-btn"
+                      type="button"
+                      :disabled="loading"
+                      @click="sendMessage"
+                    >
                       <span>{{ loading ? "发送中" : "发送" }}</span>
-                    </div>
+                      <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
             <div class="board-box theme-bg-color">
               <div class="box-title">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-liuyanban"></use>
-                </svg>
-                <h2>留言板</h2>
+                <span class="title-icon" aria-hidden="true">
+                  <i class="bi bi-chat-square-heart"></i>
+                </span>
+                <div class="title-copy">
+                  <h2>留言板</h2>
+                  <p>所有真诚的留言，都会被好好收下</p>
+                </div>
+                <span class="message-count">{{ dataMap.msgList.length }} 条留言</span>
               </div>
               <div class="board-content">
                 <template v-if="dataMap.msgList.length">
@@ -108,7 +116,10 @@
                 </template>
 
                 <template v-else>
-                  <p>留言板上暂时还没有留言呢~</p>
+                  <div class="empty-message">
+                    <i class="bi bi-chat-square-dots" aria-hidden="true"></i>
+                    <p>这里还没有留言，来留下第一句话吧～</p>
+                  </div>
                 </template>
               </div>
             </div>
@@ -116,9 +127,9 @@
           <div class="topic-sidebar">
             <div class="announcement-block">
               <div class="announcement-title">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-liuyanban"></use>
-                </svg>
+                <span class="announcement-icon" aria-hidden="true">
+                  <i class="bi bi-stars"></i>
+                </span>
                 <span>系统提示</span>
               </div>
               <el-divider />
@@ -126,12 +137,18 @@
                 <p>你已进入 Levi 的异次元空间</p>
                 <p>在这里你可以：</p>
                 <ul>
-                  <li>"发送来自未来的建议"</li>
-                  <li>"报告时空裂缝中的 bug"</li>
-                  <li>"留下你的足迹与回声"</li>
+                  <li><i class="bi bi-send" aria-hidden="true"></i>发送来自未来的建议</li>
+                  <li><i class="bi bi-bug" aria-hidden="true"></i>报告时空裂缝中的 bug</li>
+                  <li><i class="bi bi-signpost-2" aria-hidden="true"></i>留下你的足迹与回声</li>
                 </ul>
-                <p>⛔禁止使用黑魔法发布广告</p>
-                <p>🛸 欢迎异世界旅人留下只言片语！</p>
+                <p class="announcement-warning">
+                  <i class="bi bi-slash-circle" aria-hidden="true"></i>
+                  请勿使用黑魔法发布广告
+                </p>
+                <p class="announcement-welcome">
+                  <i class="bi bi-stars" aria-hidden="true"></i>
+                  欢迎异世界旅人留下只言片语！
+                </p>
               </div>
             </div>
           </div>
@@ -401,11 +418,13 @@ const getSystemInfo = () => {
 <style lang="scss" scoped>
 .comments-main {
   display: flex;
-  gap: 20px;
+  align-items: flex-start;
+  gap: 24px;
 }
 
 .comments-box {
   flex: 1;
+  min-width: 0;
   margin: 0 0 100px 0;
 }
 
@@ -413,51 +432,77 @@ const getSystemInfo = () => {
 .message-box {
   border-radius: var(--theme-radius);
   padding: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
 }
 
 .message-box {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .board-box .box-title {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .box-title {
   display: flex;
   align-items: center;
+  gap: 12px;
 
   h2 {
     margin: 0;
+    font-size: 20px;
+    line-height: 1.3;
   }
 
-  .icon {
-    width: 2em;
-    height: 2em;
-    margin-right: 10px;
+  .title-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    color: var(--theme-btn-hover-color);
+    background: var(--accent-soft-bg-strong);
+    font-size: 20px;
+  }
+
+  .title-copy {
+    min-width: 0;
+
+    p {
+      margin: 4px 0 0;
+      color: var(--text-secondary);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+  }
+
+  .message-count {
+    margin-left: auto;
+    padding: 5px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    white-space: nowrap;
   }
 }
 
 .box-content {
-  margin: 20px 0;
+  margin: 24px 0 0;
 }
 
 .input-box {
   display: flex;
-  margin: 20px 0;
+  gap: 16px;
+  margin: 16px 0 20px;
 
   .input-item {
-    margin-right: 20px;
+    flex: 1;
+    min-width: 0;
     box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02);
-
-    .icon {
-      width: 1.2em;
-      height: 1.2em;
-    }
-  }
-
-  .input-item:last-child {
-    margin-right: 0;
   }
 }
 
@@ -469,6 +514,7 @@ const getSystemInfo = () => {
     position: absolute;
     left: 0;
     bottom: 30px;
+    pointer-events: none;
     background-color: var(--filing-color);
     color: var(--white-color);
     width: auto;
@@ -489,10 +535,12 @@ const getSystemInfo = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
 
   .emoji-send-box {
     display: flex;
     align-items: center;
+    gap: 12px;
 
     .emoji-icon-box {
       display: flex;
@@ -502,24 +550,46 @@ const getSystemInfo = () => {
     }
 
     .send-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
       background-color: var(--theme-btn-hover-color);
-      padding: 8px 20px;
-      border-radius: 5px;
+      min-width: 88px;
+      padding: 9px 16px;
+      border: 0;
+      border-radius: 8px;
       cursor: pointer;
-      color: var(--white-color);
+      color: var(--accent-contrast);
       font-size: 12px;
       transition: all 0.3s;
 
       &:hover {
-        opacity: 0.9;
         transform: translateY(-2px);
+        filter: brightness(1.08);
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.65;
+        transform: none;
       }
     }
   }
 }
 
 .board-content {
-  padding-bottom: 50px;
+  min-height: 100px;
+  padding: 4px 0 30px;
+
+  > p {
+    margin: 0;
+    padding: 36px 20px;
+    border: 1px dashed var(--border-color);
+    border-radius: 10px;
+    color: var(--text-secondary);
+    text-align: center;
+  }
 }
 
 .announcement-block {
@@ -528,44 +598,112 @@ const getSystemInfo = () => {
   position: sticky;
   left: 0;
   top: 80px;
-  padding: 20px;
+  padding: 22px 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+
   .announcement-title {
     display: flex;
     align-items: center;
-    gap: 10px;
-    .icon {
-      width: 2em;
-      height: 2em;
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 600;
+
+    .announcement-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: var(--accent-soft-bg-strong);
+      color: var(--theme-btn-hover-color);
+      font-size: 18px;
     }
   }
+
   .announcement-content {
     font-size: 15px;
+
     p {
       margin: 8px 0;
+      line-height: 1.7;
     }
+
     ul {
       display: flex;
       flex-direction: column;
       gap: 5px;
       margin: 15px 0;
+      padding: 0;
+
       li {
         list-style: disc;
         margin-left: 30px;
+        padding-left: 2px;
+        line-height: 1.6;
       }
     }
   }
 }
 
 @media (max-width: 860px) {
+  .comments,
+  .comments-container {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .comments-main {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
   .comments-box {
     width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .message-box,
+  .board-box {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .box-title {
+    min-width: 0;
+
+    .title-copy {
+      min-width: 0;
+    }
+
+    .message-count {
+      flex-shrink: 0;
+    }
+  }
+
+  .topic-sidebar {
+    width: 100%;
+    margin-top: 24px;
+  }
+
+  .announcement-block {
+    position: static;
   }
 
   .input-box {
     display: block;
 
     .input-item {
+      width: 100%;
       margin-bottom: 20px;
+      box-sizing: border-box;
     }
 
     .input-item:last-child {

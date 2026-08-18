@@ -1,10 +1,30 @@
 <template>
   <div class="avatar-select-box" @click.stop="showAvatarList = !showAvatarList">
-    <div
-      class="avatar-list-box"
-      :class="{ 'show-avatar-list': showAvatarList }"
-      @click.stop
-    >
+    <Teleport to="body" :disabled="!isMobile">
+      <div
+        class="avatar-list-box"
+        :class="{
+          'show-avatar-list': showAvatarList,
+          'mobile-panel-above': isMobile && panelPlacement === 'above',
+          'mobile-panel-below': isMobile && panelPlacement === 'below',
+        }"
+        :style="panelStyle"
+        @click.stop
+      >
+      <div class="avatar-list-header">
+        <div>
+          <strong>选择头像</strong>
+          <span>挑选一个喜欢的头像作为留言头像</span>
+        </div>
+        <button
+          class="avatar-close"
+          type="button"
+          aria-label="关闭头像面板"
+          @click.stop="showAvatarList = false"
+        >
+          <i class="bi bi-x-lg" aria-hidden="true"></i>
+        </button>
+      </div>
       <div class="avatar-list-content">
         <div class="image-box" v-if="selectVal === `通用`">
           <ul>
@@ -41,23 +61,61 @@
         </div>
       </div>
       <div class="avatar-list-tools">
-        <ul>
-          <li class="avatar-li active-avatar-li" @click="selectLi('通用', $event)">
-            通用
-          </li>
-          <li class="avatar-li" @click="selectLi('男头', $event)">男头</li>
-          <li class="avatar-li" @click="selectLi('女头', $event)">女头</li>
-        </ul>
+        <button
+          class="avatar-tab"
+          :class="{ 'active-avatar-li': selectVal === '通用' }"
+          type="button"
+          @click="selectLi('通用')"
+        >
+          <i class="bi bi-grid-3x3-gap" aria-hidden="true"></i>
+          通用
+        </button>
+        <button
+          class="avatar-tab"
+          :class="{ 'active-avatar-li': selectVal === '男头' }"
+          type="button"
+          @click="selectLi('男头')"
+        >
+          <i class="bi bi-person" aria-hidden="true"></i>
+          男头
+        </button>
+        <button
+          class="avatar-tab"
+          :class="{ 'active-avatar-li': selectVal === '女头' }"
+          type="button"
+          @click="selectLi('女头')"
+        >
+          <i class="bi bi-person-heart" aria-hidden="true"></i>
+          女头
+        </button>
       </div>
-    </div>
+      </div>
+    </Teleport>
     <div class="avatar-img-box">
-      <img v-lazy="props.avatarImg" alt="头像" />
+      <button
+        ref="triggerRef"
+        class="avatar-trigger"
+        type="button"
+        aria-label="打开头像面板"
+        :aria-expanded="showAvatarList"
+        @click.stop="toggleAvatarList"
+      >
+        <img v-lazy="props.avatarImg" alt="头像" />
+      </button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onBeforeUnmount, defineEmits, defineProps } from "vue";
+import {
+  ref,
+  reactive,
+  nextTick,
+  onMounted,
+  onBeforeUnmount,
+  defineEmits,
+  defineProps,
+} from "vue";
 import { getAvatars } from "@/api/avatar.js";
 
 const props = defineProps({
@@ -75,13 +133,59 @@ const dataMap = reactive({
 
 const showAvatarList = ref(false);
 const selectVal = ref("通用");
+const isMobile = ref(false);
+const triggerRef = ref(null);
+const panelStyle = ref({});
+const panelPlacement = ref("above");
+let mediaQuery;
+
+const updateMobile = (event) => {
+  isMobile.value = event.matches;
+  if (!isMobile.value) {
+    panelStyle.value = {};
+  } else if (showAvatarList.value) {
+    nextTick(updatePanelPosition);
+  }
+};
+
+const updatePanelPosition = () => {
+  if (!isMobile.value || !triggerRef.value) return;
+
+  const triggerRect = triggerRef.value.getBoundingClientRect();
+  const panelWidth = Math.min(360, window.innerWidth - 24);
+  const panelHeight = Math.min(330, window.innerHeight - 32);
+  const left = Math.min(
+    Math.max(triggerRect.left + triggerRect.width / 2 - panelWidth / 2, 12),
+    window.innerWidth - panelWidth - 12,
+  );
+  const hasSpaceAbove = triggerRect.top >= panelHeight + 24;
+
+  panelPlacement.value = hasSpaceAbove ? "above" : "below";
+  panelStyle.value = {
+    left: `${left}px`,
+    top: hasSpaceAbove ? `${triggerRect.top - 12}px` : `${triggerRect.bottom + 12}px`,
+  };
+};
+
+const toggleAvatarList = () => {
+  showAvatarList.value = !showAvatarList.value;
+  if (showAvatarList.value && isMobile.value) {
+    nextTick(updatePanelPosition);
+  }
+};
 
 onMounted(() => {
+  mediaQuery = window.matchMedia("(max-width: 860px)");
+  isMobile.value = mediaQuery.matches;
+  mediaQuery.addEventListener?.("change", updateMobile);
+  window.addEventListener("resize", updatePanelPosition);
   document.addEventListener("click", closeAvatarList);
   getAvatarList();
 });
 
 onBeforeUnmount(() => {
+  mediaQuery?.removeEventListener?.("change", updateMobile);
+  window.removeEventListener("resize", updatePanelPosition);
   document.removeEventListener("click", closeAvatarList);
 });
 
@@ -91,16 +195,12 @@ const closeAvatarList = (e) => {
   }
 };
 
-const selectLi = (val, e) => {
+const selectLi = (val) => {
   selectVal.value = val;
-  const lis = document.querySelectorAll(".avatar-list-box li");
-  lis.forEach((item) => {
-    item.classList.remove("active-avatar-li");
-  });
-  e.target.classList.add("active-avatar-li");
 };
 
 const selectavatar = (url) => {
+  showAvatarList.value = false;
   emit("ok", url);
 };
 
@@ -129,7 +229,7 @@ const emit = defineEmits(["ok"]);
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s;
-  border: 5px solid #fff;
+  border: 4px solid var(--theme-color);
   img {
     width: 100%;
     height: 100%;
@@ -140,54 +240,119 @@ const emit = defineEmits(["ok"]);
   }
 }
 
+.avatar-trigger {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+}
+
 .avatar-select-box {
   position: relative;
 }
 
 .avatar-list-box {
   position: absolute;
-  width: 500px;
-  height: 300px;
-  top: -610px;
+  z-index: 20;
+  bottom: calc(100% + 12px);
   left: 0;
-  background-color: var(--white-color);
-  transform: translateY(100%) scale(0.9);
-  transform-origin: top;
-  transition: all 0.3s ease;
+  width: min(410px, calc(100vw - 32px));
+  height: 330px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  background: var(--theme-color);
+  box-shadow: var(--shadow-raise);
+  transform: translateY(8px) scale(0.96);
+  transform-origin: bottom left;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  box-shadow: 0 0 0 1px var(--el-input-border-color, var(--el-border-color)) inset;
   display: flex;
   flex-direction: column;
-  border-radius: var(--theme-radius);
-  overflow: hidden;
+
+  .avatar-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 14px 11px;
+    border-bottom: 1px solid var(--border-color);
+
+    strong,
+    span {
+      display: block;
+    }
+
+    strong {
+      color: var(--color);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    span {
+      margin-top: 2px;
+      color: var(--text-secondary);
+      font-size: 11px;
+    }
+  }
+
+  .avatar-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      background: var(--accent-soft-bg);
+      color: var(--theme-btn-hover-color);
+    }
+  }
+
   .avatar-list-content {
     flex: 1;
-    padding: 10px;
+    padding: 10px 12px;
     overflow: auto;
+    scrollbar-width: thin;
   }
+
   .avatar-list-tools {
-    height: 50px;
-    box-shadow: 0 -0.125rem 0.25rem rgba(0, 0, 0, 0.06);
-    ul {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      li {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 20px;
-        cursor: pointer;
-        font-size: 14px;
-        transition: all 0.3s;
-        border-bottom: 3px solid #fff;
-        color: var(--black-text-color);
-        &:hover {
-          background: #f5f5f5;
-        }
-      }
+    display: flex;
+    min-height: 50px;
+    padding: 0 8px;
+    border-top: 1px solid var(--border-color);
+    background: var(--accent-soft-bg);
+  }
+
+  .avatar-tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 92px;
+    padding: 0 13px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 13px;
+    transition: color 0.2s ease, background 0.2s ease;
+
+    &:hover {
+      background: var(--accent-soft-bg-strong);
+      color: var(--color);
     }
   }
 }
@@ -211,20 +376,21 @@ const emit = defineEmits(["ok"]);
       border-radius: 10px;
     }
     &:hover {
-      background-color: #f5f5f5;
-      border-radius: 5px;
+      background-color: var(--accent-soft-bg-strong);
     }
   }
 }
 
 .active-avatar-li {
-  border-bottom: 3px solid red !important;
+  border-bottom-color: transparent !important;
+  color: var(--theme-btn-hover-color) !important;
 }
 
 .show-avatar-list {
-  opacity: 1 !important;
-  transform: translateY(100%) !important;
-  pointer-events: all !important;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
 }
 
 .icon {
@@ -240,10 +406,29 @@ const emit = defineEmits(["ok"]);
 
 @media (max-width: 860px) {
   .avatar-list-box {
-    width: 300px;
-    height: 300px;
-    top: -610px;
-    left: 0;
+    position: fixed;
+    right: auto;
+    bottom: auto;
+    width: min(360px, calc(100vw - 24px));
+    height: min(330px, calc(100vh - 32px));
+  }
+
+  .mobile-panel-above {
+    transform-origin: bottom center;
+    transform: translateY(-100%) scale(0.96);
+  }
+
+  .mobile-panel-below {
+    transform-origin: top center;
+    transform: translateY(8px) scale(0.96);
+  }
+
+  .show-avatar-list.mobile-panel-above {
+    transform: translateY(-100%) scale(1);
+  }
+
+  .show-avatar-list.mobile-panel-below {
+    transform: translateY(0) scale(1);
   }
 
   .avatar-box ul li {

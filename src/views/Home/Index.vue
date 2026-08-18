@@ -15,13 +15,37 @@
     <div class="home-container page-container">
       <article class="content">
         <ArticleSkeleton v-if="loading" />
+        <div v-else-if="fetchError" class="home-state home-error-state">
+          <div class="home-state-icon"><i class="bi bi-wifi-off"></i></div>
+          <h2>文章加载失败</h2>
+          <p>{{ fetchError }}</p>
+          <button type="button" class="home-state-action" @click="getData">重新加载</button>
+        </div>
+        <div v-else-if="!dataMap.data.length" class="home-state">
+          <div class="home-state-icon"><i class="bi bi-journal-richtext"></i></div>
+          <h2>暂时还没有文章</h2>
+          <p>内容正在整理中，稍后再来看看吧。</p>
+        </div>
         <template v-else>
+          <div class="article-list-head">
+            <div>
+              <p class="article-list-kicker">ARTICLE ARCHIVE</p>
+              <h1>最新文章</h1>
+              <p class="article-list-subtitle">记录开发、生活与一些正在发生的事</p>
+            </div>
+            <span class="article-count">共 {{ dataMap.paginationDatas.total }} 篇</span>
+          </div>
           <div
             class="article-card"
             :class="{ 'has-image': item.image, 'is-pinned': item.is_top }"
             v-for="item in dataMap.data"
             :key="item.id"
             @click="toArticleDetail(item)"
+            @keydown.enter="toArticleDetail(item)"
+            @keydown.space.prevent="toArticleDetail(item)"
+            role="link"
+            tabindex="0"
+            :aria-label="`阅读文章：${item.title}`"
             v-slid-in
           >
             <div class="card-cover" v-if="item.image">
@@ -43,12 +67,12 @@
               <h2 class="card-title">{{ item.title }}</h2>
               <p class="card-desc">{{ item.article_description }}</p>
               <div class="card-meta">
-                <span class="meta-item">
+                <span class="meta-item meta-optional">
                   <i class="bi bi-calendar3"></i>
                   {{ item.published_at }}
                 </span>
                 <span class="meta-divider"></span>
-                <span class="meta-item">
+                <span class="meta-item meta-optional">
                   <i class="bi bi-eye"></i>
                   {{ item.view_count || 0 }} 阅读
                 </span>
@@ -63,12 +87,15 @@
                   {{ getReadTime(item) }}
                 </span>
               </div>
-              <div class="card-tags" v-if="item.article_tags && item.article_tags.length">
+              <div class="card-tags" v-if="getVisibleTags(item).length">
                 <span
                   class="tag-pill"
-                  v-for="key in item.article_tags"
-                  :key="key"
-                >{{ tagNameById[key] || '' }}</span>
+                  v-for="tag in getVisibleTags(item)"
+                  :key="tag.key"
+                >{{ tag.name }}</span>
+                <span class="tag-pill tag-more" v-if="getExtraTagCount(item)">
+                  +{{ getExtraTagCount(item) }}
+                </span>
               </div>
             </div>
           </div>
@@ -138,7 +165,7 @@ onMounted(async () => {
   const previousRouteName = getStore("LEVI_PREVIONS_ROUTE_NAME");
   const pageStatus = getStore("LEVI_HOME_PAGE_STATUS");
   if (previousRouteName === `Topic Detail`) {
-    page.value = pageStatus.page;
+    page.value = pageStatus?.page || 1;
   }
 });
 
@@ -158,6 +185,7 @@ const dataMap = reactive({
 const page = ref(1);
 const pageSize = ref(10);
 const loading = ref(false);
+const fetchError = ref("");
 
 const bannerConfig = computed(() => ({
   height: "min-height: 88vh",
@@ -176,6 +204,20 @@ const getReadTime = (item) => {
   const charCount = text.replace(/[\s\n\r]/g, "").length;
   const minutes = Math.max(1, Math.ceil(charCount / 400));
   return `${minutes} 分钟阅读`;
+};
+
+const getVisibleTags = (item) => {
+  const tags = Array.isArray(item.article_tags) ? item.article_tags : [];
+  return tags
+    .map((key) => ({ key, name: tagNameById.value[key] }))
+    .filter((tag) => tag.name)
+    .slice(0, 3);
+};
+
+const getExtraTagCount = (item) => {
+  const tags = Array.isArray(item.article_tags) ? item.article_tags : [];
+  const knownTagCount = tags.filter((key) => tagNameById.value[key]).length;
+  return Math.max(0, knownTagCount - getVisibleTags(item).length);
 };
 
 const nextPosition = () => {
@@ -208,14 +250,20 @@ const handleCurrentChange = (val) => {
 const scrollToArticleList = () => {
   const container = document.querySelector(".home-container");
   if (container) {
-    const top = container.getBoundingClientRect().top + window.scrollY - 20;
-    scrollAnimation(top, "top", 16);
+    const header = document.querySelector(".header");
+    const headerHeight = header?.getBoundingClientRect().height || 0;
+    const top = Math.max(
+      0,
+      container.getBoundingClientRect().top + window.scrollY - headerHeight - 16
+    );
+    scrollAnimation(top, "bottom", 260);
   }
 };
 
 const getData = async () => {
   try {
     loading.value = true;
+    fetchError.value = "";
     const res = await getArticleList();
     const { code, data, message } = res.data;
     if (code === 200) {
@@ -226,10 +274,10 @@ const getData = async () => {
       });
       getTableData();
     } else {
-      console.log(message, "message--------------------");
+      fetchError.value = message || "暂时无法获取文章列表";
     }
   } catch (error) {
-    console.log(error, "error--------------------");
+    fetchError.value = "网络开小差了，请稍后重试";
   } finally {
     loading.value = false;
   }
@@ -237,48 +285,121 @@ const getData = async () => {
 </script>
 
 <style lang="scss" scoped>
+.home {
+  width: 100%;
+  max-width: 1240px;
+  box-sizing: border-box;
+  padding: 0 30px;
+}
+
+.home-container {
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.home-container > .topic-sidebar {
+  width: 280px;
+  flex: 0 0 280px;
+  position: sticky;
+  top: 96px;
+}
+
 .content {
   flex: 1;
   width: 100%;
+}
+
+.article-list-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.article-list-kicker {
+  margin: 0 0 6px;
+  color: var(--theme-btn-hover-color);
+  font-family: var(--mono-font-family);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.article-list-head h1 {
+  margin: 0;
+  color: var(--black-text-color);
+  font-size: 26px;
+  line-height: 1.25;
+}
+
+.article-list-subtitle {
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.article-count {
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  color: var(--text-secondary);
+  font-size: 12px;
 }
 
 .article-card {
   background: var(--theme-color);
   border-radius: var(--theme-radius);
   cursor: pointer;
-  margin-bottom: 24px;
+  min-height: 188px;
+  margin-bottom: 20px;
   position: relative;
-  transition: all var(--dur-normal) var(--ease-standard);
+  transition: transform var(--dur-normal) var(--ease-standard), box-shadow var(--dur-normal) var(--ease-standard), border-color var(--dur-normal) var(--ease-standard);
   display: flex;
   overflow: hidden;
   border: 1px solid var(--border-color);
-  border-left: 3px solid transparent;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: var(--theme-btn-hover-color);
+    opacity: 0;
+    transition: opacity var(--dur-normal) var(--ease-standard);
+    z-index: 2;
+  }
 
   &:hover {
     box-shadow: var(--shadow-card-hover);
-    border-color: var(--theme-btn-hover-color);
-    border-left-color: var(--theme-btn-hover-color);
+    border-color: color-mix(in srgb, var(--theme-btn-hover-color) 38%, var(--border-color));
+    transform: translateY(-2px);
   }
 
   &.is-pinned {
-    border-left-width: 5px;
-    border-left-color: var(--theme-btn-hover-color);
+    &::before {
+      opacity: 1;
+    }
   }
 
   &.has-image {
     .card-body {
-      padding: 24px 28px;
+      padding: 22px 24px;
     }
   }
 }
 
 .card-cover {
   flex-shrink: 0;
-  width: 280px;
-  min-height: 200px;
+  width: 250px;
+  min-height: 188px;
+  aspect-ratio: 5 / 3;
   overflow: hidden;
 
   img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -292,7 +413,9 @@ const getData = async () => {
 
 .card-body {
   flex: 1;
-  padding: 24px 28px;
+  min-height: 188px;
+  box-sizing: border-box;
+  padding: 22px 24px;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -302,7 +425,7 @@ const getData = async () => {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 .category-badge {
@@ -313,7 +436,6 @@ const getData = async () => {
   border-radius: 20px;
   font-size: 13px;
   font-weight: 500;
-  font-family: var(--mono-font-family);
   white-space: nowrap;
 }
 
@@ -325,8 +447,7 @@ const getData = async () => {
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
-  font-family: var(--mono-font-family);
-  color: #0d1117;
+  color: var(--accent-contrast);
   background: var(--theme-btn-hover-color);
   white-space: nowrap;
 
@@ -338,14 +459,14 @@ const getData = async () => {
 .card-title {
   font-size: 20px;
   font-weight: 700;
-  line-height: 1.4;
-  margin: 0 0 12px 0;
+  line-height: 1.45;
+  margin: 0 0 10px;
   color: var(--black-text-color);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  transition: color 0.25s;
+  transition: color var(--dur-normal) var(--ease-standard);
 
   .article-card:hover & {
     color: var(--theme-btn-hover-color);
@@ -353,10 +474,10 @@ const getData = async () => {
 }
 
 .card-desc {
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 14px;
+  line-height: 1.65;
   color: var(--text-secondary);
-  margin: 0 0 16px 0;
+  margin: 0 0 14px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -369,15 +490,14 @@ const getData = async () => {
   align-items: center;
   flex-wrap: wrap;
   gap: 2px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .meta-item {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 13px;
-  font-family: var(--mono-font-family);
+  font-size: 12px;
   color: var(--text-secondary);
 
   .bi {
@@ -390,7 +510,7 @@ const getData = async () => {
   height: 3px;
   border-radius: 50%;
   background: var(--border-color);
-  margin: 0 10px;
+  margin: 0 8px;
 }
 
 .card-tags {
@@ -405,24 +525,24 @@ const getData = async () => {
   padding: 3px 12px;
   border-radius: 12px;
   font-size: 12px;
-  font-family: var(--mono-font-family);
-  color: #0e7490;
-  background: rgba(14, 116, 144, 0.1);
-  transition: all 0.2s;
+  color: var(--link-text-color);
+  background: var(--accent-soft-bg);
+  transition: background-color var(--dur-fast) var(--ease-standard);
   white-space: nowrap;
 
   &:hover {
-    background: rgba(14, 116, 144, 0.18);
+    background: var(--accent-soft-bg-strong);
   }
 }
 
 html[data-theme="dark"] .tag-pill {
-  color: #67e8f9;
-  background: rgba(34, 211, 238, 0.14);
+  color: var(--link-text-color);
+}
 
-  &:hover {
-    background: rgba(34, 211, 238, 0.24);
-  }
+.tag-more {
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px dashed var(--border-color);
 }
 
 .pagination-box {
@@ -432,7 +552,82 @@ html[data-theme="dark"] .tag-pill {
   padding: 10px 0 30px;
 }
 
+.home-state {
+  min-height: 300px;
+  padding: 40px 24px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--theme-radius);
+  background: var(--theme-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.home-state-icon {
+  width: 56px;
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: var(--accent-soft-bg);
+  color: var(--theme-btn-hover-color);
+  font-size: 24px;
+}
+
+.home-state h2 {
+  margin: 16px 0 0;
+  color: var(--black-text-color);
+  font-size: 22px;
+}
+
+.home-state p {
+  max-width: 420px;
+  margin: 10px 0 0;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.home-state-action {
+  margin-top: 20px;
+  padding: 9px 18px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--theme-btn-hover-color);
+  color: var(--accent-contrast);
+  cursor: pointer;
+}
+
+.home-state-action:focus-visible,
+.article-card:focus-visible {
+  outline: 3px solid rgba(34, 211, 238, 0.45);
+  outline-offset: 3px;
+}
+
 @media (max-width: 860px) {
+  .home {
+    padding: 0 16px;
+  }
+
+  .home-container {
+    margin-top: 32px;
+  }
+
+  .article-list-head {
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .article-list-head h1 {
+    font-size: 22px;
+  }
+
+  .article-list-subtitle {
+    font-size: 12px;
+  }
+
   .article-card {
     flex-direction: column;
 
@@ -445,11 +640,12 @@ html[data-theme="dark"] .tag-pill {
 
   .card-cover {
     width: 100%;
-    max-height: 200px;
-    min-height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 8;
   }
 
   .card-body {
+    min-height: 0;
     padding: 16px;
   }
 
@@ -477,6 +673,11 @@ html[data-theme="dark"] .tag-pill {
     }
   }
 
+  .meta-optional,
+  .meta-optional + .meta-divider {
+    display: none;
+  }
+
   .meta-divider {
     margin: 0 6px;
   }
@@ -494,6 +695,22 @@ html[data-theme="dark"] .tag-pill {
   .tag-pill {
     font-size: 10px;
     padding: 2px 10px;
+  }
+}
+
+@media (min-width: 861px) and (max-width: 1100px) {
+  .home {
+    padding: 0 24px;
+  }
+
+  .home-container > .topic-sidebar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .article-card:hover {
+    transform: none;
   }
 }
 </style>

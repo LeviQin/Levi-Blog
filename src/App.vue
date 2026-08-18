@@ -2,7 +2,7 @@
   <div>
     <div class="app-shell">
       <router-view />
-      <cat-pet :initial-delay="1820" />
+      <cat-pet :initial-delay="showEntranceDoor ? 1820 : 0" />
     </div>
 
     <Teleport to="body">
@@ -11,7 +11,6 @@
           v-if="showEntranceDoor"
           class="door-reveal"
           :class="{ 'is-opening': isDoorOpening }"
-          aria-hidden="true"
         >
           <div class="door-panel door-panel-left">
             <div class="door-panel-inner">
@@ -23,6 +22,9 @@
             <span class="door-badge-text">Levi Blog</span>
             <span class="door-badge-line"></span>
           </div>
+          <button class="door-skip" type="button" @click="skipEntrance">
+            跳过动画
+          </button>
           <div class="door-panel door-panel-right">
             <div class="door-panel-inner">
               <div class="door-glow"></div>
@@ -35,24 +37,35 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import { getTagList } from "@/api/articles";
 import { getBlogSetting } from "@/api/blogSetting";
 import { useMainStore } from "@/stores/mainStore";
 import { useTheme } from "@/hooks/useTheme";
 import CatPet from "@/components/CatPet/Index.vue";
+import { ElNotification } from "@/utils/element.js";
+import { getStore, setStore } from "@/utils/storage.js";
 
 // 初始化主题(默认暗色)，确保 html[data-theme] 生效
 useTheme();
 
 const mainStore = useMainStore();
-const showEntranceDoor = ref(true);
+const showEntranceDoor = ref(getStore("LEVI_ENTRANCE_SEEN") !== true);
 const isDoorOpening = ref(false);
+let openTimer = null;
+let finishTimer = null;
 
 onMounted(() => {
   getTags();
   getBlogSettingInfo();
-  playEntranceDoor();
+  if (showEntranceDoor.value) {
+    playEntranceDoor();
+  }
+});
+
+onBeforeUnmount(() => {
+  window.clearTimeout(openTimer);
+  window.clearTimeout(finishTimer);
 });
 
 const updateMetaDescription = (description) => {
@@ -66,23 +79,47 @@ const updateMetaDescription = (description) => {
 };
 
 const getTags = async () => {
-  const res = await getTagList();
-  const { code, data } = res.data;
-  if (code == 200) {
-    mainStore.setTagMap(data);
+  try {
+    const res = await getTagList();
+    const { code, data, message } = res.data;
+    if (code == 200) {
+      mainStore.setTagMap(data);
+    } else {
+      throw new Error(message || "标签加载失败");
+    }
+  } catch (error) {
+    ElNotification({
+      title: "标签加载失败",
+      message: "文章仍可浏览，但标签信息暂时不可用。",
+      type: "warning",
+      zIndex: 99999,
+    });
   }
 };
 
 const getBlogSettingInfo = async () => {
-  const res = await getBlogSetting("levi-blog");
-  const { code, data } = res.data;
-  if (code == 200) {
-    mainStore.setBlogSettingMap(data);
-    document.title = `${data.blog_name} - ${data.blog_description}`;
-    const link = document.querySelector("link[rel~='icon']");
-    link.type = "image/png";
-    link.href = data.blog_logo;
-    updateMetaDescription(data.blog_description);
+  try {
+    const res = await getBlogSetting("levi-blog");
+    const { code, data, message } = res.data;
+    if (code == 200) {
+      mainStore.setBlogSettingMap(data);
+      document.title = `${data.blog_name} - ${data.blog_description}`;
+      const link = document.querySelector("link[rel~='icon']");
+      if (link && data.blog_logo) {
+        link.type = "image/png";
+        link.href = data.blog_logo;
+      }
+      updateMetaDescription(data.blog_description);
+    } else {
+      throw new Error(message || "站点配置加载失败");
+    }
+  } catch (error) {
+    ElNotification({
+      title: "站点配置加载失败",
+      message: "已使用默认页面配置。",
+      type: "warning",
+      zIndex: 99999,
+    });
   }
 };
 
@@ -92,13 +129,22 @@ const playEntranceDoor = () => {
   const openDelay = prefersReducedMotion ? 120 : 520;
   const finishDelay = prefersReducedMotion ? 320 : 1820;
 
-  window.setTimeout(() => {
+  openTimer = window.setTimeout(() => {
     isDoorOpening.value = true;
   }, openDelay);
 
-  window.setTimeout(() => {
+  finishTimer = window.setTimeout(() => {
     showEntranceDoor.value = false;
+    setStore("LEVI_ENTRANCE_SEEN", true);
   }, finishDelay);
+};
+
+const skipEntrance = () => {
+  window.clearTimeout(openTimer);
+  window.clearTimeout(finishTimer);
+  isDoorOpening.value = true;
+  showEntranceDoor.value = false;
+  setStore("LEVI_ENTRANCE_SEEN", true);
 };
 </script>
 <style lang="scss" scoped>
@@ -201,6 +247,27 @@ const playEntranceDoor = () => {
   transform: translate(-50%, -50%);
   transition: opacity 0.55s ease, transform 0.9s ease;
   z-index: 2;
+}
+
+.door-skip {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  z-index: 3;
+  pointer-events: auto;
+  padding: 7px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: rgba(13, 17, 23, 0.48);
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.door-skip:hover,
+.door-skip:focus-visible {
+  color: var(--color);
+  border-color: var(--theme-btn-hover-color);
 }
 
 .door-badge-line {

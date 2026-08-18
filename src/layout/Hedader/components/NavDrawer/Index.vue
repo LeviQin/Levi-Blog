@@ -15,9 +15,9 @@
       <div class="dividing-line">
         <i class="bi bi-rocket-takeoff-fill"></i>
       </div>
-      <ul class="nav-drawer-ul" @click="toPage">
-        <li class="nav-drawer-li" data-router="/">
-          <a href="/">首页</a>
+      <ul class="nav-drawer-ul" @click="toPage" @keydown.enter.prevent="toPage">
+        <li class="nav-drawer-li" data-router="/" role="link" tabindex="0">
+          <span>首页</span>
         </li>
         <div class="collapse-card" v-if="blogSettingMap.show_category_module">
           <li
@@ -25,6 +25,9 @@
             id="topic"
             :class="{ 'is-expanded': showTopicCollapse }"
             @click="clickTopic"
+            @keydown.enter.prevent="clickTopic"
+            tabindex="0"
+            role="button"
           >
             <span>文章分类</span>
             <i class="bi bi-chevron-down collapse-icon" :class="{ 'is-open': showTopicCollapse }"></i>
@@ -36,30 +39,20 @@
               id="topicCollapse"
             >
               <ul @click="toPage">
-                <li data-router="/category/daily">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-woderichang"></use></svg
-                  ><span>日常随记</span>
+                <li data-router="/category/daily" role="link" tabindex="0">
+                  <i class="bi bi-journal-text icon" aria-hidden="true"></i><span>日常随记</span>
                 </li>
-                <li data-router="/category/technology">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-jishurenyuan"></use></svg
-                  ><span>开发心得</span>
+                <li data-router="/category/technology" role="link" tabindex="0">
+                  <i class="bi bi-code-slash icon" aria-hidden="true"></i><span>开发心得</span>
                 </li>
-                <li data-router="/category/cute-pet">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-aichong03"></use></svg
-                  ><span>萌宠日记</span>
+                <li data-router="/category/cute-pet" role="link" tabindex="0">
+                  <i class="bi bi-heart icon" aria-hidden="true"></i><span>萌宠日记</span>
                 </li>
-                <li data-router="/category/notes">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-biji"></use></svg
-                  ><span>学习笔记</span>
+                <li data-router="/category/notes" role="link" tabindex="0">
+                  <i class="bi bi-journal-bookmark icon" aria-hidden="true"></i><span>学习笔记</span>
                 </li>
-                <li data-router="/category/landscape">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-fengjing"></use></svg
-                  ><span>光影故事</span>
+                <li data-router="/category/landscape" role="link" tabindex="0">
+                  <i class="bi bi-camera icon" aria-hidden="true"></i><span>光影故事</span>
                 </li>
               </ul>
             </div>
@@ -71,6 +64,9 @@
           id="tools"
           :class="{ 'is-expanded': showToolsCollapse }"
           @click="clickTools"
+          @keydown.enter.prevent="clickTools"
+          tabindex="0"
+          role="button"
           v-if="blogSettingMap.show_widget_module"
         >
           <span>小工具</span>
@@ -79,40 +75,26 @@
         <Transition name="submenu-slide">
           <div v-if="showToolsCollapse" class="nav-drawer-li-collapse" id="toolsCollapse">
             <ul @click="toPage">
-              <li data-router="/encryption">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-jiami"></use></svg
-                ><span>加密/解密</span>
+              <li data-router="/encryption" role="link" tabindex="0">
+                <i class="bi bi-shield-lock icon" aria-hidden="true"></i><span>加密/解密</span>
               </li>
               <!-- <li data-router="/weather">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-tianqi"></use></svg
-                ><span>天气查询</span>
+                <i class="bi bi-cloud-sun icon" aria-hidden="true"></i><span>天气查询</span>
               </li>
               <li data-router="/ip">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-IPdizhi"></use></svg
-                ><span>IP地址查询</span>
+                <i class="bi bi-geo-alt icon" aria-hidden="true"></i><span>IP地址查询</span>
               </li> -->
-              <li data-router="/unit">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-danweihuansuanx"></use></svg
-                ><span>单位换算</span>
+              <li data-router="/unit" role="link" tabindex="0">
+                <i class="bi bi-rulers icon" aria-hidden="true"></i><span>单位换算</span>
               </li>
-              <li data-router="/password">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-mima"></use></svg
-                ><span>密码生成器</span>
+              <li data-router="/password" role="link" tabindex="0">
+                <i class="bi bi-key icon" aria-hidden="true"></i><span>密码生成器</span>
               </li>
-              <li data-router="/image-processing">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-tupianchuli"></use></svg
-                ><span>图片处理</span>
+              <li data-router="/image-processing" role="link" tabindex="0">
+                <i class="bi bi-image icon" aria-hidden="true"></i><span>图片处理</span>
               </li>
               <!-- <li data-router="/qr">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-erweimashengchenggongju"></use></svg
-                ><span>二维码生成</span>
+                <i class="bi bi-qr-code icon" aria-hidden="true"></i><span>二维码生成</span>
               </li> -->
             </ul>
           </div>
@@ -120,6 +102,8 @@
         <li
           class="nav-drawer-li"
           data-router="/nav"
+          role="link"
+          tabindex="0"
           v-if="blogSettingMap.show_sites_module"
         >
           常用网站
@@ -127,6 +111,8 @@
         <li
           class="nav-drawer-li"
           data-router="/comments"
+          role="link"
+          tabindex="0"
           v-if="blogSettingMap.show_guestbook_module"
         >
           留言板
@@ -134,6 +120,8 @@
         <li
           class="nav-drawer-li"
           data-router="/friendlinks"
+          role="link"
+          tabindex="0"
           v-if="blogSettingMap.show_friend_link_module"
         >
           友情链接
@@ -141,6 +129,8 @@
         <li
           class="nav-drawer-li"
           data-router="/about"
+          role="link"
+          tabindex="0"
           v-if="blogSettingMap.show_about_module"
         >
           关于我
@@ -331,6 +321,12 @@ defineExpose({
     color: inherit;
     width: 100%;
   }
+}
+
+.nav-drawer-li:focus-visible,
+.nav-drawer-li-collapse li:focus-visible {
+  outline: 3px solid rgba(34, 211, 238, 0.45);
+  outline-offset: 2px;
 }
 
 .nav-drawer-li-toggle {

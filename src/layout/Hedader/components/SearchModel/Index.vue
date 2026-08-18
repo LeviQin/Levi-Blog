@@ -23,6 +23,7 @@
         </div>
         <el-input
           @input="changeSearch"
+          @keydown.enter="submitSearch"
           v-model="keyword"
           placeholder="输入文章标题、关键词或描述"
           ref="searchInputRef"
@@ -53,7 +54,16 @@
           </p>
         </div>
 
-        <div class="result-content" v-if="dataMap.articleData.length">
+        <div v-if="errorMessage" class="search-error-state">
+          <div class="search-empty-icon">
+            <i class="bi bi-cloud-slash"></i>
+          </div>
+          <h3>搜索失败</h3>
+          <p>{{ errorMessage }}</p>
+          <button type="button" class="search-retry-btn" @click="retrySearch">重试</button>
+        </div>
+
+        <div class="result-content" v-else-if="dataMap.articleData.length">
           <div
             class="result-content-item"
             v-for="item in dataMap.articleData"
@@ -100,7 +110,6 @@
 import { ref, defineExpose, reactive, nextTick, onUnmounted, computed } from "vue";
 import { getKeywordResult } from "@/api/articles.js";
 import { debounce } from "@/utils/utils.js";
-import { ElNotification } from "@/utils/element.js";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -115,11 +124,13 @@ const dataMap = reactive({
 
 const dialogVisible = ref(false);
 const loading = ref(false);
+const errorMessage = ref("");
 const dialogWidth = ref("500px");
 const keyword = ref("");
 const searchInputRef = ref(null);
 const trimmedKeyword = computed(() => keyword.value.trim());
 const resultCount = computed(() => dataMap.articleData.length);
+let searchRequestId = 0;
 
 const setDialogWidth = () => {
   if (window.innerWidth <= 480) {
@@ -141,9 +152,11 @@ const show = () => {
 };
 
 const close = () => {
+  searchRequestId += 1;
   dialogVisible.value = false;
   keyword.value = "";
   dataMap.articleData = [];
+  errorMessage.value = "";
 };
 
 const toArticleDetail = (item) => {
@@ -158,31 +171,45 @@ const toArticleDetail = (item) => {
 
 const changeSearch = debounce(() => {
   if (trimmedKeyword.value) {
-    getData();
+    getData(trimmedKeyword.value);
   } else {
+    searchRequestId += 1;
     dataMap.articleData = [];
+    errorMessage.value = "";
   }
 }, 500);
 
-const getData = async () => {
+const submitSearch = () => {
+  if (trimmedKeyword.value) {
+    getData(trimmedKeyword.value);
+  }
+};
+
+const retrySearch = () => {
+  getData(trimmedKeyword.value);
+};
+
+const getData = async (searchKeyword = trimmedKeyword.value) => {
+  const requestId = ++searchRequestId;
+  errorMessage.value = "";
   try {
     loading.value = true;
-    const res = await getKeywordResult({ keyword: keyword.value });
+    const res = await getKeywordResult({ keyword: searchKeyword });
     const { code, data, message } = res.data;
+    if (requestId !== searchRequestId || searchKeyword !== trimmedKeyword.value) return;
     if (code === 200) {
       dataMap.articleData = data;
     } else {
-      ElNotification({
-        title: "错误",
-        message,
-        type: "error",
-        zIndex: 99999,
-      });
+      errorMessage.value = message || "暂时无法完成搜索";
     }
   } catch (error) {
-    console.log(error, "error---------------------");
+    if (requestId === searchRequestId && searchKeyword === trimmedKeyword.value) {
+      errorMessage.value = "网络开小差了，请稍后重试";
+    }
   } finally {
-    loading.value = false;
+    if (requestId === searchRequestId) {
+      loading.value = false;
+    }
   }
 };
 
@@ -435,7 +462,8 @@ defineExpose({
 }
 
 .no-data-box,
-.search-empty-state {
+.search-empty-state,
+.search-error-state {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -449,6 +477,11 @@ defineExpose({
 }
 
 .search-empty-state {
+  min-height: 220px;
+  padding: 28px 18px;
+}
+
+.search-error-state {
   min-height: 220px;
   padding: 28px 18px;
 }
@@ -484,7 +517,8 @@ defineExpose({
 }
 
 .no-data-text,
-.search-empty-state p {
+.search-empty-state p,
+.search-error-state p {
   margin: 10px 0 0;
   color: var(--color);
   font-size: 13px;
@@ -494,6 +528,21 @@ defineExpose({
 
 .loading-box {
   width: 25px;
+}
+
+.search-retry-btn {
+  margin-top: 16px;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--theme-btn-hover-color);
+  color: #0d1117;
+  cursor: pointer;
+}
+
+.search-retry-btn:focus-visible {
+  outline: 3px solid rgba(34, 211, 238, 0.45);
+  outline-offset: 3px;
 }
 
 .keyword-highlight {
@@ -542,7 +591,8 @@ defineExpose({
   }
 
   .search-empty-state,
-  .no-data-box {
+  .no-data-box,
+  .search-error-state {
     min-height: 180px;
     padding: 20px 14px;
   }
@@ -554,8 +604,9 @@ html[data-theme="dark"] {
   .search-helper-text,
   .search-result-summary,
   .result-content-item-description,
-  .no-data-text,
-  .search-empty-state p {
+    .no-data-text,
+    .search-empty-state p,
+    .search-error-state p {
     opacity: 0.84;
   }
 

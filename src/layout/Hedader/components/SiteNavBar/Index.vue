@@ -1,7 +1,7 @@
 <template>
   <div class="nav-bar">
-    <ul class="nav-ul" @click="toPage">
-      <li class="nav-li" data-router="/" :class="{ 'active-li': route.path === `/` }">
+    <ul class="nav-ul" @click="toPage" @keydown.enter.prevent="toPage">
+      <li class="nav-li" data-router="/" role="link" tabindex="0" :class="{ 'active-li': route.path === `/` }">
         首页
       </li>
       <custom-dropdown
@@ -10,37 +10,27 @@
         ref="categoryDropdown"
       >
         <template #trigger>
-          <li class="nav-li">文章分类</li>
+          <li class="nav-li" aria-haspopup="menu" :class="{ 'active-li': route.path.startsWith('/category/') }">文章分类</li>
         </template>
         <template #menu>
           <dropdown-item @click="handleCommandToPage('category/daily')">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-woderichang"></use>
-            </svg>
+            <i class="bi bi-journal-text icon" aria-hidden="true"></i>
             <span>日常随记</span>
           </dropdown-item>
           <dropdown-item @click="handleCommandToPage('category/technology')">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-jishurenyuan"></use>
-            </svg>
+            <i class="bi bi-code-slash icon" aria-hidden="true"></i>
             <span>开发心得</span>
           </dropdown-item>
           <dropdown-item @click="handleCommandToPage('category/cute-pet')">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-aichong03"></use>
-            </svg>
+            <i class="bi bi-heart icon" aria-hidden="true"></i>
             <span>萌宠日记</span>
           </dropdown-item>
           <dropdown-item @click="handleCommandToPage('category/notes')">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-biji"></use>
-            </svg>
+            <i class="bi bi-journal-bookmark icon" aria-hidden="true"></i>
             <span>学习笔记</span>
           </dropdown-item>
           <dropdown-item @click="handleCommandToPage('category/landscape')">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-fengjing"></use>
-            </svg>
+            <i class="bi bi-camera icon" aria-hidden="true"></i>
             <span>光影故事</span>
           </dropdown-item>
         </template>
@@ -52,52 +42,38 @@
         ref="widgetDropdown"
       >
         <template #trigger>
-          <li class="nav-li">小工具</li>
+          <li class="nav-li" aria-haspopup="menu" :class="{ 'active-li': route.path.startsWith('/encryption') || route.path.startsWith('/unit') || route.path.startsWith('/password') || route.path.startsWith('/image-processing') }">小工具</li>
         </template>
         <template #menu>
           <dropdown-item @click="handleCommandToPage('encryption')">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-jiami"></use>
-            </svg>
+            <i class="bi bi-shield-lock icon" aria-hidden="true"></i>
             <span>加密/解密</span>
           </dropdown-item>
           <!-- 注释掉的菜单项
           <dropdown-item @click="handleCommandToPage('weather')">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-tianqi"></use>
-            </svg>
+            <i class="bi bi-cloud-sun icon" aria-hidden="true"></i>
             <span>天气查询</span>
           </dropdown-item>
           <dropdown-item @click="handleCommandToPage('ip')">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-IPdizhi"></use>
-            </svg>
+            <i class="bi bi-geo-alt icon" aria-hidden="true"></i>
             <span>IP地址查询</span>
           </dropdown-item>
           -->
           <dropdown-item @click="handleCommandToPage('unit')">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-danweihuansuanx"></use>
-            </svg>
+            <i class="bi bi-rulers icon" aria-hidden="true"></i>
             <span>单位换算</span>
           </dropdown-item>
           <dropdown-item @click="handleCommandToPage('password')">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-mima"></use>
-            </svg>
+            <i class="bi bi-key icon" aria-hidden="true"></i>
             <span>密码生成器</span>
           </dropdown-item>
           <dropdown-item @click="handleCommandToPage('image-processing')">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-tupianchuli"></use>
-            </svg>
+            <i class="bi bi-image icon" aria-hidden="true"></i>
             <span>图片处理</span>
           </dropdown-item>
           <!-- 注释掉的菜单项
           <dropdown-item @click="handleCommandToPage('qr')">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-erweimashengchenggongju"></use>
-            </svg>
+            <i class="bi bi-qr-code icon" aria-hidden="true"></i>
             <span>二维码生成</span>
           </dropdown-item>
           -->
@@ -106,6 +82,8 @@
       <li
         class="nav-li"
         data-router="/nav"
+        role="link"
+        tabindex="0"
         :class="{ 'active-li': route.path === `/nav` }"
         v-if="blogSettingMap.show_sites_module"
       >
@@ -114,6 +92,8 @@
       <li
         class="nav-li"
         data-router="/comments"
+        role="link"
+        tabindex="0"
         :class="{ 'active-li': route.path === `/comments` }"
         v-if="blogSettingMap.show_guestbook_module"
       >
@@ -122,6 +102,8 @@
       <li
         class="nav-li"
         data-router="/friendlinks"
+        role="link"
+        tabindex="0"
         :class="{ 'active-li': route.path === `/friendlinks` }"
         v-if="blogSettingMap.show_friend_link_module"
       >
@@ -130,6 +112,8 @@
       <li
         class="nav-li"
         data-router="/about"
+        role="link"
+        tabindex="0"
         :class="{ 'active-li': route.path === `/about` }"
         v-if="blogSettingMap.show_about_module"
       >
@@ -195,14 +179,20 @@ const handleCommandToPage = (val) => {
   border-bottom: 2px solid transparent;
 }
 
+.nav-li:focus-visible,
+:deep(.dropdown-trigger:focus-visible) {
+  outline: 3px solid rgba(34, 211, 238, 0.45);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
 .active-li {
   color: var(--btn-tag-bg-color);
 }
 
-svg.icon {
+.icon {
   margin-right: 5px;
-  width: 1em;
-  height: 1em;
+  font-size: 1em;
 }
 
 .bi {

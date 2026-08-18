@@ -2790,11 +2790,6 @@ longest@^1.0.0:
   resolved "https://registry.npmmirror.com/longest/-/longest-1.0.1.tgz"
   integrity sha512-k+yt5n3l48JU4k8ftnKG6V7u32wyH2NfKzeMto9F/QRE0amxy/LayxwlvjjkZEIzqR+19IrtFO8p5kB9QaYUFg==
 
-lottie-web@^5.13.0:
-  version "5.13.0"
-  resolved "https://registry.npmjs.org/lottie-web/-/lottie-web-5.13.0.tgz"
-  integrity sha512-+gfBXl6sxXMPe8tKQm7qzLnUy5DUPJPKIyRHwtpCpyUEYjHYRJC/5gjUvdkuO2c3JllrPtHXH5UJJK8LRYl5yQ==
-
 loud-rejection@^1.0.0:
   version "1.6.0"
   resolved "https://registry.npmmirror.com/loud-rejection/-/loud-rejection-1.6.0.tgz"

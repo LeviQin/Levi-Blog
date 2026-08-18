@@ -10,8 +10,8 @@
           <span class="typing-caret"></span>
         </p>
         <div class="banner-actions">
-          <button class="banner-btn primary" type="button" @click="router.push('/category/technology')">
-            查看文章
+          <button class="banner-btn primary" type="button" @click="toNextPage">
+            浏览文章
           </button>
           <button class="banner-btn ghost" type="button" @click="router.push('/about')">
             关于我
@@ -51,11 +51,13 @@
       </p>
     </div>
 
-    <i
+    <button
       class="bi bi-chevron-double-down button-arrow"
       @click="toNextPage"
       v-if="props.bannerConfig.showArrow"
-    ></i>
+      type="button"
+      aria-label="滚动到下一部分"
+    ></button>
   </div>
 </template>
 
@@ -194,7 +196,8 @@ onBeforeUnmount(() => {
 .banner-split {
   position: relative;
   z-index: 1;
-  width: min(1180px, 92vw);
+  width: 100%;
+  max-width: 1180px;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   align-items: center;
@@ -412,6 +415,10 @@ onBeforeUnmount(() => {
   color: var(--color);
   animation: arrowMove 1s linear infinite;
   font-size: 24px;
+  border: 0;
+  padding: 8px;
+  background: transparent;
+  color: var(--color);
 }
 
 @media (max-width: 860px) {

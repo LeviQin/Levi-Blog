@@ -1,5 +1,12 @@
 <template>
-  <div class="dropdown-item" @click="handleClick">
+  <div
+    class="dropdown-item"
+    @click="handleClick"
+    @keydown.enter.prevent="handleClick"
+    @keydown.space.prevent="handleClick"
+    role="menuitem"
+    tabindex="0"
+  >
     <slot></slot>
   </div>
 </template>
@@ -47,10 +54,9 @@ const handleClick = () => {
       transform: none;
     }
   }
-  svg.icon {
+  .icon {
     margin-right: 5px;
-    width: 1em;
-    height: 1em;
+    font-size: 1em;
   }
 }
 </style>

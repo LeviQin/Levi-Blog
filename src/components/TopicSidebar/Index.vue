@@ -7,9 +7,7 @@
       :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
     >
       <div class="sidebar-category-title">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#levi-fenlei"></use>
-        </svg>
+        <i class="bi bi-grid-3x3-gap-fill icon" aria-hidden="true"></i>
         <span>全部分类</span>
       </div>
       <div class="sidebar-category-content">
@@ -19,11 +17,7 @@
             data-router="/"
             :class="{ 'active-category': route.path === '/' }"
           >
-            <span
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-zonghelei"></use></svg
-              ><span>综合文章</span></span
-            >
+            <span><i class="bi bi-collection icon" aria-hidden="true"></i><span>综合文章</span></span>
             <i class="bi bi-chevron-right"></i>
           </li>
           <li
@@ -31,11 +25,7 @@
             data-router="/category/daily"
             :class="{ 'active-category': route.path === '/category/daily' }"
           >
-            <span
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-woderichang"></use></svg
-              ><span>日常随记</span></span
-            >
+            <span><i class="bi bi-journal-text icon" aria-hidden="true"></i><span>日常随记</span></span>
             <i class="bi bi-chevron-right"></i>
           </li>
           <li
@@ -43,11 +33,7 @@
             data-router="/category/technology"
             :class="{ 'active-category': route.path === '/category/technology' }"
           >
-            <span
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-jishurenyuan"></use></svg
-              ><span>开发心得</span></span
-            >
+            <span><i class="bi bi-code-slash icon" aria-hidden="true"></i><span>开发心得</span></span>
             <i class="bi bi-chevron-right"></i>
           </li>
           <li
@@ -55,11 +41,7 @@
             data-router="/category/cute-pet"
             :class="{ 'active-category': route.path === '/category/cute-pet' }"
           >
-            <span
-              ><svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-aichong03"></use></svg
-              ><span>萌宠日记</span></span
-            >
+            <span><i class="bi bi-heart icon" aria-hidden="true"></i><span>萌宠日记</span></span>
             <i class="bi bi-chevron-right"></i>
           </li>
           <li
@@ -67,11 +49,7 @@
             data-router="/category/notes"
             :class="{ 'active-category': route.path === '/category/notes' }"
           >
-            <span>
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-biji"></use></svg
-              ><span>学习笔记</span></span
-            >
+            <span><i class="bi bi-journal-bookmark icon" aria-hidden="true"></i><span>学习笔记</span></span>
             <i class="bi bi-chevron-right"></i>
           </li>
           <li
@@ -79,11 +57,7 @@
             data-router="/category/landscape"
             :class="{ 'active-category': route.path === '/category/landscape' }"
           >
-            <span>
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#levi-fengjing"></use></svg
-              ><span>光影故事</span></span
-            >
+            <span><i class="bi bi-camera icon" aria-hidden="true"></i><span>光影故事</span></span>
             <i class="bi bi-chevron-right"></i>
           </li>
         </ul>
@@ -95,17 +69,15 @@
       :class="{ 'sidin-start': true, 'sidin-end': isSidebarVisible }"
     >
       <div class="sidebar-tags-title">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#levi-biaoqian_1"></use>
-        </svg>
-        <span>所有标签</span>
+        <i class="bi bi-tags-fill icon" aria-hidden="true"></i>
+        <span>标签概览</span>
       </div>
       <div class="sidebar-tags-content">
         <div
           class="tags-item"
           v-for="item in tags"
           :key="item.id"
-          :style="{ color: item.color }"
+          :style="{ color: item.displayColor }"
         >
           {{ item.tag_name }}
         </div>
@@ -124,22 +96,27 @@ import { useTheme } from "@/hooks/useTheme";
 
 const { theme } = useTheme();
 
-// 按主题生成可读的随机色：浅色主题深色文字，深色主题亮色文字
-const tagColor = (dark) => {
-  const h = Math.floor(Math.random() * 360);
-  const s = Math.floor(Math.random() * 35) + 45;
-  const l = dark
-    ? Math.floor(Math.random() * 20) + 68
-    : Math.floor(Math.random() * 18) + 30;
-  return `hsl(${h}, ${s}%, ${l}%)`;
+// 按主题从固定调色板生成稳定、可读的标签颜色
+const tagColor = (id, dark) => {
+  const source = String(id);
+  let hash = 0;
+  for (let index = 0; index < source.length; index += 1) {
+    hash = (hash * 31 + source.charCodeAt(index)) >>> 0;
+  }
+  const palette = dark
+    ? ["#67e8f9", "#a5f3fc", "#93c5fd", "#c4b5fd", "#86efac"]
+    : ["#0e7490", "#0369a1", "#4338ca", "#6d28d9", "#047857"];
+  return palette[hash % palette.length];
 };
 
 const tags = computed(() => {
   return mainStore.tagMap
     .filter((item) => item.status === 1)
     .map((item) => {
-      item.color = tagColor(theme.value === "dark");
-      return item;
+      return {
+        ...item,
+        displayColor: tagColor(item.id, theme.value === "dark"),
+      };
     });
 });
 
@@ -186,6 +163,9 @@ const selectCategory = (e) => {
   margin-bottom: 15px;
   padding: 0 5px;
   .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 1.5em;
     height: 1.5em;
     margin-right: 10px;
@@ -197,6 +177,9 @@ const selectCategory = (e) => {
   padding: 0 2px;
 
   .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 1.3em;
     height: 1.3em;
     margin-right: 8px;
@@ -205,18 +188,17 @@ const selectCategory = (e) => {
 
 .sidebar-tags-content {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 6px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
   padding: 0;
 }
 
 .tags-item {
   position: relative;
-  padding: 5px 6px;
+  padding: 7px 8px;
   border-radius: 10px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
-  font-family: var(--mono-font-family);
   color: var(--theme-btn-hover-color);
   line-height: 1;
   cursor: default;
@@ -225,29 +207,23 @@ const selectCategory = (e) => {
   white-space: nowrap;
   text-overflow: ellipsis;
   box-shadow: inset 0 0 0 1px currentColor;
-  transition: transform 0.22s ease, box-shadow 0.22s ease, color 0.22s ease;
+  transition: background-color var(--dur-fast) var(--ease-standard), box-shadow var(--dur-fast) var(--ease-standard);
 
   &::before {
     content: "";
     position: absolute;
     inset: 0;
     background: currentColor;
-    opacity: 0.1;
+    opacity: 0.08;
     transition: opacity 0.22s ease;
   }
 
   &:hover {
-    box-shadow: inset 0 0 0 1px currentColor, 0 6px 14px rgba(34, 211, 238, 0.16);
+    box-shadow: inset 0 0 0 1px currentColor, 0 4px 10px rgba(34, 211, 238, 0.12);
 
     &::before {
-      opacity: 0.14;
+      opacity: 0.12;
     }
-  }
-}
-
-@media (max-width: 1200px) {
-  .sidebar-tags-content {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -262,24 +238,24 @@ const selectCategory = (e) => {
 
   .sidebar-tags-content {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 5px;
+    gap: 6px;
   }
 
   .tags-item {
-    padding: 5px 6px;
-    font-size: 10px;
+    padding: 6px 7px;
+    font-size: 11px;
   }
 }
 
-.bi-hdd-stack,
-.bi-tags-fill {
+.sidebar-category-title .bi,
+.sidebar-tags-title .bi {
   margin-right: 10px;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .sidebar-category-li {
-  padding: 5px 10px;
-  margin: 5px 0;
+  padding: 8px 10px;
+  margin: 4px 0;
   cursor: pointer;
   transition: all 0.3s;
   display: flex;
@@ -289,27 +265,24 @@ const selectCategory = (e) => {
 
   span > .icon {
     margin-right: 10px;
-    width: 1.2em;
-    height: 1.2em;
+    font-size: 15px;
   }
 
   &:hover {
-    transition: all 0.3s;
-    background: #e9e6e69e;
+    background: var(--accent-soft-bg);
     color: var(--link-text-color);
   }
 }
 
 .active-category {
-  transition: all 0.3s;
-  background: #e9e6e69e;
+  background: var(--accent-soft-bg);
   color: var(--link-text-color);
 }
 
 html[data-theme="dark"] .sidebar-category-li {
   &:hover,
   &.active-category {
-    background: rgba(34, 211, 238, 0.12);
+    background: var(--accent-soft-bg);
     color: var(--link-text-color);
   }
 }

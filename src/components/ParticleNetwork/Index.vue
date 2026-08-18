@@ -7,6 +7,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { useMainStore } from "@/stores/mainStore";
+import { getEffectRgb } from "@/utils/effectColor";
 
 // 粒子连线网络：粒子缓慢漂移，近距离互连成线，鼠标经过吸引
 const canvasRef = ref(null);
@@ -19,18 +20,9 @@ let running = false;
 let particles = [];
 let mouse = { x: -9999, y: -9999 };
 
-const hexToRgb = (hex) => {
-  const h = hex.replace("#", "");
-  return {
-    r: parseInt(h.substring(0, 2), 16),
-    g: parseInt(h.substring(2, 4), 16),
-    b: parseInt(h.substring(4, 6), 16),
-  };
-};
-
 const rebuild = () => {
   const cfg = mainStore.fxConfig;
-  const count = Math.floor((cfg.density / 100) * 70); // 0-70 个粒子
+  const count = Math.floor(20 + (cfg.density / 100) * 140); // 20-160 个粒子
   particles = new Array(count).fill(0).map(() => ({
     x: Math.random() * canvasWidth,
     y: Math.random() * canvasHeight,
@@ -56,10 +48,10 @@ const setupCanvas = () => {
 const draw = () => {
   if (!running) return;
   const cfg = mainStore.fxConfig;
-  const rgb = hexToRgb(cfg.color);
+  const rgb = getEffectRgb(cfg.color);
   const baseAlpha = cfg.opacity / 100;
   const speedFactor = 0.4 + (cfg.speed / 100) * 1.2;
-  const linkDist = 120 + (cfg.density / 100) * 80; // 密度越大连线距离越远
+  const linkDist = 150 + (cfg.density / 100) * 180; // 密度越大连线距离越远
 
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
@@ -84,7 +76,7 @@ const draw = () => {
       if (dist < linkDist) {
         const alpha = baseAlpha * (1 - dist / linkDist) * 0.6;
         ctx.strokeStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
-        ctx.lineWidth = 0.6;
+        ctx.lineWidth = 0.8;
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
         ctx.lineTo(b.x, b.y);
@@ -101,7 +93,7 @@ const draw = () => {
     if (dist < 160) {
       const alpha = baseAlpha * (1 - dist / 160) * 0.5;
       ctx.strokeStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
-      ctx.lineWidth = 0.6;
+      ctx.lineWidth = 0.8;
       ctx.beginPath();
       ctx.moveTo(p.x, p.y);
       ctx.lineTo(mouse.x, mouse.y);

@@ -116,8 +116,9 @@ const emit = defineEmits(["replyMessage"]);
       border-radius: 50%;
     }
   }
-  .message-item-main {
+.message-item-main {
     flex: 1;
+    min-width: 0;
   }
 }
 
@@ -189,12 +190,28 @@ const emit = defineEmits(["replyMessage"]);
   justify-content: space-between;
   gap: 15px;
   position: relative;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+
+  :deep(a) {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: normal;
+  }
+
   &:hover .reply-btn {
     opacity: 1;
   }
   p {
     margin: 0;
     padding-right: 60px;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: normal;
   }
   .reply-btn {
     position: absolute;
@@ -219,9 +236,26 @@ const emit = defineEmits(["replyMessage"]);
 }
 
 @media (max-width: 860px) {
+  .message-item-content,
+  .message-item-main,
+  .message-item-main-bar,
+  .message-item-main-bar .item-name {
+    min-width: 0;
+  }
+
   .message-item-avatar {
     transform: scale(0.8);
   }
+
+  .message-item-main-bar .item-time {
+    flex: 0 0 84px;
+    width: 84px;
+  }
+
+  .message-item-main-content p {
+    overflow-wrap: anywhere;
+  }
+
   .message-item-main-bar .item-name {
     font-size: 12px;
     gap: 5px;

@@ -147,9 +147,15 @@ const onRequestClose = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(15, 23, 42, 0.45);
+  background: rgba(15, 23, 42, 0.56);
+  backdrop-filter: blur(10px) saturate(1.08);
+  -webkit-backdrop-filter: blur(10px) saturate(1.08);
   padding: 20px;
   box-sizing: border-box;
+}
+
+html:not([data-theme="dark"]) .el-overlay {
+  background: rgba(15, 23, 42, 0.34);
 }
 
 .el-dialog {

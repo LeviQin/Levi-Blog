@@ -28,9 +28,12 @@ import MatrixRain from "../components/MatrixRain/Index.vue";
 import ParticleNetwork from "../components/ParticleNetwork/Index.vue";
 import StarField from "../components/StarField/Index.vue";
 import DustParticles from "../components/DustParticles/Index.vue";
+import AuroraGlow from "../components/AuroraGlow/Index.vue";
+import ShootingStars from "../components/ShootingStars/Index.vue";
 import { useMainStore } from "@/stores/mainStore";
 
 const mainStore = useMainStore();
+const prefersReducedMotion = ref(false);
 
 // 特效类型 -> 组件映射（markRaw 避免组件被响应式代理影响性能）
 const effectMap = {
@@ -38,9 +41,12 @@ const effectMap = {
   particles: markRaw(ParticleNetwork),
   stars: markRaw(StarField),
   dust: markRaw(DustParticles),
+  aurora: markRaw(AuroraGlow),
+  "shooting-stars": markRaw(ShootingStars),
 };
 
 const effectComponent = computed(() => {
+  if (prefersReducedMotion.value) return null;
   return effectMap[mainStore.fxConfig.type] || null;
 });
 
@@ -58,6 +64,7 @@ const bannerBarStyle = computed(() => {
 const route = useRoute();
 
 onMounted(() => {
+  prefersReducedMotion.value = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   window.addEventListener("keydown", keydownEvent);
 });
 

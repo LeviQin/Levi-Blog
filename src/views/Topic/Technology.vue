@@ -48,22 +48,16 @@
             <div class="article-item-footer">
               <div class="footer-info">
                 <div class="footer-date">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-riqi"></use>
-                  </svg>
+                  <i class="bi bi-calendar3 icon" aria-hidden="true"></i>
                   <span>{{ item.published_at }}</span>
                 </div>
                 <div class="footer-update">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#levi-gengxinmulu"></use>
-                  </svg>
+                  <i class="bi bi-arrow-repeat icon" aria-hidden="true"></i>
                   <span>{{ item.updated_at }}</span>
                 </div>
               </div>
               <div class="footer-tags">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#levi-biaoqian_1"></use>
-                </svg>
+                <i class="bi bi-tags-fill icon" aria-hidden="true"></i>
                 <span class="tags-item" v-for="key in item.article_tags" :key="key">{{
                   tagNameById[key] || ''
                 }}</span>
@@ -438,8 +432,10 @@ const getData = async () => {
   background: rgba(255, 255, 255, 0.45);
 
   .icon {
-    width: 1.2em;
-    height: 1.2em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
     margin-right: 8px;
   }
 }
@@ -455,8 +451,10 @@ const getData = async () => {
   background: rgba(255, 255, 255, 0.45);
 
   .icon {
-    width: 1.2em;
-    height: 1.2em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
     margin-right: 8px;
   }
 }
@@ -506,8 +504,10 @@ const getData = async () => {
   margin-bottom: 0;
 
   .icon {
-    width: 1.2em;
-    height: 1.2em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
   }
 }
 

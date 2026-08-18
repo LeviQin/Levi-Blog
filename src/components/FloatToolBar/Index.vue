@@ -9,6 +9,7 @@
         v-if="showBackTop"
         class="tool-btn"
         title="回到顶部"
+        aria-label="回到顶部"
         @click="backToTop"
       >
         <i class="bi bi-rocket-fill"></i>
@@ -18,7 +19,8 @@
     <button
       class="tool-btn toggle-btn"
       :title="showToolBar ? '收起工具栏' : '展开工具栏'"
-      @click="showToolBar = !showToolBar"
+      :aria-label="showToolBar ? '收起工具栏' : '展开工具栏'"
+      @click="toggleToolBar"
     >
       <i class="bi" :class="showToolBar ? 'bi-chevron-bar-contract' : 'bi-chevron-bar-expand'"></i>
     </button>
@@ -28,6 +30,7 @@
         <button
           class="tool-btn"
           :title="isLeft ? '移至右侧' : '移至左侧'"
+          :aria-label="isLeft ? '移至右侧' : '移至左侧'"
           @click="isLeft = !isLeft"
         >
           <i class="bi" :class="isLeft ? 'bi-chevron-right' : 'bi-chevron-left'"></i>
@@ -36,14 +39,26 @@
         <button
           class="tool-btn"
           title="切换背景特效"
+          aria-label="切换背景特效"
           @click="clickSwitchWallpaper"
         >
           <i class="bi bi-stars"></i>
         </button>
 
         <button
+          v-if="isPetHidden"
+          class="tool-btn"
+          title="召唤宠物"
+          aria-label="召唤宠物"
+          @click="restorePet"
+        >
+          <i class="bi bi-mouse2-fill pet-tool-icon" aria-hidden="true"></i>
+        </button>
+
+        <button
           class="tool-btn"
           :title="isDark ? '切换到亮色' : '切换到暗色'"
+          :aria-label="isDark ? '切换到亮色' : '切换到暗色'"
           @click="toggleTheme"
         >
           <i class="bi" :class="isDark ? 'bi-sun' : 'bi-moon-stars'"></i>
@@ -52,7 +67,6 @@
     </Transition>
 
     <switch-wallpaper ref="switchWallpaperRef"></switch-wallpaper>
-    <set-model ref="setModelRef"></set-model>
   </div>
 </template>
 
@@ -60,18 +74,20 @@
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { scrollAnimation } from "@/utils/scrollAnimation.js";
 import SwitchWallpaper from "../SwitchWallpaper/Index.vue";
-import SetModel from "../SetModel/Index.vue";
 import { useTheme } from "@/hooks/useTheme";
+import { getStore, setStore } from "@/utils/storage.js";
+
+const PET_SETTINGS_KEY = "levi-catpet-settings-v1";
 
 const { theme, toggleTheme } = useTheme();
 const isDark = computed(() => theme.value === "dark");
 
 const switchWallpaperRef = ref(null);
-const setModelRef = ref(null);
 const toolBarRef = ref(null);
-const showToolBar = ref(true);
+const showToolBar = ref(getStore("LEVI_FLOAT_TOOLBAR_OPEN") === true);
 const isLeft = ref(false);
 const showBackTop = ref(false);
+const isPetHidden = ref(false);
 
 let scrollTimer = null;
 
@@ -91,13 +107,39 @@ const clickSwitchWallpaper = () => {
   switchWallpaperRef.value?.show();
 };
 
+const readPetVisibility = () => {
+  try {
+    const settings = JSON.parse(localStorage.getItem(PET_SETTINGS_KEY) || "{}");
+    return settings.visible !== false;
+  } catch (error) {
+    return true;
+  }
+};
+
+const handlePetVisibility = (event) => {
+  isPetHidden.value = event.detail?.visible === false;
+};
+
+const restorePet = () => {
+  isPetHidden.value = false;
+  window.dispatchEvent(new CustomEvent("levi-cat-pet-restore"));
+};
+
+const toggleToolBar = () => {
+  showToolBar.value = !showToolBar.value;
+  setStore("LEVI_FLOAT_TOOLBAR_OPEN", showToolBar.value);
+};
+
 onMounted(() => {
+  isPetHidden.value = !readPetVisibility();
   handleScroll();
   window.addEventListener("scroll", handleScroll, { passive: true });
+  window.addEventListener("levi-cat-pet-visibility", handlePetVisibility);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener("scroll", handleScroll);
+  window.removeEventListener("levi-cat-pet-visibility", handlePetVisibility);
   if (scrollTimer) cancelAnimationFrame(scrollTimer);
 });
 </script>
@@ -145,9 +187,16 @@ onBeforeUnmount(() => {
   box-shadow: 0 2px 8px rgba(34, 211, 238, 0.25);
 
   .bi {
-    font-size: 16px;
     transition: transform 0.25s;
     pointer-events: none;
+  }
+
+  .bi {
+    font-size: 16px;
+  }
+
+  .pet-tool-icon {
+    font-size: 17px;
   }
 
   &:hover {

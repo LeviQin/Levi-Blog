@@ -31,6 +31,7 @@ declare module '@vue/runtime-core' {
     ElProgress: typeof import('./components/ElProgress.vue')['default']
     ElSelect: typeof import('./components/ElSelect.vue')['default']
     ElSlider: typeof import('./components/ElSlider.vue')['default']
+    ElSwitch: typeof import('./components/ElSwitch.vue')['default']
     ElTabPane: typeof import('./components/ElTabPane.vue')['default']
     ElTabs: typeof import('./components/ElTabs.vue')['default']
     ElUpload: typeof import('./components/ElUpload.vue')['default']

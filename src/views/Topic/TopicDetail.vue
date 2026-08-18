@@ -8,9 +8,22 @@
   <div class="topic-detail w">
     <div class="reading-progress-bar" :style="{ width: progressPercent + '%' }"></div>
 
-    <top-banner :bannerConfig="bannerConfig"></top-banner>
+    <div class="article-context-bar">
+      <button type="button" class="article-back-button" @click="backToPreviousPage">
+        <i class="bi bi-arrow-left"></i>
+        返回
+      </button>
+      <span class="article-context-label">文章详情</span>
+    </div>
 
-    <article class="topic-detail-container page-container" ref="topicDetailRef" v-loading="loading" element-loading-background="rgba(122, 122, 122, 0)">
+    <div v-if="articleError" class="article-state">
+      <div class="article-state-icon"><i class="bi bi-file-earmark-x"></i></div>
+      <h1>文章加载失败</h1>
+      <p>{{ articleError }}</p>
+      <button type="button" class="article-state-action" @click="getArticleDetail">重新加载</button>
+    </div>
+
+    <article v-else class="topic-detail-container page-container" ref="topicDetailRef" v-loading="loading" element-loading-background="rgba(122, 122, 122, 0)">
       <div class="topic-detail-content">
         <div class="article-cover" v-if="dataMap.articleInfo.image">
           <img :src="dataMap.articleInfo.image" :alt="dataMap.articleInfo.title" />
@@ -71,12 +84,37 @@
           </div>
 
           <div class="article-actions">
-            <div class="action-btn like-btn" :class="{ liked: hasLiked }" @click="clickLikes">
+            <button type="button" class="action-btn like-btn" :class="{ liked: hasLiked }" @click="clickLikes" :aria-label="hasLiked ? '已点赞' : '点赞文章'">
               <i class="bi" :class="hasLiked ? 'bi-heart-fill' : 'bi-heart'"></i>
               <span>{{ dataMap.articleInfo.likes || 0 }}</span>
               <span class="plus-one" :class="{ show: showPlusOne }">+1</span>
-            </div>
+            </button>
           </div>
+        </div>
+
+        <div class="article-navigation">
+          <button
+            v-if="previousArticle"
+            type="button"
+            class="article-navigation-item"
+            @click="openAdjacentArticle(previousArticle)"
+          >
+            <span>上一篇</span>
+            <strong>{{ previousArticle.title }}</strong>
+          </button>
+          <button
+            v-if="nextArticle"
+            type="button"
+            class="article-navigation-item article-navigation-next"
+            @click="openAdjacentArticle(nextArticle)"
+          >
+            <span>下一篇</span>
+            <strong>{{ nextArticle.title }}</strong>
+          </button>
+          <button type="button" class="article-share-button" @click="copyArticleLink">
+            <i class="bi bi-link-45deg"></i>
+            复制链接
+          </button>
         </div>
 
         <!-- <CommentList :postId="route.params.id" @replyMessage="replyMessage" />
@@ -87,9 +125,7 @@
         <sidebar-user></sidebar-user>
         <div class="toc-card" v-if="dataMap.titles.length">
           <div class="toc-header">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#levi-a-shuqianshumulu"></use>
-            </svg>
+            <i class="bi bi-list-nested icon" aria-hidden="true"></i>
             <span>目录</span>
           </div>
           <el-divider />
@@ -103,6 +139,9 @@
                 paddingLeft: `${(anchor.level || 1) * 12}px`,
               }"
               @click="handleAnchorClick(anchor.text)"
+              @keydown.enter.prevent="handleAnchorClick(anchor.text)"
+              role="button"
+              tabindex="0"
             >
               <span class="toc-dot"></span>
               <span class="toc-text">{{ anchor.text }}</span>
@@ -116,11 +155,10 @@
 
 <script setup>
 import { onMounted, onBeforeUnmount, reactive, ref, watch, computed, nextTick } from "vue";
-import { useRoute } from "vue-router";
-import { articleDetail, ArticleLikes } from "@/api/articles.js";
+import { useRoute, useRouter } from "vue-router";
+import { articleDetail, ArticleLikes, getArticleList } from "@/api/articles.js";
 import MarkdownRenderer from "@/components/MarkdownRenderer/Index.vue";
 import SidebarUser from "@/components/SidebarUser/Index.vue";
-import TopBanner from "@/components/TopBanner/Index.vue";
 import { dateToString } from "@/utils/utils.js";
 import { Head } from "@vueuse/head";
 import { getStore, setStore } from "@/utils/storage.js";
@@ -146,18 +184,21 @@ const tagNameById = computed(() => {
 });
 
 const route = useRoute();
+const router = useRouter();
 
 watch(
   () => route.params.id,
   () => {
     if (route.params.id) {
       getArticleDetail();
+      getAdjacentArticles();
     }
   }
 );
 
 onMounted(() => {
   getArticleDetail();
+  getAdjacentArticles();
   window.addEventListener("scroll", handleScroll);
 });
 
@@ -185,17 +226,13 @@ const dataMap = reactive({
 
 const markdownRendererRef = ref(null);
 const loading = ref(false);
+const articleError = ref("");
 const showPlusOne = ref(false);
 const progressPercent = ref(0);
 const activeAnchorIndex = ref(0);
 const hasLiked = ref(false);
-
-const bannerConfig = {
-  height: "30vh",
-  showArrow: false,
-  title: "Levi",
-  text: "莫道桑榆晚，为霞尚满天",
-};
+const previousArticle = ref(null);
+const nextArticle = ref(null);
 
 const readTime = computed(() => {
   const text = dataMap.articleInfo.content || "";
@@ -215,6 +252,50 @@ const sendMdTitle = (titles) => {
 
 const handleAnchorClick = (title) => {
   markdownRendererRef.value.handleAnchorClick(title);
+};
+
+const categoryPathById = {
+  1: "/category/daily",
+  2: "/category/technology",
+  3: "/category/cute-pet",
+  4: "/category/notes",
+  5: "/category/landscape",
+};
+
+const backToPreviousPage = () => {
+  const previousPath = router.options.history.state?.back;
+
+  // 正常从分类页进入详情时，恢复进入前的页面和滚动位置
+  if (previousPath && previousPath !== route.fullPath) {
+    router.back();
+    return;
+  }
+
+  // 直接打开详情页时没有可返回历史，回到文章所属分类
+  router.replace(categoryPathById[dataMap.articleInfo.category] || "/");
+};
+
+const openAdjacentArticle = (article) => {
+  router.push({ name: "Topic Detail", params: { id: article.id } });
+};
+
+const copyArticleLink = async () => {
+  try {
+    await navigator.clipboard.writeText(window.location.href);
+    ElNotification({
+      title: "链接已复制",
+      message: "可以分享给朋友了。",
+      type: "success",
+      zIndex: 99999,
+    });
+  } catch (error) {
+    ElNotification({
+      title: "复制失败",
+      message: "请手动复制当前页面地址。",
+      type: "warning",
+      zIndex: 99999,
+    });
+  }
 };
 
 const handleScroll = () => {
@@ -282,7 +363,12 @@ const requsetLikes = async () => {
   } catch (error) {
     hasLiked.value = false;
     dataMap.articleInfo.likes -= 1;
-    console.log(error, "------------------------");
+    ElNotification({
+      title: "点赞失败",
+      message: "网络开小差了，请稍后重试。",
+      type: "error",
+      zIndex: 99999,
+    });
   }
 };
 
@@ -305,9 +391,10 @@ const replyMessage = (message) => {
 const getArticleDetail = async () => {
   try {
     loading.value = true;
+    articleError.value = "";
     const res = await articleDetail(route.params.id);
     const { code, data, message } = res.data;
-    if (code === 200) {
+    if (code === 200 && Array.isArray(data) && data.length) {
       dataMap.articleInfo = data.map((item) => {
         item.updated_at = dateToString(item.updated_at);
         item.published_at = dateToString(item.published_at);
@@ -316,17 +403,123 @@ const getArticleDetail = async () => {
       document.title = `${dataMap.articleInfo.title} - Levi's space`;
       hasLiked.value = !!getStore(`LEVI_LIKES_${dataMap.articleInfo.id}`);
     } else {
-      console.log(message, "------------------------");
+      articleError.value = message || "暂时无法获取这篇文章";
     }
   } catch (error) {
-    console.log(error, "------------------------");
+    articleError.value = "网络开小差了，请稍后重试";
   } finally {
     loading.value = false;
+  }
+};
+
+const getAdjacentArticles = async () => {
+  try {
+    const res = await getArticleList();
+    const { code, data } = res.data;
+    if (code !== 200 || !Array.isArray(data)) return;
+    const currentIndex = data.findIndex((item) => String(item.id) === String(route.params.id));
+    previousArticle.value = currentIndex > 0 ? data[currentIndex - 1] : null;
+    nextArticle.value = currentIndex >= 0 && currentIndex < data.length - 1 ? data[currentIndex + 1] : null;
+  } catch (error) {
+    previousArticle.value = null;
+    nextArticle.value = null;
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.article-context-bar {
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 4px;
+}
+
+.article-back-button,
+.article-share-button,
+.article-navigation-item {
+  border: 0;
+  cursor: default;
+}
+
+.article-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.article-back-button:hover,
+.article-back-button:focus-visible {
+  color: var(--theme-btn-hover-color);
+  background: rgba(34, 211, 238, 0.1);
+}
+
+.article-context-label {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.article-back-button:focus-visible,
+.article-share-button:focus-visible,
+.article-navigation-item:focus-visible,
+.action-btn:focus-visible,
+.article-state-action:focus-visible {
+  outline: 3px solid rgba(34, 211, 238, 0.45);
+  outline-offset: 3px;
+}
+
+.article-state {
+  min-height: 360px;
+  padding: 40px 24px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--theme-radius);
+  background: var(--theme-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.article-state-icon {
+  width: 60px;
+  height: 60px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: rgba(34, 211, 238, 0.12);
+  color: var(--theme-btn-hover-color);
+  font-size: 26px;
+}
+
+.article-state h1 {
+  margin: 16px 0 0;
+  color: var(--black-text-color);
+  font-size: 24px;
+}
+
+.article-state p {
+  margin: 10px 0 0;
+  color: var(--text-secondary);
+}
+
+.article-state-action {
+  margin-top: 20px;
+  padding: 9px 18px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--theme-btn-hover-color);
+  color: #0d1117;
+  cursor: pointer;
+}
+
 .reading-progress-bar {
   position: fixed;
   top: 0;
@@ -437,6 +630,64 @@ const getArticleDetail = async () => {
   gap: 20px;
 }
 
+.article-navigation {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: stretch;
+  margin-bottom: 20px;
+}
+
+.article-navigation-item {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 16px 18px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--theme-radius);
+  background: var(--theme-color);
+  color: var(--text-secondary);
+  text-align: left;
+}
+
+.article-navigation-item:hover,
+.article-navigation-item:focus-visible {
+  border-color: var(--theme-btn-hover-color);
+  color: var(--theme-btn-hover-color);
+}
+
+.article-navigation-item strong {
+  width: 100%;
+  overflow: hidden;
+  color: var(--black-text-color);
+  font-size: 14px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.article-navigation-next {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.article-share-button {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: 9px;
+  background: rgba(34, 211, 238, 0.1);
+  color: var(--theme-btn-hover-color);
+}
+
+.article-share-button:hover {
+  background: rgba(34, 211, 238, 0.18);
+}
+
 .article-tags {
   display: flex;
   align-items: center;
@@ -462,7 +713,7 @@ const getArticleDetail = async () => {
   cursor: pointer;
 
   &:hover {
-    background: rgba(34, 211, 238, 0.2);
+    background: rgba(34, 211, 238, 0.14);
   }
 }
 
@@ -568,8 +819,10 @@ const getArticleDetail = async () => {
   align-items: center;
 
   .icon {
-    width: 1.2em;
-    height: 1.2em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
     margin-right: 10px;
   }
 }
@@ -627,6 +880,20 @@ const getArticleDetail = async () => {
 }
 
 @media (max-width: 860px) {
+  .article-context-bar {
+    min-height: 48px;
+    padding: 6px 0;
+  }
+
+  .article-navigation {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .article-share-button {
+    grid-column: 1 / -1;
+    justify-content: center;
+  }
+
   .reading-progress-bar {
     height: 2px;
   }

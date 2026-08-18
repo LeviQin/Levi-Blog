@@ -38,9 +38,7 @@
           class="sidebar-info-data-item"
         >
           <div class="sidebar-info-data-item-title">
-            <svg class="icon" aria-hidden="true">
-              <use :xlink:href="item.icon"></use>
-            </svg>
+            <i :class="item.icon" aria-hidden="true"></i>
             <span>{{ item.label }}</span>
           </div>
           <div class="sidebar-info-data-num">
@@ -136,12 +134,12 @@ const sidebarInfoStyle = computed(() => {
 
 const profileStats = computed(() => {
   return [
-    { label: "文章", value: totalArticles.value, icon: "#levi-wenzhang" },
-    { label: "分类", value: totalCategories.value || categoryList.length, icon: "#levi-fenlei" },
+    { label: "文章", value: totalArticles.value, icon: "bi bi-file-earmark-text icon" },
+    { label: "分类", value: totalCategories.value || categoryList.length, icon: "bi bi-grid-3x3-gap icon" },
     {
       label: "标签",
       value: mainStore.tagMap.length,
-      icon: "#levi-biaoqian_1",
+      icon: "bi bi-tags icon",
     },
   ];
 });
@@ -405,8 +403,10 @@ const getData = async () => {
   font-family: var(--mono-font-family);
 
   .icon {
-    width: 1em;
-    height: 1em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
   }
 }
 
