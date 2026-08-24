@@ -52,7 +52,7 @@
             <span class="term-dot red"></span>
             <span class="term-dot yellow"></span>
             <span class="term-dot green"></span>
-            <span class="code-file">{{ item.name }}.vue</span>
+            <span class="code-file">{{ item.name }}</span>
             <span class="code-index">P-{{ pad(index + 1) }}</span>
             <span
               class="cat-badge"
@@ -81,7 +81,7 @@
                 <span v-if="item.link" class="code-link" aria-label="访问项目">
                   <i class="bi bi-box-arrow-up-right"></i>
                 </span>
-                <span v-else class="code-local">本地</span>
+                <span v-else class="code-local">空</span>
               </div>
             </div>
           </a>
@@ -96,14 +96,22 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { vSlidIn } from "@/utils/vSlidIn.js";
-import { projects } from "./projects";
+import { getBlogProjects } from "@/api/blogProjects";
 
 const router = useRouter();
 
 const filter = ref("all");
+const projects = ref([]);
+
+onMounted(async () => {
+  try {
+    const { data } = await getBlogProjects();
+    if (data?.code === 200) projects.value = data.data || [];
+  } catch {}
+});
 
 // 技术分类色板（深色代码面板上用亮色）
 const categoryColors = {
@@ -117,7 +125,7 @@ const categoryColors = {
 
 const catColor = (c) => categoryColors[c] || "#67e8f9";
 
-const categoryCount = computed(() => new Set(projects.map((p) => p.category)).size);
+const categoryCount = computed(() => new Set(projects.value.map((p) => p.category)).size);
 
 const catBadgeStyle = (c) => {
   const color = catColor(c);
@@ -130,18 +138,18 @@ const catBadgeStyle = (c) => {
 
 const filters = computed(() => {
   const counts = {};
-  projects.forEach((p) => {
+  projects.value.forEach((p) => {
     counts[p.category] = (counts[p.category] || 0) + 1;
   });
   return [
-    { key: "all", label: "全部", count: projects.length },
+    { key: "all", label: "全部", count: projects.value.length },
     ...Object.keys(counts).map((c) => ({ key: c, label: c, count: counts[c] })),
   ];
 });
 
 const filtered = computed(() => {
-  if (filter.value === "all") return projects;
-  return projects.filter((p) => p.category === filter.value);
+  if (filter.value === "all") return projects.value;
+  return projects.value.filter((p) => p.category === filter.value);
 });
 
 const pad = (n) => String(n).padStart(2, "0");

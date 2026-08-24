@@ -60,11 +60,6 @@
         </Transition>
       </div>
 
-      <div class="pet-status-pill" aria-live="polite">
-        <span class="status-pulse" aria-hidden="true"></span>
-        <span>{{ activityLabel }}</span>
-      </div>
-
       <div class="quick-actions" aria-label="28互动">
         <button type="button" title="抚摸28" aria-label="抚摸28" @pointerdown.stop @click.stop="petCat"><span>🤍</span><small>摸摸</small></button>
         <button type="button" title="给28喂食" aria-label="给28喂食" @pointerdown.stop @click.stop="feedCat"><span>🍖</span><small>喂食</small></button>
@@ -363,17 +358,7 @@ const currentPetImage = computed(() => {
   if (isWaving.value) return waveImage;
   return petImage;
 });
-const activityLabel = computed(() => {
-  if (isSleeping.value) return "正在打盹";
-  if (isEating.value) return "认真干饭";
-  if (currentTrick.value === "running") return "正在小跑";
-  if (currentTrick.value === "walking") return "正在散步";
-  if (currentTrick.value === "stretching") return "伸个懒腰";
-  if (currentTrick.value === "playing") return "准备扑球";
-  if (isWaving.value) return "向你挥爪";
-  if (isDragging.value) return "跟着你走";
-  return "正在观察你";
-});
+
 const careMeters = computed(() => [
   { key: "happiness", label: "心情", icon: "💗", value: care.happiness, color: "#f472b6" },
   { key: "satiety", label: "饱腹", icon: "🍖", value: care.satiety, color: "#f59e0b" },

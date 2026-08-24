@@ -266,6 +266,16 @@
   }
 }
 
+// 单图段落铺满文章内容区，多图段落继续保留原有尺寸
+.md-editor p:has(> img:only-child) > img,
+.md-editor p:has(> a:only-child > img:only-child) > a > img {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  max-height: none !important;
+  height: auto;
+}
+
 .md-editor img[alt="max"] {
   max-height: 500px !important;
 }

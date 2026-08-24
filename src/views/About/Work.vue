@@ -30,7 +30,7 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { defineEmits, defineProps, computed, ref, onMounted, onBeforeUnmount } from "vue";
-import { featuredProjects } from "./projects";
+import { getBlogProjects } from "@/api/blogProjects";
 
 const props = defineProps({
   blogSettingMap: {
@@ -47,6 +47,7 @@ const router = useRouter();
 
 // 移动端(≤860px)最多显示 4 个作品
 const isMobile = ref(false);
+const projects = ref([]);
 
 const updateViewport = () => {
   isMobile.value = window.innerWidth <= 860;
@@ -55,6 +56,9 @@ const updateViewport = () => {
 onMounted(() => {
   updateViewport();
   window.addEventListener("resize", updateViewport, { passive: true });
+  getBlogProjects(true).then(({ data }) => {
+    if (data?.code === 200) projects.value = data.data || [];
+  }).catch(() => {});
 });
 
 onBeforeUnmount(() => {
@@ -62,7 +66,7 @@ onBeforeUnmount(() => {
 });
 
 const displayProjects = computed(() => {
-  return isMobile.value ? featuredProjects.slice(0, 3) : featuredProjects;
+  return isMobile.value ? projects.value.slice(0, 3) : projects.value;
 });
 
 const toNextPage = () => {

@@ -26,6 +26,15 @@
 
 Levi Blog 是我个人独立开发并长期自用的一套博客前端（Vue 3 + Vite）。主要用来写文章、整理笔记、放一些自己经常用的小工具。UI 走深色系 + 青色点缀的路线，支持明暗主题切换，也做了按时间自动切换的开关。布局偏响应式，桌面和手机都能用，但仍以我自己日常使用场景为主。
 
+### Levi Blog 双版本
+
+Levi Blog 目前有两个前端版本，共用 `levi-blog-service` 后端：
+
+- **当前项目 `Levi-Blog`**：Vue 3 + Vite 版本，功能完整，包含工具箱、动态背景特效和互动组件。
+- [**My-Blog-Nuxt**](https://github.com/LeviQin/My-Blog-Nuxt)：Nuxt 4 SSR 版本，强调内容阅读、SEO、服务端渲染和更轻量的阅读体验。
+
+两个版本的数据接口保持一致，可以根据部署环境和产品侧重点选择使用。
+
 <table>
   <tr>
     <td><strong>⭐ 组件总数</strong></td>
