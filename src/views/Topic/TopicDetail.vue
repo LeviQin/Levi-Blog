@@ -1,11 +1,16 @@
 <template>
   <Head>
-    <meta name="keywords" :content="dataMap.articleInfo.title" />
-    <meta name="description" :content="dataMap.articleInfo.article_description" />
-    <meta property="og:description" :content="dataMap.articleInfo.article_description" />
+    <title>{{ seo.title }}</title>
+    <meta name="keywords" :content="seo.keywords" />
+    <meta name="description" :content="seo.description" />
+    <meta property="og:title" :content="seo.title" />
+    <meta property="og:description" :content="seo.description" />
+    <meta v-if="seo.image" property="og:image" :content="seo.image" />
+    <link rel="canonical" :href="seo.canonical" />
   </Head>
 
   <div class="topic-detail w">
+    <div v-if="isPreview" class="preview-banner">预览模式：这篇文章尚未公开发布</div>
     <div class="reading-progress-bar" :style="{ width: progressPercent + '%' }"></div>
 
     <div class="article-context-bar">
@@ -233,6 +238,34 @@ const activeAnchorIndex = ref(0);
 const hasLiked = ref(false);
 const previousArticle = ref(null);
 const nextArticle = ref(null);
+const isPreview = computed(() => !!route.query.preview);
+
+const stripMarkdown = (value = "") => String(value)
+  .replace(/```[\s\S]*?```/g, " ")
+  .replace(/`([^`]+)`/g, "$1")
+  .replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1")
+  .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+  .replace(/[#>*_~`-]/g, " ")
+  .replace(/\s+/g, " ")
+  .trim();
+
+const seo = computed(() => {
+  const article = dataMap.articleInfo;
+  const title = String(article.seo_title || article.title || "Levi's space").trim();
+  const description = String(article.seo_description || article.article_description || stripMarkdown(article.content).slice(0, 160) || "Levi's space").trim();
+  const tags = Array.isArray(article.article_tags)
+    ? article.article_tags.map((item) => tagNameById.value[item] || item).filter(Boolean)
+    : [];
+  const fallbackKeywords = [...new Set([...tags, categoryList[Number(article.category) - 1], article.title].filter(Boolean))].join(",");
+  const canonical = article.canonical_url || `${window.location.origin}/topic-detail/${article.id || route.params.id}`;
+  return {
+    title,
+    description,
+    keywords: String(article.seo_keywords || fallbackKeywords || title).trim(),
+    image: article.seo_image || article.image || "",
+    canonical,
+  };
+});
 
 const readTime = computed(() => {
   const text = dataMap.articleInfo.content || "";
@@ -392,7 +425,7 @@ const getArticleDetail = async () => {
   try {
     loading.value = true;
     articleError.value = "";
-    const res = await articleDetail(route.params.id);
+    const res = await articleDetail(route.params.id, route.query.preview || "");
     const { code, data, message } = res.data;
     if (code === 200 && Array.isArray(data) && data.length) {
       dataMap.articleInfo = data.map((item) => {
@@ -400,7 +433,7 @@ const getArticleDetail = async () => {
         item.published_at = dateToString(item.published_at);
         return item;
       })[0];
-      document.title = `${dataMap.articleInfo.title} - Levi's space`;
+      document.title = seo.value.title;
       hasLiked.value = !!getStore(`LEVI_LIKES_${dataMap.articleInfo.id}`);
     } else {
       articleError.value = message || "暂时无法获取这篇文章";
@@ -428,6 +461,16 @@ const getAdjacentArticles = async () => {
 </script>
 
 <style lang="scss" scoped>
+.preview-banner {
+  margin-bottom: 14px;
+  padding: 10px 16px;
+  border: 1px solid #f0c36a;
+  border-radius: 10px;
+  color: #8a5a00;
+  background: #fff7df;
+  text-align: center;
+  font-size: 13px;
+}
 .article-context-bar {
   min-height: 56px;
   display: flex;

@@ -15,10 +15,11 @@ export const getCategoryArticles = (data) => {
     });
 };
 
-export const articleDetail = (id) => {
+export const articleDetail = (id, preview = "") => {
     return request({
         method: "get",
         url: `/api/articles/article/${id}`,
+        params: preview ? { preview } : undefined,
     });
 };
 
